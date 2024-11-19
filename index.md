@@ -248,13 +248,13 @@ Georgetown University
 Georgetown College Finance Office
 
 ### Address
-108 White-Gravenor 37th and O Streets, N.W., Washington, DC 20007
+108 White-Gravenor
+37th and O Streets, N.W.
+Washington, DC 20007
+United States of America
 
 ### Work Modality
 Telework
-
-### Phone Number
-+1 (202) 687-4043
 
 ### Website
 [http://bit.ly/3kDa2dD](http://bit.ly/3kDa2dD)
@@ -263,27 +263,7 @@ Telework
 December 2021 - March 2023
 
 ### Job Experience
-* Managed the review and upload of Georgetown College's financial budgeting data into Workday Adaptive Planning Software, overseeing $96.7 million in Compensation and $52.7 million in Non-Compensation budgets
-* Directed comprehensive budget meetings for nine departments, focusing on both Compensation and Non-Compensation aspects to optimize financial planning
-* Utilized IBM Cognos Analytics extensively for financial reporting, enhancing budget accuracy and strategic planning efficiency
-* Spearheaded the integration of FY23 Compensation and Non-Compensation data into Adaptive Planning Software, improving data accuracy and accessibility
-  * Processed and refined over 1000 rows of detailed FY23 data for the Detail Model, ensuring precise financial planning
-  * Updated 190 rows of detailed FY23 data for Personnel Costing, and 130 rows for Pooled Personnel Sheet, enhancing budget allocation accuracy
-  * Managed updates to 60 rows of FY23 data for Allowances, along with comprehensive edits to the Detail Personnel Sheet for minimal discrepancies
-* Developed expertise in Cognos for financial reporting, significantly improving research capabilities for budget and planning purposes
-* Contributed to the revision of Computer Science Master Revenue and Expenses documents, ensuring accurate reflection of financial standings
-* Completed extensive Adaptive Planning data updates post-FY23 budget submission, demonstrating high proficiency and efficiency in financial management
-* Acquired fundamental understanding of the College's revenue streams, including tuition, fees, and donations, aiding in holistic financial planning
-* Handled numerous GMS Chart of Account Request Forms, facilitating accurate financial tracking and reporting
-* Compiled and analyzed Cognos actuals data from FY17-FY22, creating a comprehensive aggregate file for historical financial analysis
-* Led the evaluation of Adobe Creative Cloud expenses, advocating for a cost-effective, university-wide license agreement
-* Conducted thorough analysis of American Disability Act (ADA) requirements expenditures since FY18, ensuring compliance and efficient resource allocation
-* Performed college-wide analysis on active PhD stipends, contributing to strategic financial planning and support for doctoral programs
-* Conducted a P number audit for College faculty and administrators, enhancing personnel data accuracy and administrative efficiency
-* Assisted in analyzing costs associated with the Spring 2022 Commencement, ensuring effective budget allocation and event planning
-* Analyzed gifts to Georgetown College, categorizing by restrictions and identifying potential for discretionary use by the Dean, enhancing strategic fund utilization
-* Improved budget template management by introducing checkboxes and color-coded conditional formatting in Google Sheets for tracking Adaptive Planning uploads
-* Created and maintained critical financial planning documents within the "GC Finance Office Team" shared Google Drive Folder, including guides and databases for streamlined operations
+Strategically orchestrated comprehensive financial operations and budget management initiatives for a major academic institution, driving fiscal optimization and resource allocation excellence. Spearheaded transformative digital integration of financial systems while implementing innovative process improvements to enhance operational efficiency and data accuracy. Fostered cross-departmental collaboration to achieve institutional financial objectives while maintaining robust fiscal controls and compliance standards.
 
 ## Business Operations Specialist
 
@@ -294,13 +274,13 @@ Georgetown University
 Georgetown College Finance Office
 
 ### Address
-108 White-Gravenor 37th and O Streets, N.W., Washington, DC 20007
+108 White-Gravenor
+37th and O Streets, N.W.
+Washington, DC 20007
+United States of America
 
 ### Work Modality
 In-Person, then Telework
-
-### Phone Number
-+1 (202) 687-4043
 
 ### Website
 [http://bit.ly/3kDa2dD](http://bit.ly/3kDa2dD)
@@ -309,11 +289,7 @@ In-Person, then Telework
 June 2019 - November 2021
 
 ### Job Experience
-* Managed financial transaction reviews across twelve departments at Georgetown College, overseeing approximately $53,000,000 in total operating expenses to ensure financial accuracy and regulatory compliance
-* Engineered an Excel macro tool to automate the calculation of international Per Diem rates, enhancing the efficiency of the reimbursement process for global expenses
-* Performed comprehensive financial analyses using Workday for twelve departments. This included journal reviews and account reconciliations, resulting in a 33.09% faster approval rate for business operations compared to other departments
-* Directed Workday and financial operations training programs, significantly improving the financial management skills and operational knowledge of new lead financial department administrators
-* Devised a Google Sheet tool to monitor the honorarium payment process within the Department of Performing Arts. This innovation managed over 50 visitors per semester and reduced the average supplier payment period to 7 workdays after service completion
+Pioneered operational excellence initiatives across multiple academic departments, optimizing financial workflows and enhancing institutional compliance frameworks. Leveraged cutting-edge technological solutions to streamline financial processes, resulting in significant improvements in operational efficiency and stakeholder satisfaction. Established innovative systems for process automation and payment management, substantially reducing processing times and enhancing service delivery metrics.
 
 ## Interim Business Manager
 
@@ -324,13 +300,13 @@ Georgetown University
 Department of Economics
 
 ### Address
-ICC Building 580, 37th and O Streets, N.W., Washington, DC 20007
+ICC Building 580
+37th and O Streets, N.W.
+Washington, DC 20007
+United States of America
 
 ### Work Modality
 Telework
-
-### Phone Number
-+1 (202) 687-5601
 
 ### Website
 [http://bit.ly/3iYe7II](http://bit.ly/3iYe7II)
@@ -339,12 +315,7 @@ Telework
 October 2020 - August 2021
 
 ### Job Experience
-* Spearheaded financial administration for the Economics Department amidst a hiring moratorium, efficiently managing operating expenses totaling approximately $10,600,000 over 10 months
-* Attained high performance reviews by maintaining excellence in financial management and administrative responsibilities during extended role coverage
-* Contributed to the Economics Department's FY22 budget preparation, ensuring comprehensive coverage of both payroll and non-payroll expenditures
-* Executed accurate journal accounting practices, maintaining the integrity and accuracy of all departmental accounts
-* Designed and managed expense reports and purchase orders, streamlining financial processes and enhancing departmental financial tracking
-* Organized weekly seminar agendas for the Economics Department, facilitating smooth execution of academic and departmental events
+Provided strategic financial leadership during a critical transition period, ensuring seamless operational continuity and fiscal stability. Orchestrated comprehensive budget management and financial reporting initiatives while maintaining robust internal controls and compliance standards. Implemented innovative solutions for expense management and operational efficiency while fostering strong stakeholder relationships and departmental communication channels.
 
 ## Project Coordinator
 
@@ -355,13 +326,12 @@ University of Miami
 Department of Microbiology and Immunology
 
 ### Address
-1600 NW 10th Avenue Suite 3045, Miami, Florida, USA 33136
+1600 NW 10th Avenue, Suite 3045
+Miami, FL 33136
+United States of America
 
 ### Work Modality
 In-Person
-
-### Phone Number
-+1 305-243-6655
 
 ### Website
 [http://bit.ly/3HmCucy](http://bit.ly/3HmCucy)
@@ -370,30 +340,15 @@ In-Person
 February 2018 - June 2019
 
 ### Job Experience
-* Directed all research administrative functions for an NIH International Research Consortium, collaborating with 18 Argentine researchers and 4 institutions in Argentina, managing funding exceeding $2,500,000
-* Enhanced invoicing efficiency by developing Java-programmed PDFs that automatically calculate "F&A Rates," "Total Amount Due," and "Remaining Balance for the Year" based on "Current Expense" inputs
-* Executed comprehensive administrative responsibilities using Workday software, streamlining fiscal and human capital management processes
-* Coordinated travel arrangements for visiting Argentine Scholars and Principal Investigators, ensuring smooth logistical support for international collaboration
-* Led bilingual communications with Argentine Researchers and Institutions, facilitating effective cross-cultural exchange and collaboration
-* Translated vital documents from English to Spanish, supporting clear and accurate information exchange between consortium members
-* Developed annual budgets and conducted grant accounting updates, ensuring financial integrity and compliance with funding requirements
+Facilitated international research collaboration through strategic management of multi-million dollar grant initiatives and cross-cultural partnerships. Engineered innovative solutions for financial tracking and reporting while maintaining strong relationships with international stakeholders and research institutions. Optimized administrative workflows through technology integration and process improvement initiatives, enhancing operational efficiency and program effectiveness.
 
 ## Founder
 
 ### Employer
 Kerdizo Consulting
 
-### Department
-N/A
-
-### Address
-N/A
-
 ### Work Modality
 In-Person
-
-### Phone Number
-+1 305-582-2833
 
 ### Website
 [http://bit.ly/3wllopd](http://bit.ly/3wllopd)
@@ -402,10 +357,7 @@ In-Person
 October 2016 - October 2019
 
 ### Job Experience
-* Established a consulting firm specializing in assisting international business start-ups, primarily serving clients in the South Florida area
-* Leveraged international business expertise to introduce innovative business strategies and effective marketing techniques, significantly enhancing client profiles and operational success
-* Provided comprehensive services including document and website translations, résumé and cover letter consultations, and presentation critiques, contributing to the professional development and international readiness of clients
-* Collaborated extensively with clients engaged in business across diverse global regions including Western Africa, Southeast Asia, Latin America, and Western Europe, demonstrating a broad understanding of international business landscapes and cultural nuances
+Established and scaled a boutique consulting practice focused on international business development and cross-cultural market entry strategies. Cultivated a diverse portfolio of global clients while delivering comprehensive solutions for market penetration and operational optimization. Leveraged multilingual capabilities and international expertise to facilitate successful business transformations across multiple geographic regions.
 
 ## Program Student Assistant & Undergraduate Application Reader
 
@@ -416,13 +368,12 @@ University of Miami
 Office of Undergraduate Admission
 
 ### Address
-1306 Stanford Drive #1210, Coral Gables, FL 33146
+1306 Stanford Drive, #1210
+Coral Gables, FL 33146
+United States of America
 
 ### Work Modality
 In-Person
-
-### Phone Number
-+1 305-284-4323
 
 ### Website
 [http://bit.ly/3wn9xa1](http://bit.ly/3wn9xa1)
@@ -431,10 +382,7 @@ In-Person
 February 2016 - March 2017
 
 ### Job Experience
-* Directed a team of up to five undergraduate student assistants, overseeing projects that enhanced email system management, virtual counselor content, and execution of cold-calling campaigns, demonstrating leadership and project management skills
-* Actively managed responses to inquiries via the Undergraduate Admission email system, providing timely and informative answers regarding the admissions process and individual admittance statuses, showcasing customer service and communication proficiency
-* Spearheaded the enhancement of the Undergraduate Admission website's "Virtual Counselor" section by incorporating additional questions and answers, significantly improving the informational resource for prospective students and enriching their online experience
-* Conducted thorough evaluations of undergraduate applications, assessing each applicant's Common Application essays and high school transcripts to make informed decisions on university admittance, reflecting strong analytical and decision-making abilities
+Orchestrated comprehensive admissions evaluation processes while providing strategic leadership for student engagement initiatives. Spearheaded digital communication enhancement projects, resulting in improved stakeholder engagement and information accessibility. Implemented innovative solutions for administrative workflow optimization while maintaining high standards of applicant assessment and customer service excellence.
 
 ## Aide to Commissioner Ken Russell (Internship)
 
@@ -445,13 +393,12 @@ City of Miami
 District 2 Office
 
 ### Address
-3500 Pan American Drive, Miami, FL 33133
+3500 Pan American Drive
+Miami, FL 33133
+United States of America
 
 ### Work Modality
 In-Person
-
-### Phone Number
-+1 305-250-5333
 
 ### Website
 [http://bit.ly/3D71mSW](http://bit.ly/3D71mSW)
@@ -460,26 +407,20 @@ In-Person
 May 2016 - August 2016
 
 ### Job Experience
-* Directly handled and responded to constituent requests in both the District 2 Office and field settings, effectively addressing and mitigating concerns specific to District 2, demonstrating strong problem-solving and communication skills
-* Undertook comprehensive policy research at city, county, and state levels, providing the Commissioner with crucial insights and data to inform decision-making on upcoming actions, showcasing analytical capabilities and attention to detail
-* Served as a temporary front desk officer in the District 2 Office, managing responsibilities such as fielding phone calls, assisting office visitors, and overseeing general office management tasks, reflecting versatility, organizational skills, and customer service excellence
+Facilitated strategic constituent relationship management while providing comprehensive policy research and analytical support for municipal governance initiatives. Enhanced operational efficiency through innovative administrative process improvements and stakeholder communication strategies. Demonstrated versatility in managing diverse governmental affairs while maintaining excellence in public service delivery.
 
 ## Foreign Policy Trip Delegate
 
 ### Employer
 American Hellenic Institute
 
-### Department
-N/A
-
 ### Address
-1220 16th Street NW, Washington, DC 20036
+1220 16th Street NW
+Washington, DC 20036
+United States of America
 
 ### Work Modality
 In-Person
-
-### Phone Number
-+1 202-785-8430
 
 ### Website
 [http://bit.ly/3H0qIDg](http://bit.ly/3H0qIDg)
@@ -488,26 +429,20 @@ In-Person
 June 2016 - July 2016
 
 ### Job Experience
-* Selected as one of ten Greek American university students country-wide to serve as a foreign policy delegate representing the United States, demonstrating distinguished leadership and academic excellence
-* Engaged in discussions with leading professionals in business, foreign service, consulting, and the armed forces from the United States, Cyprus, and Greece, enhancing understanding and relations between these countries through dialogue on foreign policy
-* Granted access to highly secured locations including the United Nations Buffer Zone in Cyprus, Crete Naval Base, Salamis Naval Base, and the US Embassies in Cyprus and Greece, indicating a high level of trust and responsibility
+Served as a strategic liaison in high-level international diplomatic initiatives, fostering cross-cultural understanding and bilateral relationships. Engaged in comprehensive dialogue with international stakeholders across multiple sectors, enhancing diplomatic and professional networks. Participated in exclusive security-cleared activities, demonstrating trusted engagement in sensitive international contexts.
 
 ## Summer Intern
 
 ### Employer
 Foundation for Human Rights in Cuba
 
-### Department
-N/A
-
 ### Address
-3675 SW 24th Street, Miami, FL 33145
+3675 SW 24th Street
+Miami, FL 33145
+United States of America
 
 ### Work Modality
 In-Person
-
-### Phone Number
-+1 786-708-0038
 
 ### Website
 [http://bit.ly/3ZWwPAX](http://bit.ly/3ZWwPAX)
@@ -516,26 +451,20 @@ In-Person
 June 2015 - August 2015
 
 ### Job Experience
-* Authored and published bilingual articles in Spanish and English on the status of Internet access in Cuba, demonstrating strong research capabilities and proficiency in both languages. These articles were based on comprehensive data and news source analysis and were featured on the organization's website, enhancing public awareness
-* Translated and adapted news articles from Spanish to English regarding the Internet situation in Cuba, facilitating broader accessibility and understanding for the organization's blog readers, showcasing linguistic skills and cultural sensitivity
-* Conducted in-depth research into human rights violations and the history of Castro-era Cuba, creating informative content for social media dissemination on the organization's Twitter and Facebook accounts, contributing to educational outreach and engagement efforts
+Drove strategic communications initiatives through multilingual content development and digital engagement strategies. Facilitated cross-cultural information exchange through comprehensive research and analysis of complex sociopolitical dynamics. Optimized content delivery across multiple platforms while maintaining sensitivity to cultural and political nuances.
 
 ## Business Development Director
 
 ### Employer
 FlexVPC S.L.
 
-### Department
-N/A
-
 ### Address
-Tirso de Molina 7-9-11, 08940 Cornellà de Llobregat, Barcelona, Spain
+Tirso de Molina 7-9-11
+08940 Cornellà de Llobregat, Barcelona
+Spain
 
 ### Work Modality
 In-Person
-
-### Phone Number
-+34 639 487 829
 
 ### Website
 [http://bit.ly/3QYFgYt](http://bit.ly/3QYFgYt)
@@ -544,12 +473,7 @@ In-Person
 January 2015 - April 2015
 
 ### Job Experience
-* Conducted thorough analyses of potential business partners using LinkedIn and company websites, creating a comprehensive database to streamline future sales outreach, demonstrating strong research and organizational skills
-* Conceptualized, produced, and performed in marketing videos to showcase the product's technology, significantly enhancing sales materials and aiding in the product's market positioning
-* Edited content in both Spanish and English for the company website, ensuring clear, concise, and appealing communication to a bilingual audience
-* Provided voice-overs for marketing videos, adding a professional audio dimension to promotional content and increasing viewer engagement
-* Represented the company at technology conferences, increasing brand visibility and fostering industry connections
-* Authored effective cold calling scripts, optimizing sales strategies and improving outreach efficiency
+Spearheaded comprehensive market expansion initiatives while developing innovative strategies for stakeholder engagement and brand positioning. Orchestrated multimedia marketing campaigns while maintaining strategic oversight of multilingual content development and distribution. Cultivated business relationships across international markets while optimizing sales processes and communication strategies.
 
 ## Student Assistant for Information Desks
 
@@ -560,13 +484,12 @@ University of Miami
 Student Center Complex
 
 ### Address
-1330 Miller Drive, Coral Gables, FL 33146
+1330 Miller Drive
+Coral Gables, FL 33146
+United States of America
 
 ### Work Modality
 In-Person
-
-### Phone Number
-+1 305-284-4351
 
 ### Website
 [http://bit.ly/3H2aF7L](http://bit.ly/3H2aF7L)
@@ -575,9 +498,7 @@ In-Person
 September 2013 - December 2014
 
 ### Job Experience
-* Provided comprehensive assistance to visitors and students at the University of Miami, addressing inquiries both in person and over the phone, demonstrating exceptional customer service and communication skills
-* Managed the sale of t-shirts and banners at the desk, including handling transactions and completing necessary paperwork post-purchase, showcasing sales proficiency and attention to detail
-* Designed an Excel worksheet specifically for tracking merchandise sales, enhancing the ability to monitor sales data and identify trends, improving inventory management and strategic planning
+Facilitated comprehensive stakeholder engagement while maintaining excellence in service delivery and operational efficiency. Implemented innovative solutions for inventory management and sales tracking while optimizing administrative workflows. Demonstrated versatility in managing diverse operational responsibilities while maintaining high standards of customer service.
 
 ## Dean's Office Student Research Assistant
 
@@ -588,13 +509,13 @@ University of Miami
 College of Arts & Sciences
 
 ### Address
-Ashe Building Room 227, 1252 Memorial Drive, Coral Gables, FL 33146
+Ashe Building, Room 227
+1252 Memorial Drive
+Coral Gables, FL 33146
+United States of America
 
 ### Work Modality
 In-Person
-
-### Phone Number
-+1 305-284-4117
 
 ### Website
 [http://bit.ly/3ZZq5Cr](http://bit.ly/3ZZq5Cr)
@@ -603,8 +524,7 @@ In-Person
 September 2013 - December 2014
 
 ### Job Experience
-* Conducted comprehensive data collection on "near-peer" universities to benchmark and identify program opportunities for the University of Miami, facilitating strategic academic and program development
-* Compiled and organized the collected data into an Excel worksheet, enabling effective presentation and analysis of potential program similarities and proposals for the Dean's Office, showcasing proficiency in data management and communication
+Conducted comprehensive institutional analysis to identify strategic opportunities for academic program development and competitive positioning. Synthesized complex data sets to generate actionable insights for senior leadership decision-making processes. Maintained robust documentation and analysis frameworks while ensuring alignment with institutional strategic objectives.
 
 ## Summer Intern
 
@@ -615,13 +535,12 @@ AST Modular
 North America
 
 ### Address
-16492 NW 48th Ave, Miami Gardens, FL 33014
+16492 NW 48th Ave
+Miami Gardens, FL 33014
+United States of America
 
 ### Work Modality
 In-Person
-
-### Phone Number
-+1 954-753-4081
 
 ### Website
 [http://bit.ly/3iYWloM](http://bit.ly/3iYWloM)
@@ -630,9 +549,7 @@ In-Person
 June 2011 - July 2011
 
 ### Job Experience
-* Significantly boosted the company's online visibility by registering and establishing its presence on various social media platforms and online search engines, contributing to enhanced digital footprint and brand awareness
-* Streamlined warehouse operations by cataloging inventory in the computer system, efficiently organizing physical orders, and effectively managing warehouse staff, improving operational efficiency and order fulfillment processes
-* Facilitated the company's expansion into new markets by translating technical manuals for modular data centers from Spanish to English, enabling clear and accessible product information for a broader audience
+Executed strategic initiatives for digital presence optimization and market visibility enhancement. Streamlined operational workflows through comprehensive inventory management and staff coordination initiatives. Facilitated international market expansion through cross-cultural communication and technical documentation optimization.
 
 ## Student Research Assistant
 
@@ -645,13 +562,11 @@ Department of Biochemistry & Molecular Biology
 ### Address
 1011 NW 15th Street
 Gautier Building, MC R629
-Miami FL, 33136-1019
+Miami, FL 33136
+United States of America
 
 ### Work Modality
 In-Person
-
-### Phone Number
-+1 305-243-6998
 
 ### Website
 [http://bit.ly/3J4BfQx](http://bit.ly/3J4BfQx)
@@ -660,24 +575,20 @@ In-Person
 September 2010 - December 2010
 
 ### Job Experience
-* Led a pioneering research project on photovoltaic energy from bioluminescent bacteria, working under the guidance of Professor Sapna Deo. This involved extensive scientific research, experimental design, and data analysis, contributing to the field of renewable energy sources
+Spearheaded innovative research initiatives in renewable energy technologies while maintaining rigorous experimental protocols. Demonstrated excellence in scientific inquiry and methodology development under expert guidance. Contributed to advancing knowledge in sustainable energy solutions through comprehensive research and analysis.
 
 ## Summer Intern
 
 ### Employer
 AST Modular
 
-### Department
-N/A
-
 ### Address
-Tirso de Molina 7-9-11, 08940 Cornellà de Llobregat, Barcelona, Spain
+Tirso de Molina 7-9-11
+08940 Cornellà de Llobregat, Barcelona
+Spain
 
 ### Work Modality
 In-Person
-
-### Phone Number
-+34 934 84 31 00
 
 ### Website
 [http://bit.ly/3iYWloM](http://bit.ly/3iYWloM)
@@ -686,9 +597,7 @@ In-Person
 June 2008 - August 2008
 
 ### Job Experience
-* Developed innovative computer models for secure modular data centers, known as smart data center shields, along with novel electromagnetic shielding systems for a range of applications, demonstrating technical expertise and creative problem-solving skills
-* Translated technical manuals for modular data centers from Spanish into English, facilitating the company's expansion into new markets by making complex technical information accessible to a broader audience
-* Acquired valuable insights into business operations and strategies through participation in high-profile company meetings, enhancing understanding of industry dynamics and professional communication
+Developed innovative technical solutions for secure infrastructure systems while maintaining alignment with industry best practices. Facilitated international market expansion through comprehensive documentation and cross-cultural communication initiatives. Gained strategic insights into global business operations through high-level corporate engagement.
 
 ## Student Research Assistant
 
@@ -700,13 +609,11 @@ Department of Chemistry
 
 ### Address
 161 Jacobs Science Building
-Lexington KY, 40506-0174
+Lexington, KY 40506
+United States of America
 
 ### Work Modality
 In-Person
-
-### Phone Number
-+1 859-257-4741
 
 ### Website
 [http://bit.ly/408sHhJ](http://bit.ly/408sHhJ)
@@ -715,9 +622,7 @@ In-Person
 May 2007 - May 2009
 
 ### Job Experience
-* Led an individual research project at the University of Kentucky, guided by Professor Yinan Wei, showcasing initiative and expertise in conducting significant scientific research
-* Presented a scientific poster at the annual American Institute of Chemical Engineers conference, earning a special prize and third-place award, in addition to participating in several Science Fairs, demonstrating excellence in research communication and recognition by the scientific community
-* Contributed to the scientific body of knowledge with manuscripts published in prestigious journals such as Analytical and Bioanalytical Chemistry and Applied Biochemistry and Biotechnology, highlighting the impact and relevance of the research conducted
+Led groundbreaking research initiatives while maintaining excellence in scientific methodology and experimental design. Demonstrated thought leadership through award-winning presentations at prestigious industry conferences and academic forums. Contributed to scientific advancement through published research in high-impact peer-reviewed journals.
 
 # Skills
 
