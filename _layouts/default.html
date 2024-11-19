@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/styles.css' | relative_url }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Navigation</h2>
+            <button id="sidebar-toggle" class="sidebar-toggle">
+                <span class="toggle-icon">☰</span>
+            </button>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="#contact" class="nav-link">Contact Information</a></li>
+                <li><a href="#education" class="nav-link">Education</a></li>
+                <li><a href="#certification" class="nav-link">Certification</a></li>
+                <li><a href="#experience" class="nav-link">Work Experience</a></li>
+                <li><a href="#volunteer" class="nav-link">Volunteer Experience</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="content" id="main-content">
+        <header class="main-header">
+            <h1>{{ site.title }}</h1>
+            <p>{{ site.description }}</p>
+        </header>
+        
+        {{ content }}
+    </div>
+
+    <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+</body>
+</html>
