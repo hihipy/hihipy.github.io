@@ -2,31 +2,25 @@ title: "Philip Gregory Bachas-Daunert"
 description: "Business Analyst"
 remote_theme: just-the-docs/just-the-docs
 
+# Logo configuration
+logo: "/assets/images/qr-code.png" # Set the QR code as the logo
+
 # Enable SCSS customization
 sass:
   sass_dir: _sass
 
 # Site configurations
-color_scheme: custom
-logo: assets/images/qr-code.png # Use QR code as the logo
+color_scheme: dark # Dark theme
+search_enabled: true # Enable site search
+nav_enabled: true # Enable navigation
+collapse_section: true # Enable collapsible menus
 
-# Navigation settings
-just_the_docs:
-  collapse_section: true # Enable collapsible menu
-  default_layout: "default" # Use the default layout
-  aux_links:
-    "GitHub Profile": //github.com/hihipy
-    "LinkedIn": //linkedin.com/in/pbachas
-    "Bitly Link-in-bio": //bit.ly/m/pgbd
-  aux_links_new_tab: true
+# Auxiliary links in the top-right header
+aux_links:
+  "GitHub Profile": //github.com/hihipy
+  "LinkedIn": //linkedin.com/in/pbachas
+  "Bitly Link-in-bio": //bit.ly/m/pgbd
+aux_links_new_tab: true # Open auxiliary links in a new tab
 
-# Footer content
+# Footer
 footer_content: "© 2024 Philip Gregory Bachas-Daunert"
-
-# Reorder navigation menu
-nav_order: # Ensures correct order for navigation items
-  - Home
-  - Work Experience
-  - Education
-  - Skills
-  - Key Projects
