@@ -1,43 +1,27 @@
+# Philip Bachas-Daunert
+
+**Business Analyst**
+
 ---
-layout: default
+
+## Professional Overview
+
+Business Analyst with expertise in data analysis, financial modeling, and strategic planning. Combining analytical skills with business acumen to drive data-informed decisions.
+
 ---
 
-<div class="container">
-  <div class="ascii-art">
-  ╔══════════════════════════════════════════════╗
-  ║                                              ║
-  ║           PHILIP BACHAS-DAUNERT              ║
-  ║             BUSINESS ANALYST                 ║
-  ║                                              ║
-  ╚══════════════════════════════════════════════╝
-  </div>
+## Core Competencies
 
-  <nav class="nav">
-    <a href="/projects">Projects</a>
-    <a href="/cv">Curriculum Vitae</a>
-  </nav>
+- Financial Analysis & Budgeting
+- Data Analytics & Visualization
+- Strategic Planning
+- Process Improvement
+- Project Management
 
-  <div class="card">
-    <h2>Professional Overview</h2>
-    <p>Business Analyst with expertise in data analysis, financial modeling, and strategic planning. Combining analytical skills with business acumen to drive data-informed decisions.</p>
-  </div>
+---
 
-  <div class="card">
-    <h2>Core Competencies</h2>
-    <ul>
-      <li>Financial Analysis & Budgeting</li>
-      <li>Data Analytics & Visualization</li>
-      <li>Strategic Planning</li>
-      <li>Process Improvement</li>
-      <li>Project Management</li>
-    </ul>
-  </div>
+## Contact Information
 
-  <div class="contact-info">
-    <p>
-      <a href="mailto:career-pgbd@pm.me">career-pgbd@pm.me</a> |
-      <a href="https://github.com/hihipy">GitHub</a> |
-      <a href="https://www.linkedin.com/in/pbachas/">LinkedIn</a>
-    </p>
-  </div>
-</div>
+- [Email: career-pgbd@pm.me](mailto:career-pgbd@pm.me)
+- [GitHub: hihipy](https://github.com/hihipy)
+- [LinkedIn: Philip Bachas-Daunert](https://www.linkedin.com/in/pbachas/)

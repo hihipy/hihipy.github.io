@@ -1,41 +1,31 @@
+# Key Projects
+
 ---
-layout: default
+
+## Financial Budget Management
+
+Managed Georgetown College's financial budgeting data exceeding $96.7M.
+
+- Implemented Workday Adaptive Planning Software
+- Directed budget meetings for nine departments
+- Enhanced financial reporting efficiency
+
 ---
 
-<div class="container">
-  <div class="ascii-art">
-  ┌─────────────────────────────────┐
-  │          KEY PROJECTS           │
-  └─────────────────────────────────┘
-  </div>
+## Healthcare Analytics
 
-  <div class="card">
-    <h2>Financial Budget Management</h2>
-    <p>Managed Georgetown College's financial budgeting data exceeding $96.7M</p>
-    <ul>
-      <li>Implemented Workday Adaptive Planning Software</li>
-      <li>Directed budget meetings for nine departments</li>
-      <li>Enhanced financial reporting efficiency</li>
-    </ul>
-  </div>
+Led 3D object segmentation project for lung CT scans.
 
-  <div class="card">
-    <h2>Healthcare Analytics</h2>
-    <p>Led 3D object segmentation project for lung CT scans</p>
-    <ul>
-      <li>Developed image processing pipeline</li>
-      <li>Achieved 0.83 Dice-Sørensen coefficient</li>
-      <li>Enhanced early detection capabilities</li>
-    </ul>
-  </div>
+- Developed image processing pipeline
+- Achieved 0.83 Dice-Sørensen coefficient
+- Enhanced early detection capabilities
 
-  <div class="card">
-    <h2>Service Request Analysis</h2>
-    <p>Boston 311 Service Request Closure Prediction</p>
-    <ul>
-      <li>Analyzed city services and crime data</li>
-      <li>Implemented machine learning models</li>
-      <li>Created interactive visualization tools</li>
-    </ul>
-  </div>
-</div>
+---
+
+## Service Request Analysis
+
+Boston 311 Service Request Closure Prediction.
+
+- Analyzed city services and crime data
+- Implemented machine learning models
+- Created interactive visualization tools

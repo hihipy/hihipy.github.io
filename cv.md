@@ -2,22 +2,19 @@
 layout: default
 ---
 
-```
- ╔════════════════════════════════════════════════════════════════╗
- ║                                                                ║
- ║                PHILIP GREGORY BACHAS-DAUNERT                   ║
- ║                      CURRICULUM VITAE                          ║
- ║                                                                ║
- ╚════════════════════════════════════════════════════════════════╝
-```
-
 # Contact Information
+
+---
 
 ## Telephone
 [+1 202 285 1684](tel:12022851684)
 
+---
+
 ## Email
 [career-pgbd@pm.me](mailto:career-pgbd@pm.me)
+
+---
 
 ## Professional Websites
 
@@ -30,9 +27,15 @@ layout: default
 ### LinkedIn
 [https://www.linkedin.com/in/pbachas/](https://www.linkedin.com/in/pbachas/)
 
+---
+
 # Education
 
+---
+
 ## M.S. in Business Analytics
+
+---
 
 ### Institution
 University of Miami
@@ -77,6 +80,8 @@ Business Analytics
 * MGT 697 - Graduate Business Career Connect
 * MKT 675 - Marketing Analytics
 
+---
+
 ## M.A. in International Administration
 
 ### Institution
@@ -114,6 +119,8 @@ International Administration
 * IGS 647 - Disaster Response and Humanitarian Intervention
 * INS 642 - Drug-Trafficking in the Americas
 * INS 653 - The European Union: History, Institutions, Policies
+
+---
 
 ## B.A. in History, Minor in Education
 
@@ -172,6 +179,8 @@ Minor: Education
 * TAL 305 - Critical Reading
 * TAL 305 - Classroom and Behavior Management
 
+---
+
 ## Undeclared
 
 ### Institution
@@ -207,7 +216,11 @@ Georgetown University
 * SPA 201 - Intermediate Spanish I
 * THEO 001 - The Problem of God
 
+---
+
 # Certification
+
+---
 
 ## Data Science
 
@@ -231,6 +244,8 @@ Georgetown University School of Continuing Studies
 * XBUS-506 - 201 Visual Analytics
 * XBUS-507 - 202 Applied Data Science
 
+---
+
 ## Financial Management
 
 ### Institution
@@ -250,7 +265,11 @@ eCornell
 * HAME513 - Understanding Financial Statements
 * HAME514 - Using Ratio Analysis to Evaluate Financial Performance
 
+---
+
 # Work Experience
+
+---
 
 ## Planning and Budget Analyst
 
@@ -278,6 +297,8 @@ December 2021 - March 2023
 ### Job Experience
 Strategically orchestrated comprehensive financial operations and budget management initiatives for a major academic institution, driving fiscal optimization and resource allocation excellence. Spearheaded transformative digital integration of financial systems while implementing innovative process improvements to enhance operational efficiency and data accuracy. Fostered cross-departmental collaboration to achieve institutional financial objectives while maintaining robust fiscal controls and compliance standards.
 
+---
+
 ## Interim Business Manager
 
 ### Employer
@@ -304,6 +325,8 @@ October 2020 - August 2021
 ### Job Experience
 Provided strategic financial leadership during a critical transition period, ensuring seamless operational continuity and fiscal stability. Orchestrated comprehensive budget management and financial reporting initiatives while maintaining robust internal controls and compliance standards. Implemented innovative solutions for expense management and operational efficiency while fostering strong stakeholder relationships and departmental communication channels.
 
+---
+
 ## Project Coordinator
 
 ### Employer
@@ -328,6 +351,8 @@ February 2018 - June 2019
 
 ### Job Experience
 Facilitated international research collaboration through strategic management of multi-million dollar grant initiatives and cross-cultural partnerships. Engineered innovative solutions for financial tracking and reporting while maintaining strong relationships with international stakeholders and research institutions. Optimized administrative workflows through technology integration and process improvement initiatives, enhancing operational efficiency and program effectiveness.
+
+---
 
 ## Founder
 
@@ -371,6 +396,8 @@ February 2016 - March 2017
 ### Job Experience
 Orchestrated comprehensive admissions evaluation processes while providing strategic leadership for student engagement initiatives. Spearheaded digital communication enhancement projects, resulting in improved stakeholder engagement and information accessibility. Implemented innovative solutions for administrative workflow optimization while maintaining high standards of applicant assessment and customer service excellence.
 
+---
+
 ## Aide to Commissioner Ken Russell (Internship)
 
 ### Employer
@@ -396,6 +423,8 @@ May 2016 - August 2016
 ### Job Experience
 Facilitated strategic constituent relationship management while providing comprehensive policy research and analytical support for municipal governance initiatives. Enhanced operational efficiency through innovative administrative process improvements and stakeholder communication strategies. Demonstrated versatility in managing diverse governmental affairs while maintaining excellence in public service delivery.
 
+---
+
 ## Foreign Policy Trip Delegate
 
 ### Employer
@@ -417,6 +446,8 @@ June 2016 - July 2016
 
 ### Job Experience
 Served as a strategic liaison in high-level international diplomatic initiatives, fostering cross-cultural understanding and bilateral relationships. Engaged in comprehensive dialogue with international stakeholders across multiple sectors, enhancing diplomatic and professional networks. Participated in exclusive security-cleared activities, demonstrating trusted engagement in sensitive international contexts.
+
+---
 
 ## Summer Intern
 
@@ -440,6 +471,8 @@ June 2015 - August 2015
 ### Job Experience
 Drove strategic communications initiatives through multilingual content development and digital engagement strategies. Facilitated cross-cultural information exchange through comprehensive research and analysis of complex sociopolitical dynamics. Optimized content delivery across multiple platforms while maintaining sensitivity to cultural and political nuances.
 
+---
+
 ## Business Development Director
 
 ### Employer
@@ -461,6 +494,8 @@ January 2015 - April 2015
 
 ### Job Experience
 Spearheaded comprehensive market expansion initiatives while developing innovative strategies for stakeholder engagement and brand positioning. Orchestrated multimedia marketing campaigns while maintaining strategic oversight of multilingual content development and distribution. Cultivated business relationships across international markets while optimizing sales processes and communication strategies.
+
+---
 
 ## Student Assistant for Information Desks
 
@@ -486,6 +521,8 @@ September 2013 - December 2014
 
 ### Job Experience
 Facilitated comprehensive stakeholder engagement while maintaining excellence in service delivery and operational efficiency. Implemented innovative solutions for inventory management and sales tracking while optimizing administrative workflows. Demonstrated versatility in managing diverse operational responsibilities while maintaining high standards of customer service.
+
+---
 
 ## Dean's Office Student Research Assistant
 
@@ -513,6 +550,8 @@ September 2013 - December 2014
 ### Job Experience
 Conducted comprehensive institutional analysis to identify strategic opportunities for academic program development and competitive positioning. Synthesized complex data sets to generate actionable insights for senior leadership decision-making processes. Maintained robust documentation and analysis frameworks while ensuring alignment with institutional strategic objectives.
 
+---
+
 ## Summer Intern
 
 ### Employer
@@ -537,6 +576,8 @@ June 2011 - July 2011
 
 ### Job Experience
 Executed strategic initiatives for digital presence optimization and market visibility enhancement. Streamlined operational workflows through comprehensive inventory management and staff coordination initiatives. Facilitated international market expansion through cross-cultural communication and technical documentation optimization.
+
+---
 
 ## Student Research Assistant
 
@@ -564,6 +605,8 @@ September 2010 - December 2010
 ### Job Experience
 Spearheaded innovative research initiatives in renewable energy technologies while maintaining rigorous experimental protocols. Demonstrated excellence in scientific inquiry and methodology development under expert guidance. Contributed to advancing knowledge in sustainable energy solutions through comprehensive research and analysis.
 
+---
+
 ## Summer Intern
 
 ### Employer
@@ -585,6 +628,8 @@ June 2008 - August 2008
 
 ### Job Experience
 Developed innovative technical solutions for secure infrastructure systems while maintaining alignment with industry best practices. Facilitated international market expansion through comprehensive documentation and cross-cultural communication initiatives. Gained strategic insights into global business operations through high-level corporate engagement.
+
+---
 
 ## Student Research Assistant
 
@@ -610,55 +655,3 @@ May 2007 - May 2009
 
 ### Job Experience
 Led groundbreaking research initiatives while maintaining excellence in scientific methodology and experimental design. Demonstrated thought leadership through award-winning presentations at prestigious industry conferences and academic forums. Contributed to scientific advancement through published research in high-impact peer-reviewed journals.
-
-# Skills
-
-## Language
-* Native Proficiency: English & Spanish
-* Intermediate Proficiency: Catalan
-* Elementary Proficiency: Mandarin
-
-## Nationality
-Dual Citizenship: USA & Spain
-
-## Technical Skills
-* Adobe Acrobat Proficient Programming
-* Document Translation
-* Microsoft Office Suite
-* Workday Proficiency
-* Workday Adaptive Planning
-* IBM Cognos Analytics
-* Written & Technical Research
-* Graduate School Level Research
-* Graduate School Level Writing
-* Python
-* R
-* SQL
-* Markdown
-* LaTeX
-* Databricks
-
-## General Skills
-* **Exceptional Customer Service**
-  * Rapid response to inquiries, demonstrating promptness and efficiency
-  * Cordial in both written and spoken language, ensuring positive interactions
-  * Exhibits patience, providing thoughtful and considerate customer support
-  * Maintains calmness under pressure, adept at handling challenging situations
-
-* **Outstanding Collaborator**
-  * Empathetic listener, fostering understanding and collaborative solutions
-  * Amicable personality, creating a welcoming and positive team environment
-  * A unifying leader, adept at bringing people together for common goals
-
-* **General Management**
-  * Advanced organizational skills, proficient in managing electronics, complex events, and paperwork
-  * Highly adaptable, able to pivot strategies in response to changing circumstances
-  * Compassionate leadership, prioritizing team welfare and motivation
-  * Detail-oriented, ensuring thoroughness and accuracy in tasks and projects
-
-* **Post-Grad Level Writing Proficiency**
-  * Demonstrated through the achievement of a Master's Degree, evidencing high-level academic writing skills
-
-* **Social Media Management**
-  * Organizational skills tailored to digital platforms, enhancing online presence
-  * Witty writing style, engaging audiences and promoting brand identity

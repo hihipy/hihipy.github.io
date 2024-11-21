@@ -1,51 +1,33 @@
-# Site Settings
 title: "Philip Gregory Bachas-Daunert"
-description: "Portfolio & Professional CV"
-url: "https://hihipy.github.io"
-baseurl: ""
-repository: "hihipy/hihipy.github.io"
+description: "Business Analyst"
+remote_theme: just-the-docs/just-the-docs
 
-# Theme and Layout
-theme: jekyll-theme-leap-day
-markdown: kramdown
-kramdown:
-  toc_levels: 1..3
-  auto_ids: true
-  hard_wrap: false
-  syntax_highlighter: rouge
+# Color scheme and accessibility
+color_scheme: light
+search_enabled: true
 
-# Plugin Settings
-plugins:
-  - jekyll-toc
-  - jekyll-seo-tag
-  - jekyll-sitemap
-  - jekyll-relative-links
+# Aux links for the upper right navigation
+aux_links:
+  "GitHub Profile":
+    - "//github.com/hihipy"
+  "LinkedIn":
+    - "//linkedin.com/in/pbachas"
+  "Bitly Link-in-bio":
+    - "//bit.ly/m/pgbd"
 
-# TOC Settings
-toc:
-  min_level: 1
-  max_level: 3
-  ordered_list: false
-  no_toc_section_class: no_toc_section
-  list_class: section-nav
-  sublist_class: toc-sublist
-  item_class: toc-entry
+aux_links_new_tab: true
 
-# Custom Variables
-author: "Philip Gregory Bachas-Daunert"
-linkedin: "" # Add your LinkedIn profile URL
-github: "hihipy"
-email: "" # Add your professional email
+# Custom settings
+heading_anchors: true
+search:
+  heading_level: 3
+  previews: 3
 
-# Build Settings
-exclude:
-  - README.md
-  - Gemfile
-  - Gemfile.lock
-  - node_modules
-  - vendor
+# Navigation ordering
+nav_sort: case_sensitive
 
-# Additional Settings
-timezone: America/New_York
-encoding: utf-8
-safe: true
+# Footer content
+footer_content: "© 2024 Philip Gregory Bachas-Daunert"
+
+# Enable custom SCSS
+color_scheme: custom
