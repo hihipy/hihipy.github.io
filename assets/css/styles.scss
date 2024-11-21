@@ -1,58 +1,146 @@
 ---
 ---
 
-/* Import Google Fonts - JetBrains Mono */
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
-
-/* Retro Effects */
-
-// Star trail
-.trail-star {
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  font-size: 12px;
-  color: var(--accent);
-  transition: all 0.1s linear;
+/* Accessible Color Scheme */
+:root {
+  --primary: #2d3436;          /* Dark gray - for main text */
+  --secondary: #0984e3;        /* Blue - for links (accessible) */
+  --background: #ffffff;       /* White background */
+  --accent: #00b894;          /* Teal - for highlights */
+  --menu-bg: #f5f6fa;         /* Light gray - for menu */
+  --border: #dcdde1;          /* Light border color */
 }
 
-// Retro text effect
-.retro-text {
+/* Base Styles with System Monospace Fonts */
+body {
+  font-family: Monaco, Consolas, "Courier New", monospace;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--primary);
+  background: var(--background);
+  margin: 0;
+  padding: 0;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+  body {
+    font-size: 18px; /* Larger text on mobile */
+  }
+}
+
+/* Accessible Link Styles */
+a {
+  color: var(--secondary);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
   transition: all 0.3s ease;
 }
 
-@keyframes retroGlow {
-  0% { text-shadow: 0 0 10px var(--accent); }
-  50% { text-shadow: 0 0 20px var(--accent), 0 0 30px var(--accent); }
-  100% { text-shadow: 0 0 10px var(--accent); }
+a:hover, a:focus {
+  border-bottom-color: var(--secondary);
+  outline: 2px solid var(--secondary);
+  outline-offset: 2px;
 }
 
-// Construction banner
-.construction-banner {
+/* Collapsible Menu */
+.nav-menu {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: var(--background);
-  border: 2px solid var(--accent);
-  padding: 10px 20px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
-  transform: rotate(-5deg);
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 250px;
+  background: var(--menu-bg);
+  transform: translateX(0);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
   z-index: 1000;
-  box-shadow: 3px 3px 0 var(--text);
 }
 
-// Blinking effect
-.blink {
-  animation: blink 1s step-end infinite;
+.nav-menu.collapsed {
+  transform: translateX(-250px);
 }
 
-@keyframes blink {
-  50% { opacity: 0; }
+/* Menu Toggle Button */
+.menu-toggle {
+  position: fixed;
+  left: 10px;
+  top: 10px;
+  z-index: 1001;
+  background: var(--menu-bg);
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 4px;
 }
 
-// ASCII art animation
+/* ASCII Art Animation */
 .ascii-art {
-  opacity: 0;
-  transform: translateY(20px);
+  font-family: Monaco, Consolas, "Courier New", monospace;
+  white-space: pre;
+  line-height: 1.2;
+  animation: fadeInUp 1s ease;
+  margin: 2em 0;
+  font-size: 14px;
+}
+
+/* 90s Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rainbow {
+  0% { color: #ff0000; }
+  16% { color: #ff8000; }
+  32% { color: #ffff00; }
+  48% { color: #00ff00; }
+  64% { color: #0000ff; }
+  80% { color: #8000ff; }
+  100% { color: #ff0000; }
+}
+
+/* Main Content Area */
+.content {
+  margin-left: 250px;
+  padding: 20px;
+  max-width: 1200px;
+  transition: margin-left 0.3s ease;
+}
+
+.content.full-width {
+  margin-left: 0;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  .nav-menu {
+    width: 100%;
+    transform: translateX(-100%);
+  }
+
+  .content {
+    margin-left: 0;
+    padding: 15px;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  :root {
+    --primary: #000000;
+    --secondary: #0000EE;
+    --background: #ffffff;
+    --accent: #006600;
+  }
 }

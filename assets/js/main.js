@@ -1,98 +1,97 @@
-// 90s-style cursor trail effect
-class Trail {
+// Menu functionality
+document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    const content = document.querySelector('.content');
+
+    // Menu toggle
+    menuToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('collapsed');
+        content.classList.toggle('full-width');
+    });
+
+    // Submenu toggles
+    document.querySelectorAll('.submenu-toggle').forEach(toggle => {
+        toggle.addEventListener('click', (e) => {
+            const submenu = e.target.nextElementSibling;
+            submenu.style.display = submenu.style.display === 'none' ? 'block' : 'none';
+        });
+    });
+
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+});
+
+// ASCII Art Animation
+class ASCIIAnimation {
     constructor() {
-      this.trail = '★';
-      this.positions = [];
-      this.maxLength = 10;
-      this.trailElements = [];
-      
-      this.init();
+        this.frames = [
+            this.createFrame('simple'),
+            this.createFrame('detailed'),
+            this.createFrame('bordered')
+        ];
+        this.currentFrame = 0;
+        this.animate();
     }
-  
-    init() {
-      document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
-      
-      // Create trail elements
-      for (let i = 0; i < this.maxLength; i++) {
-        const element = document.createElement('div');
-        element.className = 'trail-star';
-        element.innerHTML = this.trail;
-        document.body.appendChild(element);
-        this.trailElements.push(element);
-      }
+
+    createFrame(style) {
+        // Create different ASCII art frames
+        return style === 'simple' ?
+            'PHILIP GREGORY\nBACHAS-DAUNERT' :
+            style === 'detailed' ?
+            '╔════════════════╗\n║ PHILIP GREGORY ║\n║ BACHAS-DAUNERT ║\n╚════════════════╝' :
+            '┌────────────────┐\n│ PHILIP GREGORY │\n│ BACHAS-DAUNERT │\n└────────────────┘';
     }
-  
-    handleMouseMove(e) {
-      // Add new position
-      this.positions.push({ x: e.pageX, y: e.pageY });
-      
-      // Remove old positions
-      if (this.positions.length > this.maxLength) {
-        this.positions.shift();
-      }
-      
-      // Update trail elements
-      this.trailElements.forEach((element, index) => {
-        const position = this.positions[this.positions.length - 1 - index];
-        if (position) {
-          element.style.left = `${position.x}px`;
-          element.style.top = `${position.y}px`;
-          element.style.opacity = 1 - (index / this.maxLength);
+
+    animate() {
+        const header = document.querySelector('.ascii-header');
+        if (header) {
+            header.textContent = this.frames[this.currentFrame];
+            this.currentFrame = (this.currentFrame + 1) % this.frames.length;
         }
-      });
+        setTimeout(() => this.animate(), 2000);
     }
-  }
-  
-  // Retro text effect for headers
-  function initRetroText() {
-    const headers = document.querySelectorAll('h1, h2');
-    headers.forEach(header => {
-      header.classList.add('retro-text');
-      
-      // Add hover effect
-      header.addEventListener('mouseover', () => {
-        header.style.animation = 'none';
-        header.offsetHeight; // Trigger reflow
-        header.style.animation = 'retroGlow 1s infinite';
-      });
-      
-      header.addEventListener('mouseout', () => {
-        header.style.animation = 'none';
-      });
-    });
-  }
-  
-  // ASCII art animation
-  function animateAsciiArt() {
-    const asciiArts = document.querySelectorAll('.ascii-art');
-    asciiArts.forEach(art => {
-      art.style.opacity = '0';
-      art.style.transform = 'translateY(20px)';
-      
-      setTimeout(() => {
-        art.style.transition = 'all 1s ease';
-        art.style.opacity = '1';
-        art.style.transform = 'translateY(0)';
-      }, 100);
-    });
-  }
-  
-  // "Under Construction" banner
-  function addConstructionBanner() {
-    const banner = document.createElement('div');
-    banner.className = 'construction-banner';
-    banner.innerHTML = `
-      <span class="blink">🚧</span>
-      ALWAYS IMPROVING
-      <span class="blink">🚧</span>
-    `;
-    document.body.appendChild(banner);
-  }
-  
-  // Initialize everything when document is ready
-  document.addEventListener('DOMContentLoaded', () => {
-    new Trail();
-    initRetroText();
-    animateAsciiArt();
-    addConstructionBanner();
-  });
+}
+
+// Initialize ASCII animation
+new ASCIIAnimation();
+
+// Add 90s cursor trail effect
+class CursorTrail {
+    constructor() {
+        this.trail = '★';
+        this.points = [];
+        this.init();
+    }
+
+    init() {
+        document.addEventListener('mousemove', (e) => {
+            this.points.push({
+                x: e.pageX,
+                y: e.pageY,
+                life: 10
+            });
+            this.update();
+        });
+    }
+
+    update() {
+        this.points = this.points.filter(point => {
+            point.life--;
+            if (point.life <= 0) {
+                return false;
+            }
+            return true;
+        });
+    }
+}
+
+// Initialize cursor trail
+new CursorTrail();
