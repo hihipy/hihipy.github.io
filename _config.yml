@@ -2,11 +2,14 @@ title: "Philip Gregory Bachas-Daunert"
 description: "Business Analyst"
 remote_theme: just-the-docs/just-the-docs
 
-# Color scheme and accessibility
-color_scheme: light
-search_enabled: true
+# Enable SCSS customization
+sass:
+  sass_dir: _sass
 
-# Aux links for the upper right navigation
+# Site configurations
+color_scheme: custom
+
+# Navigation links
 aux_links:
   "GitHub Profile":
     - "//github.com/hihipy"
@@ -17,17 +20,5 @@ aux_links:
 
 aux_links_new_tab: true
 
-# Custom settings
-heading_anchors: true
-search:
-  heading_level: 3
-  previews: 3
-
-# Navigation ordering
-nav_sort: case_sensitive
-
 # Footer content
 footer_content: "© 2024 Philip Gregory Bachas-Daunert"
-
-# Enable custom SCSS
-color_scheme: custom
