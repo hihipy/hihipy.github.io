@@ -1,5 +1,7 @@
 ---
 layout: default
+title: Education
+nav_order: 3
 ---
 
 # Education

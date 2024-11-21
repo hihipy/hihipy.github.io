@@ -1,3 +1,9 @@
+---
+layout: default
+title: Key Projects
+nav_order: 5
+---
+
 # Key Projects
 
 ---

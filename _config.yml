@@ -8,17 +8,25 @@ sass:
 
 # Site configurations
 color_scheme: custom
+logo: assets/images/qr-code.png # Use QR code as the logo
 
-# Navigation links
-aux_links:
-  "GitHub Profile":
-    - "//github.com/hihipy"
-  "LinkedIn":
-    - "//linkedin.com/in/pbachas"
-  "Bitly Link-in-bio":
-    - "//bit.ly/m/pgbd"
-
-aux_links_new_tab: true
+# Navigation settings
+just_the_docs:
+  collapse_section: true # Enable collapsible menu
+  default_layout: "default" # Use the default layout
+  aux_links:
+    "GitHub Profile": //github.com/hihipy
+    "LinkedIn": //linkedin.com/in/pbachas
+    "Bitly Link-in-bio": //bit.ly/m/pgbd
+  aux_links_new_tab: true
 
 # Footer content
 footer_content: "© 2024 Philip Gregory Bachas-Daunert"
+
+# Reorder navigation menu
+nav_order: # Ensures correct order for navigation items
+  - Home
+  - Work Experience
+  - Education
+  - Skills
+  - Key Projects
