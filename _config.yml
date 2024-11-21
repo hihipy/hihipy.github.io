@@ -2,25 +2,36 @@ title: "Philip Gregory Bachas-Daunert"
 description: "Business Analyst"
 remote_theme: just-the-docs/just-the-docs
 
-# Logo configuration
-logo: "/assets/images/qr-code.png" # Set the QR code as the logo
-
 # Enable SCSS customization
 sass:
   sass_dir: _sass
 
 # Site configurations
-color_scheme: dark # Dark theme
+color_scheme: dark # Default to dark theme (overridden by system setting via JS)
 search_enabled: true # Enable site search
 nav_enabled: true # Enable navigation
 collapse_section: true # Enable collapsible menus
 
-# Auxiliary links in the top-right header
-aux_links:
-  "GitHub Profile": //github.com/hihipy
-  "LinkedIn": //linkedin.com/in/pbachas
-  "Bitly Link-in-bio": //bit.ly/m/pgbd
-aux_links_new_tab: true # Open auxiliary links in a new tab
+# Just the Docs specific configurations
+just_the_docs:
+  # Configure navigation and TOC
+  toc:
+    min_level: 1 # Include h1 headers
+    max_level: 6 # Include all headers up to h6
+    show: true # Show table of contents (TOC) on all pages
+  search:
+    heading_level: 6 # Allow all heading levels (h1 to h6) in search and navigation
+  heading_anchors: true # Enable deep linking to headers
+  # Auxiliary links in the top-right header
+  aux_links:
+    "GitHub Profile": //github.com/hihipy
+    "LinkedIn": //linkedin.com/in/pbachas
+    "Bitly Link-in-bio": //bit.ly/m/pgbd
+  aux_links_new_tab: true # Open auxiliary links in a new tab
+
+# Logo and favicon
+logo: "/assets/images/qr-code.png" # Use QR code as the logo
+favicon_ico: "/assets/images/favicon.ico" # Optional: add a favicon
 
 # Footer
 footer_content: "© 2024 Philip Gregory Bachas-Daunert"

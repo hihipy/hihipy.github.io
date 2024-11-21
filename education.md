@@ -2,6 +2,7 @@
 layout: default
 title: Education
 nav_order: 3
+has_toc: true
 ---
 
 # Education

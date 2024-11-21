@@ -2,6 +2,7 @@
 layout: default
 title: Key Projects
 nav_order: 5
+has_toc: true
 ---
 
 # Key Projects
