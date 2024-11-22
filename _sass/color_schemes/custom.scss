@@ -1,60 +1,61 @@
-// Custom styles for logo centering and size
-.header-logo img {
-  display: block;
-  margin: 0 auto;
-  max-height: 150px;
-  width: auto;
-}
-
-// Sidebar width
+// Narrow sidebar
 .side-bar {
-  width: 248px;
+  width: 248px !important;
+  @media (min-width: 50rem) {
+    width: 248px !important;
+  }
 }
 
 .main {
-  margin-left: 248px;
-}
-
-@media (min-width: 50rem) {
-  .side-bar {
-    width: 248px;
-  }
-
-  .main {
-    margin-left: 248px;
+  @media (min-width: 50rem) {
+    margin-left: 248px !important;
   }
 }
 
-// Logo styling
-.site-logo {
-  width: 100%;
-  height: auto;
+// Center and enlarge logo
+.site-header {
+  .site-title {
+    padding-right: 0;
+    text-align: center;
+    width: 100%;
+
+    img {
+      max-height: 200px;
+      margin: 0 auto;
+    }
+  }
+}
+
+// Theme toggle styling
+.theme-toggle-container {
   padding: 1rem;
   text-align: center;
 }
 
-.site-logo img {
-  max-width: 200px;
-  margin: 0 auto;
-}
-
-// Theme toggle button styling
-.theme-toggle-container {
-  padding: 0.5rem 1rem;
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
 .theme-toggle-button {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 4px;
   background: var(--body-heading-color);
   color: var(--body-background-color);
   border: 1px solid var(--body-text-color);
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9rem;
 }
 
-.theme-toggle-button:hover {
-  opacity: 0.8;
+// Light theme colors
+:root[data-theme="light"] {
+  --body-background-color: #ffffff;
+  --body-heading-color: #27262b;
+  --body-text-color: #27262b;
+  --link-color: #0d6efd;
+  --nav-child-link-color: #27262b;
+}
+
+// Dark theme colors
+:root[data-theme="dark"] {
+  --body-background-color: #27262b;
+  --body-heading-color: #ffffff;
+  --body-text-color: #ffffff;
+  --link-color: #5c9aff;
+  --nav-child-link-color: #ffffff;
 }

@@ -1,23 +1,25 @@
 <script>
     function toggleTheme() {
-        const currentTheme = localStorage.getItem('theme') || 'dark';
+        const body = document.querySelector('body');
+        const currentTheme = body.getAttribute('data-theme') || 'dark';
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        body.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
-        document.querySelector('body').setAttribute('data-theme', newTheme);
-        location.reload();
+        jtd.setTheme(newTheme);
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const sidebarNav = document.querySelector('.nav-list');
-        if (sidebarNav) {
-            const toggleContainer = document.createElement('div');
-            toggleContainer.className = 'theme-toggle-container';
-            toggleContainer.innerHTML = `
-              <button onclick="toggleTheme()" class="theme-toggle-button">
-                Toggle Theme
-              </button>
-            `;
-            sidebarNav.parentNode.insertBefore(toggleContainer, sidebarNav);
+    window.addEventListener('DOMContentLoaded', function () {
+        const nav = document.querySelector('.nav-list');
+        if (nav) {
+            const container = document.createElement('div');
+            container.className = 'theme-toggle-container';
+            container.innerHTML = `<button onclick="toggleTheme()" class="theme-toggle-button">Toggle Theme</button>`;
+            nav.parentNode.insertBefore(container, nav);
+        }
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.querySelector('body').setAttribute('data-theme', savedTheme);
         }
     });
 </script>

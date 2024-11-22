@@ -5,52 +5,36 @@ remote_theme: just-the-docs/just-the-docs
 
 # Theme Configuration
 just_the_docs:
-  # Enable navigation bar
   nav_enabled: true
-  # Collapsible sidebar sections
   collapse_section: true
-  # Table of Contents (TOC)
+  nav:
+    level: 6
   toc:
     min_level: 1
     max_level: 6
     show: true
-  # Heading anchors for direct links
   heading_anchors: true
-  # Show all header levels in navigation
-  nav:
-    show_all_headers: true
 
-# Navigation Order (front matter takes precedence)
-# Use `nav_order` in each markdown file for customization.
-
-# Color Scheme and Theme Toggle
-color_scheme: dark # Options: light, dark, or custom
+color_scheme: custom
 enable_theme_toggle: true
 
-# Logo and Favicon
 logo: "/assets/images/qr-code.png"
 favicon_ico: "/assets/images/favicon.ico"
-
-# Footer Content
 footer_content: ""
 
-# Auxiliary Links (header)
 aux_links:
   "GitHub Profile": //github.com/hihipy
   "LinkedIn": //linkedin.com/in/pbachas
   "Bitly Link-in-bio": //bit.ly/m/pgbd
 aux_links_new_tab: true
 
-# Search
 search_enabled: true
 search:
   heading_level: 6
 
-# Sass Configuration for Custom SCSS
 sass:
   sass_dir: _sass
 
-# Markdown Processing
 markdown: kramdown
 kramdown:
   input: GFM
