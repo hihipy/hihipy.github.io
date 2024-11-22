@@ -1,0 +1,23 @@
+<script>
+    function toggleTheme() {
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('theme', newTheme);
+        document.querySelector('body').setAttribute('data-theme', newTheme);
+        location.reload();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const sidebarNav = document.querySelector('.nav-list');
+        if (sidebarNav) {
+            const toggleContainer = document.createElement('div');
+            toggleContainer.className = 'theme-toggle-container';
+            toggleContainer.innerHTML = `
+              <button onclick="toggleTheme()" class="theme-toggle-button">
+                Toggle Theme
+              </button>
+            `;
+            sidebarNav.parentNode.insertBefore(toggleContainer, sidebarNav);
+        }
+    });
+</script>
