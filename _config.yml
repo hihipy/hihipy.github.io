@@ -7,6 +7,10 @@ remote_theme: just-the-docs/just-the-docs
 just_the_docs:
   nav_enabled: true
   collapse_section: true
+  collections:
+    pages:
+      nav:
+        level: 6
   nav:
     level: 6
   toc:
@@ -38,4 +42,5 @@ sass:
 markdown: kramdown
 kramdown:
   input: GFM
+  toc_levels: "1..6"
   syntax_highlighter: rouge

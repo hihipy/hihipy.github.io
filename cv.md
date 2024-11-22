@@ -3,6 +3,7 @@ layout: default
 title: Work Experience
 nav_order: 2
 has_toc: true
+has_children: false
 ---
 
 # Work Experience

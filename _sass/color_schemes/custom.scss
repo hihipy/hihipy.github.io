@@ -1,27 +1,15 @@
-// Narrow sidebar
-.side-bar {
-  width: 248px !important;
-  @media (min-width: 50rem) {
-    width: 248px !important;
-  }
-}
-
-.main {
-  @media (min-width: 50rem) {
-    margin-left: 248px !important;
-  }
-}
-
 // Center and enlarge logo
 .site-header {
   .site-title {
     padding-right: 0;
-    text-align: center;
+    text-align: center !important;
     width: 100%;
+    display: block !important;
 
     img {
-      max-height: 200px;
-      margin: 0 auto;
+      max-height: 300px !important;
+      margin: 0 auto !important;
+      display: block !important;
     }
   }
 }
@@ -42,7 +30,7 @@
   cursor: pointer;
 }
 
-// Light theme colors
+// Theme colors
 :root[data-theme="light"] {
   --body-background-color: #ffffff;
   --body-heading-color: #27262b;
@@ -51,7 +39,6 @@
   --nav-child-link-color: #27262b;
 }
 
-// Dark theme colors
 :root[data-theme="dark"] {
   --body-background-color: #27262b;
   --body-heading-color: #ffffff;

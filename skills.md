@@ -3,6 +3,7 @@ layout: default
 title: Skills
 nav_order: 4
 has_toc: true
+has_children: false
 ---
 
 # Skills
