@@ -1,0 +1,559 @@
+/* ============================================================
+   FONT | MonoLisa Variable
+   Self-hosted. Drop your licensed .woff2 files into /fonts.
+   The variable file handles every weight 100-800 in one request.
+   ============================================================ */
+
+@font-face {
+  font-family: 'MonoLisa Variable';
+  src: url('fonts/MonoLisaVariable.woff2') format('woff2-variations'),
+       url('fonts/MonoLisaVariable.woff2') format('woff2');
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MonoLisa Variable';
+  src: url('fonts/MonoLisaVariableItalic.woff2') format('woff2-variations'),
+       url('fonts/MonoLisaVariableItalic.woff2') format('woff2');
+  font-weight: 100 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ============================================================
+   THEME | Dark by default. Light if user prefers light.
+   Palette is colorblind-safe (Okabe-Ito derived).
+   ============================================================ */
+
+:root {
+  --bg: #0D1117;
+  --surface: #161B22;
+  --text: #E6EDF3;
+  --text-muted: #8B949E;
+  --text-faint: #6E7681;
+  --border: #30363D;
+  --border-strong: #484F58;
+  --accent: #FFB454;
+  --accent-strong: #FFCA82;
+  --link: #59C2FF;
+  --link-hover: #88D5FF;
+  --selection-bg: #FFB454;
+  --selection-fg: #0D1117;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #FAFAF7;
+    --surface: #FFFFFF;
+    --text: #0F0F0F;
+    --text-muted: #5A5A5A;
+    --text-faint: #8B8B85;
+    --border: #E5E5E0;
+    --border-strong: #D4D4CE;
+    --accent: #BA7517;
+    --accent-strong: #854F0B;
+    --link: #0072B2;
+    --link-hover: #005589;
+    --selection-bg: #0072B2;
+    --selection-fg: #FFFFFF;
+  }
+}
+
+/* ============================================================
+   RESET
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  font-family: 'MonoLisa Variable', ui-monospace, 'SF Mono', 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace;
+  font-size: 15px;
+  line-height: 1.7;
+  font-variation-settings: "wght" 400;
+  font-feature-settings: "calt", "liga", "zero";
+  color: var(--text);
+  background: var(--bg);
+  text-rendering: optimizeLegibility;
+}
+
+/* ============================================================
+   MONOLISA STYLISTIC SETS (optional)
+   To enable additional alternates, add the desired sets to
+   font-feature-settings on body. Common picks for personality:
+     "ss01"  alternate a (single-story)
+     "ss02"  alternate g (single-story)
+     "ss03"  alternate i with serifs
+     "ss05"  alternate l (with tail)
+     "ss06"  alternate r
+     "ss12"  alternate @ (compact)
+   Example: font-feature-settings: "calt", "liga", "zero", "ss02";
+   Full list in the MonoLisa documentation PDF in your bundle.
+   ============================================================ */
+
+::selection {
+  background: var(--selection-bg);
+  color: var(--selection-fg);
+}
+
+ul { list-style: none; }
+a { color: inherit; }
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+
+.skip-link {
+  position: absolute;
+  top: -48px;
+  left: 1rem;
+  background: var(--accent);
+  color: var(--bg);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  z-index: 100;
+  text-decoration: none;
+  font-variation-settings: "wght" 600;
+  transition: top 0.2s;
+}
+
+.skip-link:focus { top: 1rem; }
+
+.site-header,
+main,
+.site-footer {
+  max-width: 760px;
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+}
+
+.brand {
+  font-variation-settings: "wght" 600;
+  font-size: 14px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.site-nav {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 14px;
+}
+
+.site-nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.site-nav a:hover { color: var(--accent); }
+
+main {
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+
+.hero {
+  padding: 4rem 0 6rem;
+}
+
+.meta {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  font-variation-settings: "wght" 500;
+  letter-spacing: 0.02em;
+}
+
+.accent-mark {
+  color: var(--accent);
+  margin-right: 0.4em;
+}
+
+.hero-name {
+  font-size: clamp(40px, 8vw, 84px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  font-variation-settings: "wght" 700;
+  margin-bottom: 1.5rem;
+  color: var(--text);
+}
+
+.hero-tagline {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 540px;
+  margin-bottom: 0.5rem;
+}
+
+.hero-typing {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--accent);
+  font-variation-settings: "wght" 500;
+  margin-bottom: 2.5rem;
+  min-height: 1.6em;
+}
+
+.cursor {
+  display: inline-block;
+  color: var(--accent);
+  margin-left: 2px;
+  animation: cursor-blink 1.06s step-end infinite;
+}
+
+@keyframes cursor-blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor { animation: none; opacity: 1; }
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  font-size: 14px;
+  font-variation-settings: "wght" 600;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.btn-primary:hover {
+  background: var(--accent-strong);
+  transform: translateY(-1px);
+}
+
+.btn-link {
+  color: var(--link);
+  border-radius: 0;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.btn-link:hover {
+  color: var(--link-hover);
+  border-bottom-color: var(--link);
+}
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+
+.section {
+  padding: 3rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.section-heading {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-variation-settings: "wght" 500;
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.02em;
+}
+
+.prose p {
+  margin-bottom: 1.25rem;
+  font-size: 16px;
+  color: var(--text);
+  max-width: 620px;
+}
+
+.prose p:last-child { margin-bottom: 0; }
+
+/* ============================================================
+   PROJECTS | variable-weight hover is the signature detail
+   ============================================================ */
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.project {
+  border-bottom: 1px solid var(--border);
+}
+
+.project:first-child {
+  border-top: 1px solid var(--border);
+}
+
+.project a {
+  display: grid;
+  grid-template-columns: 40px 1fr 24px;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  text-decoration: none;
+  color: var(--text);
+  align-items: start;
+  transition: background 0.25s ease, padding 0.25s ease;
+}
+
+.project a:hover {
+  background: var(--surface);
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.project-num {
+  color: var(--text-faint);
+  font-size: 13px;
+  font-variation-settings: "wght" 500;
+  padding-top: 4px;
+}
+
+.project-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.project-title {
+  font-size: 17px;
+  color: var(--text);
+  font-variation-settings: "wght" 500;
+  transition: color 0.3s ease, font-variation-settings 0.3s ease;
+}
+
+.project a:hover .project-title {
+  color: var(--accent);
+  font-variation-settings: "wght" 700;
+}
+
+.project-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.project-tags {
+  font-size: 12px;
+  color: var(--text-faint);
+  letter-spacing: 0.02em;
+}
+
+.project-arrow {
+  color: var(--text-faint);
+  font-size: 16px;
+  padding-top: 4px;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.project a:hover .project-arrow {
+  transform: translateX(4px);
+  color: var(--accent);
+}
+
+/* ============================================================
+   EXPERIENCE / EDUCATION / SKILLS / CONTACT
+   ============================================================ */
+
+.role,
+.edu {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.role:first-child,
+.edu:first-child {
+  border-top: 1px solid var(--border);
+}
+
+.role-date,
+.edu-year {
+  font-size: 13px;
+  color: var(--text-faint);
+  padding-top: 4px;
+}
+
+.role-title,
+.edu-degree {
+  font-size: 16px;
+  font-variation-settings: "wght" 600;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+
+.role-org,
+.edu-school {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.role-summary {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.skills-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.skill-group {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 1.5rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.skill-group:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.skill-label {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-variation-settings: "wght" 500;
+}
+
+.skill-list {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.contact-list li {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 1.5rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--border);
+  font-size: 15px;
+}
+
+.contact-list li:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.contact-label {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.contact-list a {
+  color: var(--link);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.contact-list a:hover { color: var(--link-hover); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+.site-footer {
+  padding-top: 4rem;
+  padding-bottom: 2rem;
+  font-size: 13px;
+  color: var(--text-faint);
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+}
+
+/* ============================================================
+   FOCUS | visible for keyboard, invisible for mouse
+   ============================================================ */
+
+a:focus { outline: none; }
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 640px) {
+  .site-header,
+  main,
+  .site-footer {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .role,
+  .edu,
+  .skill-group,
+  .contact-list li {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .role-date,
+  .edu-year {
+    padding-top: 0;
+  }
+
+  .project a {
+    grid-template-columns: 32px 1fr 20px;
+    gap: 1rem;
+  }
+
+  .site-nav { gap: 1rem; }
+
+  .hero { padding: 2rem 0 4rem; }
+
+  .section { padding: 2rem 0; }
+}
