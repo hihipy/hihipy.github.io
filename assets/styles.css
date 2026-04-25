@@ -667,6 +667,61 @@ main {
 }
 
 /* ============================================================
+   ROOMS LIST (casa explainer on home page)
+   ============================================================ */
+
+.rooms-list {
+  list-style: none;
+  margin-top: 1rem;
+}
+
+.rooms-list li {
+  border-top: 1px solid var(--border);
+}
+
+.rooms-list li:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.rooms-list a {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 1.25rem;
+  align-items: baseline;
+  padding: 1rem 0;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.rooms-list a:hover {
+  color: var(--text);
+}
+
+.rooms-list .room-path {
+  color: var(--accent);
+  font-size: 14px;
+  font-variation-settings: "wght" 500;
+  transition: color 0.2s ease;
+}
+
+.rooms-list a:hover .room-path {
+  color: var(--accent-strong);
+}
+
+.rooms-list .room-desc {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .rooms-list a {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+}
+
+/* ============================================================
    THEME TOGGLE BUTTON
    ============================================================ */
 
@@ -706,6 +761,12 @@ main {
    PDF VIEWER (resume page)
    ============================================================ */
 
+/* CV page gets a wider main container so the embedded PDF
+   has room to breathe and renders text at a readable size. */
+body.cv-page main {
+  max-width: 1280px;
+}
+
 .pdf-viewer {
   width: 100%;
   border: 0.5px solid var(--border);
@@ -717,7 +778,7 @@ main {
 
 .pdf-viewer iframe {
   width: 100%;
-  height: 1100px;
+  height: 1500px;
   border: 0;
   display: block;
 }
@@ -739,6 +800,53 @@ main {
 @media (max-width: 640px) {
   .pdf-viewer iframe {
     height: 700px;
+  }
+}
+
+/* ============================================================
+   CODE BLOCKS (project snippets on work page)
+   ============================================================ */
+
+.code-block {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  font-size: 13px;
+  line-height: 1.65;
+  overflow-x: auto;
+  font-family: inherit;
+}
+
+.code-block pre {
+  white-space: pre;
+  color: var(--text);
+  margin: 0;
+}
+
+.code-block .code-label {
+  display: block;
+  font-size: 11px;
+  color: var(--text-faint);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+/* Minimal syntax tinting. c=comment, k=keyword, s=string. */
+.code-block .c { color: var(--text-faint); }
+.code-block .k { color: var(--accent); font-variation-settings: "wght" 600; }
+.code-block .s { color: var(--link); }
+
+@media (max-width: 640px) {
+  .code-block {
+    font-size: 12px;
+    padding: 1rem;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
   }
 }
 

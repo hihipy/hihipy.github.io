@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Open-source projects by Philip Bachas-Daunert. Pipelines, dashboards, AI tools, and automation utilities, organized by what they do.">
+  <meta name="color-scheme" content="dark light">
+
+  <link rel="canonical" href="https://pgbd.casa/taller/">
+
+  <meta property="og:title" content="Taller · Work · Philip Bachas-Daunert">
+  <meta property="og:description" content="Open-source projects organized by what they do. Pipelines, dashboards, AI tools, and automation utilities.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pgbd.casa/taller/">
+  <meta property="og:site_name" content="philip · bd · casa">
+
+  <title>Taller · Philip Bachas-Daunert</title>
+
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('theme');
+        var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        var theme = stored || (prefersLight ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+  <link rel="preload" href="/assets/fonts/MonoLisaVariable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="site-header">
+    <a href="/" class="brand">philip · bd</a>
+    <div class="header-right">
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/">~/casa</a>
+        <a href="/sala/">~/sala</a>
+        <a href="/taller/" class="current">~/taller</a>
+        <a href="/#contact">~/patio</a>
+      </nav>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle light or dark theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section class="page-hero" aria-labelledby="page-title">
+      <p class="meta"><span class="accent-mark">▓</span> // ~/casa/taller</p>
+      <h1 id="page-title" class="page-title">Taller</h1>
+      <p class="page-subtitle">Workshop. Open-source projects on GitHub, organized by what they do. Pipelines and ETL, BI and reporting, AI-assisted analysis, and Office automation.</p>
+    </section>
+
+    <section class="section">
+      <h2 class="section-heading"><span class="accent-mark">▓</span> // data pipelines and etl</h2>
+      <p class="section-intro">Tools that turn messy or hard-to-acquire institutional data into clean, analysis-ready datasets.</p>
+      <ul class="project-detail-list">
+
+        <li class="project-detail">
+          <div class="project-detail-meta">
+            <span class="project-num">01</span>
+            <a href="https://github.com/hihipy/brimr-downloader" target="_blank" rel="noopener noreferrer" class="project-detail-link">github.com/hihipy/brimr-downloader →</a>
+          </div>
+          <div class="project-detail-body">
+            <h2 class="project-detail-title">brimr-downloader</h2>
+            <p class="project-detail-desc">Python GUI application that uses Selenium browser automation to batch download Excel files from the Blue Ridge Institute for Medical Research website, which publishes annual NIH funding rankings for medical schools, departments, and principal investigators.</p>
+            <p class="project-detail-desc">BRIMR provides invaluable funding data spanning nearly two decades, but every Excel file has to be downloaded individually, with 70+ files per year. Manually downloading even five years of data takes over an hour. brimr-downloader transforms that into a single organized download with automatic file categorization across nine folders (school rankings, department summaries, basic science, clinical departments, PI rankings, geographic analyses, and more), reducing an estimated 8 to 10 hours of manual clicking to about 13 minutes per multi-year pull.</p>
+            <p class="project-detail-desc">Cross-platform with native Downloads folder detection on Windows, macOS, and Linux. Automatic year detection on launch, headless mode for background runs, and a comprehensive timestamped log file per session for full auditability.</p>
+            <div class="code-block">
+              <span class="code-label">brimr_downloader.py · simplified</span>
+<pre><code><span class="c"># Iterate years, classify each file by URL pattern,</span>
+<span class="c"># route into one of nine destination folders.</span>
+<span class="k">for</span> year <span class="k">in</span> years_to_fetch:
+    driver.get(<span class="s">f"https://brimr.org/{year}/"</span>)
+    <span class="k">for</span> href, filename <span class="k">in</span> collect_xlsx_links(driver):
+        bucket = classify(filename)        <span class="c"># one of nine categories</span>
+        target = DESTINATIONS[bucket]
+        download(href, target, log=session_log)</code></pre>
+            </div>
+            <p class="project-detail-tags">Cross-platform · Python · Selenium · ChromeDriver · Tkinter · webdriver-manager</p>
+          </div>
+        </li>
+
+        <li class="project-detail">
+          <div class="project-detail-meta">
+            <span class="project-num">02</span>
+            <a href="https://github.com/hihipy/25live-cleaner" target="_blank" rel="noopener noreferrer" class="project-detail-link">github.com/hihipy/25live-cleaner →</a>
+          </div>
+          <div class="project-detail-body">
+            <h2 class="project-detail-title">25live-cleaner</h2>
+            <p class="project-detail-desc">Python GUI utility that transforms raw 25Live room booking Excel exports into clean, analysis-ready datasets. 25Live is a widely used campus space scheduling platform whose raw exports require hours of manual cleaning before any analysis can begin.</p>
+            <p class="project-detail-desc">Reconstructs fragmented overnight bookings (where 25Live splits multi-day events across rows using "cont" tokens instead of real timestamps), normalizes inconsistent text fields with HTML entities and mixed casing, and performs smart deduplication that distinguishes exact duplicates from legitimate multi-location records.</p>
+            <p class="project-detail-desc">Generates a comprehensive machine-readable JSON audit trail documenting script identity (version, SHA-256 hash), every cleaning decision (cont token replacements, stitching groups, deduplication keep/drop reasons), and output metadata. Designed for non-technical facilities management staff with a tkinter GUI rather than a command line.</p>
+            <div class="code-block">
+              <span class="code-label">stitcher.py · simplified</span>
+<pre><code><span class="c"># Stitch fragmented overnight bookings. 25Live splits multi-day</span>
+<span class="c"># events across rows using a "cont" placeholder for the second</span>
+<span class="c"># row's start time. Walk the rows, stitch back to a real range.</span>
+<span class="k">for</span> prev, curr <span class="k">in</span> zip(rows, rows[1:]):
+    <span class="k">if</span> curr.start == <span class="s">"cont"</span> <span class="k">and</span> curr.event_id == prev.event_id:
+        prev.end = curr.end
+        curr.drop = <span class="k">True</span>
+        audit.log(<span class="s">"stitched"</span>, prev.event_id, prev.start, prev.end)</code></pre>
+            </div>
+            <p class="project-detail-tags">ETL · Pandas · Python · Tkinter · openpyxl</p>
+          </div>
+        </li>
+
+        <li class="project-detail">
+          <div class="project-detail-meta">
+            <span class="project-num">03</span>
+            <a href="https://github.com/hihipy/qualtrics-processing-pipeline" target="_blank" rel="noopener noreferrer" class="project-detail-link">github.com/hihipy/qualtrics-processing-pipeline →</a>
+          </div>
+          <div class="project-detail-body">
+            <h2 class="project-detail-title">qualtrics-processing-pipeline</h2>
+            <p class="project-detail-desc">Jupyter Notebook pipeline that transforms raw Qualtrics survey Excel exports into a complete, documented, analysis-ready package. Automates test data removal, question-text mapping preservation, intelligent data type detection, and quality flagging, then generates five output files including a styled HTML summary, clean CSV/XLSX datasets, a comprehensive codebook, descriptive statistics, and an NLP-ready JSON export.</p>
+            <p class="project-detail-desc">Designed as a transparent, step-by-step interactive document rather than a black-box script. Eighteen cells across four major steps, each producing inspectable intermediate outputs.</p>
+            <p class="project-detail-desc">The intelligent type detection engine cross-references column names and their mapped question text against keyword dictionaries (datetime, numeric, year-specific) to inform type decisions before falling back to statistical analysis. Handles contaminated numerics, detects matrix question series, and validates year values against an 1800-2100 range.</p>
+            <p class="project-detail-tags">Jupyter · NLP · Pandas · Python · openpyxl</p>
+          </div>
+        </li>
+
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2 class="section-heading"><span class="accent-mark">▓</span> // bi and reporting</h2>
+      <p class="section-intro">Tools that move BI artifacts and survey data out of proprietary formats and into something readable.</p>
+      <ul class="project-detail-list">
+
+        <li class="project-detail">
+          <div class="project-detail-meta">
+            <span class="project-num">04</span>
+            <a href="https://github.com/hihipy/pbi-model-export" target="_blank" rel="noopener noreferrer" class="project-detail-link">github.com/hihipy/pbi-model-export →</a>
+          </div>
+          <div class="project-detail-body">
+            <h2 class="project-detail-title">pbi-model-export</h2>
+            <p class="project-detail-desc">Tabular Editor 2 C# script that exports a complete Power BI model snapshot to a single portable JSON file. Tables, columns, relationships, measures with DAX expressions, hierarchies, partitions with M queries, RLS roles, data sources, plus a compact summary section designed for AI consumption.</p>
+            <p class="project-detail-desc">Power BI model structure is normally locked inside the desktop application with no built-in way to export the full architecture to a portable, machine-readable format. This script enables model documentation, impact analysis, architecture review, and direct LLM-assisted analysis without manually describing model structure.</p>
+            <p class="project-detail-desc">Includes a measure-dependency detector built on compiled regex bracket matching that runs in linear time (the v1 version was quadratic), JSON-safe character escaping for DAX expressions and M queries with embedded special characters, and configuration for hidden objects, partition source expressions, and RLS roles. Saves as a Tabular Editor Custom Action for one-click access.</p>
+            <div class="code-block">
+              <span class="code-label">DependencyDetector.cs · simplified</span>
+<pre><code><span class="c">// Linear-time dependency detection. Compiled regex with</span>
+<span class="c">// bracket-matching, replacing the v1 quadratic scan.</span>
+<span class="k">var</span> refs = <span class="k">new</span> HashSet&lt;<span class="k">string</span>&gt;();
+<span class="k">foreach</span> (Match m <span class="k">in</span> MEASURE_REFERENCE_PATTERN.Matches(dax))
+{
+    <span class="k">if</span> (m.Groups[<span class="s">"closed"</span>].Success)
+        refs.Add(m.Groups[<span class="s">"name"</span>].Value);
+}
+<span class="k">return</span> refs;</code></pre>
+            </div>
+            <p class="project-detail-tags">C# · DAX · Power BI · Tabular Editor 2 · Tabular Object Model</p>
+          </div>
+        </li>
+
+        <li class="project-detail">
+          <div class="project-detail-meta">
+            <span class="project-num">05</span>
+            <a href="https://github.com/hihipy/qualtrics-report-generator" target="_blank" rel="noopener noreferrer" class="project-detail-link">github.com/hihipy/qualtrics-report-generator →</a>
+          </div>
+          <div class="project-detail-body">
+            <h2 class="project-detail-title">qualtrics-report-generator</h2>
+            <p class="project-detail-desc">Python utility that converts Qualtrics CSV and QSF exports into formatted, self-contained HTML reports. Built specifically for administrative data intake surveys (institutional reporting, compliance questionnaires, accreditation self-studies, rankings collection) where a small number of respondents each complete different sections and the goal is readable per-response review rather than aggregate statistics.</p>
+            <p class="project-detail-desc">When a QSF file is provided, the parser extracts complete survey definitions including question type metadata, choices with display labels, and answer column labels. A 30-entry type map translates Qualtrics' internal question type tuples (matrix Likert, multiple choice variations, sliders, side-by-sides) to internal display types. When no QSF is provided, the script infers structure from CSV column patterns.</p>
+            <p class="project-detail-desc">A 13-type value classification system formats each cell appropriately (URLs become links, file paths become download links with extracted filenames, coordinates display with degree symbols, JSON pretty-prints in collapsible blocks). The HTML output uses a colorblind-friendly palette based on Paul Tol's research, safe for all three common forms of color vision deficiency.</p>
+            <p class="project-detail-tags">Accessibility · HTML · Pandas · Python · Qualtrics</p>
+          </div>
+        </li>
+
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2 class="section-heading"><span class="accent-mark">▓</span> // ai-assisted tools</h2>
+      <p class="section-intro">Tools built around the idea that LLMs are most useful when given good structured input. Both projects produce that input.</p>
+      <ul class="project-detail-list">
+
+        <li class="project-detail">
+          <div class="project-detail-meta">
+            <span class="project-num">06</span>
+            <a href="https://github.com/hihipy/ai-csv-profiler" target="_blank" rel="noopener noreferrer" class="project-detail-link">github.com/hihipy/ai-csv-profiler →</a>
+          </div>
+          <div class="project-detail-body">
+            <h2 class="project-detail-title">ai-csv-profiler</h2>
+            <p class="project-detail-desc">Dual-interface Python utility (tkinter GUI and argparse CLI) that generates comprehensive, AI-optimized JSON profiles of CSV files. Built to produce structured metadata summaries that can be fed directly to LLM assistants (ChatGPT, Claude, etc.) to give them full structural awareness of a dataset before prompting, eliminating the need to paste raw data or manually describe column types.</p>
+            <p class="project-detail-desc">The CSV reader implements a multi-stage fallback: first iterating through eight encodings crossed with six separator candidates, then falling back to pandas auto-detection, and finally resorting to manual line-by-line parsing for severely corrupted files. Every operation is wrapped in defensive error handlers so the program never crashes on malformed data.</p>
+            <p class="project-detail-desc">The type detection engine classifies columns as numeric, boolean, datetime, categorical, or text using ordered priority rules (boolean patterns checked first to prevent misclassification), column-name keyword hints, a 90% numeric conversion threshold, and cardinality-based categorical-vs-text differentiation.</p>
+            <div class="code-block">
+              <span class="code-label">reader.py · simplified</span>
+<pre><code><span class="c"># Multi-stage CSV reader. Eight encodings × six separators,</span>
+<span class="c"># then pandas auto-detect, then byte-level recovery.</span>
+<span class="k">for</span> encoding, sep <span class="k">in</span> product(ENCODINGS, SEPARATORS):
+    <span class="k">try</span>: <span class="k">return</span> read_csv(path, encoding=encoding, sep=sep)
+    <span class="k">except</span> (UnicodeDecodeError, ParserError): <span class="k">continue</span>
+<span class="k">try</span>: <span class="k">return</span> read_csv(path, sep=<span class="k">None</span>, engine=<span class="s">"python"</span>)
+<span class="k">except</span> Exception: <span class="k">return</span> manual_line_recovery(path)</code></pre>
+            </div>
+            <p class="project-detail-tags">LLM Tooling · Pandas · Python · Tkinter</p>
+          </div>
+        </li>
+
+        <li class="project-detail">
+          <div class="project-detail-meta">
+            <span class="project-num">07</span>
+            <a href="https://github.com/hihipy/decode-for-humans" target="_blank" rel="noopener noreferrer" class="project-detail-link">github.com/hihipy/decode-for-humans →</a>
+          </div>
+          <div class="project-detail-body">
+            <h2 class="project-detail-title">decode-for-humans</h2>
+            <p class="project-detail-desc">Python desktop application that translates source code files into structured plain-English reports across 55 supported languages. Built to reduce reliance on technical intermediaries during code review and compliance handoffs, where a non-developer (auditor, manager, lawyer, analyst) needs to understand what a script actually does.</p>
+            <p class="project-detail-desc">Routes report generation through five AI providers (Claude, ChatGPT, Gemini, Mistral, Groq) via a single unified interface, with per-file token cost previews so users can compare cost-quality trade-offs before running. Reduced code documentation time from hours of manual writing to under 60 seconds per file.</p>
+            <p class="project-detail-desc">Batch processing mode decodes entire project folders in a single session with real-time progress logging, cutting a 10-file documentation project from a full day of manual writing to under 10 minutes.</p>
+            <p class="project-detail-tags">AI Tooling · Multi-Provider · Python · Tkinter</p>
+          </div>
+        </li>
+
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2 class="section-heading"><span class="accent-mark">▓</span> // office automation</h2>
+      <p class="section-intro">Smaller utilities for the everyday work of pulling structure out of unstructured spreadsheets.</p>
+      <ul class="project-detail-list">
+
+        <li class="project-detail">
+          <div class="project-detail-meta">
+            <span class="project-num">08</span>
+            <a href="https://github.com/hihipy/Excel-VBA-Toolkit" target="_blank" rel="noopener noreferrer" class="project-detail-link">github.com/hihipy/Excel-VBA-Toolkit →</a>
+          </div>
+          <div class="project-detail-body">
+            <h2 class="project-detail-title">Excel-VBA-Toolkit</h2>
+            <p class="project-detail-desc">A collection of Excel VBA macros for the everyday work of pulling structure out of unstructured spreadsheets. Data cleaning routines, table exports, pivot table documentation, and small utilities I've found myself rebuilding from scratch across roles, packaged as a reusable .bas module set.</p>
+            <p class="project-detail-tags">Excel · Office Automation · VBA</p>
+          </div>
+        </li>
+
+      </ul>
+    </section>
+
+    <section class="section page-footer-cta">
+      <p><a href="https://github.com/hihipy" target="_blank" rel="noopener noreferrer" class="inline-link">Everything else on GitHub →</a></p>
+      <p><a href="/sala/" class="inline-link">More about me (sala) →</a></p>
+      <p><a href="/cv/" class="inline-link">View my CV →</a></p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>$ exit · Last updated <span id="last-updated">2026</span></p>
+  </footer>
+
+  <script>
+    (function () {
+      const toggle = document.getElementById('theme-toggle');
+      if (!toggle) return;
+      toggle.addEventListener('click', function () {
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('theme', next); } catch (e) {}
+      });
+    })();
+
+    (function () {
+      const REPO = 'hihipy/hihipy.github.io';
+      fetch(`https://api.github.com/repos/${REPO}/commits?per_page=1`)
+        .then(r => r.ok ? r.json() : null)
+        .then(data => {
+          if (!data || !data[0]) return;
+          const d = new Date(data[0].commit.author.date);
+          document.getElementById('last-updated').textContent =
+            d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+        })
+        .catch(() => {});
+    })();
+
+    console.log(
+      '%c bienvenido al taller. source at github.com/hihipy/hihipy.github.io ',
+      'background:#FFB454;color:#0D1117;padding:6px 10px;font-family:monospace;border-radius:4px;'
+    );
+  </script>
+
+</body>
+</html>

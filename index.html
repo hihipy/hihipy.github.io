@@ -33,8 +33,8 @@
     })();
   </script>
 
-  <link rel="preload" href="fonts/MonoLisaVariable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="preload" href="/assets/fonts/MonoLisaVariable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to content</a>
@@ -44,8 +44,8 @@
     <div class="header-right">
       <nav class="site-nav" aria-label="Primary">
         <a href="/" class="current">~/casa</a>
-        <a href="/about.html">~/sala</a>
-        <a href="/work.html">~/taller</a>
+        <a href="/sala/">~/sala</a>
+        <a href="/taller/">~/taller</a>
         <a href="#contact">~/patio</a>
       </nav>
       <button id="theme-toggle" class="theme-toggle" aria-label="Toggle light or dark theme">
@@ -65,12 +65,43 @@
     <section class="hero" aria-labelledby="hero-name">
       <p class="meta"><span class="accent-mark">▓</span> // bienvenido a mi casa</p>
       <h1 id="hero-name" class="hero-name">Philip<br>Bachas-Daunert</h1>
-      <p class="hero-tagline">Data analyst at the University of Miami Miller School of Medicine. This is my digital casa, a small corner of the internet for the work, words, and projects of someone who took the long way to analytics.</p>
+      <p class="hero-tagline">Welcome to my digital home. Data analyst at the University of Miami Miller School of Medicine. This is a small corner of the internet for the work, words, and projects of someone who took the long way to analytics.</p>
       <p class="hero-typing"><span id="typing">Power BI · Python · R · SQL.</span><span class="cursor" aria-hidden="true">▊</span></p>
       <div class="hero-actions">
-        <a href="/work.html" class="btn btn-primary">View work →</a>
-        <a href="/cv.html" class="btn btn-link">Mi CV →</a>
+        <a href="/taller/" class="btn btn-primary">View work →</a>
+        <a href="/cv/" class="btn btn-link">Mi CV →</a>
       </div>
+    </section>
+
+    <section id="rooms" class="section" aria-labelledby="rooms-heading">
+      <h2 id="rooms-heading" class="section-heading"><span class="accent-mark">▓</span> // rooms in the casa</h2>
+      <p class="section-intro">A small map of the digital home. Each section is a different room. The terminal-style paths are a nod to the shells and home directories that are my second language.</p>
+      <ul class="rooms-list">
+        <li>
+          <a href="/sala/">
+            <span class="room-path">~/sala</span>
+            <span class="room-desc">The living room. About me, the long way to analytics, and what I'm currently building.</span>
+          </a>
+        </li>
+        <li>
+          <a href="/taller/">
+            <span class="room-path">~/taller</span>
+            <span class="room-desc">The workshop. Open-source projects, organized by what they do.</span>
+          </a>
+        </li>
+        <li>
+          <a href="/cv/">
+            <span class="room-path">~/cv</span>
+            <span class="room-desc">My resume, viewable inline in your browser. Download if you want a copy.</span>
+          </a>
+        </li>
+        <li>
+          <a href="#contact">
+            <span class="room-path">~/patio</span>
+            <span class="room-desc">The patio. Where I greet visitors. Links to find me elsewhere on the internet.</span>
+          </a>
+        </li>
+      </ul>
     </section>
 
     <section id="about" class="section" aria-labelledby="about-heading">
@@ -78,7 +109,7 @@
       <div class="prose">
         <p>I work at the University of Miami's medical school, in the Dean's Office, building dashboards, ETL pipelines, and KPI frameworks for research administration and operations.</p>
         <p>My path here ran through history, international administration, university budget operations at Georgetown, and a master's in business analytics. The humanities background shapes how I approach data: ask what the question is actually about before building anything.</p>
-        <p class="more-link"><a href="/about.html" class="inline-link">Read the longer story →</a></p>
+        <p class="more-link"><a href="/sala/" class="inline-link">Read the longer story →</a></p>
       </div>
     </section>
 
@@ -124,12 +155,12 @@
         </li>
 
       </ul>
-      <p class="more-link"><a href="/work.html" class="inline-link">All six projects →</a></p>
+      <p class="more-link"><a href="/taller/" class="inline-link">All six projects →</a></p>
     </section>
 
     <section id="contact" class="section" aria-labelledby="contact-heading">
       <h2 id="contact-heading" class="section-heading"><span class="accent-mark">▓</span> // ~/casa/patio</h2>
-      <p class="section-intro">Open to senior analytics roles. The fastest ways to reach me:</p>
+      <p class="section-intro">Where to find me online:</p>
       <ul class="contact-list">
         <li>
           <span class="contact-icon" aria-hidden="true">
