@@ -1,13 +1,941 @@
 /* ============================================================
-   ADDITIONS FOR PROJECT ROOMS AND DEEP PAGES
-   Append to the end of styles.css.
+   FONT | MonoLisa Variable
+   Self-hosted. Drop your licensed .woff2 files into /fonts.
+   The variable file handles every weight 100-800 in one request.
    ============================================================ */
 
+@font-face {
+  font-family: 'MonoLisa Variable';
+  src: url('fonts/MonoLisaVariable.woff2') format('woff2-variations'),
+       url('fonts/MonoLisaVariable.woff2') format('woff2');
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MonoLisa Variable';
+  src: url('fonts/MonoLisaVariableItalic.woff2') format('woff2-variations'),
+       url('fonts/MonoLisaVariableItalic.woff2') format('woff2');
+  font-weight: 100 800;
+  font-style: italic;
+  font-display: swap;
+}
+
 /* ============================================================
-   PROJECT TAGS | simpleicons treatment for tech badges
-   Replaces the existing .project-tags rule (around line 393).
-   The icons render as masks so they pick up the theme color
-   and accent on hover without needing colored SVG variants.
+   THEME | Dark by default, light if user prefers or toggles.
+   The data-theme attribute is set by inline script in <head>
+   based on localStorage, then prefers-color-scheme, then dark.
+   Palette is colorblind-safe (Okabe-Ito derived).
+   ============================================================ */
+
+:root,
+:root[data-theme="dark"] {
+  --bg: #0D1117;
+  --surface: #161B22;
+  --text: #E6EDF3;
+  --text-muted: #8B949E;
+  --text-faint: #6E7681;
+  --border: #30363D;
+  --border-strong: #484F58;
+  --accent: #FFB454;
+  --accent-strong: #FFCA82;
+  --link: #59C2FF;
+  --link-hover: #88D5FF;
+  --selection-bg: #FFB454;
+  --selection-fg: #0D1117;
+}
+
+:root[data-theme="light"] {
+  --bg: #FAFAF7;
+  --surface: #FFFFFF;
+  --text: #0F0F0F;
+  --text-muted: #5A5A5A;
+  --text-faint: #8B8B85;
+  --border: #E5E5E0;
+  --border-strong: #D4D4CE;
+  --accent: #BA7517;
+  --accent-strong: #854F0B;
+  --link: #0072B2;
+  --link-hover: #005589;
+  --selection-bg: #0072B2;
+  --selection-fg: #FFFFFF;
+}
+
+/* ============================================================
+   RESET
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  font-family: 'MonoLisa Variable', ui-monospace, 'SF Mono', 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace;
+  font-size: 15px;
+  line-height: 1.7;
+  font-variation-settings: "wght" 400;
+  font-feature-settings: "calt", "liga", "zero";
+  color: var(--text);
+  background: var(--bg);
+  text-rendering: optimizeLegibility;
+}
+
+/* ============================================================
+   MONOLISA STYLISTIC SETS (optional)
+   To enable additional alternates, add the desired sets to
+   font-feature-settings on body. Common picks for personality:
+     "ss01"  alternate a (single-story)
+     "ss02"  alternate g (single-story)
+     "ss03"  alternate i with serifs
+     "ss05"  alternate l (with tail)
+     "ss06"  alternate r
+     "ss12"  alternate @ (compact)
+   Example: font-feature-settings: "calt", "liga", "zero", "ss02";
+   Full list in the MonoLisa documentation PDF in your bundle.
+   ============================================================ */
+
+::selection {
+  background: var(--selection-bg);
+  color: var(--selection-fg);
+}
+
+ul { list-style: none; }
+a { color: inherit; }
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+
+.skip-link {
+  position: absolute;
+  top: -48px;
+  left: 1rem;
+  background: var(--accent);
+  color: var(--bg);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  z-index: 100;
+  text-decoration: none;
+  font-variation-settings: "wght" 600;
+  transition: top 0.2s;
+}
+
+.skip-link:focus { top: 1rem; }
+
+.site-header,
+main,
+.site-footer {
+  max-width: 760px;
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+  gap: 1rem;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* .brand rule moved to bottom (batch 2 additions) */
+
+.site-nav {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 14px;
+}
+
+.site-nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.site-nav a:hover { color: var(--accent); }
+
+.site-nav a.current {
+  color: var(--accent);
+  font-variation-settings: "wght" 600;
+}
+
+main {
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+
+.hero {
+  padding: 4rem 0 6rem;
+}
+
+.meta {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  font-variation-settings: "wght" 500;
+  letter-spacing: 0.02em;
+}
+
+.accent-mark {
+  color: var(--accent);
+  margin-right: 0.4em;
+}
+
+.hero-name {
+  font-size: clamp(40px, 8vw, 84px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  font-variation-settings: "wght" 700;
+  margin-bottom: 1.5rem;
+  color: var(--text);
+}
+
+.hero-tagline {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 540px;
+  margin-bottom: 0.5rem;
+}
+
+.hero-typing {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--accent);
+  font-variation-settings: "wght" 500;
+  margin-bottom: 2.5rem;
+  min-height: 1.6em;
+}
+
+.cursor {
+  display: inline-block;
+  color: var(--accent);
+  margin-left: 2px;
+  animation: cursor-blink 1.06s step-end infinite;
+}
+
+@keyframes cursor-blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor { animation: none; opacity: 1; }
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  font-size: 14px;
+  font-variation-settings: "wght" 600;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.btn-primary:hover {
+  background: var(--accent-strong);
+  transform: translateY(-1px);
+}
+
+.btn-link {
+  color: var(--link);
+  border-radius: 0;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.btn-link:hover {
+  color: var(--link-hover);
+  border-bottom-color: var(--link);
+}
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+
+.section {
+  padding: 3rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.section-heading {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-variation-settings: "wght" 500;
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.02em;
+}
+
+.prose p {
+  margin-bottom: 1.25rem;
+  font-size: 16px;
+  color: var(--text);
+  max-width: 620px;
+}
+
+.prose p:last-child { margin-bottom: 0; }
+
+/* ============================================================
+   PROJECTS | variable-weight hover is the signature detail
+   ============================================================ */
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.project {
+  border-bottom: 1px solid var(--border);
+}
+
+.project:first-child {
+  border-top: 1px solid var(--border);
+}
+
+.project a {
+  display: grid;
+  grid-template-columns: 40px 1fr 24px;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  text-decoration: none;
+  color: var(--text);
+  align-items: start;
+  transition: background 0.25s ease, padding 0.25s ease;
+}
+
+.project a:hover {
+  background: var(--surface);
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.project-num {
+  color: var(--text-faint);
+  font-size: 13px;
+  font-variation-settings: "wght" 500;
+  padding-top: 4px;
+}
+
+.project-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.project-title {
+  font-size: 17px;
+  color: var(--text);
+  font-variation-settings: "wght" 500;
+  transition: color 0.3s ease, font-variation-settings 0.3s ease;
+}
+
+.project a:hover .project-title {
+  color: var(--accent);
+  font-variation-settings: "wght" 700;
+}
+
+.project-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* .project-tags rule moved to bottom (batch 1 additions) */
+
+.project-arrow {
+  color: var(--text-faint);
+  font-size: 16px;
+  padding-top: 4px;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.project a:hover .project-arrow {
+  transform: translateX(4px);
+  color: var(--accent);
+}
+
+/* ============================================================
+   EXPERIENCE / EDUCATION / SKILLS / CONTACT
+   ============================================================ */
+
+.role,
+.edu {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.role:first-child,
+.edu:first-child {
+  border-top: 1px solid var(--border);
+}
+
+.role-date,
+.edu-year {
+  font-size: 13px;
+  color: var(--text-faint);
+  padding-top: 4px;
+}
+
+.role-title,
+.edu-degree {
+  font-size: 16px;
+  font-variation-settings: "wght" 600;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+
+.role-org,
+.edu-school {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.role-summary {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.skills-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.skill-group {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 1.5rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.skill-group:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.skill-label {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-variation-settings: "wght" 500;
+}
+
+/* .skill-list rule moved to bottom (batch 3 additions) */
+
+.contact-list {
+  list-style: none;
+}
+
+.contact-list li {
+  display: grid;
+  grid-template-columns: 28px 100px 1fr;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 0;
+  border-top: 1px solid var(--border);
+  font-size: 15px;
+}
+
+.contact-list li:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.contact-icon {
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.contact-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.contact-list li:hover .contact-icon {
+  color: var(--accent);
+}
+
+.contact-label {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.contact-list a {
+  color: var(--link);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.contact-list a:hover { color: var(--link-hover); }
+
+/* ============================================================
+   PAGE HERO (about, work, etc.)
+   ============================================================ */
+
+.page-hero {
+  padding: 4rem 0 3rem;
+}
+
+.page-title {
+  font-size: clamp(36px, 6vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variation-settings: "wght" 700;
+  margin: 0.5rem 0 1.25rem;
+  color: var(--text);
+}
+
+.page-subtitle {
+  font-size: 16px;
+  color: var(--text-muted);
+  max-width: 580px;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   INLINE LINK (read more, view all, etc.)
+   ============================================================ */
+
+.inline-link {
+  color: var(--link);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.inline-link:hover {
+  color: var(--link-hover);
+  border-bottom-color: var(--link);
+}
+
+.section-intro {
+  font-size: 15px;
+  color: var(--text-muted);
+  max-width: 580px;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.more-link {
+  margin-top: 1.5rem;
+  font-size: 14px;
+}
+
+/* ============================================================
+   PROJECT DETAIL (full work page)
+   ============================================================ */
+
+.project-detail-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-detail {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 2rem;
+  padding: 2.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.project-detail:first-child {
+  border-top: 1px solid var(--border);
+}
+
+.project-detail-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.project-detail-meta .project-num {
+  padding-top: 0;
+}
+
+.project-detail-link {
+  font-size: 13px;
+  color: var(--link);
+  text-decoration: none;
+  word-break: break-word;
+  transition: color 0.2s ease;
+}
+
+.project-detail-link:hover {
+  color: var(--link-hover);
+}
+
+.project-detail-title {
+  font-size: 22px;
+  font-variation-settings: "wght" 700;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+.project-detail-desc {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  max-width: 640px;
+}
+
+.project-detail-desc:last-of-type {
+  margin-bottom: 1rem;
+}
+
+.project-detail-tags {
+  font-size: 12px;
+  color: var(--text-faint);
+  letter-spacing: 0.02em;
+  margin-top: 1rem;
+}
+
+/* ============================================================
+   PAGE FOOTER CTA
+   ============================================================ */
+
+.page-footer-cta {
+  border-top: 1px solid var(--border);
+  padding-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  font-size: 15px;
+}
+
+/* ============================================================
+   ROOMS LIST (casa explainer on home page)
+   ============================================================ */
+
+.rooms-list {
+  list-style: none;
+  margin-top: 1rem;
+}
+
+.rooms-list li {
+  border-top: 1px solid var(--border);
+}
+
+.rooms-list li:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.rooms-list a {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 1.25rem;
+  align-items: baseline;
+  padding: 1rem 0;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.rooms-list a:hover {
+  color: var(--text);
+}
+
+.rooms-list .room-path {
+  color: var(--accent);
+  font-size: 14px;
+  font-variation-settings: "wght" 500;
+  transition: color 0.2s ease;
+}
+
+.rooms-list a:hover .room-path {
+  color: var(--accent-strong);
+}
+
+.rooms-list .room-desc {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .rooms-list a {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+}
+
+/* ============================================================
+   THEME TOGGLE BUTTON
+   ============================================================ */
+
+.theme-toggle {
+  background: transparent;
+  border: 0.5px solid var(--border);
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-family: inherit;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.theme-toggle:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.theme-toggle svg {
+  width: 16px;
+  height: 16px;
+}
+
+.theme-toggle .icon-sun { display: block; }
+.theme-toggle .icon-moon { display: none; }
+
+[data-theme="light"] .theme-toggle .icon-sun { display: none; }
+[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+
+/* ============================================================
+   PDF VIEWER (resume page)
+   ============================================================ */
+
+/* CV page gets a wider main container so the embedded PDF
+   has room to breathe and renders text at a readable size. */
+body.cv-page main {
+  max-width: 1280px;
+}
+
+.pdf-viewer {
+  width: 100%;
+  border: 0.5px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--surface);
+  margin-bottom: 1.5rem;
+}
+
+.pdf-viewer iframe {
+  width: 100%;
+  height: 1500px;
+  border: 0;
+  display: block;
+}
+
+.pdf-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  font-size: 14px;
+}
+
+.pdf-fallback {
+  padding: 2rem;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .pdf-viewer iframe {
+    height: 700px;
+  }
+}
+
+/* ============================================================
+   CODE BLOCKS (project snippets on work page)
+   ============================================================ */
+
+.code-block {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  font-size: 13px;
+  line-height: 1.65;
+  overflow-x: auto;
+  font-family: inherit;
+}
+
+.code-block pre {
+  white-space: pre;
+  color: var(--text);
+  margin: 0;
+}
+
+.code-block .code-label {
+  display: block;
+  font-size: 11px;
+  color: var(--text-faint);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+/* Minimal syntax tinting. c=comment, k=keyword, s=string. */
+.code-block .c { color: var(--text-faint); }
+.code-block .k { color: var(--accent); font-variation-settings: "wght" 600; }
+.code-block .s { color: var(--link); }
+
+@media (max-width: 640px) {
+  .code-block {
+    font-size: 12px;
+    padding: 1rem;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+.site-footer {
+  padding-top: 4rem;
+  padding-bottom: 2rem;
+  font-size: 13px;
+  color: var(--text-faint);
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+}
+
+/* ============================================================
+   FOCUS | visible for keyboard, invisible for mouse
+   ============================================================ */
+
+a:focus { outline: none; }
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 640px) {
+  .site-header,
+  main,
+  .site-footer {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .role,
+  .edu,
+  .skill-group {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .contact-list li {
+    grid-template-columns: 28px 1fr;
+    grid-template-rows: auto auto;
+    gap: 0.5rem 1rem;
+  }
+
+  .contact-list .contact-label {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .contact-list a {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: 0.25rem;
+  }
+
+  .project-detail {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .project-detail-meta {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .role-date,
+  .edu-year {
+    padding-top: 0;
+  }
+
+  .project a {
+    grid-template-columns: 32px 1fr 20px;
+    gap: 1rem;
+  }
+
+  .site-nav { gap: 1rem; font-size: 13px; }
+
+  .hero { padding: 2rem 0 4rem; }
+
+  .section { padding: 2rem 0; }
+
+  .page-hero { padding: 2rem 0 2rem; }
+}
+
+/* ============================================================
+   PROJECT TAGS & SKILL TAGS | shared tag system
+   The .tag + .tag-icon pattern is reused across project cards,
+   skills sections, and deep page hero badges. Icons render as
+   masks so they pick up the theme color and accent on hover.
+   Icon sizing is em-based so it scales with the parent font.
    ============================================================ */
 
 .project-tags {
@@ -20,23 +948,52 @@
   letter-spacing: 0.02em;
 }
 
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.3rem;
+  align-items: center;
+  font-size: 14px;
+  color: var(--text);
+}
+
 .tag {
   display: inline-flex;
   align-items: center;
+  white-space: nowrap;
+  /* Brand color for tags without a simpleicon. Set inline as
+     style="--tag-color: #HEX". When set, both the text label
+     and any icon mask render in the brand color. Default
+     fallback is the parent text color (theme-controlled). */
+  color: var(--tag-color, inherit);
 }
+
+/* Brand color reference (for tags without simpleicons).
+   Use inline as: style="--tag-color: #512BD4;"
+   ----------------------------------------------------------
+   C#                  #9B4F96     Matplotlib       #5277B4
+   SQL                 #4479A1     Seaborn          #4C72B0
+   VBA                 #217346     Smartsheet       #00A550
+   DAX                 #F2C811     Workday          #F38B00
+   ggplot2             #276DC3     Tabular Editor   #4CAF50
+   Tkinter             #3776AB     spaCy            #09A3D5
+   Hugging Face        #FFD21E     Mistral          #FA520F
+   Groq                #F55036     Anthropic        #D97757
+   ----------------------------------------------------------
+*/
 
 .tag-icon {
   display: inline-block;
-  width: 11px;
-  height: 11px;
-  background-color: var(--text-faint);
+  width: 0.9em;
+  height: 0.9em;
+  background-color: currentColor;
   mask-size: contain;
   mask-repeat: no-repeat;
   mask-position: center;
   -webkit-mask-size: contain;
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
-  margin-right: 0.35rem;
+  margin-right: 0.4rem;
   flex-shrink: 0;
   transition: background-color 0.25s ease;
 }
@@ -45,12 +1002,62 @@
   background-color: var(--accent);
 }
 
-.tag-icon[data-icon="python"]    { mask-image: url('https://cdn.simpleicons.org/python');    -webkit-mask-image: url('https://cdn.simpleicons.org/python'); }
-.tag-icon[data-icon="selenium"]  { mask-image: url('https://cdn.simpleicons.org/selenium');  -webkit-mask-image: url('https://cdn.simpleicons.org/selenium'); }
-.tag-icon[data-icon="pandas"]    { mask-image: url('https://cdn.simpleicons.org/pandas');    -webkit-mask-image: url('https://cdn.simpleicons.org/pandas'); }
-.tag-icon[data-icon="numpy"]     { mask-image: url('https://cdn.simpleicons.org/numpy');     -webkit-mask-image: url('https://cdn.simpleicons.org/numpy'); }
-.tag-icon[data-icon="jupyter"]   { mask-image: url('https://cdn.simpleicons.org/jupyter');   -webkit-mask-image: url('https://cdn.simpleicons.org/jupyter'); }
-.tag-icon[data-icon="json"]      { mask-image: url('https://cdn.simpleicons.org/json');      -webkit-mask-image: url('https://cdn.simpleicons.org/json'); }
+/* ============================================================
+   SIMPLEICONS LIBRARY | every icon used across the casa
+   Icons are loaded as CSS mask-images from the Simple Icons CDN.
+   The brand color in the source SVG is overridden by the
+   background-color on .tag-icon (themes correctly).
+   Tags without a corresponding icon below render as text only.
+   ============================================================ */
+
+/* Programming Languages */
+.tag-icon[data-icon="python"]                  { mask-image: url('https://cdn.simpleicons.org/python');                  -webkit-mask-image: url('https://cdn.simpleicons.org/python'); }
+.tag-icon[data-icon="r"]                       { mask-image: url('https://cdn.simpleicons.org/r');                       -webkit-mask-image: url('https://cdn.simpleicons.org/r'); }
+.tag-icon[data-icon="openjdk"]                 { mask-image: url('https://cdn.simpleicons.org/openjdk');                 -webkit-mask-image: url('https://cdn.simpleicons.org/openjdk'); }
+.tag-icon[data-icon="apachespark"]             { mask-image: url('https://cdn.simpleicons.org/apachespark');             -webkit-mask-image: url('https://cdn.simpleicons.org/apachespark'); }
+.tag-icon[data-icon="gnubash"]                 { mask-image: url('https://cdn.simpleicons.org/gnubash');                 -webkit-mask-image: url('https://cdn.simpleicons.org/gnubash'); }
+
+/* BI & Reporting */
+.tag-icon[data-icon="powerbi"]                 { mask-image: url('https://cdn.simpleicons.org/powerbi');                 -webkit-mask-image: url('https://cdn.simpleicons.org/powerbi'); }
+.tag-icon[data-icon="ibm"]                     { mask-image: url('https://cdn.simpleicons.org/ibm');                     -webkit-mask-image: url('https://cdn.simpleicons.org/ibm'); }
+.tag-icon[data-icon="tableau"]                 { mask-image: url('https://cdn.simpleicons.org/tableau');                 -webkit-mask-image: url('https://cdn.simpleicons.org/tableau'); }
+
+/* Libraries */
+.tag-icon[data-icon="pandas"]                  { mask-image: url('https://cdn.simpleicons.org/pandas');                  -webkit-mask-image: url('https://cdn.simpleicons.org/pandas'); }
+.tag-icon[data-icon="numpy"]                   { mask-image: url('https://cdn.simpleicons.org/numpy');                   -webkit-mask-image: url('https://cdn.simpleicons.org/numpy'); }
+.tag-icon[data-icon="selenium"]                { mask-image: url('https://cdn.simpleicons.org/selenium');                -webkit-mask-image: url('https://cdn.simpleicons.org/selenium'); }
+.tag-icon[data-icon="scikitlearn"]             { mask-image: url('https://cdn.simpleicons.org/scikitlearn');             -webkit-mask-image: url('https://cdn.simpleicons.org/scikitlearn'); }
+.tag-icon[data-icon="tensorflow"]              { mask-image: url('https://cdn.simpleicons.org/tensorflow');              -webkit-mask-image: url('https://cdn.simpleicons.org/tensorflow'); }
+.tag-icon[data-icon="keras"]                   { mask-image: url('https://cdn.simpleicons.org/keras');                   -webkit-mask-image: url('https://cdn.simpleicons.org/keras'); }
+.tag-icon[data-icon="plotly"]                  { mask-image: url('https://cdn.simpleicons.org/plotly');                  -webkit-mask-image: url('https://cdn.simpleicons.org/plotly'); }
+.tag-icon[data-icon="spacy"]                   { mask-image: url('https://cdn.simpleicons.org/spacy');                   -webkit-mask-image: url('https://cdn.simpleicons.org/spacy'); }
+
+/* Enterprise Systems */
+.tag-icon[data-icon="microsoftpowerautomate"]  { mask-image: url('https://cdn.simpleicons.org/microsoftpowerautomate');  -webkit-mask-image: url('https://cdn.simpleicons.org/microsoftpowerautomate'); }
+.tag-icon[data-icon="qualtrics"]               { mask-image: url('https://cdn.simpleicons.org/qualtrics');               -webkit-mask-image: url('https://cdn.simpleicons.org/qualtrics'); }
+.tag-icon[data-icon="microsoftsharepoint"]     { mask-image: url('https://cdn.simpleicons.org/microsoftsharepoint');     -webkit-mask-image: url('https://cdn.simpleicons.org/microsoftsharepoint'); }
+.tag-icon[data-icon="databricks"]              { mask-image: url('https://cdn.simpleicons.org/databricks');              -webkit-mask-image: url('https://cdn.simpleicons.org/databricks'); }
+.tag-icon[data-icon="microsoftexcel"]          { mask-image: url('https://cdn.simpleicons.org/microsoftexcel');          -webkit-mask-image: url('https://cdn.simpleicons.org/microsoftexcel'); }
+
+/* Reproducibility */
+.tag-icon[data-icon="jupyter"]                 { mask-image: url('https://cdn.simpleicons.org/jupyter');                 -webkit-mask-image: url('https://cdn.simpleicons.org/jupyter'); }
+.tag-icon[data-icon="latex"]                   { mask-image: url('https://cdn.simpleicons.org/latex');                   -webkit-mask-image: url('https://cdn.simpleicons.org/latex'); }
+.tag-icon[data-icon="markdown"]                { mask-image: url('https://cdn.simpleicons.org/markdown');                -webkit-mask-image: url('https://cdn.simpleicons.org/markdown'); }
+.tag-icon[data-icon="quarto"]                  { mask-image: url('https://cdn.simpleicons.org/quarto');                  -webkit-mask-image: url('https://cdn.simpleicons.org/quarto'); }
+
+/* Dev Tools */
+.tag-icon[data-icon="docker"]                  { mask-image: url('https://cdn.simpleicons.org/docker');                  -webkit-mask-image: url('https://cdn.simpleicons.org/docker'); }
+.tag-icon[data-icon="git"]                     { mask-image: url('https://cdn.simpleicons.org/git');                     -webkit-mask-image: url('https://cdn.simpleicons.org/git'); }
+.tag-icon[data-icon="github"]                  { mask-image: url('https://cdn.simpleicons.org/github');                  -webkit-mask-image: url('https://cdn.simpleicons.org/github'); }
+
+/* AI / LLM */
+.tag-icon[data-icon="openai"]                  { mask-image: url('https://cdn.simpleicons.org/openai');                  -webkit-mask-image: url('https://cdn.simpleicons.org/openai'); }
+.tag-icon[data-icon="anthropic"]               { mask-image: url('https://cdn.simpleicons.org/anthropic');               -webkit-mask-image: url('https://cdn.simpleicons.org/anthropic'); }
+.tag-icon[data-icon="google"]                  { mask-image: url('https://cdn.simpleicons.org/google');                  -webkit-mask-image: url('https://cdn.simpleicons.org/google'); }
+.tag-icon[data-icon="huggingface"]             { mask-image: url('https://cdn.simpleicons.org/huggingface');             -webkit-mask-image: url('https://cdn.simpleicons.org/huggingface'); }
+
+/* Data Formats */
+.tag-icon[data-icon="json"]                    { mask-image: url('https://cdn.simpleicons.org/json');                    -webkit-mask-image: url('https://cdn.simpleicons.org/json'); }
 
 /* ============================================================
    DEEP PAGE | sub-section headings, metric grid, hero tags
@@ -109,4 +1116,32 @@
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
   }
+}
+
+/* ============================================================
+   BRAND ICON | ⌂ (U+2302) home glyph
+   Hidden on the home page (body.home), shown on inner pages.
+   ============================================================ */
+
+.brand {
+  font-size: 20px;
+  line-height: 1;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-variation-settings: "wght" 400;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.brand:hover {
+  color: var(--accent);
+}
+
+body.home .brand {
+  display: none;
+}
+
+body.home .site-header {
+  justify-content: flex-end;
 }

@@ -20,7 +20,6 @@
   <title>Philip Bachas-Daunert · casa</title>
 
   <script>
-    // Set theme before stylesheets parse, prevents flash of wrong theme.
     (function () {
       try {
         var stored = localStorage.getItem('theme');
@@ -36,17 +35,17 @@
   <link rel="preload" href="/assets/fonts/MonoLisaVariable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/styles.css">
 </head>
-<body>
+<body class="home">
   <a href="#main" class="skip-link">Skip to content</a>
 
   <header class="site-header">
-    <a href="/" class="brand">philip · bd</a>
+    <a href="/" class="brand" aria-label="Home">⌂</a>
     <div class="header-right">
       <nav class="site-nav" aria-label="Primary">
         <a href="/" class="current">~/casa</a>
         <a href="/sala/">~/sala</a>
-        <a href="/taller/">~/taller</a>
-        <a href="#contact">~/patio</a>
+        <a href="/cv/">~/cv</a>
+        <a href="/#contact">~/patio</a>
       </nav>
       <button id="theme-toggle" class="theme-toggle" aria-label="Toggle light or dark theme">
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -68,7 +67,7 @@
       <p class="hero-tagline">Welcome to my digital home. Data analyst at the University of Miami Miller School of Medicine. This is a small corner of the internet for the work, words, and projects of someone who took the long way to analytics.</p>
       <p class="hero-typing"><span id="typing">Power BI · Python · R · SQL.</span><span class="cursor" aria-hidden="true">▊</span></p>
       <div class="hero-actions">
-        <a href="/taller/" class="btn btn-primary">View work →</a>
+        <a href="#rooms" class="btn btn-primary">Explore the casa →</a>
         <a href="/cv/" class="btn btn-link">Mi CV →</a>
       </div>
     </section>
@@ -84,9 +83,33 @@
           </a>
         </li>
         <li>
-          <a href="/taller/">
-            <span class="room-path">~/taller</span>
-            <span class="room-desc">The workshop. Open-source projects, organized by what they do.</span>
+          <a href="/cocina/">
+            <span class="room-path">~/cocina</span>
+            <span class="room-desc">The kitchen. Data preparation, cleaning, and ETL projects. Where raw institutional data gets prepped.</span>
+          </a>
+        </li>
+        <li>
+          <a href="/galería/">
+            <span class="room-path">~/galería</span>
+            <span class="room-desc">The gallery. Business intelligence and reporting tools. Power BI exports, automated reports, dashboards.</span>
+          </a>
+        </li>
+        <li>
+          <a href="/estudio/">
+            <span class="room-path">~/estudio</span>
+            <span class="room-desc">The study. AI-augmented tools that combine analytical work with large language models.</span>
+          </a>
+        </li>
+        <li>
+          <a href="/garaje/">
+            <span class="room-path">~/garaje</span>
+            <span class="room-desc">The garage. Analyst utilities. Excel and VBA tools from financial-administration work.</span>
+          </a>
+        </li>
+        <li>
+          <a href="/jardín/">
+            <span class="room-path">~/jardín</span>
+            <span class="room-desc">The garden. Side projects. Things I built for fun or for a single odd use case.</span>
           </a>
         </li>
         <li>
@@ -111,51 +134,6 @@
         <p>My path here ran through history, international administration, university budget operations at Georgetown, and a master's in business analytics. The humanities background shapes how I approach data: ask what the question is actually about before building anything.</p>
         <p class="more-link"><a href="/sala/" class="inline-link">Read the longer story →</a></p>
       </div>
-    </section>
-
-    <section id="work" class="section" aria-labelledby="work-heading">
-      <h2 id="work-heading" class="section-heading"><span class="accent-mark">▓</span> // ~/casa/taller</h2>
-      <p class="section-intro">Six open-source projects on GitHub. Pipelines, dashboards, and automation tools that turn institutional data into decisions.</p>
-      <ul class="project-list">
-
-        <li class="project">
-          <a href="https://github.com/hihipy/brimr-downloader" target="_blank" rel="noopener noreferrer">
-            <span class="project-num">01</span>
-            <div class="project-body">
-              <h3 class="project-title">brimr-downloader</h3>
-              <p class="project-desc">Python GUI that batch-downloads NIH funding rankings from BRIMR using Selenium. Reduces an estimated 8 to 10 hours of manual clicking to 13 minutes per multi-year pull.</p>
-              <p class="project-tags">Cross-platform · Python · Selenium · Tkinter</p>
-            </div>
-            <span class="project-arrow" aria-hidden="true">→</span>
-          </a>
-        </li>
-
-        <li class="project">
-          <a href="https://github.com/hihipy/pbi-model-export" target="_blank" rel="noopener noreferrer">
-            <span class="project-num">02</span>
-            <div class="project-body">
-              <h3 class="project-title">pbi-model-export</h3>
-              <p class="project-desc">Tabular Editor 2 C# script that exports a complete Power BI model to a single portable JSON file. Built for documentation, audit, and AI-assisted analysis.</p>
-              <p class="project-tags">C# · DAX · Power BI · Tabular Editor 2</p>
-            </div>
-            <span class="project-arrow" aria-hidden="true">→</span>
-          </a>
-        </li>
-
-        <li class="project">
-          <a href="https://github.com/hihipy/qualtrics-processing-pipeline" target="_blank" rel="noopener noreferrer">
-            <span class="project-num">03</span>
-            <div class="project-body">
-              <h3 class="project-title">qualtrics-processing-pipeline</h3>
-              <p class="project-desc">Jupyter Notebook pipeline that turns raw Qualtrics survey exports into a documented, analysis-ready package with intelligent type detection.</p>
-              <p class="project-tags">Jupyter · NLP · Pandas · Python</p>
-            </div>
-            <span class="project-arrow" aria-hidden="true">→</span>
-          </a>
-        </li>
-
-      </ul>
-      <p class="more-link"><a href="/taller/" class="inline-link">All six projects →</a></p>
     </section>
 
     <section id="contact" class="section" aria-labelledby="contact-heading">
@@ -200,7 +178,6 @@
   </footer>
 
   <script>
-    // Theme toggle: flip data-theme and persist choice.
     (function () {
       const toggle = document.getElementById('theme-toggle');
       if (!toggle) return;
@@ -212,7 +189,6 @@
       });
     })();
 
-    // Footer date pulls from the latest commit to this repo.
     (function () {
       const REPO = 'hihipy/hihipy.github.io';
       fetch(`https://api.github.com/repos/${REPO}/commits?per_page=1`)
@@ -226,7 +202,6 @@
         .catch(() => {});
     })();
 
-    // Hero typing animation.
     (function () {
       const target = document.getElementById('typing');
       if (!target) return;
