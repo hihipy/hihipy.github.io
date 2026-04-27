@@ -1,0 +1,32 @@
+# Hugo site configuration
+# Reference: https://gohugo.io/getting-started/configuration/
+
+theme = "blowfish"
+baseURL = "https://pgbd.casa/"
+defaultContentLanguage = "en"
+languageCode = "en"
+
+enableRobotsTXT = true
+paginate = 10
+summaryLength = 0
+
+buildDrafts = false
+buildFuture = false
+
+enableEmoji = true
+enableGitInfo = false
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[imaging]
+  anchor = "Center"
+
+[caches]
+  [caches.images]
+    dir = ":resourceDir/_gen"
+    maxAge = "720h"
+
+  [caches.assets]
+    dir = ":resourceDir/_gen"
+    maxAge = "720h"

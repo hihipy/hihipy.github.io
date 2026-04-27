@@ -1,0 +1,18 @@
+# Language-specific configuration
+# Filename suffix (.en) must match languageCode in hugo.toml.
+
+title = "philip · bd · casa"
+
+[params]
+  description = "Philip Bachas-Daunert. Data analyst at the University of Miami Miller School of Medicine. Welcome to my digital casa."
+  copyright = "© Philip Bachas-Daunert"
+
+[params.author]
+  name = "Philip Bachas-Daunert"
+  headline = "Data analyst at the University of Miami Miller School of Medicine"
+  bio = "Humanities to analytics, the long way."
+  links = [
+    { github = "https://github.com/hihipy" },
+    { linkedin = "https://linkedin.com/in/pbachas/" },
+    { email = "mailto:career-pgbd@pm.me" }
+  ]

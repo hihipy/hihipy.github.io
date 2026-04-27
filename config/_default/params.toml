@@ -1,0 +1,96 @@
+# Blowfish theme parameters
+# Full reference: https://blowfish.page/docs/configuration/
+
+# ============================================================
+# THEME APPEARANCE
+# ============================================================
+
+colorScheme = "github"
+defaultAppearance = "dark"      # "light" or "dark" (initial fallback)
+autoSwitchAppearance = true     # auto-switch with OS preference; user can toggle
+
+# ============================================================
+# FEATURES
+# ============================================================
+
+enableSearch = true
+enableCodeCopy = true
+
+# ============================================================
+# HEADER
+# ============================================================
+
+[header]
+  layout = "basic"
+  showAppearanceSwitcher = true   # the dark/light toggle button
+
+# ============================================================
+# FOOTER
+# ============================================================
+
+[footer]
+  showCopyright = true
+  showThemeAttribution = true
+  showAppearanceSwitcher = true
+  showScrollToTop = true
+
+# ============================================================
+# HOMEPAGE
+# ============================================================
+
+[homepage]
+  layout = "page"          # page | profile | hero | card | background
+  showRecent = false        # don't surface recent posts; this is a portfolio
+  showRecentItems = 0
+  showMoreLink = false
+  cardView = false
+  cardViewScreenWidth = false
+  layoutBackgroundBlur = false
+
+# ============================================================
+# ARTICLE (defaults for individual content pages)
+# ============================================================
+
+[article]
+  showDate = false
+  showDateOnlyInArticle = false
+  showDateUpdated = false
+  showAuthor = false
+  showHero = false
+  heroStyle = ""              # basic | big | background | thumbAndBackground
+  showBreadcrumbs = true
+  showDraftLabel = true
+  showEdit = false
+  showHeadingAnchors = true
+  showPagination = false
+  invertPagination = false
+  showReadingTime = false
+  showTableOfContents = true
+  showTaxonomies = false
+  showAuthorsBadges = false
+  showWordCount = false
+  showSummary = true
+  sharingLinks = []
+  showRelatedContent = false
+  relatedContentLimit = 3
+  showComments = false
+
+# ============================================================
+# LIST VIEW (room hub pages)
+# ============================================================
+
+[list]
+  showHero = false
+  heroStyle = ""
+  showBreadcrumbs = true
+  layoutBackgroundBlur = false
+  layoutBackgroundHeaderSpace = true
+  showSummary = true
+  showTableOfContents = false
+  showCards = true            # render projects as cards
+  showTaxonomies = false
+  orderByWeight = false
+  groupByYear = false
+  cardView = true             # card-style list
+  cardViewScreenWidth = false
+  constrainItemsWidth = false

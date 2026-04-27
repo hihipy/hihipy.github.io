@@ -1,0 +1,50 @@
+/* ============================================================
+   pgbd.casa custom styles
+   MonoLisa converted from desktop TTF to web woff2.
+   Body text and headings use MonoLisa Italic with SS02
+   (script variant). Code blocks use upright MonoLisa.
+   ============================================================ */
+
+@font-face {
+  font-family: 'MonoLisa';
+  src: url('/fonts/MonoLisaVariable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MonoLisa';
+  src: url('/fonts/MonoLisaVariableItalic.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Body and headings: italic + SS02 = the cursive script variant */
+html, body {
+  font-family: 'MonoLisa', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-style: italic;
+  font-feature-settings: "ss02" 1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'MonoLisa', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-style: italic;
+  font-feature-settings: "ss02" 1;
+}
+
+/* Code blocks: upright MonoLisa, no SS02, with ligatures */
+code, pre, kbd, samp,
+.highlight, .highlight pre, .highlight code {
+  font-family: 'MonoLisa', ui-monospace, 'SF Mono', Menlo, Consolas, monospace !important;
+  font-style: normal !important;
+  font-feature-settings: "ss02" 0, "calt" 1, "liga" 1, "zero" 1 !important;
+}
+
+/* Defensive: if anything inside an article uses italic for emphasis,
+   keep SS02 on (already covered by html/body, this just makes sure) */
+em, i {
+  font-style: italic;
+  font-feature-settings: "ss02" 1;
+}

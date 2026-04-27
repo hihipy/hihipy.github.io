@@ -1,0 +1,19 @@
+# Main navigation menu
+# pageRef references content paths; weight controls order.
+# Add room links here as project content is created.
+
+[[main]]
+  name = "~/sala"
+  pageRef = "/sala"
+  weight = 10
+
+[[main]]
+  name = "~/cv"
+  pageRef = "/cv"
+  weight = 90
+
+# Footer menu (optional)
+# [[footer]]
+#   name = "RSS"
+#   url = "/index.xml"
+#   weight = 10

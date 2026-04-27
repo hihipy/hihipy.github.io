@@ -1,103 +1,138 @@
-# Portfolio
+# pgbd.casa
 
-Monospace-driven personal site. Dark by default, light when the visitor's system prefers light. Color-blind friendly throughout.
+Personal site of Philip Bachas-Daunert. Built with Hugo and the Blowfish theme.
 
-## Project structure
+## What's in this scaffold
+
+Everything you need to run the site is already here, except the Blowfish theme itself, which is added as a git submodule (one command, see below).
 
 ```
-portfolio/
-├── fonts/
-│   ├── MonoLisaVariable.woff2
-│   └── MonoLisaVariableItalic.woff2
-├── index.html
-├── styles.css
-├── resume.pdf
-└── README.md
+pgbd-casa/
+├── .github/workflows/hugo.yml    GitHub Pages deployment
+├── .gitignore                    Hugo build artifacts excluded from git
+├── README.md                     this file
+├── config/_default/
+│   ├── hugo.toml                 site config (baseURL, etc.)
+│   ├── languages.en.toml         site title, author info
+│   ├── menus.en.toml             nav menu (~/sala, ~/cv)
+│   ├── markup.toml               Hugo markup config (required)
+│   └── params.toml               Blowfish theme parameters
+├── assets/css/custom.css         MonoLisa font override
+├── content/
+│   ├── _index.md                 home page
+│   ├── sala/_index.md            about page placeholder
+│   └── cv/_index.md              resume page
+└── static/
+    ├── CNAME                     custom domain (pgbd.casa)
+    ├── resume.pdf                your resume PDF
+    └── fonts/
+        ├── MonoLisaVariable.woff2
+        └── MonoLisaVariableItalic.woff2
 ```
 
 ## Setup
 
-### 1. Add MonoLisa Variable
+You should already have:
+- Hugo installed (`brew install hugo` if not)
+- Git installed
+- An empty `hihipy.github.io` repo with the old casa archived to a separate branch
 
-The Complete bundle ships several formats. You want the variable woff2 files from the web-fonts folder. Drop them into a `fonts/` folder in the project root.
+### 1. Drop the scaffold contents into your repo
 
-The `@font-face` declarations expect:
+```bash
+cd "/Users/philipbachas-daunert/Library/CloudStorage/ProtonDrive-philgbd@pm.me-folder/Code/coding-workspace/hihipy.github.io"
 
-```
-fonts/MonoLisaVariable.woff2
-fonts/MonoLisaVariableItalic.woff2
-```
+# extract the tarball into the current directory
+# the --strip-components=1 flag unwraps the outer folder
+tar -xzf ~/Downloads/pgbd-casa-scaffold.tar.gz --strip-components=1
 
-Faceless has used a few naming conventions over the years. If your bundle uses different names (`MonoLisa-Variable.woff2`, `MonoLisaVariableNormal.woff2`, etc.), either rename or update the `src` paths at the top of `styles.css`.
-
-### 2. Customize content
-
-Open `index.html` and replace anything marked `[Edit: ...]` or `[Date]` / `[Year]` with real values. Specifically:
-
-- Hero tagline
-- About paragraphs
-- Project descriptions for `qualtrics-processing-pipeline`, `ai_csv_profiler`, and `qualtrics-report-generator`
-- Experience dates and one-line summaries
-- Education years
-- Earlier Georgetown role title
-
-### 3. Add resume PDF
-
-Drop a `resume.pdf` into the project root. The hero already links to it.
-
-### 4. Preview locally
-
-Opening `index.html` directly works for layout, but browsers block local font loading on `file://`. Run a static server:
-
-```
-python3 -m http.server 8000
+# verify the files landed correctly
+ls -la
+# you should see config/ content/ assets/ static/ .github/ README.md .gitignore
 ```
 
-Then visit `http://localhost:8000`.
+### 2. Add the Blowfish theme as a submodule
 
-### 5. Deploy to GitHub Pages
+This is how Hugo themes work — you add the theme repo as a "submodule" pointer inside your repo, and git tracks the version. You don't download Blowfish separately; this command pulls it in:
 
-Recommended: name the repo `hihipy.github.io` for a clean root URL.
-
+```bash
+git submodule add -b main https://github.com/nunocoracao/blowfish.git themes/blowfish
 ```
-git init
+
+You'll see Blowfish's files appear under `themes/blowfish/`. The submodule is what actually styles the site.
+
+### 3. Test locally
+
+```bash
+hugo server
+```
+
+Open `http://localhost:1313/` in your browser. You should see:
+- "bienvenido a mi casa" as the homepage
+- MonoLisa Variable as the font
+- A theme toggle (sun/moon icon) in the header
+- GitHub-style blue/gray color scheme
+
+If it works, move to step 4.
+
+### 4. Configure GitHub Pages
+
+In your repo settings on GitHub:
+1. Go to **Settings → Pages**
+2. Under "Build and deployment", set **Source** to **GitHub Actions** (not "Deploy from a branch")
+
+This tells GitHub to use the workflow at `.github/workflows/hugo.yml` to build and deploy the site.
+
+### 5. Push
+
+```bash
 git add .
-git commit -m "Initial portfolio"
-git branch -M main
-git remote add origin https://github.com/hihipy/hihipy.github.io.git
-git push -u origin main
+git commit -m "Migrate to Hugo + Blowfish"
+git push
 ```
 
-In repo Settings → Pages, set source to `main` branch, root folder. Site goes live at `hihipy.github.io` within a minute or two.
+Watch the Actions tab on GitHub. The workflow takes about 1-2 minutes. Once green, the site is live at `pgbd.casa`.
 
-## Theming
+## Adding a new project later
 
-Color tokens live at the top of `styles.css`:
+Each project is a markdown file. To add `25live-cleaner` to the `~/cocina` room:
 
-- `:root` defines the dark palette (default)
-- `@media (prefers-color-scheme: light)` overrides with the light palette
+```bash
+mkdir -p content/cocina
+# create content/cocina/_index.md (room hub page)
+# create content/cocina/25live-cleaner.md (project deep page)
+```
 
-The accent is the only personality knob worth touching. Both modes use values from the Okabe-Ito palette, so any swap should stay within that set to preserve color-blind safety.
+Project markdown files use frontmatter at the top:
 
-Dark accent options: `#FFB454` (amber, current), `#56B4E9` (sky blue), `#009E73` (bluish green).
-Light accent options: `#0072B2` (deep blue), `#D55E00` (vermillion), `#BA7517` (deep amber, current).
+```yaml
+---
+title: "25live-cleaner"
+description: "Python utility that cleans 25Live exports"
+date: 2025-08-01
+tags: ["Python", "pandas", "ETL"]
+---
 
-## Signature detail
+# Content goes here in markdown
+```
 
-Project titles transition between weight 500 and weight 700 on hover, animated smoothly via `font-variation-settings`. This works because MonoLisa Variable is a true variable font, with every weight in the 100-800 range interpolated from a single file. A static font cannot do this.
+Push and the Action redeploys.
 
-## MonoLisa features enabled
+## Updating the Blowfish theme later
 
-The body declaration enables three OpenType features by default:
+```bash
+cd themes/blowfish
+git pull origin main
+cd ../..
+git add themes/blowfish
+git commit -m "Update Blowfish theme"
+git push
+```
 
-- `calt` for contextual alternates (coding ligatures: `=>`, `==`, `!=`, `<=`, `>=`)
-- `liga` for standard ligatures
-- `zero` for slashed zero, distinguishes 0 from O at small sizes
+## Troubleshooting
 
-MonoLisa also ships ~18 stylistic sets for alternate character forms (single-story `a`, single-story `g`, serif-bottom `i`, alternate `r`, etc.). Common picks are noted in a comment block at the top of `styles.css`. To try one, add it to the `font-feature-settings` line on body. The stylistic sets PDF in your bundle has visual examples of each.
+**Site looks unstyled.** Blowfish submodule probably wasn't added correctly. Run `ls themes/blowfish/` — if empty, run `git submodule update --init --recursive`.
 
-## License notes
+**Font is wrong.** Check that the woff2 files are at `static/fonts/MonoLisaVariable.woff2` and `static/fonts/MonoLisaVariableItalic.woff2`. The browser DevTools Network tab will show 404s if the path is wrong.
 
-You're on MonoLisa Complete, which permits web embedding. The `@font-face` declarations only ship the woff2 files to visitors' browsers (no exposed download links), which aligns with Faceless's standard usage terms. Keep the source font files out of any public asset listing if you fork or hand off the repo.
-
-The portfolio code itself (HTML, CSS) is yours to do with as you wish.
+**Build fails on GitHub.** Open the failed workflow run in the Actions tab and read the log. Common causes: missing submodule, invalid TOML syntax, Hugo version mismatch.

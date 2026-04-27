@@ -1,0 +1,19 @@
+# Markup configuration required by Blowfish for proper rendering.
+# Always keep this file present in config/_default/.
+
+[goldmark]
+  [goldmark.renderer]
+    unsafe = true   # allows raw HTML in markdown (needed for some shortcodes)
+
+[highlight]
+  noClasses = false
+  codeFences = true
+  guessSyntax = true
+  lineNos = false
+  lineNumbersInTable = true
+  tabWidth = 2
+
+[tableOfContents]
+  endLevel = 4
+  ordered = false
+  startLevel = 2
