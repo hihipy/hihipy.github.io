@@ -1,6 +1,6 @@
 ---
 title: "⛫ pgbd's digital casa"
-description: "Philip Gregory Bachas-Daunert. Data analyst at the University of Miami Miller School of Medicine."
+description: "Mi casa digital es su casa digital. Personal portfolio and analytical work."
 draft: false
 showAuthor: false
 showDate: false
@@ -16,16 +16,16 @@ layout: "single"
 Welcome. This is my workshop and portfolio, organized like a house. The Spanish room names are a small tribute to my dual U.S. and Spanish citizenship. The sala is the about page; the other rooms hold different kinds of analytical work and side projects. Make yourself at home and pick a room.
 {{< /lead >}}
 
-[§ ~/sala  # about me](/sala/) · about Philip, full work history, education, certifications, and skills.
+[§ ~/sala  # About Me](/sala/) · about Philip, full work history, education, certifications, and skills.
 
-[≡ ~/cv  # résumé pdf](/cv/) · downloadable PDF résumé.
+[≡ ~/cv  # Résumé PDF](/cv/) · downloadable PDF résumé.
 
-[⛁ ~/cocina  # data prep & ETL](/cocina/) · data preparation and ETL tools. Where messy data gets cleaned up.
+[⛁ ~/cocina  # Data Prep & ETL](/cocina/) · data preparation and ETL tools. Where messy data gets cleaned up.
 
-[▤ ~/galería  # BI & reporting](/galer%C3%ADa/) · business intelligence and reporting projects. Dashboards, model exports, automated reports.
+[▤ ~/galería  # BI & Reporting](/galer%C3%ADa/) · business intelligence and reporting projects. Dashboards, model exports, automated reports.
 
-[✦ ~/estudio  # AI & experiments](/estudio/) · AI-augmented analytics tools and research experiments.
+[✦ ~/estudio  # AI & Experiments](/estudio/) · AI-augmented analytics tools and research experiments.
 
-[⚙ ~/garaje  # analyst utilities](/garaje/) · analyst utilities. Excel macros, calculators, processing scripts.
+[⚙ ~/garaje  # Analyst Utilities](/garaje/) · analyst utilities. Excel macros, calculators, processing scripts.
 
-[❀ ~/jardín  # side projects](/jard%C3%ADn/) · side projects and miscellaneous experiments.
+[❀ ~/jardín  # Side Projects](/jard%C3%ADn/) · side projects and miscellaneous experiments.
