@@ -21,7 +21,7 @@ enableCodeCopy = true
 # ============================================================
 
 [header]
-  layout = "basic"
+  layout = "fixed"
   showAppearanceSwitcher = true   # the dark/light toggle button
 
 # ============================================================
@@ -52,6 +52,7 @@ enableCodeCopy = true
 # ============================================================
 
 [article]
+  showLastUpdated = true   # show last edit date at bottom of each page
   showDate = false
   showDateOnlyInArticle = false
   showDateUpdated = false

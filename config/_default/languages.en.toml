@@ -1,14 +1,13 @@
 # Language-specific configuration
 # Filename suffix (.en) must match languageCode in hugo.toml.
 
-title = "philip · bd · casa"
+title = "⛫ pgbd's digital casa"
 
 [params]
-  description = "Philip Bachas-Daunert. Data analyst at the University of Miami Miller School of Medicine. Welcome to my digital casa."
-  copyright = "© Philip Bachas-Daunert"
+  description = "Philip Gregory Bachas-Daunert. Data analyst at the University of Miami Miller School of Medicine. Welcome to my digital casa."
 
 [params.author]
-  name = "Philip Bachas-Daunert"
+  name = "Philip Gregory Bachas-Daunert"
   headline = "Data analyst at the University of Miami Miller School of Medicine"
   bio = "Humanities to analytics, the long way."
   links = [

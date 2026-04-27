@@ -1,0 +1,46 @@
+<footer id="site-footer" class="py-10 print:hidden">
+  <div class="flex items-center justify-between">
+    {{/* Copyright with year of most recent site activity */}}
+    {{ if .Site.Params.footer.showCopyright | default true }}
+      {{ $latestYear := now.Year }}
+      {{ range .Site.RegularPages }}
+        {{ if .Lastmod }}
+          {{ $pageYear := .Lastmod.Year }}
+          {{ if gt $pageYear $latestYear }}
+            {{ $latestYear = $pageYear }}
+          {{ end }}
+        {{ end }}
+      {{ end }}
+      <p class="text-sm text-neutral-500 dark:text-neutral-400">
+        &copy; {{ $latestYear }} {{ .Site.Params.Author.name | markdownify }}
+      </p>
+    {{ end }}
+
+    {{/* Theme attribution */}}
+    {{ if .Site.Params.footer.showThemeAttribution | default true }}
+      <p class="text-xs text-neutral-500 dark:text-neutral-400">
+        {{ $hugo := printf `<a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+          href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a>`
+        }}
+        {{ $blowfish := printf `<a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+          href="https://blowfish.page/" target="_blank" rel="noopener noreferrer">Blowfish</a>`
+        }}
+        {{ i18n "footer.powered_by" (dict "Hugo" $hugo "Theme" $blowfish) | safeHTML }}
+      </p>
+    {{ end }}
+  </div>
+
+  {{ if not .Site.Params.disableImageZoom | default true }}
+    <script>
+      mediumZoom(document.querySelectorAll("img:not(.nozoom)"), {
+        margin: 24,
+        background: "rgba(0,0,0,0.5)",
+        scrollOffset: 0,
+      });
+    </script>
+  {{ end }}
+  {{/* Extend footer - eg. for extra scripts, etc. */}}
+  {{ if templates.Exists "partials/extend-footer.html" }}
+    {{ partialCached "extend-footer.html" . }}
+  {{ end }}
+</footer>

@@ -14,7 +14,7 @@ buildDrafts = false
 buildFuture = false
 
 enableEmoji = true
-enableGitInfo = false
+enableGitInfo = true
 
 [outputs]
   home = ["HTML", "RSS", "JSON"]

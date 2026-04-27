@@ -1,12 +1,29 @@
 ---
-title: "Mi CV"
-description: "Resume of Philip Bachas-Daunert"
+layout: "single"
+title: "≡ ~/cv  # résumé pdf"
+description: "Philip Gregory Bachas-Daunert. Printable résumé."
+draft: false
+showAuthor: false
+showDate: false
+showReadingTime: false
+showWordCount: false
+showBreadcrumbs: true
+showTableOfContents: false
+showPagination: false
 ---
 
-# Mi CV
+{{< lead >}}
+A printable version of my résumé. The sala has the readable, expanded version with more detail; this PDF is the formal one-pager for recruiters and applications.
+{{< /lead >}}
 
-Senior-level data analyst with 7+ years across academic medical centers and higher education. Currently at the University of Miami Miller School of Medicine.
+<div class="my-6 flex justify-center">
+  <a href="/resume.pdf" download class="inline-flex items-center gap-2 rounded-md bg-primary-600 px-4 py-2 text-sm font-semibold text-white hover:bg-primary-700 transition-colors">
+    {{< icon "download" >}} download résumé
+  </a>
+</div>
 
-[Download the resume PDF](/resume.pdf)
-
-<iframe src="/resume.pdf#view=FitH&toolbar=1" width="100%" height="900" style="border: 1px solid var(--color-neutral-300); border-radius: 6px;"></iframe>
+<div class="my-6">
+  <object data="/resume.pdf" type="application/pdf" width="100%" style="height: 90vh; min-height: 600px; border: 1px solid var(--color-neutral-300, #e5e5e5); border-radius: 0.375rem;">
+    <p>Your browser does not support inline PDFs. <a href="/resume.pdf">Click here to download the résumé</a>.</p>
+  </object>
+</div>

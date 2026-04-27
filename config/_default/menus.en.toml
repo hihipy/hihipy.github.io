@@ -1,19 +1,18 @@
-# Main navigation menu
-# pageRef references content paths; weight controls order.
-# Add room links here as project content is created.
-
+# Mobile menu / footer menu - social links collapse here on mobile
 [[main]]
-  name = "~/sala"
-  pageRef = "/sala"
+  name = "linkedin"
+  url = "https://linkedin.com/in/pbachas/"
+  pre = "linkedin"
   weight = 10
 
 [[main]]
-  name = "~/cv"
-  pageRef = "/cv"
-  weight = 90
+  name = "email"
+  url = "mailto:career-pgbd@pm.me"
+  pre = "email"
+  weight = 20
 
-# Footer menu (optional)
-# [[footer]]
-#   name = "RSS"
-#   url = "/index.xml"
-#   weight = 10
+[[main]]
+  name = "github"
+  url = "https://github.com/hihipy"
+  pre = "github"
+  weight = 30

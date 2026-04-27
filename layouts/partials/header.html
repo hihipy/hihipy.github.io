@@ -1,0 +1,45 @@
+{{/* Custom header for pgbd's digital casa */}}
+<header class="bg-neutral/50 dark:bg-neutral-800/50 fixed top-0 z-40 backdrop-blur w-full">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 md:flex md:justify-between md:items-center py-4">
+    <div class="flex items-center justify-between">
+      <a href="{{ "" | absLangURL }}" class="flex items-center gap-x-2 text-xl font-semibold text-neutral-800 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+        ⛫
+        <span>pgbd's digital casa</span></a>
+      <div class="flex items-center md:hidden">
+        {{- if .Site.Params.enableSearch | default false -}}
+          <button id="search-button-mobile" aria-label="{{ i18n "search.open_button_title" }}" title="{{ i18n "search.open_button_title" }}" class="ml-4 text-neutral-400 hover:text-primary-500 dark:hover:text-primary-400">
+            {{ partial "icon.html" "search" }}
+          </button>
+        {{- end -}}
+        {{- if .Site.Params.Header.showAppearanceSwitcher | default false -}}
+          <button id="appearance-switcher" aria-label="{{ i18n "footer.dark_appearance" }}" title="{{ i18n "footer.dark_appearance" }}" class="ml-4 text-neutral-400 hover:text-primary-500 dark:hover:text-primary-400">
+            <span class="dark-icon">{{ partial "icon.html" "moon" }}</span>
+            <span class="light-icon">{{ partial "icon.html" "sun" }}</span>
+          </button>
+        {{- end -}}
+      </div>
+    </div>
+    <nav class="hidden md:flex md:items-center md:space-x-4">
+      <a href="https://linkedin.com/in/pbachas/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn" class="text-neutral-400 hover:text-primary-500 dark:hover:text-primary-400">
+        {{ partial "icon.html" "linkedin" }}
+      </a>
+      <a href="mailto:career-pgbd@pm.me" aria-label="Email" title="Email" class="text-neutral-400 hover:text-primary-500 dark:hover:text-primary-400">
+        {{ partial "icon.html" "email" }}
+      </a>
+      <a href="https://github.com/hihipy" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub" class="text-neutral-400 hover:text-primary-500 dark:hover:text-primary-400">
+        {{ partial "icon.html" "github" }}
+      </a>
+      {{- if .Site.Params.enableSearch | default false -}}
+        <button id="search-button-desktop" aria-label="{{ i18n "search.open_button_title" }}" title="{{ i18n "search.open_button_title" }}" class="text-neutral-400 hover:text-primary-500 dark:hover:text-primary-400">
+          {{ partial "icon.html" "search" }}
+        </button>
+      {{- end -}}
+      {{- if .Site.Params.Header.showAppearanceSwitcher | default false -}}
+        <button id="appearance-switcher-desktop" aria-label="{{ i18n "footer.dark_appearance" }}" title="{{ i18n "footer.dark_appearance" }}" class="text-neutral-400 hover:text-primary-500 dark:hover:text-primary-400">
+          <span class="dark-icon">{{ partial "icon.html" "moon" }}</span>
+          <span class="light-icon">{{ partial "icon.html" "sun" }}</span>
+        </button>
+      {{- end -}}
+    </nav>
+  </div>
+</header>

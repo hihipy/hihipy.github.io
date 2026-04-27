@@ -48,3 +48,8 @@ em, i {
   font-style: italic;
   font-feature-settings: "ss02" 1;
 }
+
+/* Timeline badges - prevent date range wrapping. Targets Blowfish badge spans which use Tailwind utility classes. */
+span.rounded-md.border-primary-400 {
+  white-space: nowrap !important;
+}
