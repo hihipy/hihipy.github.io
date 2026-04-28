@@ -8,7 +8,8 @@ This README is written for AI assistants and future contributors who need to be 
 
 | Property | Value |
 |---|---|
-| Live URL | `https://pgbd.casa` |
+| Live URL (canonical) | `https://pgbd.casa` |
+| Live URL (redirect alias) | `https://pgbd.us` (→ redirects to `pgbd.casa`) |
 | Repository | `github.com/hihipy/hihipy.github.io` |
 | Hosting | GitHub Pages (via `CNAME` in `static/`) |
 | Build | Hugo, vendored via theme submodule |
@@ -19,6 +20,51 @@ This README is written for AI assistants and future contributors who need to be 
 | Color scheme | `github` |
 | Author | Philip Bachas-Daunert (handle: `hihipy`, email contact uses `career-pgbd@pm.me`) |
 | Owner workflow | Commits made via GitHub Desktop, NOT CLI git |
+
+### Why two URLs?
+
+The site has two domains pointing at the same content:
+
+- **`pgbd.casa`** is the canonical (primary) URL. It carries the casa metaphor in the URL itself, matches the site\'s brand identity, and is what visitors see in the URL bar after any redirect.
+- **`pgbd.us`** is a redirect alias registered through Cloudflare. It exists as a fallback for visitors whose networks block newer/uncommon TLDs. The `.us` ccTLD is more universally accepted by enterprise security filters than `.casa`. The Cloudflare zone for `pgbd.us` performs a 301 redirect of all traffic (path-preserving, query-string-preserving) to `https://pgbd.casa`.
+
+**Use `pgbd.us`** in venues where universal accessibility matters more than brand:
+- LinkedIn profile (Contact info → Website)
+- Email signature
+- Résumé
+- Job application URL fields
+- Cold outreach where the recipient\'s network is unknown
+
+**Use `pgbd.casa`** in venues where brand identity matters more than universal access:
+- The site\'s own self-references (anywhere it\'s linked from itself)
+- Personal communications and GitHub repos
+- Casual social media
+
+The user experience: a recruiter clicking `pgbd.us` from LinkedIn lands at `pgbd.casa` after a brief 301 redirect. The URL bar updates to show `.casa`. Most visitors won\'t notice; those who do see a Spanish-named domain consistent with the casa metaphor.
+
+### Cloudflare configuration for `pgbd.us`
+
+The redirect is implemented in Cloudflare DNS + Rules:
+
+1. **DNS records** (in the `pgbd.us` zone):
+   - A record `@` (apex) → `192.0.2.1` (placeholder, Proxied / orange cloud)
+   - A record `www` → `192.0.2.1` (placeholder, Proxied / orange cloud)
+   - The placeholder IP is reserved for documentation and never actually serves traffic; the Redirect Rule intercepts before any backend connection.
+
+2. **Redirect Rule** (in the `pgbd.us` zone, under Rules → Redirect Rules):
+   - Match: `(http.host eq "pgbd.us") or (http.host eq "www.pgbd.us")`
+   - Action: Static URL redirect to `https://pgbd.casa`
+   - Status: 301 (permanent)
+   - Path preservation: enabled
+   - Query string preservation: enabled
+
+3. **SSL/TLS settings**:
+   - Mode: `Full` (or `Full (strict)`)
+   - Universal certificate active for `*.pgbd.us, pgbd.us`
+   - Always Use HTTPS: enabled
+   - Minimum TLS Version: TLS 1.2
+
+This setup costs $0.50/year (Cloudflare at-cost registrar pricing for `.us`).
 
 ## 2. The Casa Metaphor
 
@@ -455,6 +501,24 @@ The site originally tried `⚙` followed by U+FE0E (TEXT VARIATION SELECTOR) as 
 
 **Convention:** Every page that should be discoverable via search MUST have a `summary` field. This is now part of the page-creation checklist (§13).
 
+### BUG-011: Newly-registered domains blocked by aggressive enterprise security filters
+
+**Symptom:** A newly-registered domain (typically less than 30-90 days old) cannot be accessed from certain restrictive enterprise networks even when DNS, SSL, and routing are all correctly configured. TCP connections succeed but TLS handshake is reset by an inline security appliance.
+
+**Cause:** Enterprise security infrastructure (Cisco Umbrella, Zscaler, Palo Alto Networks, Forcepoint, etc.) frequently maintains "newly observed domain" blocklists. Domains registered in the last 30-90 days are treated as suspicious by default until they\'ve aged. This is independent of TLD; even `.com` and `.us` domains hit this when freshly registered.
+
+**Diagnosis:**
+- TCP connection to port 443 succeeds (`Test-NetConnection <domain> -Port 443` returns `True`)
+- TLS handshake is reset (Connection was reset, ALPN negotiation fails)
+- DNS resolution returns the correct origin IPs
+- Site loads correctly from cellular networks, home wifi, or any non-restrictive network
+
+**Real-world impact:** During this site\'s development, the University of Miami\'s Miller School of Medicine network blocked both `pgbd.casa` and `pgbd.us` for the first ~24 hours after their respective registrations. Both domains worked fine from non-UM networks (cellular, residential, other corporate networks tested via the whatsmydns.net global check).
+
+**Workaround:** None for the local network. The block typically expires automatically after 30-90 days as the domain ages. Workaround for the user: access via cellular or non-restrictive network. Workaround for owners maintaining the site: do not rely on viewing the live site from highly-restrictive networks.
+
+**Why this matters for the README:** Anyone troubleshooting connectivity from a corporate network should rule out this cause before assuming the site is broken. The first diagnostic step is always: try the URL from cellular or a different network.
+
 ## 11. Configuration Files
 
 ### `config/_default/hugo.toml`
@@ -593,7 +657,7 @@ hihipy.github.io/
 │   └── shortcodes/
 │       └── section-count.html          # custom shortcode (see §9)
 ├── static/
-│   ├── CNAME                           # GitHub Pages custom domain
+│   ├── CNAME                           # GitHub Pages custom domain (pgbd.casa)
 │   ├── android-chrome-192x192.png      # PWA icons (donut chart)
 │   ├── android-chrome-512x512.png
 │   ├── apple-touch-icon.png            # 180×180
@@ -613,6 +677,7 @@ hihipy.github.io/
 - `content/puerta/_index.md` is a section index because puerta is technically a section (with no children currently).
 - `static/resume.pdf` is served verbatim at `/resume.pdf` regardless of which content page links to it.
 - Favicon files are donut chart in github palette — see BUG-009. Source SVG at `assets/img/favicon-source.svg`.
+- The `pgbd.us` redirect alias is configured in Cloudflare DNS + Rules — see §1. Not a file in this repo.
 
 ## 13. Adding a New Project Page — Procedure
 
@@ -711,7 +776,7 @@ GitHub Pages handles this automatically on push to `main`. No manual build step.
 
 ### Deployment URL chain
 
-`main` branch push → GitHub Pages builds → serves at `https://hihipy.github.io` → CNAME redirects to `https://pgbd.casa`
+`main` branch push → GitHub Pages builds → serves at `https://hihipy.github.io` → CNAME redirects to `https://pgbd.casa`. Separately, `https://pgbd.us` 301-redirects to `https://pgbd.casa` via Cloudflare — see §1.
 
 ## 15. Outstanding Items / Known Issues
 
@@ -719,6 +784,7 @@ GitHub Pages handles this automatically on push to `main`. No manual build step.
 |---|---|
 | Sala description discrepancy | The `description` field in `content/sala/index.md` says "Institutional research analyst" but other contexts (the Blowfish `[params.author]` headline) say "Data analyst." If they refer to the same role under different terminology, fine. If alignment is desired, update the sala frontmatter. |
 | Four unused icons | `building-columns`, `certificate`, `compass`, `house` in `assets/icons/` are not referenced anywhere. Kept available for future use. The `certificate` icon is the most likely candidate for sala\'s Certifications section if one is added. |
+| Newly-registered domain blocking | The University of Miami network has been observed blocking both `pgbd.casa` and `pgbd.us` for some time after each domain\'s registration. This is BUG-011 — a generic enterprise filter for newly-observed domains, not site-specific. Expected to resolve on its own after 30-90 days as the domains age. Affects only highly-restrictive corporate networks; the site is accessible from cellular, residential, and most non-restrictive networks. |
 
 ## 16. Glossary
 
@@ -733,6 +799,7 @@ GitHub Pages handles this automatically on push to `main`. No manual build step.
 | Blowfish | The Hugo theme (`themes/blowfish/`). Reference: https://blowfish.page/docs/ |
 | Tier 1-4 | The complexity gradient. See §5. |
 | Puerta-first | The convention that `puerta` (door) comes first on the home page. |
+| Redirect alias | A second domain (`pgbd.us`) that 301-redirects to the canonical `pgbd.casa`. See §1. |
 
 ## 17. Reference Links
 
@@ -742,11 +809,13 @@ GitHub Pages handles this automatically on push to `main`. No manual build step.
 - Mermaid docs (used by `{{< mermaid >}}` shortcode): https://mermaid.js.org/intro/
 - Hugo shortcode reference: https://gohugo.io/templates/shortcode-templates/
 - GitHub Pages custom domain setup: https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site
+- Cloudflare Redirect Rules: https://developers.cloudflare.com/rules/url-forwarding/single-redirects/
 
 ## 18. Document Maintenance
 
 This README is the canonical reference for the codebase. When making non-trivial changes to the site, update the relevant section here. Specifically:
 
+- §1 if domain configuration changes (new domains, expired registrations, etc.)
 - §3 if room structure changes
 - §4 if a project is added, removed, or renamed
 - §6 if the project page template changes
