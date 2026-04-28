@@ -13,19 +13,18 @@ This README is written for AI assistants and future contributors who need to be 
 | Repository | `github.com/hihipy/hihipy.github.io` |
 | Hosting | GitHub Pages (via `CNAME` in `static/`) |
 | Build | Hugo, vendored via theme submodule |
+| Hugo | Extended edition, recent stable release |
 | Theme | Blowfish |
-| Hugo version (verified working) | `v0.160.1+extended+withdeploy` (darwin/arm64) |
 | Site language | `en` |
 | Default appearance | `dark`, with auto-switch enabled |
 | Color scheme | `github` |
 | Author | Philip Bachas-Daunert (handle: `hihipy`, email contact uses `career-pgbd@pm.me`) |
-| Owner workflow | Commits made via GitHub Desktop, NOT CLI git |
 
 ### Why two URLs?
 
 The site has two domains pointing at the same content:
 
-- **`pgbd.casa`** is the canonical (primary) URL. It carries the casa metaphor in the URL itself, matches the site\'s brand identity, and is what visitors see in the URL bar after any redirect.
+- **`pgbd.casa`** is the canonical (primary) URL. It carries the casa metaphor in the URL itself, matches the site's brand identity, and is what visitors see in the URL bar after any redirect.
 - **`pgbd.us`** is a redirect alias registered through Cloudflare. It exists as a fallback for visitors whose networks block newer/uncommon TLDs. The `.us` ccTLD is more universally accepted by enterprise security filters than `.casa`. The Cloudflare zone for `pgbd.us` performs a 301 redirect of all traffic (path-preserving, query-string-preserving) to `https://pgbd.casa`.
 
 **Use `pgbd.us`** in venues where universal accessibility matters more than brand:
@@ -33,38 +32,20 @@ The site has two domains pointing at the same content:
 - Email signature
 - Résumé
 - Job application URL fields
-- Cold outreach where the recipient\'s network is unknown
+- Cold outreach where the recipient's network is unknown
 
 **Use `pgbd.casa`** in venues where brand identity matters more than universal access:
-- The site\'s own self-references (anywhere it\'s linked from itself)
+- The site's own self-references (anywhere it's linked from itself)
 - Personal communications and GitHub repos
 - Casual social media
 
-The user experience: a recruiter clicking `pgbd.us` from LinkedIn lands at `pgbd.casa` after a brief 301 redirect. The URL bar updates to show `.casa`. Most visitors won\'t notice; those who do see a Spanish-named domain consistent with the casa metaphor.
+The user experience: a recruiter clicking `pgbd.us` from LinkedIn lands at `pgbd.casa` after a brief 301 redirect. The URL bar updates to show `.casa`. Most visitors won't notice; those who do see a Spanish-named domain consistent with the casa metaphor.
 
 ### Cloudflare configuration for `pgbd.us`
 
-The redirect is implemented in Cloudflare DNS + Rules:
+The `pgbd.us` zone is configured in Cloudflare to 301-redirect all traffic to `https://pgbd.casa`. The redirect preserves both path and query string, covers both apex and `www`, and is enforced over HTTPS via Cloudflare's Universal SSL.
 
-1. **DNS records** (in the `pgbd.us` zone):
-   - A record `@` (apex) → `192.0.2.1` (placeholder, Proxied / orange cloud)
-   - A record `www` → `192.0.2.1` (placeholder, Proxied / orange cloud)
-   - The placeholder IP is reserved for documentation and never actually serves traffic; the Redirect Rule intercepts before any backend connection.
-
-2. **Redirect Rule** (in the `pgbd.us` zone, under Rules → Redirect Rules):
-   - Match: `(http.host eq "pgbd.us") or (http.host eq "www.pgbd.us")`
-   - Action: Static URL redirect to `https://pgbd.casa`
-   - Status: 301 (permanent)
-   - Path preservation: enabled
-   - Query string preservation: enabled
-
-3. **SSL/TLS settings**:
-   - Mode: `Full` (or `Full (strict)`)
-   - Universal certificate active for `*.pgbd.us, pgbd.us`
-   - Always Use HTTPS: enabled
-   - Minimum TLS Version: TLS 1.2
-
-This setup costs $0.50/year (Cloudflare at-cost registrar pricing for `.us`).
+If the redirect needs to be modified, the rule lives in the `pgbd.us` zone under Rules → Redirect Rules. SSL/TLS settings are under SSL/TLS → Overview. Account security for the Cloudflare account itself is documented in §15.
 
 ## 2. The Casa Metaphor
 
@@ -74,26 +55,24 @@ The home page lead reads `Mi Casa Digital es Su Casa Digital` (Spanish-style tit
 
 The metaphor is the differentiator. When in doubt, choose the option that strengthens the casa framing rather than the conventional portfolio framing.
 
-The casa metaphor extends to the 404 page, which uses casa language ("No room here. The hallway you walked down doesn\'t lead anywhere"). See §9.
+The casa metaphor extends to the 404 page, which uses casa language ("No room here. The hallway you walked down doesn't lead anywhere"). See §9.
 
 ## 3. Room Inventory
 
 Six rooms total. Two non-project rooms (puerta, sala) and four project rooms (cocina, estudio, garaje, jardin).
 
-| Room | Symbol | Path | Title (Title Case) | Role | Project count |
-|---|---|---|---|---|---|
-| `puerta` | `◰` | `/puerta/` | Résumé PDF | Door — entry point. Embeds `static/resume.pdf`. | 0 (terminal page) |
-| `sala` | `§` | `/sala/` | About Me | Living room — about page. Long-form bio with Experience / Education / Certifications / Skills sections. | 0 (terminal page) |
-| `cocina` | `⛁` | `/cocina/` | Data Prep & ETL | Kitchen — data preparation tools. | 4 |
-| `estudio` | `✦` | `/estudio/` | AI & Experiments | Studio — AI-augmented analytics tools. | 3 |
-| `garaje` | `⛭` | `/garaje/` | Analyst Utilities | Garage — Excel macros, calculators, processing scripts. | 5 |
-| `jardin` | `❀` | `/jardín/` | Side Projects | Garden — personal projects and miscellaneous experiments. | 4 |
-
-Total: 16 project pages.
+| Room | Symbol | Path | Title (Title Case) | Role |
+|---|---|---|---|---|
+| `puerta` | `◰` | `/puerta/` | Résumé PDF | Door, entry point. Terminal page that embeds `static/resume.pdf`. |
+| `sala` | `§` | `/sala/` | About Me | Living room, about page. Terminal page with long-form bio (Experience / Education / Certifications / Skills). |
+| `cocina` | `⛁` | `/cocina/` | Data Prep & ETL | Kitchen, data preparation tools. |
+| `estudio` | `✦` | `/estudio/` | AI & Experiments | Studio, AI-augmented analytics tools. |
+| `garaje` | `⛭` | `/garaje/` | Analyst Utilities | Garage, Excel macros, calculators, processing scripts. |
+| `jardin` | `❀` | `/jardín/` | Side Projects | Garden, personal projects and miscellaneous experiments. |
 
 **Home page order (intentional):** `puerta`, `sala`, then the four project rooms alphabetically. Puerta is first because the metaphor is "visitor walks through the door first." This is non-negotiable; do not reorder without instruction.
 
-The four project rooms display auto-counted project totals via the `section-count` shortcode (see §9).
+Project counts are NOT listed in this table by design. The four project rooms render their counts dynamically on the live site via the `section-count` shortcode (see §9), so manual counts here would be a maintenance burden and a source of drift. For the actual contents of each room, see §4.
 
 ## 4. Project Pages — Complete Inventory
 
@@ -150,7 +129,7 @@ The three written fields are NOT redundant. Each serves a different function and
 
 When asked to add a new project, all four tiers must be authored deliberately.
 
-**Important: `summary` also drives search result quality.** If `summary` is missing from a page\'s frontmatter, Blowfish\'s search index falls back to Hugo\'s auto-generated summary (the first ~70 words of body content). This produces noisy, bloated search results. Every page that is discoverable via search SHOULD have a `summary` field, including non-project pages (home, sala, puerta). See BUG-010.
+**Important: `summary` also drives search result quality.** If `summary` is missing from a page's frontmatter, Blowfish's search index falls back to Hugo's auto-generated summary (the first ~70 words of body content). This produces noisy, bloated search results. Every page that is discoverable via search SHOULD have a `summary` field, including non-project pages (home, sala, puerta). See BUG-010.
 
 ## 6. Project Page Template
 
@@ -256,7 +235,7 @@ These are established conventions across all 16 project pages. Match them when a
 | **Title Case for headings** | "Data Prep & ETL", "AI & Experiments", "Side Projects". |
 | **Sentence case for descriptions and body prose** | "Cleans messy data exports." not "Cleans Messy Data Exports." |
 | **Spanish-style title case for Spanish phrases** | "Mi Casa Digital es Su Casa Digital" — nouns capitalized, lowercase prepositions/possessives (`es`, `su`). |
-| **Audience: HR/recruiter with bachelor\'s degree, no coding background** | Avoid jargon in leads and summaries. Domain terms acceptable in body. |
+| **Audience: HR/recruiter with bachelor's degree, no coding background** | Avoid jargon in leads and summaries. Domain terms acceptable in body. |
 | **Conciseness over completeness** | Tighter is better. The reader can scroll for more. |
 | **Mention Miller School only when project genuinely connects** | Not as decoration. |
 | **No invented content, no redundancy** | If two fields say the same thing, one of them is wrong. |
@@ -308,10 +287,10 @@ Pages within a room are sorted alphabetically by enforcing weights in alphabetic
 Custom 404 page in casa style. Renders:
 
 - Title in terminal format: `~/404 # Not Found`
-- Casa-flavored copy: "No room here. The hallway you walked down doesn\'t lead anywhere..."
-- Keyboard shortcut hint: press `/` to open Blowfish\'s built-in search modal
+- Casa-flavored copy: "No room here. The hallway you walked down doesn't lead anywhere..."
+- Keyboard shortcut hint: press `/` to open Blowfish's built-in search modal
 - Link list to all six rooms in the same format as the home page
-- Inherits Blowfish\'s `baseof.html` (header with search, footer, dark-mode toggle, fonts)
+- Inherits Blowfish's `baseof.html` (header with search, footer, dark-mode toggle, fonts)
 
 GitHub Pages automatically serves `/404.html` (which Hugo generates from this layout) for any unmatched URL.
 
@@ -371,7 +350,7 @@ Hugo and Blowfish quirks discovered during development. Reference these when AI-
 
 **Symptom:** Shortcode invocations like `{{< section-count "cocina" >}}` render as literal text instead of executing.
 
-**Cause:** Hugo\'s smartypants module processes markdown body content and converts straight ASCII double quotes (`"` U+0022) to typographic open/close quotes (`“` U+201C, `”` U+201D). The shortcode parser only recognizes straight quotes, so the conversion makes the shortcode unparseable.
+**Cause:** Hugo's smartypants module processes markdown body content and converts straight ASCII double quotes (`"` U+0022) to typographic open/close quotes (`“` U+201C, `”` U+201D). The shortcode parser only recognizes straight quotes, so the conversion makes the shortcode unparseable.
 
 **Workaround:** Use unquoted single-token arguments where possible.
 
@@ -388,7 +367,7 @@ For arguments that require spaces (or quotes for any reason), the alternative is
 
 **Symptom:** Template parse error `comment ends before closing delimiter` even though the comment block has matching `{{- /*` and `*/ -}}`.
 
-**Cause:** Go\'s text/template parser scans for the literal sequence `*/` to terminate the comment, with no escape mechanism. If the comment body contains `*/` for any reason (such as an embedded shortcode example using `{{</* ... */>}}` notation), the parser ends the comment early, then chokes on the rest.
+**Cause:** Go's text/template parser scans for the literal sequence `*/` to terminate the comment, with no escape mechanism. If the comment body contains `*/` for any reason (such as an embedded shortcode example using `{{</* ... */>}}` notation), the parser ends the comment early, then chokes on the rest.
 
 **Workaround:** Never embed shortcode example syntax in `{{- /* */ -}}` block comments. Use plain prose for documentation. If you must show example syntax, use markdown comments or HTML comments outside the template comment.
 
@@ -396,7 +375,7 @@ For arguments that require spaces (or quotes for any reason), the alternative is
 
 **Symptom:** On project pages with both shortcodes, the lead block fails to render — the closing `{{< /lead >}}` shows as literal text in the body, KaTeX expressions later on the page render as raw `\(...\)` source.
 
-**Cause:** Specific interaction between Hugo\'s shortcode parser and the paired-vs-standalone shortcode arrangement. The bug is triggered when a paired block (`{{< lead >}}...{{< /lead >}}`) is immediately followed by a standalone shortcode (`{{< katex >}}`) with only blank lines between them, before any prose content.
+**Cause:** Specific interaction between Hugo's shortcode parser and the paired-vs-standalone shortcode arrangement. The bug is triggered when a paired block (`{{< lead >}}...{{< /lead >}}`) is immediately followed by a standalone shortcode (`{{< katex >}}`) with only blank lines between them, before any prose content.
 
 **Workaround:** Place `{{< katex >}}` BEFORE the lead block, immediately after the frontmatter, not after.
 
@@ -447,13 +426,13 @@ This affects 7 of the 16 project pages currently:
 
 This applies to every Mermaid diagram in the codebase. New diagrams must follow this convention.
 
-Mermaid is enabled per-page via `mermaid = true` in `params.toml` `[article]` block, and invoked via `{{< mermaid >}}...{{< /mermaid >}}` shortcode (NOT triple-backtick code blocks — that\'s a different render path that doesn\'t work with Blowfish\'s setup).
+Mermaid is enabled per-page via `mermaid = true` in `params.toml` `[article]` block, and invoked via `{{< mermaid >}}...{{< /mermaid >}}` shortcode (NOT triple-backtick code blocks — that's a different render path that doesn't work with Blowfish's setup).
 
 ### BUG-005: Mobile rendering issue with U+2699 gear icon
 
 **Symptom:** Gear icon `⚙` renders as a colored emoji on iOS Safari (and in some MonoLisa font fallbacks), breaking the typographic consistency of room symbols.
 
-**Cause:** U+2699 (`⚙`) is in Unicode\'s emoji-presentation table. Mobile browsers and some fonts render it with emoji presentation by default, which displays it as a colored multi-pixel glyph rather than a monospace text character.
+**Cause:** U+2699 (`⚙`) is in Unicode's emoji-presentation table. Mobile browsers and some fonts render it with emoji presentation by default, which displays it as a colored multi-pixel glyph rather than a monospace text character.
 
 **Workaround:** Use U+26ED (`⛭` GEAR WITHOUT HUB) instead. This codepoint is NOT in the emoji-presentation table, so it renders as a pure typographic glyph everywhere.
 
@@ -463,7 +442,7 @@ The site originally tried `⚙` followed by U+FE0E (TEXT VARIATION SELECTOR) as 
 
 **Symptom:** Project rooms display projects in order of git commit date (newest first) instead of alphabetically.
 
-**Cause:** With `enableGitInfo = true` in `hugo.toml`, Hugo populates each page\'s `.Lastmod` field from git history. Blowfish\'s section list templates fall back to `.Lastmod` for sorting when `orderByWeight = false` and no `date` field is set.
+**Cause:** With `enableGitInfo = true` in `hugo.toml`, Hugo populates each page's `.Lastmod` field from git history. Blowfish's section list templates fall back to `.Lastmod` for sorting when `orderByWeight = false` and no `date` field is set.
 
 **Fix applied:** Set `orderByWeight = true` in `params.toml` `[list]` section, and assign `weight` values to all project pages.
 
@@ -471,7 +450,7 @@ The site originally tried `⚙` followed by U+FE0E (TEXT VARIATION SELECTOR) as 
 
 **Symptom:** Card listings on room landing pages show only the title, with no description text.
 
-**Cause:** Hugo\'s auto-summary generation requires `summaryLength` to be a positive integer. With `summaryLength = 0`, Hugo generates empty auto-summaries, and Blowfish\'s card template falls through to using nothing.
+**Cause:** Hugo's auto-summary generation requires `summaryLength` to be a positive integer. With `summaryLength = 0`, Hugo generates empty auto-summaries, and Blowfish's card template falls through to using nothing.
 
 **Fix applied:** Set `summaryLength = 70` in `hugo.toml`. This makes Hugo generate auto-summaries from the first 70 words of body content. However, frontmatter `summary` field always takes priority when present (which it is on all project pages).
 
@@ -479,7 +458,7 @@ The site originally tried `⚙` followed by U+FE0E (TEXT VARIATION SELECTOR) as 
 
 **Symptom:** After a config change or rapid frontmatter edits across many files, the dev server continues serving old rendered output even though the source files are correct.
 
-**Cause:** Hugo\'s file watcher debounce can drop file change events when many files are modified simultaneously. Config changes (especially to `hugo.toml`) sometimes do not auto-restart cleanly.
+**Cause:** Hugo's file watcher debounce can drop file change events when many files are modified simultaneously. Config changes (especially to `hugo.toml`) sometimes do not auto-restart cleanly.
 
 **Workaround:** Stop the dev server (Ctrl+C) and restart it manually after batch edits or config changes. The fresh start clears the cache.
 
@@ -495,7 +474,7 @@ The site originally tried `⚙` followed by U+FE0E (TEXT VARIATION SELECTOR) as 
 
 **Symptom:** Search results for non-project pages (home, sala, puerta) showed bloated descriptions: full paragraphs of body content, embedded HTML fallback text from PDF objects, concatenated room descriptions, etc.
 
-**Cause:** Blowfish\'s search index (`index.json` output) includes a description field for each result. The field is sourced from the page\'s `summary` frontmatter if present, otherwise falls back to Hugo\'s auto-generated `.Summary` (the first ~70 words of body content). Pages without an explicit `summary` produce noisy search snippets.
+**Cause:** Blowfish's search index (`index.json` output) includes a description field for each result. The field is sourced from the page's `summary` frontmatter if present, otherwise falls back to Hugo's auto-generated `.Summary` (the first ~70 words of body content). Pages without an explicit `summary` produce noisy search snippets.
 
 **Fix applied:** Added `summary` frontmatter fields to the home page, `content/sala/index.md`, and `content/puerta/_index.md`. Project pages already had summaries from earlier work.
 
@@ -505,7 +484,7 @@ The site originally tried `⚙` followed by U+FE0E (TEXT VARIATION SELECTOR) as 
 
 **Symptom:** A newly-registered domain (typically less than 30-90 days old) cannot be accessed from certain restrictive enterprise networks even when DNS, SSL, and routing are all correctly configured. TCP connections succeed but TLS handshake is reset by an inline security appliance.
 
-**Cause:** Enterprise security infrastructure (Cisco Umbrella, Zscaler, Palo Alto Networks, Forcepoint, etc.) frequently maintains "newly observed domain" blocklists. Domains registered in the last 30-90 days are treated as suspicious by default until they\'ve aged. This is independent of TLD; even `.com` and `.us` domains hit this when freshly registered.
+**Cause:** Enterprise security infrastructure (Cisco Umbrella, Zscaler, Palo Alto Networks, Forcepoint, etc.) frequently maintains "newly observed domain" blocklists. Domains registered in the last 30-90 days are treated as suspicious by default until they've aged. This is independent of TLD; even `.com` and `.us` domains hit this when freshly registered.
 
 **Diagnosis:**
 - TCP connection to port 443 succeeds (`Test-NetConnection <domain> -Port 443` returns `True`)
@@ -513,7 +492,7 @@ The site originally tried `⚙` followed by U+FE0E (TEXT VARIATION SELECTOR) as 
 - DNS resolution returns the correct origin IPs
 - Site loads correctly from cellular networks, home wifi, or any non-restrictive network
 
-**Real-world impact:** During this site\'s development, the University of Miami\'s Miller School of Medicine network blocked both `pgbd.casa` and `pgbd.us` for the first ~24 hours after their respective registrations. Both domains worked fine from non-UM networks (cellular, residential, other corporate networks tested via the whatsmydns.net global check).
+**Real-world impact:** During this site's development, the University of Miami's Miller School of Medicine network blocked both `pgbd.casa` and `pgbd.us` for the first ~24 hours after their respective registrations. Both domains worked fine from non-UM networks (cellular, residential, other corporate networks tested via the whatsmydns.net global check).
 
 **Workaround:** None for the local network. The block typically expires automatically after 30-90 days as the domain ages. Workaround for the user: access via cellular or non-restrictive network. Workaround for owners maintaining the site: do not rely on viewing the live site from highly-restrictive networks.
 
@@ -591,7 +570,7 @@ enableCodeCopy = true
 ### `config/_default/languages.en.toml`
 
 ```toml
-title = "⛫ pgbd\'s digital casa"
+title = "⛫ pgbd's digital casa"
 
 [params]
   description = "Mi casa digital es su casa digital. Personal portfolio and analytical work."
@@ -694,7 +673,7 @@ Match the project to a room based on its primary purpose:
 | ...is a utility tool for analysts (Excel, calculators, processing) | `garaje` |
 | ...is a personal/creative side project unrelated to professional work | `jardin` |
 
-If the project is genuinely cross-cutting, prefer the room where the project\'s *primary distinguishing feature* lives (its differentiator, not its substrate).
+If the project is genuinely cross-cutting, prefer the room where the project's *primary distinguishing feature* lives (its differentiator, not its substrate).
 
 ### Step 2: Author the page
 
@@ -722,7 +701,7 @@ for i, file in enumerate(files):
     file.weight = (i + 1) * 10
 ```
 
-The room\'s project list in §4 of this README must also be updated.
+The room's project list in §4 of this README must also be updated.
 
 ### Step 4: Verify locally
 
@@ -744,9 +723,9 @@ Visit `http://localhost:1313/<room>/` and confirm:
 
 The `section-count` shortcode auto-updates. No manual intervention needed.
 
-### Step 6: Commit
+### Step 6: Commit and deploy
 
-User commits via GitHub Desktop, NOT command-line git. The deployment is automatic via GitHub Pages.
+Commit and push to `main`. Deployment is automatic via GitHub Pages.
 
 ### Regenerating the favicon
 
@@ -758,7 +737,7 @@ If the favicon design needs to change, regenerate from `assets/img/favicon-sourc
 4. Place all output files in `static/` replacing the existing icons
 5. Hard-refresh the browser (Cmd+Shift+R) to bust the favicon cache
 
-The full generation script used to produce the current favicon set is preserved in this session\'s history.
+The full generation script used to produce the current favicon set is preserved in this session's history.
 
 ## 14. Build and Deploy
 
@@ -778,15 +757,49 @@ GitHub Pages handles this automatically on push to `main`. No manual build step.
 
 `main` branch push → GitHub Pages builds → serves at `https://hihipy.github.io` → CNAME redirects to `https://pgbd.casa`. Separately, `https://pgbd.us` 301-redirects to `https://pgbd.casa` via Cloudflare — see §1.
 
-## 15. Outstanding Items / Known Issues
+## 15. Account & Access Security
+
+This section documents the security posture the site is built around. It is operational reference, not configuration. None of these items live in the repo.
+
+### Critical accounts
+
+The site's integrity depends on three distinct accounts being independently secured:
+
+1. **GitHub** (`hihipy`). Holds the repo and serves the Pages site. A compromise here lets an attacker push arbitrary content to `pgbd.casa`.
+2. **Cloudflare**. Holds DNS for `pgbd.us` and the redirect rule. A compromise here lets an attacker redirect `pgbd.us` traffic anywhere.
+3. **Domain registrar(s)**. Hold the registrations for `pgbd.casa` and `pgbd.us`. A compromise here lets an attacker move the domains entirely.
+
+Each account has its own credentials and its own 2FA. They are not linked via OAuth or shared sign-in.
+
+### Posture requirements
+
+- All three accounts use 2FA. Hardware security keys preferred where supported; TOTP via authenticator app otherwise. SMS 2FA is not sufficient.
+- Recovery codes for each account are stored offline.
+- The recovery email address has its own strong 2FA, since email is the universal account-reset channel.
+- Registrar locks (transfer lock and update lock) enabled on both domain registrations.
+
+### Avoided by design
+
+Cloudflare is not authenticated via "Sign in with GitHub" or any other OAuth provider. Cloudflare uses an independent password and independent 2FA. This is intentional: it prevents a GitHub account compromise from automatically becoming a DNS takeover. Do not re-link the two without re-evaluating this tradeoff.
+
+### Maintenance triggers
+
+Re-verify the posture above whenever:
+
+- A 2FA device is added, replaced, or lost
+- The recovery email address changes
+- A new admin or member account is created on any of the critical services
+- An OAuth integration is added or removed between any of the three account systems
+
+## 16. Outstanding Items / Known Issues
 
 | Item | Notes |
 |---|---|
 | Sala description discrepancy | The `description` field in `content/sala/index.md` says "Institutional research analyst" but other contexts (the Blowfish `[params.author]` headline) say "Data analyst." If they refer to the same role under different terminology, fine. If alignment is desired, update the sala frontmatter. |
-| Four unused icons | `building-columns`, `certificate`, `compass`, `house` in `assets/icons/` are not referenced anywhere. Kept available for future use. The `certificate` icon is the most likely candidate for sala\'s Certifications section if one is added. |
-| Newly-registered domain blocking | The University of Miami network has been observed blocking both `pgbd.casa` and `pgbd.us` for some time after each domain\'s registration. This is BUG-011 — a generic enterprise filter for newly-observed domains, not site-specific. Expected to resolve on its own after 30-90 days as the domains age. Affects only highly-restrictive corporate networks; the site is accessible from cellular, residential, and most non-restrictive networks. |
+| Four unused icons | `building-columns`, `certificate`, `compass`, `house` in `assets/icons/` are not referenced anywhere. Kept available for future use. The `certificate` icon is the most likely candidate for sala's Certifications section if one is added. |
+| Newly-registered domain blocking | The University of Miami network has been observed blocking both `pgbd.casa` and `pgbd.us` for some time after each domain's registration. This is BUG-011 — a generic enterprise filter for newly-observed domains, not site-specific. Expected to resolve on its own after 30-90 days as the domains age. Affects only highly-restrictive corporate networks; the site is accessible from cellular, residential, and most non-restrictive networks. |
 
-## 16. Glossary
+## 17. Glossary
 
 | Term | Meaning |
 |---|---|
@@ -801,7 +814,7 @@ GitHub Pages handles this automatically on push to `main`. No manual build step.
 | Puerta-first | The convention that `puerta` (door) comes first on the home page. |
 | Redirect alias | A second domain (`pgbd.us`) that 301-redirects to the canonical `pgbd.casa`. See §1. |
 
-## 17. Reference Links
+## 18. Reference Links
 
 - Hugo docs: https://gohugo.io/documentation/
 - Blowfish theme docs: https://blowfish.page/docs/
@@ -811,7 +824,7 @@ GitHub Pages handles this automatically on push to `main`. No manual build step.
 - GitHub Pages custom domain setup: https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site
 - Cloudflare Redirect Rules: https://developers.cloudflare.com/rules/url-forwarding/single-redirects/
 
-## 18. Document Maintenance
+## 19. Document Maintenance
 
 This README is the canonical reference for the codebase. When making non-trivial changes to the site, update the relevant section here. Specifically:
 
@@ -821,6 +834,7 @@ This README is the canonical reference for the codebase. When making non-trivial
 - §6 if the project page template changes
 - §10 when new bugs are discovered
 - §11 when configuration is changed
-- §15 when known issues are resolved or new ones found
+- §15 when account security posture changes (new accounts, new 2FA devices, OAuth re-coupling, recovery email change)
+- §16 when known issues are resolved or new ones found
 
 The README is intentionally dense. It is not meant to be read sequentially; it is meant to be searched and referenced by section.
