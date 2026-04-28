@@ -29,3 +29,5 @@ Welcome to my digital casa. The Spanish room names are a small tribute to my dua
 [⛭ ~/garaje  # Analyst Utilities](/garaje/)  {{< section-count garaje >}} · Excel macros, calculators, and processing scripts that make analyst work easier.
 
 [❀ ~/jardín  # Side Projects](/jardin/)  {{< section-count jardin >}} · Personal projects and miscellaneous experiments.
+
+*Press <kbd>/</kbd> to search.*
