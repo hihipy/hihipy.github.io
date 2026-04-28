@@ -1,0 +1,17 @@
+{{- /*
+  section-count: returns the number of pages in a content section.
+
+  Pass the section name as the first argument. The output is wrapped
+  in parentheses with proper pluralization: a single page returns
+  "(1 Project)", any other count returns "(N Projects)".
+
+  Counts regular pages only; section _index.md files are excluded.
+*/ -}}
+{{- $section := .Get 0 -}}
+{{- $pages := where (where .Site.RegularPages "Section" $section) "Kind" "page" -}}
+{{- $count := len $pages -}}
+{{- if eq $count 1 -}}
+({{ $count }} Project)
+{{- else -}}
+({{ $count }} Projects)
+{{- end -}}

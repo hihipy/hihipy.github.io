@@ -53,3 +53,21 @@ em, i {
 span.rounded-md.border-primary-400 {
   white-space: nowrap !important;
 }
+
+/* Center Mermaid diagrams and figures */
+.mermaid,
+figure,
+.prose p > img:only-child {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem auto;
+}
+
+/* Center Mermaid diagrams and figures */
+.mermaid,
+figure,
+.prose p > img:only-child {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem auto;
+}

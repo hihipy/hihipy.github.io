@@ -1,138 +1,702 @@
-# pgbd.casa
+# pgbd.casa — Repository Reference
 
-Personal site of Philip Bachas-Daunert. Built with Hugo and the Blowfish theme.
+This is the source repository for **pgbd.casa**, the personal portfolio of Philip Bachas-Daunert. It is a Hugo + Blowfish static site deployed via GitHub Pages.
 
-## What's in this scaffold
+This README is written for AI assistants and future contributors who need to be productive on the codebase quickly. It documents what the site is, how it is structured, every non-default decision, every quirk encountered during development, and the exact templates required to extend it. It is dense by design.
 
-Everything you need to run the site is already here, except the Blowfish theme itself, which is added as a git submodule (one command, see below).
+## 1. Site Facts
 
+| Property | Value |
+|---|---|
+| Live URL | `https://pgbd.casa` |
+| Repository | `github.com/hihipy/hihipy.github.io` |
+| Hosting | GitHub Pages (via `CNAME` in `static/`) |
+| Build | Hugo, vendored via theme submodule |
+| Theme | Blowfish |
+| Hugo version (verified working) | `v0.160.1+extended+withdeploy` (darwin/arm64) |
+| Site language | `en` |
+| Default appearance | `dark`, with auto-switch enabled |
+| Color scheme | `github` |
+| Author | Philip Bachas-Daunert (handle: `hihipy`, email contact uses `career-pgbd@pm.me`) |
+| Owner workflow | Commits made via GitHub Desktop, NOT CLI git |
+
+## 2. The Casa Metaphor
+
+The site is organized as a "digital casa" (Spanish for "house"). Each top-level navigation entry is a "room" with a Spanish name. This is a deliberate brand element, not decoration. Do not change it without explicit instruction.
+
+The home page lead reads `Mi Casa Digital es Su Casa Digital` (Spanish-style title case: only nouns capitalized, lowercase `es` and `su`).
+
+The metaphor is the differentiator. When in doubt, choose the option that strengthens the casa framing rather than the conventional portfolio framing.
+
+## 3. Room Inventory
+
+Six rooms total. Two non-project rooms (puerta, sala) and four project rooms (cocina, estudio, garaje, jardin).
+
+| Room | Symbol | Path | Title (Title Case) | Role | Project count |
+|---|---|---|---|---|---|
+| `puerta` | `◰` | `/puerta/` | Résumé PDF | Door — entry point. Embeds `static/resume.pdf`. | 0 (terminal page) |
+| `sala` | `§` | `/sala/` | About Me | Living room — about page. Long-form bio with Experience / Education / Certifications / Skills sections. | 0 (terminal page) |
+| `cocina` | `⛁` | `/cocina/` | Data Prep & ETL | Kitchen — data preparation tools. | 4 |
+| `estudio` | `✦` | `/estudio/` | AI & Experiments | Studio — AI-augmented analytics tools. | 3 |
+| `garaje` | `⛭` | `/garaje/` | Analyst Utilities | Garage — Excel macros, calculators, processing scripts. | 5 |
+| `jardin` | `❀` | `/jardín/` | Side Projects | Garden — personal projects and miscellaneous experiments. | 4 |
+
+Total: 16 project pages.
+
+**Home page order (intentional):** `puerta`, `sala`, then the four project rooms alphabetically. Puerta is first because the metaphor is "visitor walks through the door first." This is non-negotiable; do not reorder without instruction.
+
+## 4. Project Pages — Complete Inventory
+
+Listed in alphabetical order within each room (matches Hugo render order, see §8).
+
+### `/cocina/`
+
+| Filename | Title | Summary (card label) |
+|---|---|---|
+| `25live-cleaner.md` | 25live-cleaner | Cleans 25Live calendar exports. |
+| `brimr-downloader.md` | brimr-downloader | Downloads NIH funding rankings. |
+| `qualtrics-processing-pipeline.md` | qualtrics-processing-pipeline | Cleans Qualtrics survey data. |
+| `qualtrics-report-generator.md` | qualtrics-report-generator | Renders Qualtrics surveys as HTML. |
+
+### `/estudio/`
+
+| Filename | Title | Summary |
+|---|---|---|
+| `ai-csv-profiler.md` | ai-csv-profiler | CSV profiler for LLMs. |
+| `decode-for-humans.md` | decode-for-humans | AI source-code translator. |
+| `linkedin-banner-wordcloud-generator.md` | linkedin-banner-wordcloud-generator | AI résumé wordcloud generator. |
+
+### `/garaje/`
+
+| Filename | Title | Summary |
+|---|---|---|
+| `excel-vba-toolkit.md` | excel-vba-toolkit | Reusable Excel VBA macros. |
+| `expense-report-review-calculator.md` | expense-report-review-calculator | Flags late expense submissions. |
+| `foreign-per-diem-calculator-for-usa-based-institutions.md` | foreign-per-diem-calculator-for-usa-based-institutions | International per diem calculator. |
+| `pbi-model-export.md` | pbi-model-export | Power BI to AI-ready JSON. |
+| `timeline-of-events-business-days.md` | timeline-of-events-business-days | Process timeline with gap detection. |
+
+### `/jardin/`
+
+| Filename | Title | Summary |
+|---|---|---|
+| `ascii-username-generator.md` | ascii-username-generator | ASCII usernames in 19 languages. |
+| `dialogorithm.md` | dialogorithm | Phone numbers as PhD math. |
+| `fantasy-draft-lottery-randomizer.md` | fantasy-draft-lottery-randomizer | Auditable fantasy draft lottery. |
+| `seo-analysis-tool.md` | seo-analysis-tool | SEO analyzer with teaching reports. |
+
+## 5. The Three-Tier Complexity Gradient
+
+Every project page exposes three distinct text fields, each targeting a different audience and reading depth. Understanding this gradient is essential for editing existing pages or writing new ones.
+
+| Tier | Field | Length | Audience | Where it appears |
+|---|---|---|---|---|
+| 1 | `summary` (frontmatter) | 3-6 words | Recruiter scanning room | As card label on `/<room>/` listing |
+| 2 | `{{< lead >}}` block | 12-20 words | HR/recruiter on the page itself | At the very top of the project page body |
+| 3 | `description` (frontmatter) | 30-50 words | Search engines, social previews | `<meta name="description">` and Open Graph tags |
+| 4 | Body content | 1500-3500 words | Reader who clicked in deliberately | Below the lead block |
+
+The three written fields are NOT redundant. Each serves a different function and CANNOT be auto-derived from the others. Tier 1 is for scanability. Tier 2 is for "should I read this page or move on." Tier 3 is for SEO and link previews. Tier 4 is for actual technical depth.
+
+When asked to add a new project, all four tiers must be authored deliberately.
+
+## 6. Project Page Template
+
+Every project page must follow this exact structure. The order of sections matters; do not rearrange without explicit instruction.
+
+```markdown
+---
+title: "<repo-name>"
+weight: <N>   # see §8 for weight conventions
+description: "<30-50 word SEO description>"
+summary: "<3-6 word card label>"
+tags: ["tag1", "tag2", "tag3"]
+showDate: false
+showReadingTime: false
+showAuthor: false
+---
+
+{{< katex >}}   # ONLY if the page contains math expressions; OMIT if not
+
+{{< lead >}}
+<12-20 word elevator pitch, plain English, HR-friendly>
+{{< /lead >}}
+
+## At a Glance
+
+<Conversational opener, 2-3 paragraphs, sets up the problem before describing the solution.>
+
+## The Problem
+
+<Concrete examples of the friction the tool addresses. Recruiter-readable.>
+
+## The Approach
+
+<High-level architecture description. Include a Mermaid diagram if the data flow is non-trivial.>
+
+## Walking Through
+
+<Section per capability with before/after examples. This is where domain readers verify competence.>
+
+## Why <X> Matters
+
+<Variable section name. Replace X with the design philosophy of the project. Examples: "Why The Audit Log Matters", "Why Multi-Provider Architecture Matters". This section explains the design choice that distinguishes the project from a generic implementation.>
+
+## Under The Hood
+
+{{< accordion mode="collapse" separated="true" >}}
+{{< accordionItem title="<Technical detail 1>" >}}
+<Body of accordion item 1>
+{{< /accordionItem >}}
+{{< accordionItem title="<Technical detail 2>" >}}
+<Body of accordion item 2>
+{{< /accordionItem >}}
+{{< accordionItem title="<Technical detail 3>" >}}
+<Body of accordion item 3>
+{{< /accordionItem >}}
+{{< /accordion >}}
+
+## Stack
+
+- **Language:** <Python | Excel/VBA | C# | etc.>
+- **Libraries:** <list>
+- **Output format:** <CSV, PDF, JSON, etc.>
+
+## Repo
+
+[github.com/hihipy/<repo-name>](https://github.com/hihipy/<repo-name>)
 ```
-pgbd-casa/
-├── .github/workflows/hugo.yml    GitHub Pages deployment
-├── .gitignore                    Hugo build artifacts excluded from git
-├── README.md                     this file
-├── config/_default/
-│   ├── hugo.toml                 site config (baseURL, etc.)
-│   ├── languages.en.toml         site title, author info
-│   ├── menus.en.toml             nav menu (~/sala, ~/cv)
-│   ├── markup.toml               Hugo markup config (required)
-│   └── params.toml               Blowfish theme parameters
-├── assets/css/custom.css         MonoLisa font override
-├── content/
-│   ├── _index.md                 home page
-│   ├── sala/_index.md            about page placeholder
-│   └── cv/_index.md              resume page
-└── static/
-    ├── CNAME                     custom domain (pgbd.casa)
-    ├── resume.pdf                your resume PDF
-    └── fonts/
-        ├── MonoLisaVariable.woff2
-        └── MonoLisaVariableItalic.woff2
+
+### CRITICAL ordering rule for KaTeX pages
+
+If a page uses math (`{{< katex >}}` is present), the katex shortcode MUST come BEFORE the `{{< lead >}}` block. See BUG-003 in §10.
+
+```markdown
+{{< katex >}}        # FIRST
+
+{{< lead >}}         # SECOND
+...
+{{< /lead >}}
+
+## At a Glance       # THIRD
 ```
 
-## Setup
+NOT this order:
 
-You should already have:
-- Hugo installed (`brew install hugo` if not)
-- Git installed
-- An empty `hihipy.github.io` repo with the old casa archived to a separate branch
+```markdown
+{{< lead >}}         # ❌ WRONG
+...
+{{< /lead >}}
 
-### 1. Drop the scaffold contents into your repo
+{{< katex >}}        # ❌ WRONG — breaks lead rendering
 
-```bash
-cd "/Users/philipbachas-daunert/Library/CloudStorage/ProtonDrive-philgbd@pm.me-folder/Code/coding-workspace/hihipy.github.io"
-
-# extract the tarball into the current directory
-# the --strip-components=1 flag unwraps the outer folder
-tar -xzf ~/Downloads/pgbd-casa-scaffold.tar.gz --strip-components=1
-
-# verify the files landed correctly
-ls -la
-# you should see config/ content/ assets/ static/ .github/ README.md .gitignore
+## At a Glance
 ```
 
-### 2. Add the Blowfish theme as a submodule
+## 7. Tone and Style Conventions
 
-This is how Hugo themes work — you add the theme repo as a "submodule" pointer inside your repo, and git tracks the version. You don't download Blowfish separately; this command pulls it in:
+These are established conventions across all 16 project pages. Match them when authoring new content.
 
-```bash
-git submodule add -b main https://github.com/nunocoracao/blowfish.git themes/blowfish
-```
+| Rule | Notes |
+|---|---|
+| **No em dashes** | Use commas, parens, colons, semicolons, or restructure. The em dash is on the AI-tells list. |
+| **No "delve," "comprehensive," "in summary," "moreover," "furthermore"** | All on the AI-tells list. |
+| **Title Case for headings** | "Data Prep & ETL", "AI & Experiments", "Side Projects". |
+| **Sentence case for descriptions and body prose** | "Cleans messy data exports." not "Cleans Messy Data Exports." |
+| **Spanish-style title case for Spanish phrases** | "Mi Casa Digital es Su Casa Digital" — nouns capitalized, lowercase prepositions/possessives (`es`, `su`). |
+| **Audience: HR/recruiter with bachelor's degree, no coding background** | Avoid jargon in leads and summaries. Domain terms acceptable in body. |
+| **Conciseness over completeness** | Tighter is better. The reader can scroll for more. |
+| **Mention Miller School only when project genuinely connects** | Not as decoration. |
+| **No invented content, no redundancy** | If two fields say the same thing, one of them is wrong. |
+| **Backticks for inline code/paths** | `~/sala`, `Path.glob()`, `summaryLength = 70`. |
 
-You'll see Blowfish's files appear under `themes/blowfish/`. The submodule is what actually styles the site.
+## 8. Frontmatter Conventions
 
-### 3. Test locally
-
-```bash
-hugo server
-```
-
-Open `http://localhost:1313/` in your browser. You should see:
-- "bienvenido a mi casa" as the homepage
-- MonoLisa Variable as the font
-- A theme toggle (sun/moon icon) in the header
-- GitHub-style blue/gray color scheme
-
-If it works, move to step 4.
-
-### 4. Configure GitHub Pages
-
-In your repo settings on GitHub:
-1. Go to **Settings → Pages**
-2. Under "Build and deployment", set **Source** to **GitHub Actions** (not "Deploy from a branch")
-
-This tells GitHub to use the workflow at `.github/workflows/hugo.yml` to build and deploy the site.
-
-### 5. Push
-
-```bash
-git add .
-git commit -m "Migrate to Hugo + Blowfish"
-git push
-```
-
-Watch the Actions tab on GitHub. The workflow takes about 1-2 minutes. Once green, the site is live at `pgbd.casa`.
-
-## Adding a new project later
-
-Each project is a markdown file. To add `25live-cleaner` to the `~/cocina` room:
-
-```bash
-mkdir -p content/cocina
-# create content/cocina/_index.md (room hub page)
-# create content/cocina/25live-cleaner.md (project deep page)
-```
-
-Project markdown files use frontmatter at the top:
+### Required fields on every project page
 
 ```yaml
----
-title: "25live-cleaner"
-description: "Python utility that cleans 25Live exports"
-date: 2025-08-01
-tags: ["Python", "pandas", "ETL"]
----
-
-# Content goes here in markdown
+title: "<exact-repo-name>"     # matches GitHub repo name and filename stem
+weight: <multiple of 10>       # see weight rules below
+description: "<30-50 word SEO description>"
+summary: "<3-6 word card label>"
+tags: ["..."]
+showDate: false
+showReadingTime: false
+showAuthor: false
 ```
 
-Push and the Action redeploys.
+### Weight conventions
 
-## Updating the Blowfish theme later
+Pages within a room are sorted alphabetically by enforcing weights in alphabetical order: `10, 20, 30, 40, 50, ...`. This requires `orderByWeight = true` in `params.toml` (see §11). When adding a new project to a room:
+
+1. Sort existing files alphabetically including the new one.
+2. Re-assign weights `10, 20, 30, ...` in order.
+3. The script `weight_resort.py` (see §13) does this automatically.
+
+### Field role reminders
+
+| Field | Used for |
+|---|---|
+| `title` | H1 of the page; also used as alphabetical sort key when no weight is set |
+| `weight` | Hugo section list ordering |
+| `description` | `<meta name="description">`, Open Graph, Twitter card |
+| `summary` | Card label on the room landing page |
+| `tags` | Currently unused for navigation but indexed; reserve for future tag pages |
+| `showDate`, `showReadingTime`, `showAuthor` | All `false` to keep pages stripped of clutter |
+
+### Forbidden in frontmatter
+
+- `date` — not set anywhere; presence triggers reverse-chronological sort fallback
+- `lastmod` — handled automatically by `enableGitInfo`
+- `draft: true` — never used; commit only when ready
+
+## 9. Custom Infrastructure
+
+### `layouts/shortcodes/section-count.html`
+
+Auto-counts pages in a section and renders `(N Project)` or `(N Projects)` with proper pluralization. Used on the home page next to project room links.
+
+```go-html-template
+{{- /*
+  section-count: returns the number of pages in a content section.
+
+  Pass the section name as the first argument. The output is wrapped
+  in parentheses with proper pluralization: a single page returns
+  "(1 Project)", any other count returns "(N Projects)".
+
+  Counts regular pages only; section _index.md files are excluded.
+*/ -}}
+{{- $section := .Get 0 -}}
+{{- $pages := where (where .Site.RegularPages "Section" $section) "Kind" "page" -}}
+{{- $count := len $pages -}}
+{{- if eq $count 1 -}}
+({{ $count }} Project)
+{{- else -}}
+({{ $count }} Projects)
+{{- end -}}
+```
+
+**Invocation:** `{{< section-count cocina >}}` — UNQUOTED single token argument. See BUG-001 for why.
+
+### `layouts/partials/header.html` and `footer.html`
+
+Existing Blowfish overrides. Their content is project-specific and should not be modified without inspection.
+
+### `assets/icons/` — 25 custom SVGs
+
+Used primarily by `content/sala/index.md` (about page) and a few project pages. Inventory:
+
+`book, book-open, briefcase, building-columns, bullhorn, calculator, certificate, chart-bar, chart-line, clipboard-check, coins, compass, earth-americas, file-pen, flask, house, landmark, lightbulb, magnifying-glass, microscope, network-wired, pen-nib, school, server, vial`
+
+21 are referenced in content. 4 are unused (`building-columns`, `certificate`, `compass`, `house`) but kept available.
+
+**Usage in markdown:** `{{< icon "calculator" >}}` (this shortcode is provided by Blowfish theme).
+
+### `assets/css/custom.css`
+
+Custom CSS overrides. ~2KB. Inspect before modifying — small file, project-specific tweaks.
+
+## 10. Bug Catalog (BUG-NNN format)
+
+Hugo and Blowfish quirks discovered during development. Reference these when AI-troubleshooting render issues.
+
+### BUG-001: Smartypants converts straight quotes to curly inside markdown body
+
+**Symptom:** Shortcode invocations like `{{< section-count "cocina" >}}` render as literal text instead of executing.
+
+**Cause:** Hugo's smartypants module processes markdown body content and converts straight ASCII double quotes (`"` U+0022) to typographic open/close quotes (`"` U+201C, `"` U+201D). The shortcode parser only recognizes straight quotes, so the conversion makes the shortcode unparseable.
+
+**Workaround:** Use unquoted single-token arguments where possible.
+
+```markdown
+✅ {{< section-count cocina >}}
+❌ {{< section-count "cocina" >}}
+```
+
+This works for any argument that is a single word with no spaces or special characters. Section names, room names, and identifiers all qualify.
+
+For arguments that require spaces (or quotes for any reason), the alternative is to disable smartypants in `markup.toml`, but this affects all body content — undesirable for a portfolio site where résumé/résumés should still get smart quotes.
+
+### BUG-002: Hugo template comments parse `*/` as terminator inside `{{- /* */ -}}`
+
+**Symptom:** Template parse error `comment ends before closing delimiter` even though the comment block has matching `{{- /*` and `*/ -}}`.
+
+**Cause:** Go's text/template parser scans for the literal sequence `*/` to terminate the comment, with no escape mechanism. If the comment body contains `*/` for any reason (such as an embedded shortcode example using `{{</* ... */>}}` notation), the parser ends the comment early, then chokes on the rest.
+
+**Workaround:** Never embed shortcode example syntax in `{{- /* */ -}}` block comments. Use plain prose for documentation. If you must show example syntax, use markdown comments or HTML comments outside the template comment.
+
+```go-html-template
+✅ {{- /*
+  This shortcode counts pages.
+  Pass the section name as the first arg.
+*/ -}}
+
+❌ {{- /*
+  Usage: {{</* section-count "cocina" */>}}
+*/ -}}
+```
+
+### BUG-003: `{{< katex >}}` adjacent to `{{< lead >}}...{{< /lead >}}` breaks rendering
+
+**Symptom:** On project pages with both shortcodes, the lead block fails to render — the closing `{{< /lead >}}` shows as literal text in the body, KaTeX expressions later on the page render as raw `\(...\)` source.
+
+**Cause:** Specific interaction between Hugo's shortcode parser and the paired-vs-standalone shortcode arrangement. The bug is triggered when a paired block (`{{< lead >}}...{{< /lead >}}`) is immediately followed by a standalone shortcode (`{{< katex >}}`) with only blank lines between them, before any prose content.
+
+**Workaround:** Place `{{< katex >}}` BEFORE the lead block, immediately after the frontmatter, not after.
+
+```markdown
+✅ {{< katex >}}
+
+   {{< lead >}}
+   ...
+   {{< /lead >}}
+
+   ## At a Glance
+
+❌ {{< lead >}}
+   ...
+   {{< /lead >}}
+
+   {{< katex >}}
+
+   ## At a Glance
+```
+
+This affects 7 of the 16 project pages currently:
+- `cocina/25live-cleaner.md`
+- `cocina/qualtrics-processing-pipeline.md`
+- `estudio/ai-csv-profiler.md`
+- `garaje/foreign-per-diem-calculator-for-usa-based-institutions.md`
+- `garaje/pbi-model-export.md`
+- `jardin/dialogorithm.md`
+- `jardin/fantasy-draft-lottery-randomizer.md`
+
+### BUG-004: Mermaid 11.x requires double-quoted node labels
+
+**Symptom:** Mermaid diagrams fail to render with parse error when node labels contain parentheses.
+
+**Cause:** Mermaid 11.x is stricter about node label parsing. Bare-text labels with special characters (parens, brackets, slashes) are rejected.
+
+**Workaround:** Wrap ALL node labels in double quotes.
+
+```mermaid
+✅ flowchart TD
+   A["Read input file"] --> B["Parse rows (one per event)"]
+   B --> C["Write output"]
+
+❌ flowchart TD
+   A[Read input file] --> B[Parse rows (one per event)]
+   B --> C[Write output]
+```
+
+This applies to every Mermaid diagram in the codebase. New diagrams must follow this convention.
+
+Mermaid is enabled per-page via `mermaid = true` in `params.toml` `[article]` block, and invoked via `{{< mermaid >}}...{{< /mermaid >}}` shortcode (NOT triple-backtick code blocks — that's a different render path that doesn't work with Blowfish's setup).
+
+### BUG-005: Mobile rendering issue with U+2699 gear icon
+
+**Symptom:** Gear icon `⚙` renders as a colored emoji on iOS Safari (and in some MonoLisa font fallbacks), breaking the typographic consistency of room symbols.
+
+**Cause:** U+2699 (`⚙`) is in Unicode's emoji-presentation table. Mobile browsers and some fonts render it with emoji presentation by default, which displays it as a colored multi-pixel glyph rather than a monospace text character.
+
+**Workaround:** Use U+26ED (`⛭` GEAR WITHOUT HUB) instead. This codepoint is NOT in the emoji-presentation table, so it renders as a pure typographic glyph everywhere.
+
+The site originally tried `⚙` followed by U+FE0E (TEXT VARIATION SELECTOR) as the workaround, but this still fails when the font lacks a text-style glyph for U+2699. The U+26ED swap is the reliable fix.
+
+### BUG-006: `enableGitInfo = true` + `orderByWeight = false` produces reverse-chronological sort
+
+**Symptom:** Project rooms display projects in order of git commit date (newest first) instead of alphabetically.
+
+**Cause:** With `enableGitInfo = true` in `hugo.toml`, Hugo populates each page's `.Lastmod` field from git history. Blowfish's section list templates fall back to `.Lastmod` for sorting when `orderByWeight = false` and no `date` field is set.
+
+**Fix applied:** Set `orderByWeight = true` in `params.toml` `[list]` section, and assign `weight` values to all project pages.
+
+### BUG-007: `summaryLength = 0` in hugo.toml disables card summary rendering
+
+**Symptom:** Card listings on room landing pages show only the title, with no description text.
+
+**Cause:** Hugo's auto-summary generation requires `summaryLength` to be a positive integer. With `summaryLength = 0`, Hugo generates empty auto-summaries, and Blowfish's card template falls through to using nothing.
+
+**Fix applied:** Set `summaryLength = 70` in `hugo.toml`. This makes Hugo generate auto-summaries from the first 70 words of body content. However, frontmatter `summary` field always takes priority when present (which it is on all project pages).
+
+### BUG-008: Hugo dev server cache occasionally serves stale output
+
+**Symptom:** After a config change or rapid frontmatter edits across many files, the dev server continues serving old rendered output even though the source files are correct.
+
+**Cause:** Hugo's file watcher debounce can drop file change events when many files are modified simultaneously. Config changes (especially to `hugo.toml`) sometimes do not auto-restart cleanly.
+
+**Workaround:** Stop the dev server (Ctrl+C) and restart it manually after batch edits or config changes. The fresh start clears the cache.
+
+## 11. Configuration Files
+
+### `config/_default/hugo.toml`
+
+```toml
+theme = "blowfish"
+baseURL = "https://pgbd.casa/"
+defaultContentLanguage = "en"
+languageCode = "en"
+
+enableRobotsTXT = true
+paginate = 10
+summaryLength = 70           # see BUG-007
+
+buildDrafts = false
+buildFuture = false
+
+enableEmoji = true
+enableGitInfo = true         # see BUG-006
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[imaging]
+  anchor = "Center"
+
+[caches]
+  [caches.images]
+    dir = ":resourceDir/_gen"
+    maxAge = "720h"
+  [caches.assets]
+    dir = ":resourceDir/_gen"
+    maxAge = "720h"
+```
+
+### `config/_default/params.toml` — non-default values only
+
+```toml
+colorScheme = "github"
+defaultAppearance = "dark"
+autoSwitchAppearance = true
+
+enableSearch = true
+enableCodeCopy = true
+
+[homepage]
+  layout = "page"
+  showRecent = false
+  cardView = false
+
+[article]
+  mermaid = true             # required for Mermaid diagrams
+  showLastUpdated = true
+  showDate = false
+  showAuthor = false
+  showReadingTime = false
+  showTableOfContents = true
+  showWordCount = false
+  showRelatedContent = false
+  showComments = false
+
+[list]
+  showSummary = true
+  showCards = true
+  cardView = true
+  orderByWeight = true       # see BUG-006
+  groupByYear = false
+```
+
+### `config/_default/languages.en.toml`
+
+```toml
+title = "⛫ pgbd's digital casa"
+
+[params]
+  description = "Mi casa digital es su casa digital. Personal portfolio and analytical work."
+
+[params.author]
+  name = "Philip Gregory Bachas-Daunert"
+  headline = "Data analyst at the University of Miami Miller School of Medicine"
+  bio = "Humanities to analytics, the long way."
+  links = [
+    { github = "https://github.com/hihipy" },
+    { linkedin = "https://linkedin.com/in/pbachas/" },
+    { email = "mailto:career-pgbd@pm.me" }
+  ]
+```
+
+### `config/_default/menus.en.toml`
+
+Three social links: linkedin, email, github. Order via `weight` field (10, 20, 30).
+
+### `config/_default/markup.toml`
+
+Existing markup configuration. Inspect before modifying.
+
+## 12. Directory Layout
+
+```
+hihipy.github.io/
+├── README.md                           # this file
+├── assets/
+│   ├── css/
+│   │   └── custom.css                  # custom Blowfish CSS overrides
+│   ├── icons/                          # 25 SVG icons (see §9)
+│   └── img/
+│       └── logo.svg                    # site logo
+├── config/_default/
+│   ├── hugo.toml                       # Hugo core config
+│   ├── languages.en.toml               # English language pack
+│   ├── markup.toml                     # markup options
+│   ├── menus.en.toml                   # social link menu
+│   └── params.toml                     # Blowfish theme params
+├── content/
+│   ├── _index.md                       # home page
+│   ├── puerta/_index.md                # door / résumé room
+│   ├── sala/index.md                   # about page (regular page, not section)
+│   ├── cocina/
+│   │   ├── _index.md                   # room landing
+│   │   └── <project>.md × 4
+│   ├── estudio/
+│   │   ├── _index.md
+│   │   └── <project>.md × 3
+│   ├── garaje/
+│   │   ├── _index.md
+│   │   └── <project>.md × 5
+│   └── jardin/
+│       ├── _index.md
+│       └── <project>.md × 4
+├── layouts/
+│   ├── partials/
+│   │   ├── footer.html                 # custom footer override
+│   │   └── header.html                 # custom header override
+│   └── shortcodes/
+│       └── section-count.html          # custom shortcode (see §9)
+├── static/
+│   ├── CNAME                           # GitHub Pages custom domain
+│   ├── android-chrome-192x192.png      # PWA icons
+│   ├── android-chrome-512x512.png
+│   ├── apple-touch-icon.png
+│   ├── favicon-16x16.png
+│   ├── favicon-32x32.png
+│   ├── favicon.ico
+│   ├── fonts/
+│   │   ├── MonoLisaVariable.woff2
+│   │   └── MonoLisaVariableItalic.woff2
+│   ├── resume.pdf                      # served at /resume.pdf
+│   └── site.webmanifest
+└── themes/blowfish/                    # theme submodule (NOT in this README)
+```
+
+**Important:**
+- `content/sala/index.md` is a single-file page, NOT `_index.md` (no underscore). This makes `/sala/` a regular page with body content rather than a section listing.
+- `content/puerta/_index.md` is a section index because puerta is technically a section (with no children currently).
+- `static/resume.pdf` is served verbatim at `/resume.pdf` regardless of which content page links to it.
+
+## 13. Adding a New Project Page — Procedure
+
+When adding a new project to the portfolio, follow this exact procedure.
+
+### Step 1: Decide the room
+
+Match the project to a room based on its primary purpose:
+
+| If the project... | Goes in |
+|---|---|
+| ...prepares, cleans, or transforms data | `cocina` |
+| ...uses AI/LLMs as a primary feature | `estudio` |
+| ...is a utility tool for analysts (Excel, calculators, processing) | `garaje` |
+| ...is a personal/creative side project unrelated to professional work | `jardin` |
+
+If the project is genuinely cross-cutting, prefer the room where the project's *primary distinguishing feature* lives (its differentiator, not its substrate).
+
+### Step 2: Author the page
+
+Create `content/<room>/<repo-name>.md` using the template in §6. Author all four text tiers (summary, lead, description, body) deliberately per §5. Match the tone conventions in §7.
+
+### Step 3: Re-assign weights
+
+After adding the new file, ALL files in that room must have their weights re-assigned to maintain alphabetical order.
+
+```python
+# Pseudocode for the resort
+files = sorted(<room>/*.md)
+for i, file in enumerate(files):
+    file.weight = (i + 1) * 10
+```
+
+The room's project list in §4 of this README must also be updated.
+
+### Step 4: Verify locally
 
 ```bash
-cd themes/blowfish
-git pull origin main
-cd ../..
-git add themes/blowfish
-git commit -m "Update Blowfish theme"
-git push
+hugo server -D
 ```
 
-## Troubleshooting
+Visit `http://localhost:1313/<room>/` and confirm:
 
-**Site looks unstyled.** Blowfish submodule probably wasn't added correctly. Run `ls themes/blowfish/` — if empty, run `git submodule update --init --recursive`.
+- The new project appears in alphabetical order
+- The card shows the summary text (3-6 word label)
+- Clicking through opens the project page
+- The lead block renders styled at the top
+- Math expressions (if any) render correctly
+- Mermaid diagrams (if any) render correctly
 
-**Font is wrong.** Check that the woff2 files are at `static/fonts/MonoLisaVariable.woff2` and `static/fonts/MonoLisaVariableItalic.woff2`. The browser DevTools Network tab will show 404s if the path is wrong.
+### Step 5: Update the home page count automatically
 
-**Build fails on GitHub.** Open the failed workflow run in the Actions tab and read the log. Common causes: missing submodule, invalid TOML syntax, Hugo version mismatch.
+The `section-count` shortcode auto-updates. No manual intervention needed.
+
+### Step 6: Commit
+
+User commits via GitHub Desktop, NOT command-line git. The deployment is automatic via GitHub Pages.
+
+## 14. Build and Deploy
+
+### Local development
+
+```bash
+cd hihipy.github.io
+hugo server -D
+# visit http://localhost:1313/
+```
+
+### Production build
+
+GitHub Pages handles this automatically on push to `main`. No manual build step.
+
+### Deployment URL chain
+
+`main` branch push → GitHub Pages builds → serves at `https://hihipy.github.io` → CNAME redirects to `https://pgbd.casa`
+
+## 15. Outstanding Items / Known Issues
+
+| Item | Notes |
+|---|---|
+| Sala description discrepancy | The `description` field in `content/sala/index.md` says "Institutional research analyst" but other contexts (the Blowfish `[params.author]` headline) say "Data analyst." If they refer to the same role under different terminology, fine. If alignment is desired, update the sala frontmatter. |
+| Four unused icons | `building-columns`, `certificate`, `compass`, `house` in `assets/icons/` are not referenced anywhere. Kept available for future use. The `certificate` icon is the most likely candidate for sala's Certifications section if one is added. |
+
+## 16. Glossary
+
+| Term | Meaning |
+|---|---|
+| Casa | Spanish for house. Brand metaphor for the site. |
+| Room | A top-level navigation section. Six total. |
+| Project page | A markdown file inside a project room (cocina/estudio/garaje/jardin). |
+| Lead block | The `{{< lead >}}...{{< /lead >}}` shortcode, used for tier-2 elevator pitches. |
+| Summary | The frontmatter `summary` field, used as tier-1 card label. |
+| Section count | The `{{< section-count <room> >}}` custom shortcode. |
+| Blowfish | The Hugo theme (`themes/blowfish/`). Reference: https://blowfish.page/docs/ |
+| Tier 1-4 | The complexity gradient. See §5. |
+| Puerta-first | The convention that `puerta` (door) comes first on the home page. |
+
+## 17. Reference Links
+
+- Hugo docs: https://gohugo.io/documentation/
+- Blowfish theme docs: https://blowfish.page/docs/
+- KaTeX docs (used by `{{< katex >}}` shortcode): https://katex.org/docs/supported.html
+- Mermaid docs (used by `{{< mermaid >}}` shortcode): https://mermaid.js.org/intro/
+- Hugo shortcode reference: https://gohugo.io/templates/shortcode-templates/
+- GitHub Pages custom domain setup: https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site
+
+## 18. Document Maintenance
+
+This README is the canonical reference for the codebase. When making non-trivial changes to the site, update the relevant section here. Specifically:
+
+- §3 if room structure changes
+- §4 if a project is added, removed, or renamed
+- §6 if the project page template changes
+- §10 when new bugs are discovered
+- §11 when configuration is changed
+- §15 when known issues are resolved or new ones found
+
+The README is intentionally dense. It is not meant to be read sequentially; it is meant to be searched and referenced by section.

@@ -13,19 +13,19 @@ layout: "single"
 ---
 
 {{< lead >}}
-Welcome. This is my workshop and portfolio, organized like a house. The Spanish room names are a small tribute to my dual U.S. and Spanish citizenship. The sala is the about page; the other rooms hold different kinds of analytical work and side projects. Make yourself at home and pick a room.
+Mi Casa Digital es Su Casa Digital
 {{< /lead >}}
 
-[§ ~/sala  # About Me](/sala/) · about Philip, full work history, education, certifications, and skills.
+Welcome to my digital casa. The Spanish room names are a small tribute to my dual U.S. and Spanish citizenship; feel free to wander between rooms.
 
-[≡ ~/cv  # Résumé PDF](/cv/) · downloadable PDF résumé.
+[◰ ~/puerta  # Résumé PDF](/puerta/) · Downloadable PDF résumé.
 
-[⛁ ~/cocina  # Data Prep & ETL](/cocina/) · data preparation and ETL tools. Where messy data gets cleaned up.
+[§ ~/sala  # About Me](/sala/) · About Philip, with full work history, education, certifications, and skills.
 
-[▤ ~/galería  # BI & Reporting](/galer%C3%ADa/) · business intelligence and reporting projects. Dashboards, model exports, automated reports.
+[⛁ ~/cocina  # Data Prep & ETL](/cocina/)  {{< section-count cocina >}} · Data preparation and ETL tools, where messy data gets cleaned up.
 
-[✦ ~/estudio  # AI & Experiments](/estudio/) · AI-augmented analytics tools and research experiments.
+[✦ ~/estudio  # AI & Experiments](/estudio/)  {{< section-count estudio >}} · AI-augmented analytics tools and research experiments.
 
-[⚙ ~/garaje  # Analyst Utilities](/garaje/) · analyst utilities. Excel macros, calculators, processing scripts.
+[⛭ ~/garaje  # Analyst Utilities](/garaje/)  {{< section-count garaje >}} · Excel macros, calculators, and processing scripts that make analyst work easier.
 
-[❀ ~/jardín  # Side Projects](/jard%C3%ADn/) · side projects and miscellaneous experiments.
+[❀ ~/jardín  # Side Projects](/jardin/)  {{< section-count jardin >}} · Personal projects and miscellaneous experiments.

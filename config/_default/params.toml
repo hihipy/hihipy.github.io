@@ -52,6 +52,7 @@ enableCodeCopy = true
 # ============================================================
 
 [article]
+  mermaid = true
   showLastUpdated = true   # show last edit date at bottom of each page
   showDate = false
   showDateOnlyInArticle = false
@@ -90,7 +91,7 @@ enableCodeCopy = true
   showTableOfContents = false
   showCards = true            # render projects as cards
   showTaxonomies = false
-  orderByWeight = false
+  orderByWeight = true
   groupByYear = false
   cardView = true             # card-style list
   cardViewScreenWidth = false

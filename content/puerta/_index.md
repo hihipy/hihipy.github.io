@@ -1,6 +1,6 @@
 ---
 layout: "single"
-title: "≡ ~/cv  # résumé pdf"
+title: "◰ ~/puerta  # Résumé PDF"
 description: "Philip Gregory Bachas-Daunert. Printable résumé."
 draft: false
 showAuthor: false
