@@ -28,6 +28,8 @@ The home page lead reads `Mi Casa Digital es Su Casa Digital` (Spanish-style tit
 
 The metaphor is the differentiator. When in doubt, choose the option that strengthens the casa framing rather than the conventional portfolio framing.
 
+The casa metaphor extends to the 404 page, which uses casa language ("No room here. The hallway you walked down doesn\'t lead anywhere"). See §9.
+
 ## 3. Room Inventory
 
 Six rooms total. Two non-project rooms (puerta, sala) and four project rooms (cocina, estudio, garaje, jardin).
@@ -44,6 +46,8 @@ Six rooms total. Two non-project rooms (puerta, sala) and four project rooms (co
 Total: 16 project pages.
 
 **Home page order (intentional):** `puerta`, `sala`, then the four project rooms alphabetically. Puerta is first because the metaphor is "visitor walks through the door first." This is non-negotiable; do not reorder without instruction.
+
+The four project rooms display auto-counted project totals via the `section-count` shortcode (see §9).
 
 ## 4. Project Pages — Complete Inventory
 
@@ -91,7 +95,7 @@ Every project page exposes three distinct text fields, each targeting a differen
 
 | Tier | Field | Length | Audience | Where it appears |
 |---|---|---|---|---|
-| 1 | `summary` (frontmatter) | 3-6 words | Recruiter scanning room | As card label on `/<room>/` listing |
+| 1 | `summary` (frontmatter) | 3-6 words | Recruiter scanning room | As card label on `/<room>/` listing AND in search results |
 | 2 | `{{< lead >}}` block | 12-20 words | HR/recruiter on the page itself | At the very top of the project page body |
 | 3 | `description` (frontmatter) | 30-50 words | Search engines, social previews | `<meta name="description">` and Open Graph tags |
 | 4 | Body content | 1500-3500 words | Reader who clicked in deliberately | Below the lead block |
@@ -99,6 +103,8 @@ Every project page exposes three distinct text fields, each targeting a differen
 The three written fields are NOT redundant. Each serves a different function and CANNOT be auto-derived from the others. Tier 1 is for scanability. Tier 2 is for "should I read this page or move on." Tier 3 is for SEO and link previews. Tier 4 is for actual technical depth.
 
 When asked to add a new project, all four tiers must be authored deliberately.
+
+**Important: `summary` also drives search result quality.** If `summary` is missing from a page\'s frontmatter, Blowfish\'s search index falls back to Hugo\'s auto-generated summary (the first ~70 words of body content). This produces noisy, bloated search results. Every page that is discoverable via search SHOULD have a `summary` field, including non-project pages (home, sala, puerta). See BUG-010.
 
 ## 6. Project Page Template
 
@@ -204,7 +210,7 @@ These are established conventions across all 16 project pages. Match them when a
 | **Title Case for headings** | "Data Prep & ETL", "AI & Experiments", "Side Projects". |
 | **Sentence case for descriptions and body prose** | "Cleans messy data exports." not "Cleans Messy Data Exports." |
 | **Spanish-style title case for Spanish phrases** | "Mi Casa Digital es Su Casa Digital" — nouns capitalized, lowercase prepositions/possessives (`es`, `su`). |
-| **Audience: HR/recruiter with bachelor's degree, no coding background** | Avoid jargon in leads and summaries. Domain terms acceptable in body. |
+| **Audience: HR/recruiter with bachelor\'s degree, no coding background** | Avoid jargon in leads and summaries. Domain terms acceptable in body. |
 | **Conciseness over completeness** | Tighter is better. The reader can scroll for more. |
 | **Mention Miller School only when project genuinely connects** | Not as decoration. |
 | **No invented content, no redundancy** | If two fields say the same thing, one of them is wrong. |
@@ -231,7 +237,6 @@ Pages within a room are sorted alphabetically by enforcing weights in alphabetic
 
 1. Sort existing files alphabetically including the new one.
 2. Re-assign weights `10, 20, 30, ...` in order.
-3. The script `weight_resort.py` (see §13) does this automatically.
 
 ### Field role reminders
 
@@ -240,7 +245,7 @@ Pages within a room are sorted alphabetically by enforcing weights in alphabetic
 | `title` | H1 of the page; also used as alphabetical sort key when no weight is set |
 | `weight` | Hugo section list ordering |
 | `description` | `<meta name="description">`, Open Graph, Twitter card |
-| `summary` | Card label on the room landing page |
+| `summary` | Card label on the room landing page AND search result snippet |
 | `tags` | Currently unused for navigation but indexed; reserve for future tag pages |
 | `showDate`, `showReadingTime`, `showAuthor` | All `false` to keep pages stripped of clutter |
 
@@ -251,6 +256,18 @@ Pages within a room are sorted alphabetically by enforcing weights in alphabetic
 - `draft: true` — never used; commit only when ready
 
 ## 9. Custom Infrastructure
+
+### `layouts/404.html`
+
+Custom 404 page in casa style. Renders:
+
+- Title in terminal format: `~/404 # Not Found`
+- Casa-flavored copy: "No room here. The hallway you walked down doesn\'t lead anywhere..."
+- Keyboard shortcut hint: press `/` to open Blowfish\'s built-in search modal
+- Link list to all six rooms in the same format as the home page
+- Inherits Blowfish\'s `baseof.html` (header with search, footer, dark-mode toggle, fonts)
+
+GitHub Pages automatically serves `/404.html` (which Hugo generates from this layout) for any unmatched URL.
 
 ### `layouts/shortcodes/section-count.html`
 
@@ -296,6 +313,10 @@ Used primarily by `content/sala/index.md` (about page) and a few project pages. 
 
 Custom CSS overrides. ~2KB. Inspect before modifying — small file, project-specific tweaks.
 
+### `assets/img/favicon-source.svg`
+
+Canonical SVG source for the favicon set. Donut chart in Blowfish github palette: primary blue (`#0969da`), light blue tint (`#54aeff`), neutral gray (`#656d76`). Three segments at 50/30/20 percent with 4-degree gaps. The PNG/ICO files in `static/` are derived from this source. To regenerate the full favicon pack from this SVG, see §13.
+
 ## 10. Bug Catalog (BUG-NNN format)
 
 Hugo and Blowfish quirks discovered during development. Reference these when AI-troubleshooting render issues.
@@ -304,7 +325,7 @@ Hugo and Blowfish quirks discovered during development. Reference these when AI-
 
 **Symptom:** Shortcode invocations like `{{< section-count "cocina" >}}` render as literal text instead of executing.
 
-**Cause:** Hugo's smartypants module processes markdown body content and converts straight ASCII double quotes (`"` U+0022) to typographic open/close quotes (`"` U+201C, `"` U+201D). The shortcode parser only recognizes straight quotes, so the conversion makes the shortcode unparseable.
+**Cause:** Hugo\'s smartypants module processes markdown body content and converts straight ASCII double quotes (`"` U+0022) to typographic open/close quotes (`“` U+201C, `”` U+201D). The shortcode parser only recognizes straight quotes, so the conversion makes the shortcode unparseable.
 
 **Workaround:** Use unquoted single-token arguments where possible.
 
@@ -321,26 +342,15 @@ For arguments that require spaces (or quotes for any reason), the alternative is
 
 **Symptom:** Template parse error `comment ends before closing delimiter` even though the comment block has matching `{{- /*` and `*/ -}}`.
 
-**Cause:** Go's text/template parser scans for the literal sequence `*/` to terminate the comment, with no escape mechanism. If the comment body contains `*/` for any reason (such as an embedded shortcode example using `{{</* ... */>}}` notation), the parser ends the comment early, then chokes on the rest.
+**Cause:** Go\'s text/template parser scans for the literal sequence `*/` to terminate the comment, with no escape mechanism. If the comment body contains `*/` for any reason (such as an embedded shortcode example using `{{</* ... */>}}` notation), the parser ends the comment early, then chokes on the rest.
 
 **Workaround:** Never embed shortcode example syntax in `{{- /* */ -}}` block comments. Use plain prose for documentation. If you must show example syntax, use markdown comments or HTML comments outside the template comment.
-
-```go-html-template
-✅ {{- /*
-  This shortcode counts pages.
-  Pass the section name as the first arg.
-*/ -}}
-
-❌ {{- /*
-  Usage: {{</* section-count "cocina" */>}}
-*/ -}}
-```
 
 ### BUG-003: `{{< katex >}}` adjacent to `{{< lead >}}...{{< /lead >}}` breaks rendering
 
 **Symptom:** On project pages with both shortcodes, the lead block fails to render — the closing `{{< /lead >}}` shows as literal text in the body, KaTeX expressions later on the page render as raw `\(...\)` source.
 
-**Cause:** Specific interaction between Hugo's shortcode parser and the paired-vs-standalone shortcode arrangement. The bug is triggered when a paired block (`{{< lead >}}...{{< /lead >}}`) is immediately followed by a standalone shortcode (`{{< katex >}}`) with only blank lines between them, before any prose content.
+**Cause:** Specific interaction between Hugo\'s shortcode parser and the paired-vs-standalone shortcode arrangement. The bug is triggered when a paired block (`{{< lead >}}...{{< /lead >}}`) is immediately followed by a standalone shortcode (`{{< katex >}}`) with only blank lines between them, before any prose content.
 
 **Workaround:** Place `{{< katex >}}` BEFORE the lead block, immediately after the frontmatter, not after.
 
@@ -391,13 +401,13 @@ This affects 7 of the 16 project pages currently:
 
 This applies to every Mermaid diagram in the codebase. New diagrams must follow this convention.
 
-Mermaid is enabled per-page via `mermaid = true` in `params.toml` `[article]` block, and invoked via `{{< mermaid >}}...{{< /mermaid >}}` shortcode (NOT triple-backtick code blocks — that's a different render path that doesn't work with Blowfish's setup).
+Mermaid is enabled per-page via `mermaid = true` in `params.toml` `[article]` block, and invoked via `{{< mermaid >}}...{{< /mermaid >}}` shortcode (NOT triple-backtick code blocks — that\'s a different render path that doesn\'t work with Blowfish\'s setup).
 
 ### BUG-005: Mobile rendering issue with U+2699 gear icon
 
 **Symptom:** Gear icon `⚙` renders as a colored emoji on iOS Safari (and in some MonoLisa font fallbacks), breaking the typographic consistency of room symbols.
 
-**Cause:** U+2699 (`⚙`) is in Unicode's emoji-presentation table. Mobile browsers and some fonts render it with emoji presentation by default, which displays it as a colored multi-pixel glyph rather than a monospace text character.
+**Cause:** U+2699 (`⚙`) is in Unicode\'s emoji-presentation table. Mobile browsers and some fonts render it with emoji presentation by default, which displays it as a colored multi-pixel glyph rather than a monospace text character.
 
 **Workaround:** Use U+26ED (`⛭` GEAR WITHOUT HUB) instead. This codepoint is NOT in the emoji-presentation table, so it renders as a pure typographic glyph everywhere.
 
@@ -407,7 +417,7 @@ The site originally tried `⚙` followed by U+FE0E (TEXT VARIATION SELECTOR) as 
 
 **Symptom:** Project rooms display projects in order of git commit date (newest first) instead of alphabetically.
 
-**Cause:** With `enableGitInfo = true` in `hugo.toml`, Hugo populates each page's `.Lastmod` field from git history. Blowfish's section list templates fall back to `.Lastmod` for sorting when `orderByWeight = false` and no `date` field is set.
+**Cause:** With `enableGitInfo = true` in `hugo.toml`, Hugo populates each page\'s `.Lastmod` field from git history. Blowfish\'s section list templates fall back to `.Lastmod` for sorting when `orderByWeight = false` and no `date` field is set.
 
 **Fix applied:** Set `orderByWeight = true` in `params.toml` `[list]` section, and assign `weight` values to all project pages.
 
@@ -415,7 +425,7 @@ The site originally tried `⚙` followed by U+FE0E (TEXT VARIATION SELECTOR) as 
 
 **Symptom:** Card listings on room landing pages show only the title, with no description text.
 
-**Cause:** Hugo's auto-summary generation requires `summaryLength` to be a positive integer. With `summaryLength = 0`, Hugo generates empty auto-summaries, and Blowfish's card template falls through to using nothing.
+**Cause:** Hugo\'s auto-summary generation requires `summaryLength` to be a positive integer. With `summaryLength = 0`, Hugo generates empty auto-summaries, and Blowfish\'s card template falls through to using nothing.
 
 **Fix applied:** Set `summaryLength = 70` in `hugo.toml`. This makes Hugo generate auto-summaries from the first 70 words of body content. However, frontmatter `summary` field always takes priority when present (which it is on all project pages).
 
@@ -423,9 +433,27 @@ The site originally tried `⚙` followed by U+FE0E (TEXT VARIATION SELECTOR) as 
 
 **Symptom:** After a config change or rapid frontmatter edits across many files, the dev server continues serving old rendered output even though the source files are correct.
 
-**Cause:** Hugo's file watcher debounce can drop file change events when many files are modified simultaneously. Config changes (especially to `hugo.toml`) sometimes do not auto-restart cleanly.
+**Cause:** Hugo\'s file watcher debounce can drop file change events when many files are modified simultaneously. Config changes (especially to `hugo.toml`) sometimes do not auto-restart cleanly.
 
 **Workaround:** Stop the dev server (Ctrl+C) and restart it manually after batch edits or config changes. The fresh start clears the cache.
+
+### BUG-009: Bar chart favicon reads as cellular signal strength
+
+**Symptom:** Original favicon (three vertical ascending bars) was visually ambiguous — read as cellular signal indicator rather than data analytics.
+
+**Cause:** Vertical bars of uniformly increasing height are the universal symbol for cellular signal strength in mobile UIs (status bar icons). The bar chart shape, while semantically correct for "data analytics," is visually overloaded.
+
+**Fix applied:** Replaced with a donut chart design (three segments: 50%, 30%, 20% with 4-degree gaps) using the Blowfish github color palette. The donut shape has no competing semantic interpretation and reads unambiguously as analytics. Source SVG at `assets/img/favicon-source.svg`. Generated PNG/ICO files at the standard locations in `static/`.
+
+### BUG-010: Search index uses Hugo auto-summary when `summary` field is missing
+
+**Symptom:** Search results for non-project pages (home, sala, puerta) showed bloated descriptions: full paragraphs of body content, embedded HTML fallback text from PDF objects, concatenated room descriptions, etc.
+
+**Cause:** Blowfish\'s search index (`index.json` output) includes a description field for each result. The field is sourced from the page\'s `summary` frontmatter if present, otherwise falls back to Hugo\'s auto-generated `.Summary` (the first ~70 words of body content). Pages without an explicit `summary` produce noisy search snippets.
+
+**Fix applied:** Added `summary` frontmatter fields to the home page, `content/sala/index.md`, and `content/puerta/_index.md`. Project pages already had summaries from earlier work.
+
+**Convention:** Every page that should be discoverable via search MUST have a `summary` field. This is now part of the page-creation checklist (§13).
 
 ## 11. Configuration Files
 
@@ -499,7 +527,7 @@ enableCodeCopy = true
 ### `config/_default/languages.en.toml`
 
 ```toml
-title = "⛫ pgbd's digital casa"
+title = "⛫ pgbd\'s digital casa"
 
 [params]
   description = "Mi casa digital es su casa digital. Personal portfolio and analytical work."
@@ -533,6 +561,7 @@ hihipy.github.io/
 │   │   └── custom.css                  # custom Blowfish CSS overrides
 │   ├── icons/                          # 25 SVG icons (see §9)
 │   └── img/
+│       ├── favicon-source.svg          # donut chart favicon source (see §9)
 │       └── logo.svg                    # site logo
 ├── config/_default/
 │   ├── hugo.toml                       # Hugo core config
@@ -541,9 +570,9 @@ hihipy.github.io/
 │   ├── menus.en.toml                   # social link menu
 │   └── params.toml                     # Blowfish theme params
 ├── content/
-│   ├── _index.md                       # home page
-│   ├── puerta/_index.md                # door / résumé room
-│   ├── sala/index.md                   # about page (regular page, not section)
+│   ├── _index.md                       # home page (has summary field)
+│   ├── puerta/_index.md                # door / résumé room (has summary field)
+│   ├── sala/index.md                   # about page, regular page (has summary field)
 │   ├── cocina/
 │   │   ├── _index.md                   # room landing
 │   │   └── <project>.md × 4
@@ -557,6 +586,7 @@ hihipy.github.io/
 │       ├── _index.md
 │       └── <project>.md × 4
 ├── layouts/
+│   ├── 404.html                        # custom casa-style 404 (see §9)
 │   ├── partials/
 │   │   ├── footer.html                 # custom footer override
 │   │   └── header.html                 # custom header override
@@ -564,12 +594,12 @@ hihipy.github.io/
 │       └── section-count.html          # custom shortcode (see §9)
 ├── static/
 │   ├── CNAME                           # GitHub Pages custom domain
-│   ├── android-chrome-192x192.png      # PWA icons
+│   ├── android-chrome-192x192.png      # PWA icons (donut chart)
 │   ├── android-chrome-512x512.png
-│   ├── apple-touch-icon.png
+│   ├── apple-touch-icon.png            # 180×180
 │   ├── favicon-16x16.png
 │   ├── favicon-32x32.png
-│   ├── favicon.ico
+│   ├── favicon.ico                     # multi-resolution: 16, 32, 48
 │   ├── fonts/
 │   │   ├── MonoLisaVariable.woff2
 │   │   └── MonoLisaVariableItalic.woff2
@@ -582,6 +612,7 @@ hihipy.github.io/
 - `content/sala/index.md` is a single-file page, NOT `_index.md` (no underscore). This makes `/sala/` a regular page with body content rather than a section listing.
 - `content/puerta/_index.md` is a section index because puerta is technically a section (with no children currently).
 - `static/resume.pdf` is served verbatim at `/resume.pdf` regardless of which content page links to it.
+- Favicon files are donut chart in github palette — see BUG-009. Source SVG at `assets/img/favicon-source.svg`.
 
 ## 13. Adding a New Project Page — Procedure
 
@@ -598,11 +629,22 @@ Match the project to a room based on its primary purpose:
 | ...is a utility tool for analysts (Excel, calculators, processing) | `garaje` |
 | ...is a personal/creative side project unrelated to professional work | `jardin` |
 
-If the project is genuinely cross-cutting, prefer the room where the project's *primary distinguishing feature* lives (its differentiator, not its substrate).
+If the project is genuinely cross-cutting, prefer the room where the project\'s *primary distinguishing feature* lives (its differentiator, not its substrate).
 
 ### Step 2: Author the page
 
 Create `content/<room>/<repo-name>.md` using the template in §6. Author all four text tiers (summary, lead, description, body) deliberately per §5. Match the tone conventions in §7.
+
+**Checklist before saving:**
+
+- [ ] `title` matches the GitHub repo name exactly
+- [ ] `description` is 30-50 words, recruiter-readable
+- [ ] `summary` is 3-6 words (CRITICAL for clean search results, see BUG-010)
+- [ ] `tags` includes language, libraries, and domain
+- [ ] `weight` is set; will be re-assigned in Step 3
+- [ ] `{{< lead >}}` block is 12-20 words
+- [ ] `{{< katex >}}` is BEFORE the lead block if math is used (BUG-003)
+- [ ] All Mermaid node labels are double-quoted (BUG-004)
 
 ### Step 3: Re-assign weights
 
@@ -615,7 +657,7 @@ for i, file in enumerate(files):
     file.weight = (i + 1) * 10
 ```
 
-The room's project list in §4 of this README must also be updated.
+The room\'s project list in §4 of this README must also be updated.
 
 ### Step 4: Verify locally
 
@@ -631,6 +673,7 @@ Visit `http://localhost:1313/<room>/` and confirm:
 - The lead block renders styled at the top
 - Math expressions (if any) render correctly
 - Mermaid diagrams (if any) render correctly
+- Press `/` and search for the new project; it should appear with a clean compact summary (BUG-010)
 
 ### Step 5: Update the home page count automatically
 
@@ -639,6 +682,18 @@ The `section-count` shortcode auto-updates. No manual intervention needed.
 ### Step 6: Commit
 
 User commits via GitHub Desktop, NOT command-line git. The deployment is automatic via GitHub Pages.
+
+### Regenerating the favicon
+
+If the favicon design needs to change, regenerate from `assets/img/favicon-source.svg`:
+
+1. Edit the SVG (segments, colors, geometry as needed)
+2. Run a Python script using PIL to render PNG variants at sizes 16, 32, 180, 192, 512
+3. Build favicon.ico as a multi-resolution ICO containing 16, 32, 48
+4. Place all output files in `static/` replacing the existing icons
+5. Hard-refresh the browser (Cmd+Shift+R) to bust the favicon cache
+
+The full generation script used to produce the current favicon set is preserved in this session\'s history.
 
 ## 14. Build and Deploy
 
@@ -663,7 +718,7 @@ GitHub Pages handles this automatically on push to `main`. No manual build step.
 | Item | Notes |
 |---|---|
 | Sala description discrepancy | The `description` field in `content/sala/index.md` says "Institutional research analyst" but other contexts (the Blowfish `[params.author]` headline) say "Data analyst." If they refer to the same role under different terminology, fine. If alignment is desired, update the sala frontmatter. |
-| Four unused icons | `building-columns`, `certificate`, `compass`, `house` in `assets/icons/` are not referenced anywhere. Kept available for future use. The `certificate` icon is the most likely candidate for sala's Certifications section if one is added. |
+| Four unused icons | `building-columns`, `certificate`, `compass`, `house` in `assets/icons/` are not referenced anywhere. Kept available for future use. The `certificate` icon is the most likely candidate for sala\'s Certifications section if one is added. |
 
 ## 16. Glossary
 
@@ -673,7 +728,7 @@ GitHub Pages handles this automatically on push to `main`. No manual build step.
 | Room | A top-level navigation section. Six total. |
 | Project page | A markdown file inside a project room (cocina/estudio/garaje/jardin). |
 | Lead block | The `{{< lead >}}...{{< /lead >}}` shortcode, used for tier-2 elevator pitches. |
-| Summary | The frontmatter `summary` field, used as tier-1 card label. |
+| Summary | The frontmatter `summary` field, used as tier-1 card label AND search result snippet. |
 | Section count | The `{{< section-count <room> >}}` custom shortcode. |
 | Blowfish | The Hugo theme (`themes/blowfish/`). Reference: https://blowfish.page/docs/ |
 | Tier 1-4 | The complexity gradient. See §5. |

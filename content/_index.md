@@ -1,6 +1,7 @@
 ---
 title: "⛫ pgbd's digital casa"
 description: "Mi casa digital es su casa digital. Personal portfolio and analytical work."
+summary: "Personal portfolio of Philip Bachas-Daunert, Data Analyst at the University of Miami Miller School of Medicine."
 draft: false
 showAuthor: false
 showDate: false

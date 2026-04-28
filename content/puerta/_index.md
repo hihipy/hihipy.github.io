@@ -2,6 +2,7 @@
 layout: "single"
 title: "◰ ~/puerta  # Résumé PDF"
 description: "Philip Gregory Bachas-Daunert. Printable résumé."
+summary: "Downloadable PDF résumé."
 draft: false
 showAuthor: false
 showDate: false
