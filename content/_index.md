@@ -22,7 +22,7 @@ La Meva Casa Digital és La Teva Casa Digital
 {{< /typeit >}}
 {{< /lead >}}
 
-Welcome to my digital casa. The Spanish room names are a small tribute to my dual U.S. and Spanish citizenship, with the rotating welcome adding a nod to my Greek heritage. Feel free to wander between rooms.
+Welcome to my digital casa. The Spanish room names are a small tribute to my dual U.S. and Spanish citizenship, with the rotating welcome adding nods to my Catalan and Greek heritage. Feel free to wander between rooms.
 
 [◰ ~/puerta  # Résumé PDF](/puerta/) · Downloadable PDF résumé.
 
