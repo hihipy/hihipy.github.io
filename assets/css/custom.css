@@ -84,3 +84,24 @@ figure,
     min-width: 0;
   }
 }
+
+/* ============================================================
+   Mobile fix: typing-animation lead overflow on narrow viewports.
+   The {{< typeit >}} animation grows letter-by-letter; at full
+   string width on a phone, longer language variants (Greek
+   `Τα Pipelines Δεδομένων μου`, Catalan `Els Meus Pipelines de
+   Dades`) wrap to two lines mid-cycle, then unwrap when a
+   shorter string types in next. Surrounding text bounces.
+   Fix: shrink the lead font slightly under 640px AND reserve
+   enough min-height for two lines so wrapping (if it still
+   happens at very narrow widths) does not push siblings down.
+   ============================================================ */
+@media (max-width: 640px) {
+  .prose .lead,
+  div.lead,
+  [id^="typeit-"] {
+    font-size: 1.05rem;
+    line-height: 1.4;
+    min-height: 2.9em;
+  }
+}
