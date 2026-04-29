@@ -564,6 +564,18 @@ This requires `pip install fonttools brotli` (Brotli is needed because woff2 is 
 
 **Why this discovery happened:** Surfaced during work on the per-room typing animations, when verifying that all glyphs in the cycling strings (Spanish accents, Catalan accents, full Greek script) would render in MonoLisa. Spanish/Catalan/Greek all confirmed present in MonoLisa; the room symbols were the surprise miss.
 
+### BUG-014: iOS Safari Translate prompt triggers on multilingual typing animation
+
+**Symptom:** When viewing the site on iOS Safari (and in some cases other browsers with translation extensions), an inline translation UI overlay appears at the top of the page. The overlay shows fields like "Original text" and buttons reading "Contribute" / "Cancel". This is not part of the site's design.
+
+**Cause:** The {{< typeit >}} animations on the homepage and all six room landing pages cycle through Spanish, English, Catalan, and Greek strings within the same DOM element. Safari's page-language detection sees four languages on a single page and treats it as multilingual content needing translation. The Translate page feature then injects its UI to offer translation. Other browsers with translation extensions (Google Translate, DeepL) can exhibit similar behavior.
+
+**Detection:** Inspect the rendered page on a device where the overlay appears. The injected UI does not match any selector in `assets/css/custom.css` or any Blowfish template. The strings "Original text" and "Contribute" / "Cancel" are Safari's translation interface labels.
+
+**Status:** Not a site bug. The behavior is browser-side and cannot be suppressed from the site without removing the multilingual content that makes the typing animation interesting in the first place. The overlay is dismissable via the browser's address bar UI (Safari: tap `ᴀA` icon → cancel translation prompt) or by disabling translation in browser settings.
+
+**Why this matters for the README:** Anyone troubleshooting an unexpected UI element on the site should first rule out browser-injected translation widgets before assuming it is a site rendering issue. This is parallel to BUG-011 (newly-registered domain blocks at the network level) — the symptom appears on the site but the cause is external infrastructure.
+
 ## 11. Configuration Files
 
 ### `config/_default/hugo.toml`
