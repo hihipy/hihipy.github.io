@@ -16,8 +16,15 @@ cardView: false
 ---
 
 {{< lead >}}
-Senior-level data analyst with seven-plus years across academic medical centers and higher education, specializing in Power BI dashboard development, ETL pipeline engineering, and institutional research analytics. Currently analyzing $540M+ in research activity at the University of Miami Miller School of Medicine. M.S. in Business Analytics, University of Miami.
+{{< typeit speed=70 loop=true breakLines=false >}}
+Mi Trayectoria
+My Background
+La Meva Trajectòria
+Το Υπόβαθρό μου
+{{< /typeit >}}
 {{< /lead >}}
+
+Senior-level data analyst with seven-plus years across academic medical centers and higher education, specializing in Power BI dashboard development, ETL pipeline engineering, and institutional research analytics. Currently analyzing $540M+ in research activity at the University of Miami Miller School of Medicine. M.S. in Business Analytics, University of Miami.
 
 ## Experience
 

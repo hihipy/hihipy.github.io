@@ -53,6 +53,12 @@ The site is organized as a "digital casa" (Spanish for "house"). Each top-level 
 
 The home page lead is a rotating typing animation (Blowfish `{{< typeit >}}` shortcode wrapped inside `{{< lead >}}`, looping with `breakLines=false`) that cycles through four languages: Spanish (`Mi Casa Digital es Su Casa Digital`, canonical and matched by the site's `description` meta tag), English (`My Digital Home is Your Digital Home`), Catalan (`La Meva Casa Digital és La Teva Casa Digital`), and Greek (`Το Ψηφιακό Σπίτι μου είναι Το Ψηφιακό Σπίτι σου`). All four use the same casing rule (see §7). Spanish and English reflect citizenship (Spain and U.S. respectively); Catalan and Greek reflect heritage. The welcome paragraph immediately below the lead names all four connections explicitly.
 
+This pattern extends to all six room landing pages. Each `{{< lead >}}` contains a typing animation cycling a short page-purpose tagline through the same four languages in the same order. Each tagline describes what is actually on the page, not the room name itself, so a visitor who lands on cocina or estudio without context understands what they are looking at. The taglines are: puerta cycles `Mi Currículum / My Résumé / El Meu Currículum / Το Βιογραφικό μου`; sala cycles `Mi Trayectoria / My Background / La Meva Trajectòria / Το Υπόβαθρό μου`; cocina cycles `Mis Pipelines de Datos / My Data Pipelines / Els Meus Pipelines de Dades / Τα Pipelines Δεδομένων μου`; estudio cycles `Mis Experimentos con IA / My AI Experiments / Els Meus Experiments amb IA / Τα Πειράματά μου με AI`; garaje cycles `Mis Utilidades de Analista / My Analyst Utilities / Les Meves Utilitats d'Analista / Τα Εργαλεία Αναλυτή μου`; jardín cycles `Mis Proyectos Personales / My Side Projects / Els Meus Projectes Personals / Τα Προσωπικά Έργα μου`. Greek possessive clitics (`μου`) stay lowercase per native convention; Greek proparoxytone words (`Πειράματα`, `Υπόβαθρο`) take the secondary accent when followed by the clitic (`Πειράματά μου`, `Υπόβαθρό μου`).
+
+On puerta and sala, the previous static lead content (résumé explainer and professional summary respectively) is preserved as a regular paragraph immediately below the new animated lead. The puerta page also drops the redundant separate download button — the inline PDF embed has its own download control in the browser-native PDF toolbar.
+
+This pattern extends to all six room landing pages. Each `{{< lead >}}` contains a typing animation cycling a short tagline through the same four languages in the same order (Spanish → English → Catalan → Greek). Project rooms use the literal room name as the seed: cocina cycles `Mi Cocina / My Kitchen / La Meva Cuina / Η Κουζίνα μου`, and estudio/garaje/jardín follow the same shape. Puerta and sala use content-themed taglines instead, because the literal room names (`door`, `living room`) don't communicate page purpose: puerta cycles `Mi Currículum / My Résumé / El Meu Currículum / Το Βιογραφικό μου`; sala cycles `Mi Historia / My Story / La Meva Història / Η Ιστορία μου`. On puerta and sala, the previous static lead content (résumé explainer and professional summary respectively) becomes a regular paragraph immediately below the new animated lead, preserving all information while gaining the visual hook.
+
 The metaphor is the differentiator. When in doubt, choose the option that strengthens the casa framing rather than the conventional portfolio framing.
 
 The casa metaphor extends to the 404 page, which uses casa language ("No room here. The hallway you walked down doesn't lead anywhere"). See §9.
@@ -532,6 +538,31 @@ Under 640px, this stacks header above badge and lets the card shrink below its n
 The selectors target Blowfish's Tailwind utility classes (`.shadow-2xl.flex-1.ms-6` matches the timelineItem's outer card div). If upstream Blowfish ever changes those class names, this rule needs re-targeting — check `themes/blowfish/layouts/shortcodes/timelineItem.html` for the current selector.
 
 **Coverage:** Selector-based, not page-based. Applies anywhere `{{< timelineItem >}}` is used. On `sala`, that's Experience, Education, and Certifications sections, plus any future timeline entry. No per-page work when adding entries.
+
+### BUG-013: Five of six room symbols are not in MonoLisa's character map
+
+**Symptom:** The room symbols `⛫` (homepage), `⛁` (cocina), `✦` (estudio), `⛭` (garaje), and `❀` (jardín) render via system font fallback rather than from MonoLisa. Visual rendering of these glyphs varies by OS and browser depending on which fallback font supplies them. Only `◰` (puerta) and `§` (sala) are confirmed present in MonoLisa.
+
+**Detection:** Verified by inspecting the codepoint membership of MonoLisa's character map directly:
+
+```python
+from fontTools.ttLib import TTFont
+font = TTFont('static/fonts/MonoLisaVariable.woff2')
+cmap = font.getBestCmap()
+for c in '⛫◰§⛁✦⛭❀':
+    print(c, ord(c) in cmap)
+```
+
+This requires `pip install fonttools brotli` (Brotli is needed because woff2 is brotli-compressed).
+
+**Implications:** Mobile platforms in particular may substitute emoji-presentation variants from system fallback fonts (Apple Color Emoji, Segoe UI Symbol, Noto Sans Symbols). This is the same risk class as BUG-005, where U+2699 was swapped to U+26ED to escape emoji presentation. The five fallback-rendered symbols are sitting in this risk zone today.
+
+**Status:** Not currently fixed. The site renders acceptably across tested platforms because common fallback fonts cover these codepoints with text-presentation glyphs in most cases. A future cleanup would either:
+
+- Replace the five codepoints with alternatives that exist in MonoLisa (requires running fontTools cmap checks against candidate replacement codepoints, then updating frontmatter on every page that uses each symbol, plus the homepage room list and README §3 symbol column).
+- Augment `assets/css/custom.css` with explicit fallback declarations so the rendering is deterministic instead of system-dependent.
+
+**Why this discovery happened:** Surfaced during work on the per-room typing animations, when verifying that all glyphs in the cycling strings (Spanish accents, Catalan accents, full Greek script) would render in MonoLisa. Spanish/Catalan/Greek all confirmed present in MonoLisa; the room symbols were the surprise miss.
 
 ## 11. Configuration Files
 
