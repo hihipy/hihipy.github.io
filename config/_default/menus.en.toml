@@ -6,13 +6,7 @@
   weight = 10
 
 [[main]]
-  name = "email"
-  url = "mailto:career-pgbd@pm.me"
-  pre = "email"
-  weight = 20
-
-[[main]]
   name = "github"
   url = "https://github.com/hihipy"
   pre = "github"
-  weight = 30
+  weight = 20

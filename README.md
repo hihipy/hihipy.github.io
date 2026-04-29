@@ -576,6 +576,32 @@ This requires `pip install fonttools brotli` (Brotli is needed because woff2 is 
 
 **Why this matters for the README:** Anyone troubleshooting an unexpected UI element on the site should first rule out browser-injected translation widgets before assuming it is a site rendering issue. This is parallel to BUG-011 (newly-registered domain blocks at the network level) — the symptom appears on the site but the cause is external infrastructure.
 
+### BUG-015: Email address leaked in plain HTML via menu rendering
+
+**Symptom:** The contact email `career-pgbd@pm.me` appeared as an unobfuscated `mailto:` link in the rendered HTML of every page (desktop menu and mobile menu collapse, two instances per page). Bots scraping `mailto:` links via regex harvested the address, leading to spam.
+
+**Cause:** Blowfish has *two* paths that render the email link, and only one of them is obfuscated:
+
+1. The `[params.author].links` block in `languages.en.toml` is rendered by `themes/blowfish/layouts/partials/author-links.html`. That partial special-cases email entries: it writes `href="#"`, encodes the real address into a `data-email="..."` base64 attribute, and adds a `class="email-link"` hook that JavaScript uses to decode and trigger `mailto:` on click. This path is properly obfuscated and safe.
+
+2. The `[[main]]` entries in `menus.en.toml` are rendered by Blowfish's generic menu partials (`header/components/desktop-menu.html` and `header/components/mobile-menu.html`). These use a generic `<a href="{{ .URL }}">` template that does *not* special-case email URLs. Whatever URL is in the menu entry — including `mailto:`-prefixed ones — gets written literally to HTML.
+
+The site had the email address in *both* places: as a `params.author.links` entry (safe) and as a `[[main]]` menu entry (leaking). The menu version was the actual scraping target.
+
+**Fix applied:** Removed the email `[[main]]` entry from `menus.en.toml`. The email icon still renders in the social links area via the obfuscated `author-links.html` path. The menu layout loses one redundant icon. Re-weighted the remaining github entry from `30` to `20` to close the gap.
+
+**Diagnostic:** To verify no email addresses leak in plain HTML, run after a build:
+
+```bash
+grep -n "career-pgbd\|mailto" public/index.html
+```
+
+Should return zero matches. The obfuscated `data-email="..."` base64-encoded value is fine and will not show up in this grep because it does not contain the literal address.
+
+**What this fix does NOT do:** The address has already been harvested. Removing the leak protects against *future* harvesting only. To stop spam to the already-leaked address, rotate to a new contact alias (Proton's SimpleLogin integration handles this), update `params.author.links` in `languages.en.toml` to point at the new alias, and let the old address become a spam trap that can be filtered or disabled.
+
+**Generalized lesson:** When a Hugo theme renders the same conceptual data via multiple template paths, audit *each* path independently. "The email is obfuscated" was true on the path I happened to look at; it was false on the path that mattered.
+
 ## 11. Configuration Files
 
 ### `config/_default/hugo.toml`
