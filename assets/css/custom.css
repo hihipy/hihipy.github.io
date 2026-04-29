@@ -63,11 +63,24 @@ figure,
   margin: 1.5rem auto;
 }
 
-/* Center Mermaid diagrams and figures */
-.mermaid,
-figure,
-.prose p > img:only-child {
-  display: flex;
-  justify-content: center;
-  margin: 1.5rem auto;
+/* ============================================================
+   Mobile fix: timeline header/badge overflow on narrow viewports.
+   The Blowfish timelineItem shortcode renders the entry header
+   and date badge in a `flex justify-between` row. With nowrap on
+   the badge, the row demands more width than a phone viewport.
+   The parent card is flex-1 with default min-width:auto, so it
+   cannot shrink below that width and the entire card overflows
+   horizontally, clipping body text against the right edge.
+   Fix: under 640px, stack header above badge and allow the card
+   to shrink below its natural content width.
+   ============================================================ */
+@media (max-width: 640px) {
+  .shadow-2xl.flex-1.ms-6 > .flex.justify-between {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .shadow-2xl.flex-1.ms-6 {
+    min-width: 0;
+  }
 }
