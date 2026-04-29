@@ -51,7 +51,7 @@ If the redirect needs to be modified, the rule lives in the `pgbd.us` zone under
 
 The site is organized as a "digital casa" (Spanish for "house"). Each top-level navigation entry is a "room" with a Spanish name. This is a deliberate brand element, not decoration. Do not change it without explicit instruction.
 
-The home page lead reads `Mi Casa Digital es Su Casa Digital` (Spanish-style title case: only nouns capitalized, lowercase `es` and `su`).
+The home page lead is a rotating typing animation (Blowfish `{{< typeit >}}` shortcode wrapped inside `{{< lead >}}`, looping with `breakLines=false`) that cycles through four languages: Spanish (`Mi Casa Digital es Su Casa Digital`, canonical and matched by the site's `description` meta tag), English (`My Digital Home is Your Digital Home`), Catalan (`La Meva Casa Digital és La Teva Casa Digital`), and Greek (`Το Ψηφιακό Σπίτι μου είναι Το Ψηφιακό Σπίτι σου`). All four use the same casing rule (see §7). The Spanish line reflects citizenship; the other three reflect heritage and ancestry. The welcome paragraph immediately below the lead acknowledges dual U.S./Spanish citizenship plus Greek heritage explicitly.
 
 The metaphor is the differentiator. When in doubt, choose the option that strengthens the casa framing rather than the conventional portfolio framing.
 
@@ -234,7 +234,7 @@ These are established conventions across all 16 project pages. Match them when a
 | **No "delve," "comprehensive," "in summary," "moreover," "furthermore"** | All on the AI-tells list. |
 | **Title Case for headings** | "Data Prep & ETL", "AI & Experiments", "Side Projects". |
 | **Sentence case for descriptions and body prose** | "Cleans messy data exports." not "Cleans Messy Data Exports." |
-| **Spanish-style title case for Spanish phrases** | "Mi Casa Digital es Su Casa Digital" — nouns capitalized, lowercase prepositions/possessives (`es`, `su`). |
+| **Title case for the home page typing animation** | Content words capitalized, verbs/copulas lowercase. Applies across all four languages in the rotation: `es` (Spanish), `is` (English), `és` (Catalan), `είναι` (Greek) all stay lowercase. Greek exception: possessive clitics `μου` and `σου` also stay lowercase per native convention (they follow the noun and aren't capitalized mid-sentence even in display text). See §2 for the full phrases. |
 | **Audience: HR/recruiter with bachelor's degree, no coding background** | Avoid jargon in leads and summaries. Domain terms acceptable in body. |
 | **Conciseness over completeness** | Tighter is better. The reader can scroll for more. |
 | **Mention Miller School only when project genuinely connects** | Not as decoration. |
@@ -336,7 +336,15 @@ Used primarily by `content/sala/index.md` (about page) and a few project pages. 
 
 ### `assets/css/custom.css`
 
-Custom CSS overrides. ~2KB. Inspect before modifying — small file, project-specific tweaks.
+Custom CSS overrides, roughly 3KB. Five concerns:
+
+1. MonoLisa `@font-face` declarations (variable + variable italic, both woff2)
+2. Body and headings use italic + SS02 (script variant); code blocks use upright + ligatures, no SS02
+3. `white-space: nowrap !important` on Blowfish badge spans — prevents date ranges from breaking ugly across lines
+4. Mermaid diagrams and figures centered with auto margins
+5. Mobile timeline overflow fix at `@media (max-width: 640px)` — see BUG-012
+
+Inspect before modifying — every rule has a reason.
 
 ### `assets/img/favicon-source.svg`
 
@@ -497,6 +505,33 @@ The site originally tried `⚙` followed by U+FE0E (TEXT VARIATION SELECTOR) as 
 **Workaround:** None for the local network. The block typically expires automatically after 30-90 days as the domain ages. Workaround for the user: access via cellular or non-restrictive network. Workaround for owners maintaining the site: do not rely on viewing the live site from highly-restrictive networks.
 
 **Why this matters for the README:** Anyone troubleshooting connectivity from a corporate network should rule out this cause before assuming the site is broken. The first diagnostic step is always: try the URL from cellular or a different network.
+
+### BUG-012: Blowfish timeline cards overflow viewport on mobile
+
+**Symptom:** On viewports under ~640px (phones), timeline entries in `content/sala/index.md` overflow horizontally. The header wraps word-by-word into a tall stack, the date badge gets clipped at the right edge, and body text is cut off mid-word past the viewport.
+
+**Cause:** Blowfish's `timelineItem.html` shortcode places the entry header and date badge inside a `<div class="flex justify-between">`. On desktop this works — title left, badge right. On mobile, the badge has `white-space: nowrap !important` (set in `custom.css` to prevent date ranges like `Apr 2023 - Mar 2025` from breaking across lines), and the heading refuses to share a line with the badge. The row demands more horizontal space than a phone viewport offers. The parent card is `flex-1` with default `min-width: auto`, so it cannot shrink below its content's natural width — the entire card overflows, dragging body text past the right edge.
+
+**Fix applied:** Added a mobile-only media query block to `assets/css/custom.css`:
+
+```css
+@media (max-width: 640px) {
+  .shadow-2xl.flex-1.ms-6 > .flex.justify-between {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .shadow-2xl.flex-1.ms-6 {
+    min-width: 0;
+  }
+}
+```
+
+Under 640px, this stacks header above badge and lets the card shrink below its natural content width. The `nowrap` on the badge is preserved (date ranges still don't break ugly).
+
+The selectors target Blowfish's Tailwind utility classes (`.shadow-2xl.flex-1.ms-6` matches the timelineItem's outer card div). If upstream Blowfish ever changes those class names, this rule needs re-targeting — check `themes/blowfish/layouts/shortcodes/timelineItem.html` for the current selector.
+
+**Coverage:** Selector-based, not page-based. Applies anywhere `{{< timelineItem >}}` is used. On `sala`, that's Experience, Education, and Certifications sections, plus any future timeline entry. No per-page work when adding entries.
 
 ## 11. Configuration Files
 

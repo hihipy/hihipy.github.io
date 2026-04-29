@@ -14,10 +14,15 @@ layout: "single"
 ---
 
 {{< lead >}}
+{{< typeit speed=70 loop=true breakLines=false >}}
 Mi Casa Digital es Su Casa Digital
+My Digital Home is Your Digital Home
+La Meva Casa Digital és La Teva Casa Digital
+Το Ψηφιακό Σπίτι μου είναι Το Ψηφιακό Σπίτι σου
+{{< /typeit >}}
 {{< /lead >}}
 
-Welcome to my digital casa. The Spanish room names are a small tribute to my dual U.S. and Spanish citizenship; feel free to wander between rooms.
+Welcome to my digital casa. The Spanish room names are a small tribute to my dual U.S. and Spanish citizenship, with the rotating welcome adding a nod to my Greek heritage. Feel free to wander between rooms.
 
 [◰ ~/puerta  # Résumé PDF](/puerta/) · Downloadable PDF résumé.
 
