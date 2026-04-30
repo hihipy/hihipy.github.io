@@ -79,11 +79,13 @@ The trade-off is file size. A model with fifty tables and two hundred measures p
 
 ## Top-Level KPI Detection
 
-The detection of top-level KPIs is conceptually clean. A measure is a top-level KPI if no other measure references it. Equivalently, the set of top-level KPIs is the complement of the set of "measures that are referenced by some other measure":
+The detection of top-level KPIs is conceptually clean. A measure is a top-level KPI if no other measure references it. In set-builder notation, with $M$ as the set of all measures in the model:
 
-$$\text{TopLevelKPIs} = \text{AllMeasures} \setminus \text{ReferencedByOthers}$$
+$$K = \{\, m \in M \mid \nexists\, m' \in M \text{ s.t. } m' \text{ references } m \,\}$$
 
-The implementation builds the right-hand set by walking every measure's DAX expression and extracting the bracketed names it references. Each name found gets added to a `referencedByOthers` set. After the full pass, any measure whose name is *not* in this set is a top-level KPI.
+In plain English: $K$ is the set of measures $m$ from the model $M$ such that there is no other measure $m'$ in $M$ that references $m$. The set-builder notation reads left-to-right as "$K$ equals the set of all $m$ in $M$ such that there does not exist an $m'$ in $M$ where $m'$ references $m$."
+
+The implementation builds this set by walking every measure's DAX expression and extracting the bracketed names it references. Each name found gets added to a `referencedByOthers` set. After the full pass, any measure whose name is *not* in this set is a top-level KPI.
 
 This works because Power BI models, in practice, have a layered measure architecture. Base measures aggregate columns directly: `Total Revenue = SUM(Sales[Revenue])`. Intermediate measures combine base measures: `YTD Revenue = TOTALYTD([Total Revenue], 'Calendar'[Date])`. Top-level KPIs are the names that surface in the visual layer — the cards, the charts, the slicers — and nothing else builds on them. A clean model has a small handful of top-level KPIs and many supporting measures underneath; an unclean model has flat layers with everything at the top.
 
@@ -253,9 +255,9 @@ The `visited` set is per-call. Each top-level call to `GetFullChain` starts with
 
 The cycle protection handles a real edge case. Power BI does not technically prevent circular references at the model level (`A` calling `[B]` which calls `[A]`), and real models occasionally contain them by accident. Without the visited check, the recursion would never terminate. With it, the script bails on the second visit and the cycle is silently broken without affecting the rest of the resolution.
 
-The dependency graph then drives the top-level KPI detection. A reverse pass through every measure's direct dependencies builds a `referencedByOthers` set; the complement of this set against `allMeasureNames` is the top-level KPI list. This is the same set difference computed earlier:
+The dependency graph then drives the top-level KPI detection. A reverse pass through every measure's direct dependencies builds a `referencedByOthers` set; the complement of this set against `allMeasureNames` is the top-level KPI list. This is the same set $K$ defined earlier:
 
-$$\text{TopLevelKPIs} = \text{AllMeasures} \setminus \text{ReferencedByOthers}$$
+$$K = \{\, m \in M \mid \nexists\, m' \in M \text{ s.t. } m' \text{ references } m \,\}$$
 
 Both sides of this equation come from the same regex-driven walk. The cost is one full pass through every DAX expression in the model, which is fast even for large models (Tabular Editor's TOM provides the expressions in memory; no I/O is required).
 
