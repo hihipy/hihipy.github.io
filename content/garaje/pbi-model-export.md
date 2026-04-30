@@ -79,11 +79,11 @@ The trade-off is file size. A model with fifty tables and two hundred measures p
 
 ## Top-Level KPI Detection
 
-The detection of top-level KPIs is conceptually clean. A measure is a top-level KPI if no other measure references it. Equivalently, the set of top-level KPIs is the complement of the set of "measures that are referenced by some other measure":
+The detection of top-level KPIs is conceptually clean. A measure is a top-level KPI if no other measure references it. In set-builder notation, with \\(M\\) as the set of all measures in the model:
 
-$$\text{TopLevelKPIs} = \text{AllMeasures} \setminus \text{ReferencedByOthers}$$
+$$K = \{ m \in M \mid \nexists\, n \in M \text{ s.t. } n \text{ references } m \}$$
 
-In plain English: the top-level KPIs are exactly the measures that nothing else uses. Start with every measure in the model, remove any measure that some other measure references, and what remains is the set of top-level KPIs. The backslash (`\setminus` in math notation) is the set-difference operator, equivalent to "remove from the left side anything that appears in the right side."
+In plain English: \\(K\\) is the set of measures \\(m\\) drawn from the full model \\(M\\) such that no other measure \\(n\\) in \\(M\\) references \\(m\\). The notation reads left-to-right as "\\(K\\) equals the set of all \\(m\\) in \\(M\\) such that there does not exist any \\(n\\) in \\(M\\) where \\(n\\) references \\(m\\)." Concretely: start with every measure in the model, ask each one "does anything else in the model reference you?", and keep only those that answer no. Those are the top-level KPIs.
 
 The implementation builds this set by walking every measure's DAX expression and extracting the bracketed names it references. Each name found gets added to a `referencedByOthers` set. After the full pass, any measure whose name is *not* in this set is a top-level KPI.
 
@@ -255,9 +255,9 @@ The `visited` set is per-call. Each top-level call to `GetFullChain` starts with
 
 The cycle protection handles a real edge case. Power BI does not technically prevent circular references at the model level (`A` calling `[B]` which calls `[A]`), and real models occasionally contain them by accident. Without the visited check, the recursion would never terminate. With it, the script bails on the second visit and the cycle is silently broken without affecting the rest of the resolution.
 
-The dependency graph then drives the top-level KPI detection. A reverse pass through every measure's direct dependencies builds a `referencedByOthers` set; the complement of this set against `allMeasureNames` is the top-level KPI list. This is the same set difference computed earlier:
+The dependency graph then drives the top-level KPI detection. A reverse pass through every measure's direct dependencies builds a `referencedByOthers` set; the complement of this set against `allMeasureNames` is the top-level KPI list. This is the same set \\(K\\) defined earlier:
 
-$$\text{TopLevelKPIs} = \text{AllMeasures} \setminus \text{ReferencedByOthers}$$
+$$K = \{ m \in M \mid \nexists\, n \in M \text{ s.t. } n \text{ references } m \}$$
 
 Both sides of this equation come from the same regex-driven walk. The cost is one full pass through every DAX expression in the model, which is fast even for large models (Tabular Editor's TOM provides the expressions in memory; no I/O is required).
 

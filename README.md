@@ -633,27 +633,34 @@ H1 page titles (the terminal-prompt strings like `Σ ~/sala  # About Me`) and th
 
 **Why this matters generally:** The original cursive script was visually distinctive but it traded readability for aesthetics across every page. The fix demonstrates that "identity-defining typography" and "accessible typography" are not always in conflict — they can coexist by scoping each to where it does its best work. The terminal-prompt look defines the brand in short strings (page titles, animations); long-form prose needs to be read by humans, including those for whom italic cursive is a real barrier.
 
-### BUG-017: Inline KaTeX `\(...\)` and `$...$` delimiters do not work on this Hugo+Blowfish setup
+### BUG-017: Inline KaTeX requires `\\(...\\)` (double-backslash) in markdown source
 
-**Symptom:** Attempting to use inline KaTeX math on a project page (e.g., `\(M\)` to render an italic mathematical *M* mid-sentence) results in the source rendering as literal text. The user sees `(M)` or `\(M\)` in the prose instead of the styled math character.
+**Symptom:** Writing inline math as `\(M\)` in markdown source renders as the literal text `(M)` in the browser. KaTeX never processes it.
 
-**Cause:** Two interacting issues in the rendering pipeline.
+**Cause:** Hugo's Goldmark Markdown renderer interprets `\(` and `\)` as Markdown escape sequences for literal parentheses *before* the HTML reaches KaTeX. Goldmark eats the backslashes, leaving plain `(M)` in the rendered HTML. KaTeX's auto-render then has nothing to recognize.
 
-First, Blowfish's `katex-render.js` calls `renderMathInElement(document.body)` with no explicit `delimiters` array. KaTeX's auto-render then uses its default delimiter set, which includes `$$...$$` (block) and `\(...\)` (inline) but excludes `$...$` (inline) for safety — single-dollar would conflict with currency notation, which the site uses heavily on `sala` (e.g., `$540M`) and several `garaje` pages.
+**Fix:** Use `\\(...\\)` (double-backslash) in markdown source. Goldmark interprets `\\` as an escape for a literal backslash, leaving `\(` in the rendered HTML, which is the inline-math delimiter KaTeX recognizes.
 
-Second, even though `\(...\)` is theoretically a default KaTeX inline delimiter, Hugo's Goldmark Markdown renderer interprets backslash-paren sequences (`\(`, `\)`) as Markdown escape sequences for literal parentheses *before* the rendered HTML reaches KaTeX. Goldmark eats the backslashes, KaTeX never sees the math markers, and the content renders as plain text.
+**Working examples on the site (verified):**
 
-**Workarounds attempted, none successful:**
+- `content/cocina/25live-cleaner.md` uses `\\(A\\)`, `\\(B\\)`, `\\(\\delta\\)`
+- `content/cocina/qualtrics-processing-pipeline.md` uses `\\(P_{\\text{straight}} \\geq 0.8\\)`
+- `content/garaje/foreign-per-diem-calculator-for-usa-based-institutions.md` uses `\\(N\\)`
+- `content/estudio/ai-csv-profiler.md` uses `\\(k = 5\\)`, `\\(k = 30\\)`
+- `content/garaje/pbi-model-export.md` uses `\\(M\\)`, `\\(K\\)`, `\\(m\\)`, `\\(n\\)` in set-builder notation
 
-- Replacing inline `\(M\)` with `$M$` — fails because single-dollar delimiters aren't enabled in `katex-render.js`, and enabling them site-wide would break dollar-amount text on multiple other pages.
-- Replacing inline `\(M\)` with double-backslash `\\(M\\)` — Goldmark's escape handling is more aggressive than expected; this also gets stripped.
-- Enabling `unsafe = true` in `markup.toml` to allow raw HTML, then wrapping inline math in `<span class="math-inline">` tags — works mechanically but requires authoring math in HTML rather than markdown, defeating the readability of the source file.
+All of these render correctly. The pattern is consistent across the codebase.
 
-**Status:** Block KaTeX (`$$...$$`) works correctly and is what the site uses. Inline KaTeX is effectively unsupported on this Hugo+Blowfish setup. Workaround: replace inline math with code-formatted identifiers (e.g., write `K`, `M`, `m` in backticks) and let the surrounding prose carry the meaning. Block formulas remain available for the centerpiece equation in any math-heavy page.
+**Single-dollar `$...$` does not work and cannot be enabled.** Blowfish's `katex-render.js` calls `renderMathInElement(document.body)` with no explicit delimiters array, so KaTeX uses its defaults: double-dollar block delimiters (enabled) and backslash-paren inline delimiters (enabled). Single-dollar inline is excluded by default for safety because it would conflict with currency notation, which the site uses heavily on `sala` (e.g. `$540M`, `$96.7M`) and several `garaje` pages (e.g. `$2` in `C$2` Excel formulas). Enabling single-dollar globally would mangle all of those.
 
-**If a future Hugo or Blowfish update enables inline math:** the test is to put `\(M\)` inline in any markdown file with the `{{< katex >}}` shortcode and verify it renders as italic *M*. If yes, this bug is resolved and inline math becomes available. If no, this workaround stays in place.
+**Avoid apostrophe-style primes (`m'`) in math expressions.** The apostrophe is converted to a curly typographic quote by Hugo's smartypants module before KaTeX processes the expression, breaking the parse. Use either a different variable name (e.g. `n` instead of `m'`) or LaTeX's `\\prime` superscript syntax (`m^{\\prime}`). The pbi-model-export page uses the former (`n`) for simplicity. See also BUG-001 for the broader smartypants issue with shortcodes.
 
-**Why this matters:** Anyone trying to add math notation to a project page will hit this. Document it once here so we don't waste another debugging cycle re-discovering it. The pbi-model-export page (currently the site's only math-using page) keeps its block formula and uses prose for inline references; new math-using pages should follow the same pattern.
+**Diagnostic recipe.** If inline math is rendering as literal text on a new page, check three things in order:
+1. Is the page calling `{{< katex >}}` *before* `{{< lead >}}`? See BUG-003.
+2. Is the inline math written as `\\(...\\)` (double-backslash) in markdown source? Single-backslash will not work.
+3. Does the expression contain an apostrophe (`'`)? Replace it with `\\prime` or restructure to avoid.
+
+**Why this matters.** Inline KaTeX works fine on this site with the right syntax. The pitfall is that the natural syntax (`\(M\)` borrowed from LaTeX, Pandoc, and most static site generators) does not work here because of Goldmark's escape handling. The double-backslash workaround is non-obvious and easy to lose during refactors. Documenting the working syntax with verified examples saves future debugging cycles.
 
 ## 11. Configuration Files
 
