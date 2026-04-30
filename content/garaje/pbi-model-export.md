@@ -79,11 +79,11 @@ The trade-off is file size. A model with fifty tables and two hundred measures p
 
 ## Top-Level KPI Detection
 
-The detection of top-level KPIs is conceptually clean. A measure is a top-level KPI if no other measure references it. In set-builder notation, with $M$ as the set of all measures in the model:
+The detection of top-level KPIs is conceptually clean. A measure is a top-level KPI if no other measure references it. In set-builder notation, with \(M\) as the set of all measures in the model:
 
-$$K = \{\, m \in M \mid \nexists\, m' \in M \text{ s.t. } m' \text{ references } m \,\}$$
+$$K = \{ m \in M \mid \nexists \, m^{\prime} \in M \text{ s.t. } m^{\prime} \text{ references } m \}$$
 
-In plain English: $K$ is the set of measures $m$ from the model $M$ such that there is no other measure $m'$ in $M$ that references $m$. The set-builder notation reads left-to-right as "$K$ equals the set of all $m$ in $M$ such that there does not exist an $m'$ in $M$ where $m'$ references $m$."
+In plain English: \(K\) is the set of measures \(m\) from the model \(M\) such that there is no other measure \(m^{\prime}\) in \(M\) that references \(m\). The set-builder notation reads left-to-right as "\(K\) equals the set of all \(m\) in \(M\) such that there does not exist an \(m^{\prime}\) in \(M\) where \(m^{\prime}\) references \(m\)."
 
 The implementation builds this set by walking every measure's DAX expression and extracting the bracketed names it references. Each name found gets added to a `referencedByOthers` set. After the full pass, any measure whose name is *not* in this set is a top-level KPI.
 
@@ -255,9 +255,9 @@ The `visited` set is per-call. Each top-level call to `GetFullChain` starts with
 
 The cycle protection handles a real edge case. Power BI does not technically prevent circular references at the model level (`A` calling `[B]` which calls `[A]`), and real models occasionally contain them by accident. Without the visited check, the recursion would never terminate. With it, the script bails on the second visit and the cycle is silently broken without affecting the rest of the resolution.
 
-The dependency graph then drives the top-level KPI detection. A reverse pass through every measure's direct dependencies builds a `referencedByOthers` set; the complement of this set against `allMeasureNames` is the top-level KPI list. This is the same set $K$ defined earlier:
+The dependency graph then drives the top-level KPI detection. A reverse pass through every measure's direct dependencies builds a `referencedByOthers` set; the complement of this set against `allMeasureNames` is the top-level KPI list. This is the same set \(K\) defined earlier:
 
-$$K = \{\, m \in M \mid \nexists\, m' \in M \text{ s.t. } m' \text{ references } m \,\}$$
+$$K = \{ m \in M \mid \nexists \, m^{\prime} \in M \text{ s.t. } m^{\prime} \text{ references } m \}$$
 
 Both sides of this equation come from the same regex-driven walk. The cost is one full pass through every DAX expression in the model, which is fast even for large models (Tabular Editor's TOM provides the expressions in memory; no I/O is required).
 
