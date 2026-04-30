@@ -1,5 +1,5 @@
 ---
-title: "✦ ~/estudio  # AI & Experiments"
+title: "~/estudio  # AI & Experiments"
 description: "AI-augmented analytics tools and research experiments."
 ---
 

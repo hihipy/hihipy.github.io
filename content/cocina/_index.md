@@ -1,5 +1,5 @@
 ---
-title: "⛁ ~/cocina  # Data Prep & ETL"
+title: "~/cocina  # Data Prep & ETL"
 description: "Data preparation and ETL tools, where messy data gets cleaned up."
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: "single"
-title: "§ ~/sala  # About Me"
+title: "~/sala  # About Me"
 description: "Philip Bachas-Daunert. Institutional research analyst at the University of Miami Miller School of Medicine."
 summary: "Philip Bachas-Daunert: full work history, education, certifications, and skills."
 draft: false

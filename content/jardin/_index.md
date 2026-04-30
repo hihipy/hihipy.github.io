@@ -1,5 +1,5 @@
 ---
-title: "❀ ~/jardín  # Side Projects"
+title: "~/jardín  # Side Projects"
 description: "Personal projects and miscellaneous experiments."
 ---
 

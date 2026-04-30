@@ -67,14 +67,16 @@ The casa metaphor extends to the 404 page, which uses casa language ("No room he
 
 Six rooms total. Two non-project rooms (puerta, sala) and four project rooms (cocina, estudio, garaje, jardin).
 
-| Room | Symbol | Path | Title (Title Case) | Role |
-|---|---|---|---|---|
-| `puerta` | `◰` | `/puerta/` | Résumé PDF | Door, entry point. Terminal page that embeds `static/resume.pdf`. |
-| `sala` | `§` | `/sala/` | About Me | Living room, about page. Terminal page with long-form bio (Experience / Education / Certifications / Skills). |
-| `cocina` | `⛁` | `/cocina/` | Data Prep & ETL | Kitchen, data preparation tools. |
-| `estudio` | `✦` | `/estudio/` | AI & Experiments | Studio, AI-augmented analytics tools. |
-| `garaje` | `⛭` | `/garaje/` | Analyst Utilities | Garage, Excel macros, calculators, processing scripts. |
-| `jardin` | `❀` | `/jardín/` | Side Projects | Garden, personal projects and miscellaneous experiments. |
+| Room | Path | Title (Title Case) | Role |
+|---|---|---|---|
+| `puerta` | `/puerta/` | Résumé PDF | Door, entry point. Terminal page that embeds `static/resume.pdf`. |
+| `sala` | `/sala/` | About Me | Living room, about page. Terminal page with long-form bio (Experience / Education / Certifications / Skills). |
+| `cocina` | `/cocina/` | Data Prep & ETL | Kitchen, data preparation tools. |
+| `estudio` | `/estudio/` | AI & Experiments | Studio, AI-augmented analytics tools. |
+| `garaje` | `/garaje/` | Analyst Utilities | Garage, Excel macros, calculators, processing scripts. |
+| `jardin` | `/jardín/` | Side Projects | Garden, personal projects and miscellaneous experiments. |
+
+Room symbol rationale: room pages have **no** decorative symbol prefix. The terminal-prompt path (`~/sala`, `~/cocina`, etc.) is the room identity; an additional symbol prefix is redundant decoration. The site went through three iterations on this. First, mixed Unicode glyphs (`◰ § ⛁ ✦ ⛭ ❀`) — visually distinct but five of six were not in MonoLisa and rendered via system font fallback (BUG-013 in its original form). Second, Greek capitals (`Π Σ Δ Ψ Ω Φ`) — fully present in MonoLisa with a defensible thematic mapping (Σαλόνι, Δεδομένα, golden ratio in plant biology). Third, none — the realization that the Greek letters were redundant decoration in front of already-distinctive paths, and that the homepage `⛫` castle was doing the symbolic work for the entire site without needing per-room reinforcement. The terminal-prompt format alone is the room identity. The homepage `⛫` (castle) is the brand anchor and remains the only symbolic glyph on the site. Anyone tempted to add per-room symbols back should weigh the symbolic redundancy against the visual flourish; previous iterations are documented for reference but were removed deliberately.
 
 **Home page order (intentional):** `puerta`, `sala`, then the four project rooms alphabetically. Puerta is first because the metaphor is "visitor walks through the door first." This is non-negotiable; do not reorder without instruction.
 
@@ -239,6 +241,9 @@ These are established conventions across all 16 project pages. Match them when a
 | **No em dashes** | Use commas, parens, colons, semicolons, or restructure. The em dash is on the AI-tells list. |
 | **No "delve," "comprehensive," "in summary," "moreover," "furthermore"** | All on the AI-tells list. |
 | **Title Case for headings** | "Data Prep & ETL", "AI & Experiments", "Side Projects". |
+| **Body and most headings: Atkinson Hyperlegible** | Sans-serif designed by the Braille Institute for low-vision and dyslexic readers. Loaded from `static/fonts/AtkinsonHyperlegible-{Regular,Bold,Italic,BoldItalic}.woff2`. Switched from MonoLisa Italic + SS02 cursive in BUG-016. |
+| **Page titles (H1) and typing animations: MonoLisa upright** | Terminal-prompt strings like `Σ ~/sala  # About Me` and the {{< typeit >}} animations keep the monospace look. Upright (not italic) is fine for short strings; italic cursive was the dyslexia barrier. |
+| **Code blocks: MonoLisa upright with ligatures** | Unchanged — code retains identity-defining typography. |
 | **Sentence case for descriptions and body prose** | "Cleans messy data exports." not "Cleans Messy Data Exports." |
 | **Title case for the home page typing animation** | Content words capitalized, verbs/copulas lowercase. Applies across all four languages in the rotation: `es` (Spanish), `is` (English), `és` (Catalan), `είναι` (Greek) all stay lowercase. Greek exception: possessive clitics `μου` and `σου` also stay lowercase per native convention (they follow the noun and aren't capitalized mid-sentence even in display text). See §2 for the full phrases. |
 | **Audience: HR/recruiter with bachelor's degree, no coding background** | Avoid jargon in leads and summaries. Domain terms acceptable in body. |
@@ -342,13 +347,15 @@ Used primarily by `content/sala/index.md` (about page) and a few project pages. 
 
 ### `assets/css/custom.css`
 
-Custom CSS overrides, roughly 3KB. Five concerns:
+Custom CSS overrides, roughly 5KB. Concerns:
 
-1. MonoLisa `@font-face` declarations (variable + variable italic, both woff2)
-2. Body and headings use italic + SS02 (script variant); code blocks use upright + ligatures, no SS02
-3. `white-space: nowrap !important` on Blowfish badge spans — prevents date ranges from breaking ugly across lines
-4. Mermaid diagrams and figures centered with auto margins
-5. Mobile timeline overflow fix at `@media (max-width: 640px)` — see BUG-012
+1. Atkinson Hyperlegible `@font-face` declarations (Regular, Italic, Bold, BoldItalic, all woff2 self-hosted from `static/fonts/`)
+2. MonoLisa `@font-face` declaration (variable, upright only — italic was retired in BUG-016)
+3. Body and most headings (h2-h6) use Atkinson sans-serif for readability; H1 page titles and typeit animations use MonoLisa upright to preserve terminal-prompt aesthetic; code blocks use MonoLisa upright with ligatures
+4. `white-space: nowrap !important` on Blowfish badge spans — prevents date ranges from breaking ugly across lines
+5. Mermaid diagrams and figures centered with auto margins
+6. Mobile timeline overflow fix at `@media (max-width: 640px)` — see BUG-012
+7. Mobile typing-animation lead font shrink + min-height to prevent bounce — see typing animation work in §2
 
 Inspect before modifying — every rule has a reason.
 
@@ -539,7 +546,9 @@ The selectors target Blowfish's Tailwind utility classes (`.shadow-2xl.flex-1.ms
 
 **Coverage:** Selector-based, not page-based. Applies anywhere `{{< timelineItem >}}` is used. On `sala`, that's Experience, Education, and Certifications sections, plus any future timeline entry. No per-page work when adding entries.
 
-### BUG-013: Five of six room symbols are not in MonoLisa's character map
+### BUG-013: Five of six room symbols are not in MonoLisa's character map [RESOLVED]
+
+**Resolution (April 2026):** Room symbols removed entirely. After two iterations (original mixed Unicode glyphs `◰ § ⛁ ✦ ⛭ ❀`, then Greek capitals `Π Σ Δ Ψ Ω Φ`), the conclusion was that the per-room symbol prefix was redundant decoration in front of already-distinctive terminal-prompt paths (`~/sala`, `~/cocina`, etc.). The Greek-letter intermediate iteration *did* eliminate the font-fallback issue (Greek capitals are fully present in MonoLisa), so it would have resolved this bug if kept. Removing the symbols entirely also resolves the bug while simplifying the visual identity. The homepage `⛫` (castle) is preserved as the single brand anchor and is the only symbol on the site that renders via system font fallback; that one instance is acceptable because the castle is the brand and is contained to a single location. Bug retained in this catalog as historical context — anyone tempted to re-introduce per-room symbols should know the constraints (must render in MonoLisa to avoid fallback inconsistency) and the reasoning for removal (symbolic redundancy with the path).
 
 **Symptom:** The room symbols `⛫` (homepage), `⛁` (cocina), `✦` (estudio), `⛭` (garaje), and `❀` (jardín) render via system font fallback rather than from MonoLisa. Visual rendering of these glyphs varies by OS and browser depending on which fallback font supplies them. Only `◰` (puerta) and `§` (sala) are confirmed present in MonoLisa.
 
@@ -601,6 +610,28 @@ Should return zero matches. The obfuscated `data-email="..."` base64-encoded val
 **What this fix does NOT do:** The address has already been harvested. Removing the leak protects against *future* harvesting only. To stop spam to the already-leaked address, rotate to a new contact alias (Proton's SimpleLogin integration handles this), update `params.author.links` in `languages.en.toml` to point at the new alias, and let the old address become a spam trap that can be filtered or disabled.
 
 **Generalized lesson:** When a Hugo theme renders the same conceptual data via multiple template paths, audit *each* path independently. "The email is obfuscated" was true on the path I happened to look at; it was false on the path that mattered.
+
+### BUG-016: MonoLisa Italic + SS02 cursive script unreadable for dyslexic readers
+
+**Symptom:** A reader with dyslexia reported the body text was hard to read. The site shipped MonoLisa Italic with `font-feature-settings: "ss02" 1` everywhere except code blocks. SS02 is MonoLisa's stylistic alternate that turns italic into a flowing cursive script — visually striking but functionally a script font for body text and headings.
+
+**Cause:** Italic-as-body-text is unconventional and creates real reading friction for many readers. Cursive-style italic specifically (which SS02 is) compounds the issue because the connected, sloped letterforms reduce per-character visual distinctiveness. Dyslexic readers in particular rely on per-character distinctiveness to disambiguate similar letters (b/d, p/q, m/w). The italic cursive collapses this distinctiveness across all letters, not just the typically-confused pairs.
+
+**Fix applied:** Switched to a hybrid typography system. Body text and most headings (h2-h6) now use **Atkinson Hyperlegible**, a sans-serif designed by the Braille Institute specifically for low-vision and dyslexic readers. The font has visually distinct letterforms (no I/l/1 collisions, no b/d mirroring) which helps every reader, not just dyslexic ones. Loaded as four self-hosted woff2 files (Regular, Italic, Bold, BoldItalic) from `static/fonts/`, converted from upstream TTF via fontTools at ~24KB each.
+
+H1 page titles (the terminal-prompt strings like `Σ ~/sala  # About Me`) and the {{< typeit >}} typing animations remain in MonoLisa upright. These are the identity-defining typography of the site, and upright MonoLisa is not the readability barrier — italic cursive was. Keeping the terminal-prompt look in H1s and animations preserves the brand without re-introducing the dyslexia issue. Code blocks remain in MonoLisa upright with ligatures, unchanged.
+
+**Implementation in `assets/css/custom.css`:**
+
+- Atkinson `@font-face` declarations for all four weights/styles
+- MonoLisa Italic `@font-face` removed entirely (no longer used anywhere)
+- `html, body` and `h2, h3, h4, h5, h6` selectors point to Atkinson with system sans-serif fallback chain
+- `h1` and `[id^="typeit-"]` selectors point to MonoLisa upright with monospace fallback chain
+- `em, i` defensive italic rule removed (was MonoLisa-specific; Atkinson has its own italic variant)
+
+**Verification:** Load any page on the site. Body text and h2/h3 headings should render in Atkinson Hyperlegible (clean sans-serif). H1 page titles like `Σ ~/sala  # About Me` should render in MonoLisa upright (monospace). The cycling typing animations should also render in MonoLisa upright. Code blocks in project pages should render in MonoLisa with ligatures, unchanged from before.
+
+**Why this matters generally:** The original cursive script was visually distinctive but it traded readability for aesthetics across every page. The fix demonstrates that "identity-defining typography" and "accessible typography" are not always in conflict — they can coexist by scoping each to where it does its best work. The terminal-prompt look defines the brand in short strings (page titles, animations); long-form prose needs to be read by humans, including those for whom italic cursive is a real barrier.
 
 ## 11. Configuration Files
 

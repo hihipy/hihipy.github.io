@@ -24,16 +24,16 @@ La Meva Casa Digital és La Teva Casa Digital
 
 Welcome to my digital casa. The Spanish room names are a small tribute to my dual U.S. and Spanish citizenship, with the rotating welcome adding nods to my Catalan and Greek heritage. Feel free to wander between rooms.
 
-[◰ ~/puerta  # Résumé PDF](/puerta/) · Downloadable PDF résumé.
+[~/puerta  # Résumé PDF](/puerta/) · Downloadable PDF résumé.
 
-[§ ~/sala  # About Me](/sala/) · About Philip, with full work history, education, certifications, and skills.
+[~/sala  # About Me](/sala/) · About Philip, with full work history, education, certifications, and skills.
 
-[⛁ ~/cocina  # Data Prep & ETL](/cocina/)  {{< section-count cocina >}} · Data preparation and ETL tools, where messy data gets cleaned up.
+[~/cocina  # Data Prep & ETL](/cocina/)  {{< section-count cocina >}} · Data preparation and ETL tools, where messy data gets cleaned up.
 
-[✦ ~/estudio  # AI & Experiments](/estudio/)  {{< section-count estudio >}} · AI-augmented analytics tools and research experiments.
+[~/estudio  # AI & Experiments](/estudio/)  {{< section-count estudio >}} · AI-augmented analytics tools and research experiments.
 
-[⛭ ~/garaje  # Analyst Utilities](/garaje/)  {{< section-count garaje >}} · Excel macros, calculators, and processing scripts that make analyst work easier.
+[~/garaje  # Analyst Utilities](/garaje/)  {{< section-count garaje >}} · Excel macros, calculators, and processing scripts that make analyst work easier.
 
-[❀ ~/jardín  # Side Projects](/jardin/)  {{< section-count jardin >}} · Personal projects and miscellaneous experiments.
+[~/jardín  # Side Projects](/jardin/)  {{< section-count jardin >}} · Personal projects and miscellaneous experiments.
 
 *Press <kbd>/</kbd> to search.*
