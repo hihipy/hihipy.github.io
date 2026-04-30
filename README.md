@@ -633,6 +633,28 @@ H1 page titles (the terminal-prompt strings like `Σ ~/sala  # About Me`) and th
 
 **Why this matters generally:** The original cursive script was visually distinctive but it traded readability for aesthetics across every page. The fix demonstrates that "identity-defining typography" and "accessible typography" are not always in conflict — they can coexist by scoping each to where it does its best work. The terminal-prompt look defines the brand in short strings (page titles, animations); long-form prose needs to be read by humans, including those for whom italic cursive is a real barrier.
 
+### BUG-017: Inline KaTeX `\(...\)` and `$...$` delimiters do not work on this Hugo+Blowfish setup
+
+**Symptom:** Attempting to use inline KaTeX math on a project page (e.g., `\(M\)` to render an italic mathematical *M* mid-sentence) results in the source rendering as literal text. The user sees `(M)` or `\(M\)` in the prose instead of the styled math character.
+
+**Cause:** Two interacting issues in the rendering pipeline.
+
+First, Blowfish's `katex-render.js` calls `renderMathInElement(document.body)` with no explicit `delimiters` array. KaTeX's auto-render then uses its default delimiter set, which includes `$$...$$` (block) and `\(...\)` (inline) but excludes `$...$` (inline) for safety — single-dollar would conflict with currency notation, which the site uses heavily on `sala` (e.g., `$540M`) and several `garaje` pages.
+
+Second, even though `\(...\)` is theoretically a default KaTeX inline delimiter, Hugo's Goldmark Markdown renderer interprets backslash-paren sequences (`\(`, `\)`) as Markdown escape sequences for literal parentheses *before* the rendered HTML reaches KaTeX. Goldmark eats the backslashes, KaTeX never sees the math markers, and the content renders as plain text.
+
+**Workarounds attempted, none successful:**
+
+- Replacing inline `\(M\)` with `$M$` — fails because single-dollar delimiters aren't enabled in `katex-render.js`, and enabling them site-wide would break dollar-amount text on multiple other pages.
+- Replacing inline `\(M\)` with double-backslash `\\(M\\)` — Goldmark's escape handling is more aggressive than expected; this also gets stripped.
+- Enabling `unsafe = true` in `markup.toml` to allow raw HTML, then wrapping inline math in `<span class="math-inline">` tags — works mechanically but requires authoring math in HTML rather than markdown, defeating the readability of the source file.
+
+**Status:** Block KaTeX (`$$...$$`) works correctly and is what the site uses. Inline KaTeX is effectively unsupported on this Hugo+Blowfish setup. Workaround: replace inline math with code-formatted identifiers (e.g., write `K`, `M`, `m` in backticks) and let the surrounding prose carry the meaning. Block formulas remain available for the centerpiece equation in any math-heavy page.
+
+**If a future Hugo or Blowfish update enables inline math:** the test is to put `\(M\)` inline in any markdown file with the `{{< katex >}}` shortcode and verify it renders as italic *M*. If yes, this bug is resolved and inline math becomes available. If no, this workaround stays in place.
+
+**Why this matters:** Anyone trying to add math notation to a project page will hit this. Document it once here so we don't waste another debugging cycle re-discovering it. The pbi-model-export page (currently the site's only math-using page) keeps its block formula and uses prose for inline references; new math-using pages should follow the same pattern.
+
 ## 11. Configuration Files
 
 ### `config/_default/hugo.toml`
