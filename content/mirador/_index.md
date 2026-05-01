@@ -42,25 +42,49 @@ The kitchen has standards. These are not up for debate.
 
 A real kitchen does not let a customer talk it out of food safety. The dashboard equivalent is **accessibility**, meaning legibility and color contrast. If the dashboard cannot be read, it cannot do its job. This is the only place where I will hold the line against a stakeholder who wants something different.
 
-**Fonts.** Use a typeface that was actually designed for clarity.
+**Fonts.** Use a typeface that was actually designed for clarity. For body text, that means avoiding thin geometric sans-serifs where similar characters are easy to swap (1/l/I, 0/O, B/8). For data tables, code, and terminal-style elements, a monospaced face keeps columns aligned and characters distinct. The cost of a bad font choice is invisible: a reader misreads a 0 as an O, a 1 as an l, makes a decision on the wrong number, and you never find out.
 
-For body text, that means avoiding thin geometric sans-serifs where similar characters are easy to swap (1/l/I, 0/O, B/8):
+**Color.** Use a palette designed for color-blind viewers. Pair color with shape, position, or label so the meaning never depends on color alone. About 8% of men have some form of red-green color blindness, which means the green-good/red-bad shorthand in business dashboards fails for roughly one in twelve men in the room.
+
+**Contrast.** Color choices alone are not enough. The actual measurement is contrast ratio:
+
+$$\text{Contrast Ratio} = \frac{L_1 + 0.05}{L_2 + 0.05}$$
+
+where \\(L_1\\) is the relative luminance of the lighter color and \\(L_2\\) the darker. The [WCAG 2.1 AA standard](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html) requires at least 4.5:1 for normal text and 3:1 for large text (18pt and up, or 14pt bold and up). Below those numbers, you have excluded somebody, usually silently, because they will not say so.
+
+To check any specific foreground-background pair, the [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/) is the standard tool: paste two hex codes, get the ratio and pass/fail at each WCAG level.
+
+**Recommended pairings.** I use the GitHub light and dark theme accent palettes throughout this site. Every pair clears AA for normal text, the contrast ratios are public and verifiable, and using the same palette in both modes means one design decision instead of two.
+
+**Density and spacing.** Crowding is its own legibility failure. When numbers, labels, and charts are pressed together with no breathing room, the eye cannot find anchors. Generous padding around tiles, consistent line height, and white space between sections are not decorative; they are how the reader navigates without effort.
+
+**The export test.** Every dashboard I build will eventually be screenshotted into a slide deck or exported to PDF for a board meeting. The first time that happens, all interactivity dies. Tooltips disappear. Filters freeze. Whatever the user is looking at is what the audience gets. If a chart relies on a tooltip to make sense, it is broken on paper. Build for the static export from the start.
+
+The principle behind all of these is the same: design for the worst pair of eyes in the room, looking at the worst version of the document. If they can read it, everyone can.
+
+You can see this philosophy applied on this site itself: Atkinson Hyperlegible for body text, MonoLisa for code blocks and the terminal-style room paths in the header.
+
+{{< accordion mode="collapse" separated="true" >}}
+
+{{< accordionItem title="Specific Typefaces I Recommend" >}}
+
+For body text:
 
 - **[Atkinson Hyperlegible](https://www.brailleinstitute.org/freefont/)** (Free, OFL). My default. Designed by the Braille Institute for low-vision and dyslexic readers, with deliberate disambiguation between characters that get confused at low resolution.
 - **[Inter](https://rsms.me/inter/)** (Free, OFL). Designed for screen UIs. Widely supported.
 - **[IBM Plex Sans](https://www.ibm.com/plex/)** (Free, OFL). Broad language coverage. Technical pedigree.
 - **[Lexend](https://www.lexend.com/)** (Free, OFL). Research-backed for reading proficiency, especially for readers with reading difficulties.
 
-For data tables, code, and terminal-style elements, a monospaced face keeps columns aligned and characters distinct:
+For data tables, code, and terminal-style elements:
 
 - **[MonoLisa](https://www.monolisa.dev/)** (Paid). My pick. The casa uses it for code blocks and the room paths in the header.
 - **[JetBrains Mono](https://www.jetbrains.com/lp/mono/)** (Free, OFL). Designed by JetBrains for IDE use.
 - **[Fira Code](https://github.com/tonsky/FiraCode)** (Free, OFL). Popular for its programming ligatures.
 - **[Atkinson Hyperlegible Mono](https://www.brailleinstitute.org/freefont/)** (Free, OFL). New 2025 monospaced version from the Braille Institute team.
 
-The cost of a bad font choice is invisible: a reader misreads a 0 as an O, a 1 as an l, makes a decision on the wrong number, and you never find out.
+{{< /accordionItem >}}
 
-**Color.** Use a palette designed for color-blind viewers. Pair color with shape, position, or label so the meaning never depends on color alone. About 8% of men have some form of red-green color blindness, which means the green-good/red-bad shorthand in business dashboards fails for roughly one in twelve men in the room.
+{{< accordionItem title="The Color Palettes I Use" >}}
 
 **[Okabe-Ito](https://jfly.uni-koeln.de/color/).** Categorical, up to 8 categories. Default categorical in *Nature Methods*.
 
@@ -99,15 +123,11 @@ The cost of a bad font choice is invisible: a reader misreads a 0 as an O, a 1 a
 - {{< swatch "#92C5DE" >}} [Morning Glory](https://chir.ag/projects/name-that-color/#92C5DE) (#92C5DE)
 - {{< swatch "#0571B0" >}} [Deep Cerulean](https://chir.ag/projects/name-that-color/#0571B0) (#0571B0)
 
-**Contrast.** Color choices alone are not enough. The actual measurement is contrast ratio:
+{{< /accordionItem >}}
 
-$$\text{Contrast Ratio} = \frac{L_1 + 0.05}{L_2 + 0.05}$$
+{{< accordionItem title="Recommended UI Pairings For Light And Dark Modes" >}}
 
-where \\(L_1\\) is the relative luminance of the lighter color and \\(L_2\\) the darker. The [WCAG 2.1 AA standard](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html) requires at least 4.5:1 for normal text and 3:1 for large text (18pt and up, or 14pt bold and up). Below those numbers, you have excluded somebody, usually silently, because they will not say so.
-
-To check any specific foreground-background pair, the [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/) is the standard tool: paste two hex codes, get the ratio and pass/fail at each WCAG level.
-
-**Recommended pairings.** A starting point that clears WCAG AA in both modes. The casa uses these throughout, and the light and dark sets map to each other so the same design works in both.
+A starting point that clears WCAG AA in both modes. The casa uses these throughout, and the light and dark sets map to each other so the same design works in both.
 
 For a white or near-white background:
 
@@ -129,13 +149,9 @@ For a dark background (the canvas color is #0D1117):
 
 These are the GitHub light and dark theme accent palettes. They are not the only valid choices. They are a reliable starting point: every pair clears AA for normal text, the contrast ratios are public and verifiable, and using the same palette in both modes means one design decision instead of two.
 
-**Density and spacing.** Crowding is its own legibility failure. When numbers, labels, and charts are pressed together with no breathing room, the eye cannot find anchors. Generous padding around tiles, consistent line height, and white space between sections are not decorative; they are how the reader navigates without effort.
+{{< /accordionItem >}}
 
-**The export test.** Every dashboard I build will eventually be screenshotted into a slide deck or exported to PDF for a board meeting. The first time that happens, all interactivity dies. Tooltips disappear. Filters freeze. Whatever the user is looking at is what the audience gets. If a chart relies on a tooltip to make sense, it is broken on paper. Build for the static export from the start.
-
-The principle behind all of these is the same: design for the worst pair of eyes in the room, looking at the worst version of the document. If they can read it, everyone can.
-
-You can see this philosophy applied on this site itself: Atkinson Hyperlegible for body text, MonoLisa for code blocks and the terminal-style room paths in the header.
+{{< /accordion >}}
 
 ## Clarity
 
@@ -251,9 +267,21 @@ The principles for keeping the pantry in order:
 
 **Source-control what you can.** Modern formats let the model itself live in git: Power BI Project (PBIP), LookML, dbt models, Tabular Editor save files. The visualization layer may not be source-controllable, but the model behind it usually is.
 
-**How I do it in Power BI.** [Tabular Editor 2](https://github.com/TabularEditor/TabularEditor) is the actual development tool: a real measure editor with display folders, bulk operations, and dependency views the built-in interface never surfaces. Free, open-source, MIT-licensed, indispensable. Alongside it, [pbi-model-export](/garaje/pbi-model-export/), my own tool, extracts the entire model as JSON: every table, column, measure, relationship, hierarchy, role, plus the DAX dependency graph and the resolved source paths for each table. Tabular Editor 2 is for active development; pbi-model-export is for periodic full inventory and review. Together they finally let me work on a dashboard's model the way I work on code.
+{{< accordion mode="collapse" separated="true" >}}
 
-**Other tools, equivalent options.** Tableau organizes calculated fields into folders in the Data pane (right-click → Folders); Tableau Catalog, a Server/Cloud feature, provides lineage tracking for the model layer. Looker is code-first by design: LookML is a text modeling language, every measure and dimension lives in a `.lkml` file, and version control is the default workflow rather than an add-on. dbt sits one layer earlier in the pipeline: it models the data warehouse itself with auto-generated documentation and lineage, then any dashboard tool consumes the cleaned model. Each path arrives at the same destination by different routes.
+{{< accordionItem title="Power BI Implementation: Tabular Editor 2 + pbi-model-export" >}}
+
+[Tabular Editor 2](https://github.com/TabularEditor/TabularEditor) is the actual development tool: a real measure editor with display folders, bulk operations, and dependency views the built-in interface never surfaces. Free, open-source, MIT-licensed, indispensable. Alongside it, [pbi-model-export](/garaje/pbi-model-export/), my own tool, extracts the entire model as JSON: every table, column, measure, relationship, hierarchy, role, plus the DAX dependency graph and the resolved source paths for each table. Tabular Editor 2 is for active development; pbi-model-export is for periodic full inventory and review. Together they finally let me work on a dashboard's model the way I work on code.
+
+{{< /accordionItem >}}
+
+{{< accordionItem title="Equivalent Approaches In Tableau, Looker, And dbt" >}}
+
+Tableau organizes calculated fields into folders in the Data pane (right-click → Folders); Tableau Catalog, a Server/Cloud feature, provides lineage tracking for the model layer. Looker is code-first by design: LookML is a text modeling language, every measure and dimension lives in a `.lkml` file, and version control is the default workflow rather than an add-on. dbt sits one layer earlier in the pipeline: it models the data warehouse itself with auto-generated documentation and lineage, then any dashboard tool consumes the cleaned model. Each path arrives at the same destination by different routes.
+
+{{< /accordionItem >}}
+
+{{< /accordion >}}
 
 The principle is consistent regardless of tool: treat the model with the same discipline as code. Name things consistently. Group related things. Track dependencies. Make it possible to delete with confidence.
 

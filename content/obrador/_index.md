@@ -22,6 +22,7 @@ showZenMode: false
 layout: "single"
 ---
 
+{{< lead >}}
 {{< typeit
     tag="h3"
     speed=70
@@ -33,70 +34,42 @@ My Tool-Building Philosophy
 La Meva Filosofia d'Eines
 Η Φιλοσοφία μου για τα Εργαλεία
 {{< /typeit >}}
+{{< /lead >}}
 
 ## Approach
 
 Two things sit underneath every tool I build.
 
-The first is a train of thought. This field rarely hands you a turnkey solution. The data arrives misformatted, the export is structurally broken, the workflow has a step that takes ten minutes and happens forty times a year. There is almost always more than one way to address it, and the work is in choosing which way is worth the effort.
+The first is a train of thought. This field rarely hands you a turnkey solution. The data arrives misformatted, the export is structurally broken, the workflow has a step that takes ten minutes and happens forty times a year. The work is in choosing which way of addressing it is worth the effort.
 
-The second is gratitude. Almost nothing I build is original. Every tool sits on top of decades of open-source work by people I have never met, on documentation written by maintainers who answer GitHub issues in their free time, and on accumulated answers to questions that earlier versions of me would have asked. The right framing is not "I built this." It is "I assembled this on top of what was already there."
-
-Both halves matter for the same reason: they keep me honest about where the value comes from. The thinking is mine. The substrate is borrowed.
+The second is gratitude. Almost nothing I build is original. Every tool sits on top of decades of open-source work, on documentation written by maintainers who answer GitHub issues in their free time, and on accumulated answers to questions that earlier versions of me would have asked. The right framing is not "I built this." It is "I assembled this on top of what was already there."
 
 ## When Friction Becomes A Tool
+
+{{< mermaid >}}
+flowchart TD
+    A[I have a friction point] --> B{Does it recur?}
+    B -->|No| C[Live with it<br/>One-off pain isn't worth automating]
+    B -->|Yes| D{Does the manual version drift<br/>or produce inconsistent output?}
+    D -->|No| E[Manual is fine<br/>Trustworthy by hand means no tool needed]
+    D -->|Yes| F[Build the tool<br/>Output has stopped being trustworthy]
+{{< /mermaid >}}
 
 Not every annoyance becomes a tool. The threshold is two conditions met at once: the task recurs, and the manual version produces inconsistent results.
 
 A one-off pain is just a one-off pain. A recurring task done consistently by hand is fine. But a recurring task done by hand that drifts a little every time, formatted differently or missing a step occasionally, is where automation pays. Not because the time saved is huge, but because the output stops being trustworthy.
 
-A few concrete moments from the rooms next door.
+A few concrete examples from the rooms next door.
 
 **A 25Live export that looks usable but isn't.** [25Live](https://collegenet.com/scheduling/25live) is the room and event scheduling system used by most universities. The Excel export from any campus 25Live opens fine. It also has structural problems that quietly break analysis: events split across rows because of recurrence rules, room codes that do not match the master room list, dates parsed as strings. Every analyst who tries to use a 25Live export does the same hour of cleanup before they can ask the actual analytical question. [25live-cleaner](/cocina/25live-cleaner/) does the cleanup once, in code, and produces a written record of every fix applied. Recurring + manual-and-inconsistent.
 
 **Power BI models that no one can see into.** A medium-sized Power BI model has dozens of tables, hundreds of columns, fifty measures with intricate DAX referencing each other, and relationships with their own filtering rules. All of it is invisible from outside Power BI Desktop. You cannot grep it, you cannot diff it, you cannot review it. [pbi-model-export](/garaje/pbi-model-export/) walks the model and emits the whole structure as JSON, with the DAX dependency graph included. The model becomes inspectable. Recurring + opaque.
 
-**Per diem math nobody gets right by hand.** Foreign per diem at a U.S. institution is not a single rate. It is the M&IE rate minus 25% for travel days, minus specific dollar deductions for any provided meal, with the meal deductions varying by city. Doing this calculation by hand for a multi-city trip takes twenty minutes and produces a different answer every time. [foreign-per-diem-calculator](/garaje/foreign-per-diem-calculator-for-usa-based-institutions/) does the math correctly and consistently. Recurring + error-prone.
+**Per diem math nobody gets right by hand.** Foreign per diem at a U.S. institution is not a single rate. It is the M&IE rate minus 25% for travel days, minus specific dollar deductions for any provided meal, with the meal deductions varying by city. Doing this calculation by hand for a multi-city trip takes twenty minutes and produces a different answer every time. [foreign-per-diem-calculator](/garaje/foreign-per-diem-calculator-for-usa-based-institutions/) does the math correctly and consistently.
 
-**Qualtrics exports that need an hour of cleaning before any actual work.** A raw Qualtrics export mixes preview and test responses with real ones, has cryptic column names like `Q5_3_TEXT`, stores numbers and dates as strings, and arrives without a codebook. Every fresh export gets the same hour of manual prep. [qualtrics-processing-pipeline](/cocina/qualtrics-processing-pipeline/) eats that hour. Recurring + tedious.
+**Qualtrics exports that need an hour of cleaning before any actual work.** A raw Qualtrics export mixes preview and test responses with real ones, has cryptic column names like `Q5_3_TEXT`, stores numbers and dates as strings, and arrives without a codebook. Every fresh export gets the same hour of manual prep. [qualtrics-processing-pipeline](/cocina/qualtrics-processing-pipeline/) eats that hour.
 
 The threshold is the same in every case. If the friction is one-time, live with it. If it recurs and the manual version drifts, build the tool.
-
-## Stack Overflow Then, AI Now
-
-People in this field have been panicking about productivity tools for as long as the field has existed.
-
-When the internet became searchable, there was a real argument that programmers would lose the ability to write code from scratch because every solution was now a Google query away. When Stack Overflow gained traction, there was a follow-up argument that copying and adapting answers was somehow not real engineering. Now AI assistants are the panic of the moment, with the same shape: that using them is cheating, that they will erode the underlying skill, that real practitioners write everything from first principles.
-
-It was wrong each previous time and it is wrong now.
-
-This is a field built on iteration through time. Each generation of practitioners builds on the work of the last, and the tools that compress that loop (search, Stack Overflow, AI assistants) are how the field actually moves forward. The objection assumes there is some pure version of programming that does not involve consulting prior work. That version has never existed.
-
-I use AI assistants heavily. I encounter a problem, I do my own research, and I talk to an LLM. The LLM has read more pages on the problem than I will in my lifetime, and there is a good chance someone with my exact issue has already worked through it. Copying their thinking is not cheating, any more than reading a textbook is cheating. The textbook was someone else's thinking, too.
-
-The field-specific point: most of the code I write is not novel. It is gluing together known operations on known data formats with known libraries. AI assistants are excellent at that kind of work because that kind of work is what they have seen the most of. They struggle on genuinely novel research code, but I am not writing genuinely novel research code. I am cleaning Qualtrics exports.
-
-Knowing the fundamentals matters, but the actual work of building tools like the ones I build is more about knowing what to ask, where to look, how to translate a real-world friction into a tractable problem, and how to verify the answer once you have it.
-
-The right mental model for an AI assistant is an over-eager intern. Bright, fast, willing to take a swing at any problem you hand them, genuinely useful for a wide range of tasks, and still learning. That last part matters. An over-eager intern will sometimes hand you a confident-sounding answer that is partly or entirely wrong: a function that does not exist, a citation that was never published, an API call with a hallucinated parameter. The output looks finished, the tone is assured, and the mistake is invisible until you check. So check. Read every line of code before you commit it. Verify every fact before you cite it. Run every snippet before you ship it. The intern is helpful, but the work is still yours.
-
-LLMs are here to stay, the way the internet is. Getting good at working with them is part of the craft now.
-
-## Talking To The Machine
-
-Once you accept that AI assistants are part of the workflow, the next question is how to make them effective. The biggest leverage is in the format you give them.
-
-LLMs are language models trained largely on the web. The web is built on HTML, which means the document formats LLMs understand best are the ones with HTML lineage: Markdown (which compiles to HTML) and JSON (which the web runs on). Hand an LLM raw Excel and it does its best. Hand it Markdown and it can actually reason. The format change does more for output quality than the prompt does.
-
-This shapes how I build tools.
-
-[**pbi-model-export**](/garaje/pbi-model-export/) is the clearest example. A `.pbix` file is a binary blob. The model inside is structured data, but you cannot show it to anything that does not already speak Power BI. By extracting the model to JSON (every table, column, measure, relationship, the DAX expressions, the dependency graph), the model becomes something an AI can actually read and help me work on. The JSON is for me when I am reviewing the model offline. The JSON is also for Claude when I am asking "what depends on this measure if I rename it." Both audiences benefit from the same artifact.
-
-[**ai-csv-profiler**](/estudio/ai-csv-profiler/) is the same pattern at smaller scale. Pasting a CSV into an AI chat works for ten rows, breaks at a hundred, and is impossible at a million. So the tool produces a small structured JSON document that captures column types, ranges, distributions, and quality issues. Everything an AI needs to reason about the data without seeing the rows. The conversation about the data becomes possible because the data was first translated into a format the AI can hold in its head.
-
-The same logic applies to documentation. Every tool I build has a README written for two audiences at once: a human colleague who needs to know what the tool does and how to run it, and an LLM that I will later ask to extend the tool or fix a bug in it. Good documentation for one is good documentation for the other. They both want clear structure, examples that actually run, and explicit assumptions stated up front.
-
-The pattern is general: anywhere I can convert messy, tool-specific output into Markdown or JSON, I do. Not because it is elegant, though it usually is, but because the conversion expands what the AI can help with from a few lines to the whole problem.
 
 ## What Not To Share
 
@@ -118,7 +91,51 @@ A practical workflow that has served me:
 
 The cost of this discipline is small. The cost of getting it wrong is enormous, and almost always invisible until it is not.
 
-## Reference Docs For The Machine
+## On Working With AI Assistants
+
+What follows is practical detail on AI assistants: why they belong in the workflow at all, why format conversion matters more than prompt engineering, and how to pre-load context so a session starts smarter than it would on its own.
+
+{{< accordion mode="collapse" separated="true" >}}
+
+{{< accordionItem title="Why AI Assistants Are The Latest Version Of An Old Argument" >}}
+
+People in this field have been panicking about productivity tools for as long as the field has existed.
+
+When the internet became searchable, there was a real argument that programmers would lose the ability to write code from scratch because every solution was now a Google query away. When Stack Overflow gained traction, there was a follow-up argument that copying and adapting answers was somehow not real engineering. Now AI assistants are the panic of the moment, with the same shape: that using them is cheating, that they will erode the underlying skill, that real practitioners write everything from first principles.
+
+It was wrong each previous time and it is wrong now.
+
+This is a field built on iteration through time. Each generation of practitioners builds on the work of the last, and the tools that compress that loop (search, Stack Overflow, AI assistants) are how the field actually moves forward. The objection assumes there is some pure version of programming that does not involve consulting prior work. That version has never existed.
+
+I use AI assistants heavily. I encounter a problem, I do my own research, and I talk to an LLM. The LLM has read more pages on the problem than I will in my lifetime, and there is a good chance someone with my exact issue has already worked through it. Copying their thinking is not cheating, any more than reading a textbook is cheating. The textbook was someone else's thinking, too.
+
+The field-specific point: most of the code I write is not novel. It is gluing together known operations on known data formats with known libraries. AI assistants are excellent at that kind of work because that kind of work is what they have seen the most of. They struggle on genuinely novel research code, but I am not writing genuinely novel research code. I am cleaning Qualtrics exports.
+
+The right mental model for an AI assistant is an over-eager intern. Bright, fast, willing to take a swing at any problem you hand them, genuinely useful for a wide range of tasks, and still learning. That last part matters. An over-eager intern will sometimes hand you a confident-sounding answer that is partly or entirely wrong: a function that does not exist, a citation that was never published, an API call with a hallucinated parameter. The output looks finished, the tone is assured, and the mistake is invisible until you check. So check. Read every line of code before you commit it. Verify every fact before you cite it. Run every snippet before you ship it. The intern is helpful, but the work is still yours.
+
+LLMs are here to stay, the way the internet is. Getting good at working with them is part of the craft now.
+
+{{< /accordionItem >}}
+
+{{< accordionItem title="Format Conversion Is Higher Leverage Than Prompting" >}}
+
+Once you accept that AI assistants are part of the workflow, the next question is how to make them effective. The biggest leverage is in the format you give them.
+
+LLMs are language models trained largely on the web. The web is built on HTML, which means the document formats LLMs understand best are the ones with HTML lineage: Markdown (which compiles to HTML) and JSON (which the web runs on). Hand an LLM raw Excel and it does its best. Hand it Markdown and it can actually reason. The format change does more for output quality than the prompt does.
+
+This shapes how I build tools.
+
+[**pbi-model-export**](/garaje/pbi-model-export/) is the clearest example. A `.pbix` file is a binary blob. The model inside is structured data, but you cannot show it to anything that does not already speak Power BI. By extracting the model to JSON (every table, column, measure, relationship, the DAX expressions, the dependency graph), the model becomes something an AI can actually read and help me work on. The JSON is for me when I am reviewing the model offline. The JSON is also for Claude when I am asking "what depends on this measure if I rename it." Both audiences benefit from the same artifact.
+
+[**ai-csv-profiler**](/estudio/ai-csv-profiler/) is the same pattern at smaller scale. Pasting a CSV into an AI chat works for ten rows, breaks at a hundred, and is impossible at a million. So the tool produces a small structured JSON document that captures column types, ranges, distributions, and quality issues. Everything an AI needs to reason about the data without seeing the rows. The conversation about the data becomes possible because the data was first translated into a format the AI can hold in its head.
+
+The same logic applies to documentation. Every tool I build has a README written for two audiences at once: a human colleague who needs to know what the tool does and how to run it, and an LLM that I will later ask to extend the tool or fix a bug in it. Good documentation for one is good documentation for the other. They both want clear structure, examples that actually run, and explicit assumptions stated up front.
+
+The pattern is general: anywhere I can convert messy, tool-specific output into Markdown or JSON, I do. Not because it is elegant, though it usually is, but because the conversion expands what the AI can help with from a few lines to the whole problem.
+
+{{< /accordionItem >}}
+
+{{< accordionItem title="Pre-Loading Context So The AI Starts Smarter" >}}
 
 Once the data is in a format the AI can handle, the next leverage point is the context I bring to the session before the conversation even starts.
 
@@ -144,22 +161,18 @@ The recursive trick that makes building these tractable: I ask the AI to help me
 
 This approach has a specific limit. Guides work for tools and formats with fixed rules. They do not work for tasks that depend on judgment, context, or my actual data. For those, regular prompting still applies. But for any tool I use repeatedly with a stable spec, building a guide once is a permanent multiplier.
 
+{{< /accordionItem >}}
+
+{{< /accordion >}}
+
 ## The Giants
 
 A short, incomplete list of the giants I am standing on.
 
-The Python data ecosystem holds up almost everything in [cocina](/cocina/) and [estudio](/estudio/): [pandas](https://pandas.pydata.org/) for the data work, [NumPy](https://numpy.org/) underneath that, [openpyxl](https://openpyxl.readthedocs.io/) for Excel I/O, [requests](https://requests.readthedocs.io/) for fetching things off the web, [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/) for parsing HTML, [Selenium](https://www.selenium.dev/) when a site needs a browser to render. None of my tools would exist without these. I have never written a Selenium driver. I have never written a CSV parser. I have written code that calls them.
+The Python data ecosystem holds up almost everything in [cocina](/cocina/) and [estudio](/estudio/): [pandas](https://pandas.pydata.org/), [NumPy](https://numpy.org/), [openpyxl](https://openpyxl.readthedocs.io/), [requests](https://requests.readthedocs.io/), [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/), and [Selenium](https://www.selenium.dev/). The GUI work in [estudio](/estudio/) and [jardín](/jardín/) leans on [tkinter](https://docs.python.org/3/library/tkinter.html) and [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter) by Tom Schimansky, plus [Pillow](https://pillow.readthedocs.io/) and the [wordcloud](https://github.com/amueller/word_cloud) library by Andreas Mueller. In Power BI land, [Tabular Editor 2](https://github.com/TabularEditor/TabularEditor) by Daniel Otykier is the only reason `pbi-model-export` was buildable in the first place. The casa itself runs on [Hugo](https://gohugo.io/) by Bjørn Erik Pedersen and the [Blowfish](https://blowfish.page/) theme by Nuno Coração.
 
-The GUI work in [estudio](/estudio/) and [jardín](/jardín/) leans on [tkinter](https://docs.python.org/3/library/tkinter.html), built into Python, plus [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter) by Tom Schimansky when I want something that does not look like 1995. For images, [Pillow](https://pillow.readthedocs.io/). For the LinkedIn wordcloud generator specifically, the [wordcloud](https://github.com/amueller/word_cloud) library by Andreas Mueller, which does the layout I customize on top of.
+Beyond software, [Stack Overflow](https://stackoverflow.com/) is the reason most analysts can solve most problems most days, and whoever maintains the [pandas docs](https://pandas.pydata.org/docs/) deserves a salary they probably do not get. Lately, [Claude](https://claude.ai/), [ChatGPT](https://chatgpt.com/), [Gemini](https://gemini.google.com/), [Copilot](https://copilot.microsoft.com/), and [Perplexity](https://www.perplexity.ai/) are the newest layer of this stack: not on the same shelf as pandas, but part of the substrate.
 
-In Power BI land, [Tabular Editor 2](https://github.com/TabularEditor/TabularEditor) by Daniel Otykier is the unsung hero of every measure I have ever organized properly. Free, open-source, MIT-licensed, and the only reason `pbi-model-export` was buildable in the first place: the C# scripting environment is what gave me programmatic access to the model.
-
-The casa itself runs on [Hugo](https://gohugo.io/) by Bjørn Erik Pedersen and contributors, with the [Blowfish](https://blowfish.page/) theme by Nuno Coração. Every page on this site exists because of work I did not have to do.
-
-The non-software giants are harder to name but worth naming anyway. [Stack Overflow](https://stackoverflow.com/) as an institution is the reason most analysts can solve most problems most days; the answers I have leaned on were written by people who got nothing in return except the satisfaction of helping. Whoever maintains the documentation for [pandas](https://pandas.pydata.org/docs/) deserves a meaningful salary that they probably do not get. The unnamed contributors who fixed the bug I would otherwise have hit on a Tuesday are the actual reason I shipped on schedule.
-
-And, lately, the LLMs themselves: [Claude](https://claude.ai/), [ChatGPT](https://chatgpt.com/), [Gemini](https://gemini.google.com/), [Copilot](https://copilot.microsoft.com/), and [Perplexity](https://www.perplexity.ai/) are the newest layer of this stack. They are not on the same shelf as pandas (pandas does the work; the LLMs help me find the right way to call it), but they are absolutely part of the substrate now.
-
-The honest summary: very little of what runs on this site is original code. The originality, where there is any, is in choosing which problem to attack and how to compose the borrowed pieces into something that fits the actual workflow. The composition is mine. The pieces are not.
+Very little of what runs on this site is original code. The composition is mine. The pieces are not.
 
 That is the deal. You build on what is there, and you say so.
