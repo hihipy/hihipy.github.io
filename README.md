@@ -53,11 +53,9 @@ The site is organized as a "digital casa" (Spanish for "house"). Each top-level 
 
 The home page lead is a rotating typing animation (Blowfish `{{< typeit >}}` shortcode wrapped inside `{{< lead >}}`, looping with `breakLines=false`) that cycles through four languages: Spanish (`Mi Casa Digital es Su Casa Digital`, canonical and matched by the site's `description` meta tag), English (`My Digital Home is Your Digital Home`), Catalan (`La Meva Casa Digital és La Teva Casa Digital`), and Greek (`Το Ψηφιακό Σπίτι μου είναι Το Ψηφιακό Σπίτι σου`). All four use the same casing rule (see §7). Spanish and English reflect citizenship (Spain and U.S. respectively); Catalan and Greek reflect heritage. The welcome paragraph immediately below the lead names all four connections explicitly.
 
-This pattern extends to all six room landing pages. Each `{{< lead >}}` contains a typing animation cycling a short page-purpose tagline through the same four languages in the same order. Each tagline describes what is actually on the page, not the room name itself, so a visitor who lands on cocina or estudio without context understands what they are looking at. The taglines are: puerta cycles `Mi Currículum / My Résumé / El Meu Currículum / Το Βιογραφικό μου`; sala cycles `Mi Trayectoria / My Background / La Meva Trajectòria / Το Υπόβαθρό μου`; cocina cycles `Mis Pipelines de Datos / My Data Pipelines / Els Meus Pipelines de Dades / Τα Pipelines Δεδομένων μου`; estudio cycles `Mis Experimentos con IA / My AI Experiments / Els Meus Experiments amb IA / Τα Πειράματά μου με AI`; garaje cycles `Mis Utilidades de Analista / My Analyst Utilities / Les Meves Utilitats d'Analista / Τα Εργαλεία Αναλυτή μου`; jardín cycles `Mis Proyectos Personales / My Side Projects / Els Meus Projectes Personals / Τα Προσωπικά Έργα μου`. Greek possessive clitics (`μου`) stay lowercase per native convention; Greek proparoxytone words (`Πειράματα`, `Υπόβαθρο`) take the secondary accent when followed by the clitic (`Πειράματά μου`, `Υπόβαθρό μου`).
+This pattern extends to all nine room landing pages. Each `{{< lead >}}` contains a typing animation cycling a short page-purpose tagline through the same four languages in the same order. Each tagline describes what is actually on the page, not the room name itself, so a visitor who lands on cocina or estudio without context understands what they are looking at. The taglines are: puerta cycles `Mi Currículum / My Résumé / El Meu Currículum / Το Βιογραφικό μου`; sala cycles `Mi Trayectoria / My Background / La Meva Trajectòria / Το Υπόβαθρό μου`; mirador cycles `Mi Filosofía de Dashboards / My Dashboard Philosophy / La Meva Filosofia de Dashboards / Η Φιλοσοφία μου για Dashboards`; taller cycles `Mi Dashboard / My Dashboard / El Meu Dashboard / Το Dashboard μου`; obrador cycles `Mi Filosofía de Herramientas / My Tool-Building Philosophy / La Meva Filosofia d'Eines / Η Φιλοσοφία μου για τα Εργαλεία`; cocina cycles `Mis Pipelines de Datos / My Data Pipelines / Els Meus Pipelines de Dades / Τα Pipelines Δεδομένων μου`; estudio cycles `Mis Experimentos con IA / My AI Experiments / Els Meus Experiments amb IA / Τα Πειράματά μου με AI`; garaje cycles `Mis Utilidades de Analista / My Analyst Utilities / Les Meves Utilitats d'Analista / Τα Εργαλεία Αναλυτή μου`; jardín cycles `Mis Proyectos Personales / My Side Projects / Els Meus Projectes Personals / Τα Προσωπικά Έργα μου`. Greek possessive clitics (`μου`) stay lowercase per native convention; Greek proparoxytone words (`Πειράματα`, `Υπόβαθρο`) take the secondary accent when followed by the clitic (`Πειράματά μου`, `Υπόβαθρό μου`).
 
 On puerta and sala, the previous static lead content (résumé explainer and professional summary respectively) is preserved as a regular paragraph immediately below the new animated lead. The puerta page also drops the redundant separate download button — the inline PDF embed has its own download control in the browser-native PDF toolbar.
-
-This pattern extends to all six room landing pages. Each `{{< lead >}}` contains a typing animation cycling a short tagline through the same four languages in the same order (Spanish → English → Catalan → Greek). Project rooms use the literal room name as the seed: cocina cycles `Mi Cocina / My Kitchen / La Meva Cuina / Η Κουζίνα μου`, and estudio/garaje/jardín follow the same shape. Puerta and sala use content-themed taglines instead, because the literal room names (`door`, `living room`) don't communicate page purpose: puerta cycles `Mi Currículum / My Résumé / El Meu Currículum / Το Βιογραφικό μου`; sala cycles `Mi Historia / My Story / La Meva Història / Η Ιστορία μου`. On puerta and sala, the previous static lead content (résumé explainer and professional summary respectively) becomes a regular paragraph immediately below the new animated lead, preserving all information while gaining the visual hook.
 
 The metaphor is the differentiator. When in doubt, choose the option that strengthens the casa framing rather than the conventional portfolio framing.
 
@@ -65,12 +63,15 @@ The casa metaphor extends to the 404 page, which uses casa language ("No room he
 
 ## 3. Room Inventory
 
-Six rooms total. Two non-project rooms (puerta, sala) and four project rooms (cocina, estudio, garaje, jardin).
+Nine rooms total. Two non-project rooms (puerta, sala), two dashboard rooms (mirador, taller), one tool-building methodology room (obrador), and four project rooms (cocina, estudio, garaje, jardín).
 
 | Room | Path | Title (Title Case) | Role |
 |---|---|---|---|
 | `puerta` | `/puerta/` | Résumé PDF | Door, entry point. Terminal page that embeds `static/resume.pdf`. |
 | `sala` | `/sala/` | About Me | Living room, about page. Terminal page with long-form bio (Experience / Education / Certifications / Skills). |
+| `mirador` | `/mirador/` | Dashboard Philosophy | Lookout, methodology room. Holds dashboard design philosophy and methodology essays. Not a project room. |
+| `taller` | `/taller/` | Built Dashboard | Workshop, applied room. Holds a worked dashboard example built from public data. Not a project room. |
+| `obrador` | `/obrador/` | Tool-Building Philosophy | Craft workshop, methodology room. Holds tool-building philosophy: when to automate, how to work with AI, identifier protection. Not a project room. |
 | `cocina` | `/cocina/` | Data Prep & ETL | Kitchen, data preparation tools. |
 | `estudio` | `/estudio/` | AI & Experiments | Studio, AI-augmented analytics tools. |
 | `garaje` | `/garaje/` | Analyst Utilities | Garage, Excel macros, calculators, processing scripts. |
@@ -78,7 +79,7 @@ Six rooms total. Two non-project rooms (puerta, sala) and four project rooms (co
 
 Room symbol rationale: room pages have **no** decorative symbol prefix. The terminal-prompt path (`~/sala`, `~/cocina`, etc.) is the room identity; an additional symbol prefix is redundant decoration. The site went through three iterations on this. First, mixed Unicode glyphs (`◰ § ⛁ ✦ ⛭ ❀`) — visually distinct but five of six were not in MonoLisa and rendered via system font fallback (BUG-013 in its original form). Second, Greek capitals (`Π Σ Δ Ψ Ω Φ`) — fully present in MonoLisa with a defensible thematic mapping (Σαλόνι, Δεδομένα, golden ratio in plant biology). Third, none — the realization that the Greek letters were redundant decoration in front of already-distinctive paths, and that the homepage `⛫` castle was doing the symbolic work for the entire site without needing per-room reinforcement. The terminal-prompt format alone is the room identity. The homepage `⛫` (castle) is the brand anchor and remains the only symbolic glyph on the site. Anyone tempted to add per-room symbols back should weigh the symbolic redundancy against the visual flourish; previous iterations are documented for reference but were removed deliberately.
 
-**Home page order (intentional):** `puerta`, `sala`, then the four project rooms alphabetically. Puerta is first because the metaphor is "visitor walks through the door first." This is non-negotiable; do not reorder without instruction.
+**Home page order (intentional):** Three sections separated by H2 headers. *Who I Am* contains `puerta`, `sala` (puerta first because the metaphor is "visitor walks through the door first"). *Dashboards* contains `mirador`, `taller` (alphabetical, which also reads philosophy-first). *Tooling* contains `obrador` first (the methodology room) followed by the four project rooms alphabetically (`cocina`, `estudio`, `garaje`, `jardín`). This structure is non-negotiable; do not reorder without instruction.
 
 Project counts are NOT listed in this table by design. The four project rooms render their counts dynamically on the live site via the `section-count` shortcode (see §9), so manual counts here would be a maintenance burden and a source of drift. For the actual contents of each room, see §4.
 
@@ -300,7 +301,7 @@ Custom 404 page in casa style. Renders:
 - Title in terminal format: `~/404 # Not Found`
 - Casa-flavored copy: "No room here. The hallway you walked down doesn't lead anywhere..."
 - Keyboard shortcut hint: press `/` to open Blowfish's built-in search modal
-- Link list to all six rooms in the same format as the home page
+- Link back to the home page. The 404 no longer mirrors the room list, to eliminate maintenance drift; the home page is the single source of truth.
 - Inherits Blowfish's `baseof.html` (header with search, footer, dark-mode toggle, fonts)
 
 GitHub Pages automatically serves `/404.html` (which Hugo generates from this layout) for any unmatched URL.
@@ -308,6 +309,12 @@ GitHub Pages automatically serves `/404.html` (which Hugo generates from this la
 ### `layouts/shortcodes/section-count.html`
 
 Auto-counts pages in a section and renders `(N Project)` or `(N Projects)` with proper pluralization. Used on the home page next to project room links.
+
+### `layouts/shortcodes/swatch.html`
+
+Renders an inline color swatch (small colored square) followed by the hex code in monospace. Used in `~/mirador` to make the named palettes actually viewable as colors rather than as bare hex strings the reader has to mentally translate.
+
+Usage: `{{< swatch "#E69F00" >}}`. Pass the hex value with leading `#` as the first positional argument. The shortcode emits a 0.85em colored square with a faint inset border (so very light colors stay visible against light backgrounds) followed by the hex code in a `<code>` tag.
 
 ```go-html-template
 {{- /*
@@ -577,7 +584,7 @@ This requires `pip install fonttools brotli` (Brotli is needed because woff2 is 
 
 **Symptom:** When viewing the site on iOS Safari (and in some cases other browsers with translation extensions), an inline translation UI overlay appears at the top of the page. The overlay shows fields like "Original text" and buttons reading "Contribute" / "Cancel". This is not part of the site's design.
 
-**Cause:** The {{< typeit >}} animations on the homepage and all six room landing pages cycle through Spanish, English, Catalan, and Greek strings within the same DOM element. Safari's page-language detection sees four languages on a single page and treats it as multilingual content needing translation. The Translate page feature then injects its UI to offer translation. Other browsers with translation extensions (Google Translate, DeepL) can exhibit similar behavior.
+**Cause:** The {{< typeit >}} animations on the homepage and all eight room landing pages cycle through Spanish, English, Catalan, and Greek strings within the same DOM element. Safari's page-language detection sees four languages on a single page and treats it as multilingual content needing translation. The Translate page feature then injects its UI to offer translation. Other browsers with translation extensions (Google Translate, DeepL) can exhibit similar behavior.
 
 **Detection:** Inspect the rendered page on a device where the overlay appears. The injected UI does not match any selector in `assets/css/custom.css` or any Blowfish template. The strings "Original text" and "Contribute" / "Cancel" are Safari's translation interface labels.
 
@@ -780,6 +787,9 @@ hihipy.github.io/
 │   ├── _index.md                       # home page (has summary field)
 │   ├── puerta/_index.md                # door / résumé room (has summary field)
 │   ├── sala/index.md                   # about page, regular page (has summary field)
+│   ├── mirador/_index.md               # dashboard philosophy methodology room
+│   ├── taller/_index.md                # built dashboard applied room (placeholder)
+│   ├── obrador/_index.md               # tool-building philosophy methodology room
 │   ├── cocina/
 │   │   ├── _index.md                   # room landing
 │   │   └── <project>.md × 4
@@ -798,7 +808,8 @@ hihipy.github.io/
 │   │   ├── footer.html                 # custom footer override
 │   │   └── header.html                 # custom header override
 │   └── shortcodes/
-│       └── section-count.html          # custom shortcode (see §9)
+│       ├── section-count.html          # custom shortcode (see §9)
+│       └── swatch.html                 # inline color swatch (see §9), used in mirador
 ├── static/
 │   ├── CNAME                           # GitHub Pages custom domain (pgbd.casa)
 │   ├── android-chrome-192x192.png      # PWA icons (donut chart)
@@ -808,8 +819,11 @@ hihipy.github.io/
 │   ├── favicon-32x32.png
 │   ├── favicon.ico                     # multi-resolution: 16, 32, 48
 │   ├── fonts/
-│   │   ├── MonoLisaVariable.woff2
-│   │   └── MonoLisaVariableItalic.woff2
+│   │   ├── AtkinsonHyperlegible-Regular.woff2     # body and h2-h6 (BUG-016)
+│   │   ├── AtkinsonHyperlegible-Italic.woff2
+│   │   ├── AtkinsonHyperlegible-Bold.woff2
+│   │   ├── AtkinsonHyperlegible-BoldItalic.woff2
+│   │   └── MonoLisaVariable.woff2                 # H1 titles, typeit, code
 │   ├── resume.pdf                      # served at /resume.pdf
 │   └── site.webmanifest
 └── themes/blowfish/                    # theme submodule (NOT in this README)
@@ -968,7 +982,7 @@ Re-verify the posture above whenever:
 | Term | Meaning |
 |---|---|
 | Casa | Spanish for house. Brand metaphor for the site. |
-| Room | A top-level navigation section. Six total. |
+| Room | A top-level navigation section. Nine total. |
 | Project page | A markdown file inside a project room (cocina/estudio/garaje/jardin). |
 | Lead block | The `{{< lead >}}...{{< /lead >}}` shortcode, used for tier-2 elevator pitches. |
 | Summary | The frontmatter `summary` field, used as tier-1 card label AND search result snippet. |

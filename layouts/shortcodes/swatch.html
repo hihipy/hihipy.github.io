@@ -1,0 +1,13 @@
+{{- /*
+  swatch: renders an inline color swatch followed by the hex code in monospace.
+
+  Pass the hex value (with leading #) as the first positional argument. Output
+  is a small colored square that sits inline within running prose, alongside
+  the hex code rendered in monospace via <code>. A faint inset shadow keeps
+  very light colors (white, pale yellow, near-white) visible against light
+  backgrounds in both light and dark modes.
+
+  Usage: {{< swatch "#E69F00" >}}
+*/ -}}
+{{- $hex := .Get 0 -}}
+<span style="display:inline-block;width:0.85em;height:0.85em;background:{{ $hex }};border-radius:2px;box-shadow:inset 0 0 0 1px rgba(127,127,127,0.3);vertical-align:-0.1em;margin-right:0.35em;"></span><code>{{ $hex }}</code>

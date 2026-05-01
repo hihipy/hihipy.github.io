@@ -24,9 +24,21 @@ La Meva Casa Digital és La Teva Casa Digital
 
 Welcome to my digital casa. The Spanish room names are a small tribute to my dual U.S. and Spanish citizenship, with the rotating welcome adding nods to my Catalan and Greek heritage. Feel free to wander between rooms.
 
+## Who I Am
+
 [~/puerta  # Résumé PDF](/puerta/) · Downloadable PDF résumé.
 
 [~/sala  # About Me](/sala/) · About Philip, with full work history, education, certifications, and skills.
+
+## Dashboards
+
+[~/mirador  # Dashboard Philosophy](/mirador/) · How I think about designing dashboards.
+
+[~/taller  # Built Dashboard](/taller/) · A worked dashboard example built from public data.
+
+## Tooling
+
+[~/obrador  # Tool-Building Philosophy](/obrador/) · How and why I build the tools.
 
 [~/cocina  # Data Prep & ETL](/cocina/)  {{< section-count cocina >}} · Data preparation and ETL tools, where messy data gets cleaned up.
 
