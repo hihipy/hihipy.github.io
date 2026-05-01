@@ -316,6 +316,8 @@ Renders an inline color swatch (small colored square) followed by the hex code i
 
 Usage: `{{< swatch "#E69F00" >}}`. Pass the hex value with leading `#` as the first positional argument. The shortcode emits a 0.85em colored square with a faint inset border (so very light colors stay visible against light backgrounds) followed by the hex code in a `<code>` tag.
 
+**Color naming convention.** When a color in mirador needs a name (palette entries, recommended pairings), the name comes from [chir.ag's Name That Color](https://chir.ag/projects/name-that-color/) tool. The format on the page is: swatch shortcode, then linked color name, then hex in parens, e.g. `{{< swatch "#56B4E9" >}} [Picton Blue](https://chir.ag/projects/name-that-color/#56B4E9) (#56B4E9)`. The link points to chir.ag with the hex as URL fragment (uppercase, no `#` in the URL itself — the fragment marker is the literal `#` separator). The link text MUST match what chir.ag's live tool actually returns for that hex; do not transcribe a name from a search result or a port of the ntc.js algorithm, since neither reliably matches the live tool's output. Verify by clicking the chir.ag link and reading the name from the live page. This convention exists so the page's prose stays in sync with the link target — a reader who clicks "Picton Blue" should land on a page that confirms it's Picton Blue, not Sky Blue or anything else.
+
 ```go-html-template
 {{- /*
   section-count: returns the number of pages in a content section.

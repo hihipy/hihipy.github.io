@@ -62,12 +62,42 @@ The cost of a bad font choice is invisible: a reader misreads a 0 as an O, a 1 a
 
 **Color.** Use a palette designed for color-blind viewers. Pair color with shape, position, or label so the meaning never depends on color alone. About 8% of men have some form of red-green color blindness, which means the green-good/red-bad shorthand in business dashboards fails for roughly one in twelve men in the room.
 
-| Palette | Colors | Best For |
-|---|---|---|
-| [Okabe-Ito](https://jfly.uni-koeln.de/color/) | {{< swatch "#E69F00" >}} {{< swatch "#56B4E9" >}} {{< swatch "#009E73" >}} {{< swatch "#F0E442" >}} {{< swatch "#0072B2" >}} {{< swatch "#D55E00" >}} {{< swatch "#CC79A7" >}} {{< swatch "#000000" >}} | Categorical, up to 8 categories. Default categorical in *Nature Methods*. |
-| [Paul Tol Bright](https://sronpersonalpages.nl/~pault/) | {{< swatch "#4477AA" >}} {{< swatch "#EE6677" >}} {{< swatch "#228833" >}} {{< swatch "#CCBB44" >}} {{< swatch "#66CCEE" >}} {{< swatch "#AA3377" >}} {{< swatch "#BBBBBB" >}} | Categorical alternative, less saturated. Vibrant and Muted variants on the source page. |
-| [ColorBrewer Sequential (Blues 5)](https://colorbrewer2.org/#type=sequential&scheme=Blues&n=5) | {{< swatch "#EFF3FF" >}} {{< swatch "#BDD7E7" >}} {{< swatch "#6BAED6" >}} {{< swatch "#3182BD" >}} {{< swatch "#08519C" >}} | Heatmaps, gradients, choropleth maps. |
-| [ColorBrewer Diverging (RdBu 5)](https://colorbrewer2.org/#type=diverging&scheme=RdBu&n=5) | {{< swatch "#CA0020" >}} {{< swatch "#F4A582" >}} {{< swatch "#F7F7F7" >}} {{< swatch "#92C5DE" >}} {{< swatch "#0571B0" >}} | Variance and deviation from a baseline. |
+**[Okabe-Ito](https://jfly.uni-koeln.de/color/).** Categorical, up to 8 categories. Default categorical in *Nature Methods*.
+
+- {{< swatch "#E69F00" >}} [Orange Peel](https://chir.ag/projects/name-that-color/#E69F00) (#E69F00)
+- {{< swatch "#56B4E9" >}} [Picton Blue](https://chir.ag/projects/name-that-color/#56B4E9) (#56B4E9)
+- {{< swatch "#009E73" >}} [Green Haze](https://chir.ag/projects/name-that-color/#009E73) (#009E73)
+- {{< swatch "#F0E442" >}} [Starship](https://chir.ag/projects/name-that-color/#F0E442) (#F0E442)
+- {{< swatch "#0072B2" >}} [Deep Cerulean](https://chir.ag/projects/name-that-color/#0072B2) (#0072B2)
+- {{< swatch "#D55E00" >}} [Tenn](https://chir.ag/projects/name-that-color/#D55E00) (#D55E00)
+- {{< swatch "#CC79A7" >}} [Hopbush](https://chir.ag/projects/name-that-color/#CC79A7) (#CC79A7)
+- {{< swatch "#000000" >}} [Black](https://chir.ag/projects/name-that-color/#000000) (#000000)
+
+**[Paul Tol Bright](https://sronpersonalpages.nl/~pault/).** Categorical alternative, less saturated. Vibrant and Muted variants on the source page.
+
+- {{< swatch "#4477AA" >}} [San Marino](https://chir.ag/projects/name-that-color/#4477AA) (#4477AA)
+- {{< swatch "#EE6677" >}} [Froly](https://chir.ag/projects/name-that-color/#EE6677) (#EE6677)
+- {{< swatch "#228833" >}} [Forest Green](https://chir.ag/projects/name-that-color/#228833) (#228833)
+- {{< swatch "#CCBB44" >}} [Turmeric](https://chir.ag/projects/name-that-color/#CCBB44) (#CCBB44)
+- {{< swatch "#66CCEE" >}} [Sky Blue](https://chir.ag/projects/name-that-color/#66CCEE) (#66CCEE)
+- {{< swatch "#AA3377" >}} [Royal Heath](https://chir.ag/projects/name-that-color/#AA3377) (#AA3377)
+- {{< swatch "#BBBBBB" >}} [Silver](https://chir.ag/projects/name-that-color/#BBBBBB) (#BBBBBB)
+
+**[ColorBrewer Sequential (Blues 5)](https://colorbrewer2.org/#type=sequential&scheme=Blues&n=5).** Heatmaps, gradients, choropleth maps.
+
+- {{< swatch "#EFF3FF" >}} [Zircon](https://chir.ag/projects/name-that-color/#EFF3FF) (#EFF3FF)
+- {{< swatch "#BDD7E7" >}} [Periwinkle Gray](https://chir.ag/projects/name-that-color/#BDD7E7) (#BDD7E7)
+- {{< swatch "#6BAED6" >}} [Danube](https://chir.ag/projects/name-that-color/#6BAED6) (#6BAED6)
+- {{< swatch "#3182BD" >}} [Boston Blue](https://chir.ag/projects/name-that-color/#3182BD) (#3182BD)
+- {{< swatch "#08519C" >}} [Venice Blue](https://chir.ag/projects/name-that-color/#08519C) (#08519C)
+
+**[ColorBrewer Diverging (RdBu 5)](https://colorbrewer2.org/#type=diverging&scheme=RdBu&n=5).** Variance and deviation from a baseline.
+
+- {{< swatch "#CA0020" >}} [Monza](https://chir.ag/projects/name-that-color/#CA0020) (#CA0020)
+- {{< swatch "#F4A582" >}} [Tacao](https://chir.ag/projects/name-that-color/#F4A582) (#F4A582)
+- {{< swatch "#F7F7F7" >}} [Alabaster](https://chir.ag/projects/name-that-color/#F7F7F7) (#F7F7F7)
+- {{< swatch "#92C5DE" >}} [Morning Glory](https://chir.ag/projects/name-that-color/#92C5DE) (#92C5DE)
+- {{< swatch "#0571B0" >}} [Deep Cerulean](https://chir.ag/projects/name-that-color/#0571B0) (#0571B0)
 
 **Contrast.** Color choices alone are not enough. The actual measurement is contrast ratio:
 
@@ -76,6 +106,28 @@ $$\text{Contrast Ratio} = \frac{L_1 + 0.05}{L_2 + 0.05}$$
 where \\(L_1\\) is the relative luminance of the lighter color and \\(L_2\\) the darker. The [WCAG 2.1 AA standard](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html) requires at least 4.5:1 for normal text and 3:1 for large text (18pt and up, or 14pt bold and up). Below those numbers, you have excluded somebody, usually silently, because they will not say so.
 
 To check any specific foreground-background pair, the [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/) is the standard tool: paste two hex codes, get the ratio and pass/fail at each WCAG level.
+
+**Recommended pairings.** A starting point that clears WCAG AA in both modes. The casa uses these throughout, and the light and dark sets map to each other so the same design works in both.
+
+For a white or near-white background:
+
+- {{< swatch "#1F2328" >}} [Shark](https://chir.ag/projects/name-that-color/#1F2328) (#1F2328). 15.80:1 against white. Body text, primary headings.
+- {{< swatch "#0969DA" >}} [Science Blue](https://chir.ag/projects/name-that-color/#0969DA) (#0969DA). 5.19:1 against white. Links, primary accents.
+- {{< swatch "#CF222E" >}} [Cardinal](https://chir.ag/projects/name-that-color/#CF222E) (#CF222E). 5.36:1 against white. Warnings, negative deltas.
+- {{< swatch "#1A7F37" >}} [Jewel](https://chir.ag/projects/name-that-color/#1A7F37) (#1A7F37). 5.08:1 against white. Success, positive deltas.
+- {{< swatch "#9A6700" >}} [Chelsea Gem](https://chir.ag/projects/name-that-color/#9A6700) (#9A6700). 4.87:1 against white. Caution, in-progress states.
+- {{< swatch "#8250DF" >}} [Medium Purple](https://chir.ag/projects/name-that-color/#8250DF) (#8250DF). 5.05:1 against white. Secondary categories, tags.
+
+For a dark background (the canvas color is #0D1117):
+
+- {{< swatch "#F0F6FC" >}} [Polar](https://chir.ag/projects/name-that-color/#F0F6FC) (#F0F6FC). 17.39:1 against #0D1117. Body text, primary headings.
+- {{< swatch "#79C0FF" >}} [Malibu](https://chir.ag/projects/name-that-color/#79C0FF) (#79C0FF). 9.73:1 against #0D1117. Links, primary accents.
+- {{< swatch "#FF7B72" >}} [Salmon](https://chir.ag/projects/name-that-color/#FF7B72) (#FF7B72). 7.51:1 against #0D1117. Warnings, negative deltas.
+- {{< swatch "#7EE787" >}} [Pastel Green](https://chir.ag/projects/name-that-color/#7EE787) (#7EE787). 12.32:1 against #0D1117. Success, positive deltas.
+- {{< swatch "#FFA657" >}} [Texas Rose](https://chir.ag/projects/name-that-color/#FFA657) (#FFA657). 9.77:1 against #0D1117. Caution, in-progress states.
+- {{< swatch "#D2A8FF" >}} [Mauve](https://chir.ag/projects/name-that-color/#D2A8FF) (#D2A8FF). 9.72:1 against #0D1117. Secondary categories, tags.
+
+These are the GitHub light and dark theme accent palettes. They are not the only valid choices. They are a reliable starting point: every pair clears AA for normal text, the contrast ratios are public and verifiable, and using the same palette in both modes means one design decision instead of two.
 
 **Density and spacing.** Crowding is its own legibility failure. When numbers, labels, and charts are pressed together with no breathing room, the eye cannot find anchors. Generous padding around tiles, consistent line height, and white space between sections are not decorative; they are how the reader navigates without effort.
 
