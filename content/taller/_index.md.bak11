@@ -681,7 +681,7 @@ options: {
     }
     var lg = chart.options.plugins && chart.options.plugins.legend;
     if (lg && lg.labels) lg.labels.color = palette.text;
-    chart.update();
+    chart.update('none');
   }
 
   function getCharts() {
