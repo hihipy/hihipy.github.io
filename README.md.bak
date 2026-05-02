@@ -675,24 +675,24 @@ All of these render correctly. The pattern is consistent across the codebase.
 
 **Symptom:** Charts render as blank canvas. KPI tiles, prose, and other content around them work normally. Chart.js loads (the bundle is visible at `public/js/chart.bundle.[hash].js`) but no chart draws on any of the canvases.
 
-**Cause:** The shortcode template at `themes/blowfish/layouts/shortcodes/chart.html` already emits `new Chart(ctx, { ... })` and substitutes `.Inner` between the braces. The shortcode body is supposed to be the *inside* of the config object. Wrapping the body in its own `{ ... }` produces nested braces in the rendered JS, `new Chart(ctx, { { type: 'line', ... } })`, which is a syntax error. The script silently fails to parse, the canvas stays blank, and there is no visible error if dev tools were not open during the initial parse.
+**Cause:** The shortcode template at `themes/blowfish/layouts/shortcodes/chart.html` already emits `new Chart(ctx, { ... })` and substitutes `.Inner` between the braces. The shortcode body is supposed to be the *inside* of the config object. Wrapping the body in its own `{ ... }` produces nested braces in the rendered JS — `new Chart(ctx, { { type: 'line', ... } })` — which is a syntax error. The script silently fails to parse, the canvas stays blank, and there is no visible error if dev tools were not open during the initial parse.
 
 **Workaround:**
 
 ```
-✅ {{< chart >}}
+✅ {{</* chart */>}}
 type: 'line',
 data: { labels: [...], datasets: [...] },
 options: { ... }
-{{< /chart >}}
+{{</* /chart */>}}
 
-❌ {{< chart >}}
+❌ {{</* chart */>}}
 {
   type: 'line',
   data: { labels: [...], datasets: [...] },
   options: { ... }
 }
-{{< /chart >}}
+{{</* /chart */>}}
 ```
 
 The Blowfish docs do show the correct unwrapped format, but the convention is non-obvious. Most Chart.js examples on the open web (Stack Overflow, Chart.js documentation, output from AI assistants) show full object literals with outer braces. Wrapping a literal directly into the shortcode is the natural reflex and produces a silent failure.
@@ -702,7 +702,7 @@ The Blowfish docs do show the correct unwrapped format, but the convention is no
 2. If the next token is `{`, the shortcode body had outer braces. Strip them.
 3. If the chart still renders blank, check dev tools Console for parse errors near `new Chart`.
 
-Applies to every `{{< chart >}}` instance. The `/taller/` page has 11 charts; all 11 had this bug initially.
+Applies to every `{{</* chart */>}}` instance. The `/taller/` page has 11 charts; all 11 had this bug initially.
 
 ### BUG-019: Per-page interactive scripts must be inlined in markdown body, not loaded via a partial
 
@@ -722,14 +722,14 @@ The adapter's `console.log` calls never appear. A sentinel global (`window.__cha
 (function () {
   // adapter body: attach MutationObserver to document.documentElement,
   // walk Chart instances via Chart.getChart(canvas) on each class change,
-  // swap known palette hexes, call chart.update() (see BUG-021)
+  // swap known palette hexes, call chart.update('none')
 })();
 </script>
 ```
 
-`markup.goldmark.renderer.unsafe = true` (set in `markup.toml`) permits raw HTML in markdown body, so the `<script>` tag passes through unmodified into the rendered HTML. Confirmed working: the script registers, finds Chart instances via `Chart.getChart(canvas)`, attaches a `MutationObserver` for class changes on `<html>`, swaps known palette hexes (`#0969DA` ↔ `#79C0FF`, `#000000` ↔ `#FFFFFF`, plus the matching rgba area-fill), updates grid and tick label colors, and calls `chart.update()` on each instance.
+`markup.goldmark.renderer.unsafe = true` (set in `markup.toml`) permits raw HTML in markdown body, so the `<script>` tag passes through unmodified into the rendered HTML. Confirmed working: the script registers, finds Chart instances, attaches a `MutationObserver` for class changes on `<html>`, swaps known palette hexes (`#0969DA` ↔ `#79C0FF`, `#000000` ↔ `#FFFFFF`, plus the matching rgba area-fill), updates grid and tick label colors, and calls `chart.update('none')` on each instance.
 
-**Verification.** Open dev tools Console on `/taller/`. Look for `[chart-theme] inline-in-markdown script registered` followed by `init: html.dark=..., charts=11`. Toggle the moon icon. Look for `switching light -> dark, charts: 11`. The chart colors should swap with a brief animated transition.
+**Verification.** Open dev tools Console on `/taller/`. Look for `[chart-theme] inline-in-markdown script registered` followed by `init: html.dark=..., charts=11`. Toggle the moon icon. Look for `switching light -> dark, charts: 11`. The chart colors should swap with no animation flash.
 
 **Why this matters.** This pattern generalizes. Any per-page interactive enhancement of Blowfish content that needs JavaScript against existing globals (Chart.js, Mermaid, KaTeX) can be inlined in markdown rather than wired through theme partials. The cost is a `<script>` block in the markdown source; the benefit is reliable execution colocated with the content it enhances. Theme partials remain useful for cross-cutting concerns; per-page enhancements live with the page.
 
@@ -754,50 +754,6 @@ options: {
 Right padding (6px) prevents the rightmost x-tick label from extending past the canvas right edge when the last data point sits near the right side. Bottom padding (4px) keeps year labels off the canvas bottom edge. Top and left (2px each) provide symmetric breathing room.
 
 Applied to all 8 small multiples on `/taller/`. The annual time series (360px tall), bar chart (540px tall), and slope chart (360px tall) have enough vertical room to not need explicit padding.
-
-### BUG-021: Chart.js dynamic dataset color changes need explicit point colors and the default update mode
-
-**Symptom:** A theme adapter mutates a dataset's `borderColor` and `backgroundColor` at runtime to swap palettes, then calls `chart.update('none')` to re-render without animation. The line color updates correctly. The point colors do not. Inspection shows the dataset object's color values ARE updated, but the rendered points use stale resolved options. On `/taller/`'s slope chart, this manifested as Alberta's line going black-to-white correctly on theme toggle while its data points stayed black on the now-white line.
-
-**Cause:** Two compounding issues, either of which alone is sufficient to break runtime point-color updates:
-
-1. Chart.js v4's default property routing makes `pointBackgroundColor` fall back to `dataset.backgroundColor` and `pointBorderColor` to `dataset.borderColor`. When a dataset config provides `borderColor` and `backgroundColor` but omits the point-specific properties, point colors are routed at construction time. Subsequent runtime mutations of `backgroundColor` do not flow back through the route; points keep drawing with the construction-time resolved value.
-
-2. `chart.update('none')` skips the animation transition mode. As an apparent side effect, it also skips full re-resolution of element-level options. Even when the point-color properties ARE explicit on the dataset, 'none' mode update may not pick up changes to them.
-
-**Fix (both required):**
-
-1. Set `pointBackgroundColor` and `pointBorderColor` explicitly on every dataset whose colors will be mutated at runtime, even when they would default to the line colors via routing. This gives the adapter explicit properties to mutate.
-
-   Slope chart dataset shape after the fix:
-
-   ```js
-   {
-     label: 'University of Alberta',
-     data: [...],
-     borderColor: '#000000',
-     backgroundColor: '#000000',
-     pointBackgroundColor: '#000000',
-     pointBorderColor: '#000000',
-     borderWidth: 1.5,
-     pointRadius: 4,
-     pointHoverRadius: 6,
-     tension: 0
-   }
-   ```
-
-2. Use `chart.update()` (no argument, default mode) instead of `chart.update('none')` in the theme adapter. Default mode forces full element-option re-resolution. The tradeoff is a brief animated transition on theme switch, which reads as natural rather than as a visual regression.
-
-**Diagnostic recipe.** If a runtime color change is visible on lines but not on points:
-
-1. In dev tools console, find the chart via `Chart.getChart(canvas)`.
-2. Compare the dataset value to the resolved element option:
-   - Dataset value: `chart.data.datasets[i].pointBackgroundColor`
-   - Resolved value Chart.js draws with: `chart.getDatasetMeta(i).data[0].options.backgroundColor`
-3. If the dataset value is updated but the resolved value is stale, the update mode is the problem. Switch to `update()`.
-4. If the dataset value is `undefined`, the property is being routed via Chart.js defaults. Set it explicitly on the dataset.
-
-**Why this matters.** The bug was diagnosed only by inspecting `getDatasetMeta(i).data[0].options` and comparing to the dataset value. The dataset values themselves were lying about what was being rendered. Three rounds of "this should fix it" iterations preceded the diagnosis. Theme adapters and any code that mutates Chart.js colors dynamically must be defensive on both fronts: set every color property explicitly on the dataset, and use the default update mode. The combination of property routing plus 'none' update mode silently breaks point rendering, with no console error and no visible warning.
 
 
 ## 11. Configuration Files
