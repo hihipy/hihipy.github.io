@@ -800,6 +800,44 @@ Applied to all 8 small multiples on `/taller/`. The annual time series (360px ta
 **Why this matters.** The bug was diagnosed only by inspecting `getDatasetMeta(i).data[0].options` and comparing to the dataset value. The dataset values themselves were lying about what was being rendered. Three rounds of "this should fix it" iterations preceded the diagnosis. Theme adapters and any code that mutates Chart.js colors dynamically must be defensive on both fronts: set every color property explicitly on the dataset, and use the default update mode. The combination of property routing plus 'none' update mode silently breaks point rendering, with no console error and no visible warning.
 
 
+
+### BUG-022: Chart color contrast must be measured against WCAG ratios, not eyeballed
+
+**Symptom:** A dashboard built with a "color-blind-safe palette" (Okabe-Ito) and a "documented light/dark theme" (GitHub accent palette) still shipped with two chart series at FAIL contrast in light mode (`#56B4E9` Picton Blue at 2.31:1 and `#E69F00` Orange Peel at 2.25:1, both below the 3:1 minimum) and three more at marginal AA-large/non-text in dark mode. The author had personally verified the dashboard "looked fine" in both themes; eyeballing missed it.
+
+**Cause:** Two compounding issues, each plausible-sounding on its own:
+
+1. **CVD-safe palette is not the same as high-contrast palette.** Okabe-Ito was designed for distinguishability across color-vision deficiencies on the gray paper backgrounds typical in scientific journals. Several of its colors (`#56B4E9`, `#E69F00`, `#F0E442`) are deliberately bright and pale — perfect for distinguishability, terrible for contrast against a pure-white web background. Adopting the palette without measuring per-color contrast against the actual canvas color produces silent failures.
+
+2. **A theme adapter that swaps a documented light hex (e.g., `#0969DA`) to its documented dark equivalent (e.g., `#79C0FF`) only protects the swapped colors.** Any chart series color outside the swap map (every Okabe-Ito hue) renders identically in both themes. A series at AA-text in light mode may collapse to AA-large in dark mode (or vice versa) without any code change, just because the background flipped.
+
+**Fix:** A scripted contrast audit that runs against the actual markdown source rather than against documentation. The audit script must:
+
+1. **Parse the swap map directly out of the inline theme adapter,** not maintain a separate hardcoded list. The script and the rendered page must read from the same source of truth or they will drift.
+
+2. **Enumerate every chart series color from every chart on the page** (not just the slope chart, not just the Okabe-Ito palette) and compute WCAG 2.1 contrast against the canvas color of each theme. Group results by ratio, tag each entry as AAA-text / AA-text / AA-large/non-text / FAIL.
+
+3. **Report both modes side by side.** A color that's AA-text in light mode and AA-large in dark mode is a different design situation than one that's AA-text in both. The two-mode report makes the trade-off visible.
+
+The audit script for `/taller/` lives at [`tools/audit_contrast.py`](tools/audit_contrast.py). It produces output like:
+
+```
+LIGHT MODE — chart series colors against #FFFFFF
+  COLOR      RATIO      GRADE                        USAGE
+  #0969DA    5.19:1     AA-text                      borderColor on Annual funding
+  #56B4E9    2.31:1     FAIL                         borderColor on Centre for Addiction...
+  ...
+```
+
+**Diagnostic recipe.** When building a new dashboard:
+
+1. Run the audit before the first commit. Note any FAIL entries; those need new colors.
+2. AA-large/non-text entries (3.0–4.49:1) are within mirador's documented 3:1 floor for chart elements but require a deliberate decision: accept the marginal contrast to preserve palette identity, or push the color darker/lighter at the cost of palette recognizability. Whichever you pick, **document the choice inline in the chart config** so future-you doesn't "fix" it unknowingly.
+3. After every theme-adapter change, rerun the audit. The map and the audit must stay in sync.
+
+**Why this matters.** Three rounds of "the colors look fine" preceded the FAIL discovery on `/taller/`. Visual inspection on a single monitor in a single lighting condition by a single non-CVD viewer is not an accessibility test. The math is the test. A 100-line Python script is enough to make it permanent and re-runnable; treating contrast as a one-time eyeball check is what produces silent inaccessibility in production dashboards.
+
+
 ## 11. Configuration Files
 
 ### `config/_default/hugo.toml`
