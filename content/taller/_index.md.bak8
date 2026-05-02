@@ -190,22 +190,22 @@ options: {
 
 <div class="pgbd-chart-wrap">
 
-**Every top recipient grew, but not on a straight line.** Average annual funding for the top 9 recipient institutions across four decades. Each line is one institution; the trajectory between points shows what an endpoint-only view hides. Most peaked in 2005–2014; three (CAMH, Queen's, Sick Children) kept climbing.
+**Every top recipient grew their NIH funding over the period.** Average annual funding for the top 9 recipient institutions, 1985–1994 vs 2016–2025. Each line is one institution; the slope shows the change between the two decades.
 
 {{< chart >}}
 type: 'line',
 data: {
-  labels: ['1985–1994', '1995–2004', '2005–2014', '2015–2024'],
+  labels: ['1985–1994 avg', '2016–2025 avg'],
   datasets: [
-    { label: 'University of British Columbia', data: [914466, 2313910, 7748636, 4712214], borderColor: '#0072B2', backgroundColor: '#0072B2', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'University of Toronto', data: [1645436, 2563330, 4361098, 3168219], borderColor: '#D55E00', backgroundColor: '#D55E00', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'Mcgill University', data: [1601043, 2476350, 3158852, 2180961], borderColor: '#009E73', backgroundColor: '#009E73', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'Mcmaster University', data: [691343, 1221076, 4268949, 1226064], borderColor: '#CC79A7', backgroundColor: '#CC79A7', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'Hospital for Sick Chldrn (toronto)', data: [682800, 1462830, 2192796, 2887402], borderColor: '#E69F00', backgroundColor: '#E69F00', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'Centre for Addiction and Mental Health', data: [159877, 596505, 2809084, 3618453], borderColor: '#56B4E9', backgroundColor: '#56B4E9', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'Queen\'s University at Kingston', data: [182350, 895696, 2080066, 3187402], borderColor: '#AA3377', backgroundColor: '#AA3377', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'University of Manitoba', data: [617210, 616564, 2570319, 1362083], borderColor: '#4477AA', backgroundColor: '#4477AA', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'University of Alberta', data: [209019, 1167148, 1959685, 985510], borderColor: '#000000', backgroundColor: '#000000', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 }
+    { label: 'University of British Columbia', data: [914466, 4262160], borderColor: '#0072B2', backgroundColor: '#0072B2', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'University of Toronto', data: [1645436, 3352156], borderColor: '#D55E00', backgroundColor: '#D55E00', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'Mcgill University', data: [1601043, 2012504], borderColor: '#009E73', backgroundColor: '#009E73', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'Mcmaster University', data: [691343, 1129976], borderColor: '#CC79A7', backgroundColor: '#CC79A7', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'Hospital for Sick Chldrn (toronto)', data: [682800, 2328359], borderColor: '#E69F00', backgroundColor: '#E69F00', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'Centre for Addiction and Mental Health', data: [159877, 3401055], borderColor: '#56B4E9', backgroundColor: '#56B4E9', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'Queen\'s University at Kingston', data: [182350, 3093833], borderColor: '#AA3377', backgroundColor: '#AA3377', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'University of Manitoba', data: [617210, 1031369], borderColor: '#4477AA', backgroundColor: '#4477AA', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'University of Alberta', data: [209019, 1022109], borderColor: '#000000', backgroundColor: '#000000', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 }
   ]
 },
 options: {

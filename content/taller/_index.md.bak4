@@ -98,9 +98,7 @@ data: {
       borderWidth: 2,
       fill: true,
       tension: 0.2,
-      pointRadius: 2.5,
-      pointBackgroundColor: '#0969DA',
-      pointBorderWidth: 0,
+      pointRadius: 0,
       pointHoverRadius: 5,
     },
     {
@@ -190,29 +188,29 @@ options: {
 
 <div class="pgbd-chart-wrap">
 
-**Every top recipient grew, but not on a straight line.** Average annual funding for the top 9 recipient institutions across four decades. Each line is one institution; the trajectory between points shows what an endpoint-only view hides. Most peaked in 2005–2014; three (CAMH, Queen's, Sick Children) kept climbing.
+**Top recipients receive more annually now than they did 30 years ago.** Average annual funding for top 10 institutions, 1985–1994 vs 2016–2025. Green grew, red shrank.
 
 {{< chart >}}
 type: 'line',
 data: {
-  labels: ['1985–1994', '1995–2004', '2005–2014', '2015–2024'],
+  labels: ['1985–1994 avg', '2016–2025 avg'],
   datasets: [
-    { label: 'University of British Columbia', data: [914466, 2313910, 7748636, 4712214], borderColor: '#0072B2', backgroundColor: '#0072B2', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'University of Toronto', data: [1645436, 2563330, 4361098, 3168219], borderColor: '#D55E00', backgroundColor: '#D55E00', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'Mcgill University', data: [1601043, 2476350, 3158852, 2180961], borderColor: '#009E73', backgroundColor: '#009E73', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'Mcmaster University', data: [691343, 1221076, 4268949, 1226064], borderColor: '#CC79A7', backgroundColor: '#CC79A7', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'Hospital for Sick Chldrn (toronto)', data: [682800, 1462830, 2192796, 2887402], borderColor: '#E69F00', backgroundColor: '#E69F00', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'Centre for Addiction and Mental Health', data: [159877, 596505, 2809084, 3618453], borderColor: '#56B4E9', backgroundColor: '#56B4E9', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'Queen\'s University at Kingston', data: [182350, 895696, 2080066, 3187402], borderColor: '#AA3377', backgroundColor: '#AA3377', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'University of Manitoba', data: [617210, 616564, 2570319, 1362083], borderColor: '#4477AA', backgroundColor: '#4477AA', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'University of Alberta', data: [209019, 1167148, 1959685, 985510], borderColor: '#000000', backgroundColor: '#000000', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 }
+    { label: 'University of British Columbia', data: [914466, 4262160], borderColor: '#1A7F37', backgroundColor: '#1A7F37', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'University of Toronto', data: [1645436, 3352156], borderColor: '#1A7F37', backgroundColor: '#1A7F37', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'Mcgill University', data: [1601043, 2012504], borderColor: '#1A7F37', backgroundColor: '#1A7F37', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'Mcmaster University', data: [691343, 1129976], borderColor: '#1A7F37', backgroundColor: '#1A7F37', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'Hospital for Sick Chldrn (toronto)', data: [682800, 2328359], borderColor: '#1A7F37', backgroundColor: '#1A7F37', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'Centre for Addiction and Mental Health', data: [159877, 3401055], borderColor: '#1A7F37', backgroundColor: '#1A7F37', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'Queen\'s University at Kingston', data: [182350, 3093833], borderColor: '#1A7F37', backgroundColor: '#1A7F37', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'University of Manitoba', data: [617210, 1031369], borderColor: '#1A7F37', backgroundColor: '#1A7F37', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'University of Alberta', data: [209019, 1022109], borderColor: '#1A7F37', backgroundColor: '#1A7F37', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 }
   ]
 },
 options: {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
-    legend: { display: true, position: 'bottom', labels: { boxWidth: 24, boxHeight: 6, font: { size: 11 }, padding: 10 } },
+    legend: { display: true, position: 'bottom', labels: { boxWidth: 12, boxHeight: 2, font: { size: 10 }, padding: 8 } },
     tooltip: {
       callbacks: {
         title: function(items) { return items[0].dataset.label; },
@@ -253,16 +251,13 @@ data: {
     borderWidth: 1.5,
     fill: true,
     tension: 0.25,
-    pointRadius: 1.5,
-    pointBackgroundColor: '#0969DA',
-    pointBorderWidth: 0,
+    pointRadius: 0,
     pointHoverRadius: 4
   }]
 },
 options: {
   responsive: true,
   maintainAspectRatio: false,
-  layout: { padding: { top: 2, right: 6, bottom: 4, left: 2 } },
   plugins: {
     legend: { display: false },
     tooltip: {
@@ -301,16 +296,13 @@ data: {
     borderWidth: 1.5,
     fill: true,
     tension: 0.25,
-    pointRadius: 1.5,
-    pointBackgroundColor: '#0969DA',
-    pointBorderWidth: 0,
+    pointRadius: 0,
     pointHoverRadius: 4
   }]
 },
 options: {
   responsive: true,
   maintainAspectRatio: false,
-  layout: { padding: { top: 2, right: 6, bottom: 4, left: 2 } },
   plugins: {
     legend: { display: false },
     tooltip: {
@@ -349,16 +341,13 @@ data: {
     borderWidth: 1.5,
     fill: true,
     tension: 0.25,
-    pointRadius: 1.5,
-    pointBackgroundColor: '#0969DA',
-    pointBorderWidth: 0,
+    pointRadius: 0,
     pointHoverRadius: 4
   }]
 },
 options: {
   responsive: true,
   maintainAspectRatio: false,
-  layout: { padding: { top: 2, right: 6, bottom: 4, left: 2 } },
   plugins: {
     legend: { display: false },
     tooltip: {
@@ -397,16 +386,13 @@ data: {
     borderWidth: 1.5,
     fill: true,
     tension: 0.25,
-    pointRadius: 1.5,
-    pointBackgroundColor: '#0969DA',
-    pointBorderWidth: 0,
+    pointRadius: 0,
     pointHoverRadius: 4
   }]
 },
 options: {
   responsive: true,
   maintainAspectRatio: false,
-  layout: { padding: { top: 2, right: 6, bottom: 4, left: 2 } },
   plugins: {
     legend: { display: false },
     tooltip: {
@@ -445,16 +431,13 @@ data: {
     borderWidth: 1.5,
     fill: true,
     tension: 0.25,
-    pointRadius: 1.5,
-    pointBackgroundColor: '#0969DA',
-    pointBorderWidth: 0,
+    pointRadius: 0,
     pointHoverRadius: 4
   }]
 },
 options: {
   responsive: true,
   maintainAspectRatio: false,
-  layout: { padding: { top: 2, right: 6, bottom: 4, left: 2 } },
   plugins: {
     legend: { display: false },
     tooltip: {
@@ -493,16 +476,13 @@ data: {
     borderWidth: 1.5,
     fill: true,
     tension: 0.25,
-    pointRadius: 1.5,
-    pointBackgroundColor: '#0969DA',
-    pointBorderWidth: 0,
+    pointRadius: 0,
     pointHoverRadius: 4
   }]
 },
 options: {
   responsive: true,
   maintainAspectRatio: false,
-  layout: { padding: { top: 2, right: 6, bottom: 4, left: 2 } },
   plugins: {
     legend: { display: false },
     tooltip: {
@@ -541,16 +521,13 @@ data: {
     borderWidth: 1.5,
     fill: true,
     tension: 0.25,
-    pointRadius: 1.5,
-    pointBackgroundColor: '#0969DA',
-    pointBorderWidth: 0,
+    pointRadius: 0,
     pointHoverRadius: 4
   }]
 },
 options: {
   responsive: true,
   maintainAspectRatio: false,
-  layout: { padding: { top: 2, right: 6, bottom: 4, left: 2 } },
   plugins: {
     legend: { display: false },
     tooltip: {
@@ -589,16 +566,13 @@ data: {
     borderWidth: 1.5,
     fill: true,
     tension: 0.25,
-    pointRadius: 1.5,
-    pointBackgroundColor: '#0969DA',
-    pointBorderWidth: 0,
+    pointRadius: 0,
     pointHoverRadius: 4
   }]
 },
 options: {
   responsive: true,
   maintainAspectRatio: false,
-  layout: { padding: { top: 2, right: 6, bottom: 4, left: 2 } },
   plugins: {
     legend: { display: false },
     tooltip: {
@@ -639,101 +613,3 @@ options: {
 **How this dashboard was built.** Charts are interactive Chart.js renders embedded via Blowfish's native `chart` shortcode. Hover any line, bar, or point for the underlying value. The page itself is generated by a Python script that aggregates the raw NIH RePORTER export and emits the Chart.js configurations directly into the markdown source.
 
 </div>
-
-<!-- chart-theme-adapter -->
-<script>
-(function () {
-  'use strict';
-  var TAG = '[chart-theme]';
-  console.log(TAG, 'inline-in-markdown script registered');
-  if (document.body) document.body.setAttribute('data-chart-theme', 'loaded');
-
-  var lightToDark = {
-    '#0969DA': '#79C0FF',
-    '#000000': '#FFFFFF',
-    'rgba(9, 105, 218, 0.10)': 'rgba(121, 192, 255, 0.10)'
-  };
-  var darkToLight = {};
-  Object.keys(lightToDark).forEach(function (k) { darkToLight[lightToDark[k]] = k; });
-
-  var ui = {
-    light: { grid: 'rgba(0, 0, 0, 0.08)',  text: '#1F2328' },
-    dark:  { grid: 'rgba(255, 255, 255, 0.10)', text: '#F0F6FC' }
-  };
-
-  function isDark() { return document.documentElement.classList.contains('dark'); }
-  function remap(v, m) { return (typeof v === 'string' && m[v] !== undefined) ? m[v] : v; }
-
-  var KEYS = ['borderColor', 'backgroundColor', 'pointBorderColor', 'pointBackgroundColor'];
-
-  function applyTheme(chart, target) {
-    var map = (target === 'dark') ? lightToDark : darkToLight;
-    var palette = ui[target];
-    chart.data.datasets.forEach(function (ds) {
-      KEYS.forEach(function (k) { if (ds[k] !== undefined) ds[k] = remap(ds[k], map); });
-    });
-    if (chart.options.scales) {
-      Object.keys(chart.options.scales).forEach(function (k) {
-        var s = chart.options.scales[k];
-        if (s.grid) s.grid.color = palette.grid;
-        if (s.ticks) s.ticks.color = palette.text;
-      });
-    }
-    var lg = chart.options.plugins && chart.options.plugins.legend;
-    if (lg && lg.labels) lg.labels.color = palette.text;
-    chart.update('none');
-  }
-
-  function getCharts() {
-    var out = [];
-    if (typeof Chart === 'undefined') return out;
-    if (typeof Chart.getChart === 'function') {
-      document.querySelectorAll('canvas').forEach(function (c) {
-        var i = Chart.getChart(c); if (i) out.push(i);
-      });
-    } else if (Chart.instances) {
-      Object.keys(Chart.instances).forEach(function (k) { out.push(Chart.instances[k]); });
-    }
-    return out;
-  }
-
-  var currentTheme = 'light';
-  function sync() {
-    var t = isDark() ? 'dark' : 'light';
-    if (t === currentTheme) return;
-    var charts = getCharts();
-    console.log(TAG, 'switching ' + currentTheme + ' -> ' + t + ', charts: ' + charts.length);
-    charts.forEach(function (c) { applyTheme(c, t); });
-    currentTheme = t;
-  }
-
-  function init() {
-    if (typeof Chart === 'undefined') {
-      console.warn(TAG, 'Chart undefined at init, retrying in 500ms');
-      setTimeout(init, 500);
-      return;
-    }
-    console.log(TAG, 'Chart.js version:', Chart.version || '(unknown)');
-    var charts = getCharts();
-    console.log(TAG, 'init: html.dark=' + isDark() + ', charts=' + charts.length);
-    if (charts.length === 0) {
-      console.warn(TAG, 'no charts yet, retrying in 500ms');
-      setTimeout(init, 500);
-      return;
-    }
-    Chart.defaults.color = ui[isDark() ? 'dark' : 'light'].text;
-    Chart.defaults.borderColor = ui[isDark() ? 'dark' : 'light'].grid;
-    sync();
-    new MutationObserver(function () {
-      console.log(TAG, '<html> classes:', document.documentElement.className);
-      Chart.defaults.color = ui[isDark() ? 'dark' : 'light'].text;
-      Chart.defaults.borderColor = ui[isDark() ? 'dark' : 'light'].grid;
-      sync();
-    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-    console.log(TAG, 'observer attached, ready');
-  }
-
-  if (document.readyState === 'complete') setTimeout(init, 100);
-  else window.addEventListener('load', function () { setTimeout(init, 100); });
-})();
-</script>

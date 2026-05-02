@@ -22,11 +22,11 @@ El Meu Tauler de Taller
 {{< /typeit >}}
 {{< /lead >}}
 
-## NIH Funding to Canadian Research, 1985–2025
+## NIH Funding to Canadian Research, 1985–2026
 
 Below is a working dashboard, built end-to-end against a real dataset, as a demonstration of the principles laid out in [mirador](/mirador/). It reads the same data the same way regardless of who opens it; it follows the site's light and dark theme automatically; it tells a focused story rather than presenting a wall of charts.
 
-The dataset is every NIH grant awarded to a Canadian institution between fiscal year 1985 and fiscal year 2025, pulled from [NIH RePORTER](https://reporter.nih.gov/). The headline finding: NIH funding to Canadian biomedical research peaked at $70 million in 2009 and has fallen 44% since.
+The dataset is every NIH grant awarded to a Canadian institution between fiscal year 1985 and the partial fiscal year 2026, pulled from [NIH RePORTER](https://reporter.nih.gov/). The headline finding: NIH funding to Canadian biomedical research peaked at $70 million in 2009 and has fallen 44% since.
 
 <style>
   .pgbd-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1.5rem 0; }
@@ -39,8 +39,6 @@ The dataset is every NIH grant awarded to a Canadian institution between fiscal 
   .pgbd-card-headline { font-size: 1.15rem; font-weight: 700; margin: 0 0 0.25rem; line-height: 1.3; }
   .pgbd-card-sub { font-size: 0.85rem; opacity: 0.7; margin: 0 0 1rem; }
   .pgbd-chart-wrap { margin: 1.5rem 0 2rem; }
-  .pgbd-chart-wrap > .chart { height: 360px; }
-  .pgbd-chart-wrap-tall > .chart { height: 540px; }
   .pgbd-two-col { display: grid; grid-template-columns: 1.3fr 1fr; gap: 1.5rem; margin: 1.5rem 0 2rem; }
   @media (max-width: 900px) { .pgbd-two-col { grid-template-columns: 1fr; } }
   .pgbd-multiples { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 0.5rem 0 1.5rem; }
@@ -62,7 +60,7 @@ The dataset is every NIH grant awarded to a Canadian institution between fiscal 
 <div class="pgbd-kpi">
 <p class="pgbd-kpi-value">$1.49B</p>
 <p class="pgbd-kpi-label">Total funding awarded</p>
-<p class="pgbd-kpi-sub">Cumulative, 1985–2025</p>
+<p class="pgbd-kpi-sub">Cumulative, 1985–2026</p>
 </div>
 <div class="pgbd-kpi">
 <p class="pgbd-kpi-value">6,344</p>
@@ -88,24 +86,22 @@ The dataset is every NIH grant awarded to a Canadian institution between fiscal 
 {{< chart >}}
 type: 'line',
 data: {
-  labels: [1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+  labels: [1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
   datasets: [
     {
       label: 'Annual funding',
-      data: [7541400, 8929873, 13001030, 16094934, 18463307, 17600295, 18654258, 18849625, 19351446, 20077139, 19260890, 19630675, 18615470, 17498624, 21482766, 23363758, 24898277, 30119337, 38982369, 50594256, 47224827, 51072955, 49854724, 68301452, 70038502, 65690033, 67839828, 55942362, 46252204, 48694908, 61106789, 48458152, 43004099, 43020066, 41426910, 49173933, 39271607, 39927625, 45638920, 40394530, 38917292],
+      data: [7541400, 8929873, 13001030, 16094934, 18463307, 17600295, 18654258, 18849625, 19351446, 20077139, 19260890, 19630675, 18615470, 17498624, 21482766, 23363758, 24898277, 30119337, 38982369, 50594256, 47224827, 51072955, 49854724, 68301452, 70038502, 65690033, 67839828, 55942362, 46252204, 48694908, 61106789, 48458152, 43004099, 43020066, 41426910, 49173933, 39271607, 39927625, 45638920, 40394530, 38917292, 4557222],
       borderColor: '#0969DA',
       backgroundColor: 'rgba(9, 105, 218, 0.10)',
       borderWidth: 2,
       fill: true,
       tension: 0.2,
-      pointRadius: 2.5,
-      pointBackgroundColor: '#0969DA',
-      pointBorderWidth: 0,
+      pointRadius: 0,
       pointHoverRadius: 5,
     },
     {
       label: '5-year moving average',
-      data: [9824101, 11391809, 12806109, 14817888, 16762765, 17932484, 18583786, 18906553, 19238672, 19433955, 19387124, 19016560, 19297685, 20118259, 21171779, 23472552, 27769301, 33591599, 38363813, 43598749, 47545826, 53409643, 57298492, 60991533, 64344908, 65562435, 61152586, 56883867, 55967218, 52090883, 49503230, 48856803, 47403203, 45016632, 43179323, 42564028, 43087799, 42881323, 40829995, 33887118, 32376991],
+      data: [9824101, 11391809, 12806109, 14817888, 16762765, 17932484, 18583786, 18906553, 19238672, 19433955, 19387124, 19016560, 19297685, 20118259, 21171779, 23472552, 27769301, 33591599, 38363813, 43598749, 47545826, 53409643, 57298492, 60991533, 64344908, 65562435, 61152586, 56883867, 55967218, 52090883, 49503230, 48856803, 47403203, 45016632, 43179323, 42564028, 43087799, 42881323, 40829995, 33887118, 32376991, 27956348],
       borderColor: '#8b949e',
       borderWidth: 1.5,
       borderDash: [5, 5],
@@ -143,9 +139,9 @@ options: {
 
 </div>
 
-<div class="pgbd-chart-wrap pgbd-chart-wrap-tall">
+<div class="pgbd-chart-wrap">
 
-**UBC and Toronto received $280M combined.** Top 15 recipient institutions, lifetime cumulative funding 1985–2025.
+**UBC and Toronto received $280M combined.** Top 15 recipient institutions, lifetime cumulative funding 1985–2026.
 
 {{< chart >}}
 type: 'bar',
@@ -190,29 +186,29 @@ options: {
 
 <div class="pgbd-chart-wrap">
 
-**Every top recipient grew, but not on a straight line.** Average annual funding for the top 9 recipient institutions across four decades. Each line is one institution; the trajectory between points shows what an endpoint-only view hides. Most peaked in 2005–2014; three (CAMH, Queen's, Sick Children) kept climbing.
+**Top recipients receive more annually now than they did 30 years ago.** Average annual funding for top 10 institutions, 1985–1994 vs 2016–2025. Green grew, red shrank.
 
 {{< chart >}}
 type: 'line',
 data: {
-  labels: ['1985–1994', '1995–2004', '2005–2014', '2015–2024'],
+  labels: ['1985–1994 avg', '2016–2025 avg'],
   datasets: [
-    { label: 'University of British Columbia', data: [914466, 2313910, 7748636, 4712214], borderColor: '#0072B2', backgroundColor: '#0072B2', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'University of Toronto', data: [1645436, 2563330, 4361098, 3168219], borderColor: '#D55E00', backgroundColor: '#D55E00', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'Mcgill University', data: [1601043, 2476350, 3158852, 2180961], borderColor: '#009E73', backgroundColor: '#009E73', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'Mcmaster University', data: [691343, 1221076, 4268949, 1226064], borderColor: '#CC79A7', backgroundColor: '#CC79A7', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'Hospital for Sick Chldrn (toronto)', data: [682800, 1462830, 2192796, 2887402], borderColor: '#E69F00', backgroundColor: '#E69F00', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'Centre for Addiction and Mental Health', data: [159877, 596505, 2809084, 3618453], borderColor: '#56B4E9', backgroundColor: '#56B4E9', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'Queen\'s University at Kingston', data: [182350, 895696, 2080066, 3187402], borderColor: '#AA3377', backgroundColor: '#AA3377', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'University of Manitoba', data: [617210, 616564, 2570319, 1362083], borderColor: '#4477AA', backgroundColor: '#4477AA', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'University of Alberta', data: [209019, 1167148, 1959685, 985510], borderColor: '#000000', backgroundColor: '#000000', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 }
+    { label: 'University of British Columbia', data: [914466, 4262160], borderColor: '#1A7F37', backgroundColor: '#1A7F37', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'University of Toronto', data: [1645436, 3352156], borderColor: '#1A7F37', backgroundColor: '#1A7F37', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'Mcgill University', data: [1601043, 2012504], borderColor: '#1A7F37', backgroundColor: '#1A7F37', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'Mcmaster University', data: [691343, 1129976], borderColor: '#1A7F37', backgroundColor: '#1A7F37', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'Hospital for Sick Chldrn (toronto)', data: [682800, 2328359], borderColor: '#1A7F37', backgroundColor: '#1A7F37', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'Centre for Addiction and Mental Health', data: [159877, 3401055], borderColor: '#1A7F37', backgroundColor: '#1A7F37', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'Queen\'s University at Kingston', data: [182350, 3093833], borderColor: '#1A7F37', backgroundColor: '#1A7F37', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'University of Manitoba', data: [617210, 1031369], borderColor: '#1A7F37', backgroundColor: '#1A7F37', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'University of Alberta', data: [209019, 1022109], borderColor: '#1A7F37', backgroundColor: '#1A7F37', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 }
   ]
 },
 options: {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
-    legend: { display: true, position: 'bottom', labels: { boxWidth: 24, boxHeight: 6, font: { size: 11 }, padding: 10 } },
+    legend: { display: true, position: 'bottom', labels: { boxWidth: 12, boxHeight: 2, font: { size: 10 }, padding: 8 } },
     tooltip: {
       callbacks: {
         title: function(items) { return items[0].dataset.label; },
@@ -233,7 +229,7 @@ options: {
 
 <div class="pgbd-chart-wrap">
 
-**Different NIH institutes show different funding trajectories.** Annual funding 1985–2025 from each of the eight largest NIH institutes funding Canadian research. Y-axes are independent: each chart's vertical scale fits its own data so the shape is visible.
+**Different NIH institutes show different funding trajectories.** Annual funding 1985–2026 from each of the eight largest NIH institutes funding Canadian research. Y-axes are independent: each chart's vertical scale fits its own data so the shape is visible.
 
 <div class="pgbd-multiples">
 
@@ -245,24 +241,21 @@ options: {
 {{< chart >}}
 type: 'line',
 data: {
-  labels: [1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+  labels: [1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
   datasets: [{
-    data: [2285527, 2359022, 2049823, 3108756, 3020969, 2879448, 2900367, 2448263, 1790149, 2198678, 2739991, 3761941, 4541253, 5976983, 5259005, 4221480, 4470902, 7703976, 6863497, 7540295, 10104529, 11479644, 9817849, 9002351, 10703778, 10224041, 11543853, 10654799, 9684311, 10310576, 8814365, 8214050, 6339265, 6371198, 5327467, 10760444, 6391849, 8921372, 10377589, 6258111, 9027088],
+    data: [2285527, 2359022, 2049823, 3108756, 3020969, 2879448, 2900367, 2448263, 1790149, 2198678, 2739991, 3761941, 4541253, 5976983, 5259005, 4221480, 4470902, 7703976, 6863497, 7540295, 10104529, 11479644, 9817849, 9002351, 10703778, 10224041, 11543853, 10654799, 9684311, 10310576, 8814365, 8214050, 6339265, 6371198, 5327467, 10760444, 6391849, 8921372, 10377589, 6258111, 9027088, 0],
     borderColor: '#0969DA',
     backgroundColor: 'rgba(9, 105, 218, 0.10)',
     borderWidth: 1.5,
     fill: true,
     tension: 0.25,
-    pointRadius: 1.5,
-    pointBackgroundColor: '#0969DA',
-    pointBorderWidth: 0,
+    pointRadius: 0,
     pointHoverRadius: 4
   }]
 },
 options: {
   responsive: true,
   maintainAspectRatio: false,
-  layout: { padding: { top: 2, right: 6, bottom: 4, left: 2 } },
   plugins: {
     legend: { display: false },
     tooltip: {
@@ -293,24 +286,21 @@ options: {
 {{< chart >}}
 type: 'line',
 data: {
-  labels: [1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+  labels: [1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
   datasets: [{
-    data: [169100, 165001, 202534, 154899, 1140779, 1460129, 977562, 219637, 550854, 845429, 891775, 722091, 1082250, 1101859, 1831728, 1796659, 1720438, 1402946, 5311547, 11050458, 5540980, 5082174, 4789622, 14365950, 5148503, 15912965, 12367470, 8282410, 5256367, 6379835, 6148269, 7581764, 6258736, 5964702, 6975058, 7571919, 5780454, 5856866, 7381351, 9426318, 7479522],
+    data: [169100, 165001, 202534, 154899, 1140779, 1460129, 977562, 219637, 550854, 845429, 891775, 722091, 1082250, 1101859, 1831728, 1796659, 1720438, 1402946, 5311547, 11050458, 5540980, 5082174, 4789622, 14365950, 5148503, 15912965, 12367470, 8282410, 5256367, 6379835, 6148269, 7581764, 6258736, 5964702, 6975058, 7571919, 5780454, 5856866, 7381351, 9426318, 7479522, 3128634],
     borderColor: '#0969DA',
     backgroundColor: 'rgba(9, 105, 218, 0.10)',
     borderWidth: 1.5,
     fill: true,
     tension: 0.25,
-    pointRadius: 1.5,
-    pointBackgroundColor: '#0969DA',
-    pointBorderWidth: 0,
+    pointRadius: 0,
     pointHoverRadius: 4
   }]
 },
 options: {
   responsive: true,
   maintainAspectRatio: false,
-  layout: { padding: { top: 2, right: 6, bottom: 4, left: 2 } },
   plugins: {
     legend: { display: false },
     tooltip: {
@@ -341,24 +331,21 @@ options: {
 {{< chart >}}
 type: 'line',
 data: {
-  labels: [1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+  labels: [1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
   datasets: [{
-    data: [252637, 76708, 69382, 592067, 1070461, 981528, 787441, 943123, 1134272, 498065, 510548, 643938, 581135, 501706, 2003504, 633963, 909539, 1562637, 2019286, 2250908, 3387451, 2920692, 4534417, 4808349, 6102977, 5504292, 5344682, 4876087, 3655243, 4614221, 5203035, 4068006, 6162554, 6168247, 6009066, 5175193, 6222400, 3145157, 5156794, 4155591, 3591221],
+    data: [252637, 76708, 69382, 592067, 1070461, 981528, 787441, 943123, 1134272, 498065, 510548, 643938, 581135, 501706, 2003504, 633963, 909539, 1562637, 2019286, 2250908, 3387451, 2920692, 4534417, 4808349, 6102977, 5504292, 5344682, 4876087, 3655243, 4614221, 5203035, 4068006, 6162554, 6168247, 6009066, 5175193, 6222400, 3145157, 5156794, 4155591, 3591221, 539383],
     borderColor: '#0969DA',
     backgroundColor: 'rgba(9, 105, 218, 0.10)',
     borderWidth: 1.5,
     fill: true,
     tension: 0.25,
-    pointRadius: 1.5,
-    pointBackgroundColor: '#0969DA',
-    pointBorderWidth: 0,
+    pointRadius: 0,
     pointHoverRadius: 4
   }]
 },
 options: {
   responsive: true,
   maintainAspectRatio: false,
-  layout: { padding: { top: 2, right: 6, bottom: 4, left: 2 } },
   plugins: {
     legend: { display: false },
     tooltip: {
@@ -389,24 +376,21 @@ options: {
 {{< chart >}}
 type: 'line',
 data: {
-  labels: [1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+  labels: [1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
   datasets: [{
-    data: [901778, 1242564, 1530491, 1558123, 1871673, 1334098, 1398450, 1540288, 1607500, 1162745, 966368, 634694, 858299, 1025864, 1105839, 1563372, 1675545, 2249526, 2718314, 6073744, 4768688, 5794436, 4314034, 3371212, 10123392, 3807250, 4918448, 4260989, 4910562, 5291195, 6345194, 4409799, 3636320, 4734766, 3489962, 2993993, 1456873, 361768, 1126165, 1760004, 2444100],
+    data: [901778, 1242564, 1530491, 1558123, 1871673, 1334098, 1398450, 1540288, 1607500, 1162745, 966368, 634694, 858299, 1025864, 1105839, 1563372, 1675545, 2249526, 2718314, 6073744, 4768688, 5794436, 4314034, 3371212, 10123392, 3807250, 4918448, 4260989, 4910562, 5291195, 6345194, 4409799, 3636320, 4734766, 3489962, 2993993, 1456873, 361768, 1126165, 1760004, 2444100, 324000],
     borderColor: '#0969DA',
     backgroundColor: 'rgba(9, 105, 218, 0.10)',
     borderWidth: 1.5,
     fill: true,
     tension: 0.25,
-    pointRadius: 1.5,
-    pointBackgroundColor: '#0969DA',
-    pointBorderWidth: 0,
+    pointRadius: 0,
     pointHoverRadius: 4
   }]
 },
 options: {
   responsive: true,
   maintainAspectRatio: false,
-  layout: { padding: { top: 2, right: 6, bottom: 4, left: 2 } },
   plugins: {
     legend: { display: false },
     tooltip: {
@@ -437,24 +421,21 @@ options: {
 {{< chart >}}
 type: 'line',
 data: {
-  labels: [1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+  labels: [1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
   datasets: [{
-    data: [395470, 551351, 3853162, 3823685, 3701622, 3643692, 4061098, 5120013, 5239900, 6299615, 6135243, 6543464, 4915373, 1626052, 1910449, 1806763, 2320559, 3143296, 3551789, 3795089, 2847814, 3202769, 1986893, 2414063, 2056104, 4710474, 8184379, 3250337, 679522, 1363844, 1228366, 1485202, 1131174, 461547, 422385, 616885, 458548, 627051, 627293, 541059, 557793],
+    data: [395470, 551351, 3853162, 3823685, 3701622, 3643692, 4061098, 5120013, 5239900, 6299615, 6135243, 6543464, 4915373, 1626052, 1910449, 1806763, 2320559, 3143296, 3551789, 3795089, 2847814, 3202769, 1986893, 2414063, 2056104, 4710474, 8184379, 3250337, 679522, 1363844, 1228366, 1485202, 1131174, 461547, 422385, 616885, 458548, 627051, 627293, 541059, 557793, 0],
     borderColor: '#0969DA',
     backgroundColor: 'rgba(9, 105, 218, 0.10)',
     borderWidth: 1.5,
     fill: true,
     tension: 0.25,
-    pointRadius: 1.5,
-    pointBackgroundColor: '#0969DA',
-    pointBorderWidth: 0,
+    pointRadius: 0,
     pointHoverRadius: 4
   }]
 },
 options: {
   responsive: true,
   maintainAspectRatio: false,
-  layout: { padding: { top: 2, right: 6, bottom: 4, left: 2 } },
   plugins: {
     legend: { display: false },
     tooltip: {
@@ -485,24 +466,21 @@ options: {
 {{< chart >}}
 type: 'line',
 data: {
-  labels: [1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+  labels: [1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
   datasets: [{
-    data: [166597, 195838, 190271, 339073, 557121, 672808, 993460, 1131634, 1327370, 940502, 1274360, 1199372, 909802, 2069107, 2146927, 2003642, 1604590, 1565428, 1471290, 1752802, 1853852, 1986313, 2510977, 2972547, 2503836, 2873677, 3817952, 4453508, 5050054, 4513651, 4980840, 5114183, 6063355, 5469825, 5384021, 5476009, 5791641, 5141447, 5387670, 5300243, 1736858],
+    data: [166597, 195838, 190271, 339073, 557121, 672808, 993460, 1131634, 1327370, 940502, 1274360, 1199372, 909802, 2069107, 2146927, 2003642, 1604590, 1565428, 1471290, 1752802, 1853852, 1986313, 2510977, 2972547, 2503836, 2873677, 3817952, 4453508, 5050054, 4513651, 4980840, 5114183, 6063355, 5469825, 5384021, 5476009, 5791641, 5141447, 5387670, 5300243, 1736858, 0],
     borderColor: '#0969DA',
     backgroundColor: 'rgba(9, 105, 218, 0.10)',
     borderWidth: 1.5,
     fill: true,
     tension: 0.25,
-    pointRadius: 1.5,
-    pointBackgroundColor: '#0969DA',
-    pointBorderWidth: 0,
+    pointRadius: 0,
     pointHoverRadius: 4
   }]
 },
 options: {
   responsive: true,
   maintainAspectRatio: false,
-  layout: { padding: { top: 2, right: 6, bottom: 4, left: 2 } },
   plugins: {
     legend: { display: false },
     tooltip: {
@@ -533,24 +511,21 @@ options: {
 {{< chart >}}
 type: 'line',
 data: {
-  labels: [1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+  labels: [1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
   datasets: [{
-    data: [1053952, 2069638, 1688580, 2725514, 2828396, 2844037, 3335899, 3108093, 2994030, 2206794, 1701532, 1807228, 1813207, 1547670, 2618321, 3920298, 4915612, 4213550, 3478827, 3897162, 3974080, 4489190, 4078222, 6762643, 3973272, 2360689, 1612582, 2466650, 2767192, 2837261, 2494749, 507020, 1738944, 1029979, 1029979, 626693, 581395, 1144569, 1111569, 660726, 668700],
+    data: [1053952, 2069638, 1688580, 2725514, 2828396, 2844037, 3335899, 3108093, 2994030, 2206794, 1701532, 1807228, 1813207, 1547670, 2618321, 3920298, 4915612, 4213550, 3478827, 3897162, 3974080, 4489190, 4078222, 6762643, 3973272, 2360689, 1612582, 2466650, 2767192, 2837261, 2494749, 507020, 1738944, 1029979, 1029979, 626693, 581395, 1144569, 1111569, 660726, 668700, 0],
     borderColor: '#0969DA',
     backgroundColor: 'rgba(9, 105, 218, 0.10)',
     borderWidth: 1.5,
     fill: true,
     tension: 0.25,
-    pointRadius: 1.5,
-    pointBackgroundColor: '#0969DA',
-    pointBorderWidth: 0,
+    pointRadius: 0,
     pointHoverRadius: 4
   }]
 },
 options: {
   responsive: true,
   maintainAspectRatio: false,
-  layout: { padding: { top: 2, right: 6, bottom: 4, left: 2 } },
   plugins: {
     legend: { display: false },
     tooltip: {
@@ -581,24 +556,21 @@ options: {
 {{< chart >}}
 type: 'line',
 data: {
-  labels: [1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+  labels: [1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
   datasets: [{
-    data: [833788, 437343, 845077, 767120, 915498, 442559, 526520, 319880, 501214, 379345, 332948, 510889, 588630, 548826, 702306, 1384657, 1440157, 1687504, 2252001, 1620548, 2382013, 2418253, 3204153, 2563825, 3107904, 2496017, 1697085, 1561388, 949707, 1155229, 5742447, 1242640, 1483724, 1248258, 1329619, 1423392, 990018, 1576135, 1643394, 1354470, 1071469],
+    data: [833788, 437343, 845077, 767120, 915498, 442559, 526520, 319880, 501214, 379345, 332948, 510889, 588630, 548826, 702306, 1384657, 1440157, 1687504, 2252001, 1620548, 2382013, 2418253, 3204153, 2563825, 3107904, 2496017, 1697085, 1561388, 949707, 1155229, 5742447, 1242640, 1483724, 1248258, 1329619, 1423392, 990018, 1576135, 1643394, 1354470, 1071469, 0],
     borderColor: '#0969DA',
     backgroundColor: 'rgba(9, 105, 218, 0.10)',
     borderWidth: 1.5,
     fill: true,
     tension: 0.25,
-    pointRadius: 1.5,
-    pointBackgroundColor: '#0969DA',
-    pointBorderWidth: 0,
+    pointRadius: 0,
     pointHoverRadius: 4
   }]
 },
 options: {
   responsive: true,
   maintainAspectRatio: false,
-  layout: { padding: { top: 2, right: 6, bottom: 4, left: 2 } },
   plugins: {
     legend: { display: false },
     tooltip: {
@@ -632,108 +604,10 @@ options: {
 
 **What "Total Cost" includes.** Each grant record's Total Cost field reports the funded amount for that fiscal year, combining direct and indirect costs. Multi-year grants appear as multiple records, one per fiscal year of funding. Sums above are simple totals across records.
 
-**Caveats.** Charts exclude FY2026, which was only partially complete at the extraction date. The "decline from peak" KPI compares peak (2009) to FY2025, the most recent complete year. Some grant records have blank Total Cost values and are counted as $0 in totals; these are typically administrative supplements or contracts rather than substantive awards.
+**Caveats.** FY2026 is partial as of the extraction date and not directly comparable to prior years. The "decline from peak" KPI compares peak (2009) to FY2025, the most recent complete year. Some grant records have blank Total Cost values and are counted as $0 in totals; these are typically administrative supplements or contracts rather than substantive awards.
 
 **Why this dataset.** NIH funding to Canadian institutions is a clean, bounded subset of NIH RePORTER that tells a self-contained story: where U.S. federal biomedical research dollars flow into the Canadian research ecosystem, who receives them, and how the volume has changed over four decades.
 
 **How this dashboard was built.** Charts are interactive Chart.js renders embedded via Blowfish's native `chart` shortcode. Hover any line, bar, or point for the underlying value. The page itself is generated by a Python script that aggregates the raw NIH RePORTER export and emits the Chart.js configurations directly into the markdown source.
 
 </div>
-
-<!-- chart-theme-adapter -->
-<script>
-(function () {
-  'use strict';
-  var TAG = '[chart-theme]';
-  console.log(TAG, 'inline-in-markdown script registered');
-  if (document.body) document.body.setAttribute('data-chart-theme', 'loaded');
-
-  var lightToDark = {
-    '#0969DA': '#79C0FF',
-    '#000000': '#FFFFFF',
-    'rgba(9, 105, 218, 0.10)': 'rgba(121, 192, 255, 0.10)'
-  };
-  var darkToLight = {};
-  Object.keys(lightToDark).forEach(function (k) { darkToLight[lightToDark[k]] = k; });
-
-  var ui = {
-    light: { grid: 'rgba(0, 0, 0, 0.08)',  text: '#1F2328' },
-    dark:  { grid: 'rgba(255, 255, 255, 0.10)', text: '#F0F6FC' }
-  };
-
-  function isDark() { return document.documentElement.classList.contains('dark'); }
-  function remap(v, m) { return (typeof v === 'string' && m[v] !== undefined) ? m[v] : v; }
-
-  var KEYS = ['borderColor', 'backgroundColor', 'pointBorderColor', 'pointBackgroundColor'];
-
-  function applyTheme(chart, target) {
-    var map = (target === 'dark') ? lightToDark : darkToLight;
-    var palette = ui[target];
-    chart.data.datasets.forEach(function (ds) {
-      KEYS.forEach(function (k) { if (ds[k] !== undefined) ds[k] = remap(ds[k], map); });
-    });
-    if (chart.options.scales) {
-      Object.keys(chart.options.scales).forEach(function (k) {
-        var s = chart.options.scales[k];
-        if (s.grid) s.grid.color = palette.grid;
-        if (s.ticks) s.ticks.color = palette.text;
-      });
-    }
-    var lg = chart.options.plugins && chart.options.plugins.legend;
-    if (lg && lg.labels) lg.labels.color = palette.text;
-    chart.update('none');
-  }
-
-  function getCharts() {
-    var out = [];
-    if (typeof Chart === 'undefined') return out;
-    if (typeof Chart.getChart === 'function') {
-      document.querySelectorAll('canvas').forEach(function (c) {
-        var i = Chart.getChart(c); if (i) out.push(i);
-      });
-    } else if (Chart.instances) {
-      Object.keys(Chart.instances).forEach(function (k) { out.push(Chart.instances[k]); });
-    }
-    return out;
-  }
-
-  var currentTheme = 'light';
-  function sync() {
-    var t = isDark() ? 'dark' : 'light';
-    if (t === currentTheme) return;
-    var charts = getCharts();
-    console.log(TAG, 'switching ' + currentTheme + ' -> ' + t + ', charts: ' + charts.length);
-    charts.forEach(function (c) { applyTheme(c, t); });
-    currentTheme = t;
-  }
-
-  function init() {
-    if (typeof Chart === 'undefined') {
-      console.warn(TAG, 'Chart undefined at init, retrying in 500ms');
-      setTimeout(init, 500);
-      return;
-    }
-    console.log(TAG, 'Chart.js version:', Chart.version || '(unknown)');
-    var charts = getCharts();
-    console.log(TAG, 'init: html.dark=' + isDark() + ', charts=' + charts.length);
-    if (charts.length === 0) {
-      console.warn(TAG, 'no charts yet, retrying in 500ms');
-      setTimeout(init, 500);
-      return;
-    }
-    Chart.defaults.color = ui[isDark() ? 'dark' : 'light'].text;
-    Chart.defaults.borderColor = ui[isDark() ? 'dark' : 'light'].grid;
-    sync();
-    new MutationObserver(function () {
-      console.log(TAG, '<html> classes:', document.documentElement.className);
-      Chart.defaults.color = ui[isDark() ? 'dark' : 'light'].text;
-      Chart.defaults.borderColor = ui[isDark() ? 'dark' : 'light'].grid;
-      sync();
-    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-    console.log(TAG, 'observer attached, ready');
-  }
-
-  if (document.readyState === 'complete') setTimeout(init, 100);
-  else window.addEventListener('load', function () { setTimeout(init, 100); });
-})();
-</script>

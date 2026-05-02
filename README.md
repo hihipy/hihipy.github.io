@@ -671,6 +671,91 @@ All of these render correctly. The pattern is consistent across the codebase.
 
 **Why this matters.** Inline KaTeX works fine on this site with the right syntax. The pitfall is that the natural syntax (`\(M\)` borrowed from LaTeX, Pandoc, and most static site generators) does not work here because of Goldmark's escape handling. The double-backslash workaround is non-obvious and easy to lose during refactors. Documenting the working syntax with verified examples saves future debugging cycles.
 
+### BUG-018: Blowfish `{{< chart >}}` shortcode body must be the inside of an object literal, not a complete object
+
+**Symptom:** Charts render as blank canvas. KPI tiles, prose, and other content around them work normally. Chart.js loads (the bundle is visible at `public/js/chart.bundle.[hash].js`) but no chart draws on any of the canvases.
+
+**Cause:** The shortcode template at `themes/blowfish/layouts/shortcodes/chart.html` already emits `new Chart(ctx, { ... })` and substitutes `.Inner` between the braces. The shortcode body is supposed to be the *inside* of the config object. Wrapping the body in its own `{ ... }` produces nested braces in the rendered JS — `new Chart(ctx, { { type: 'line', ... } })` — which is a syntax error. The script silently fails to parse, the canvas stays blank, and there is no visible error if dev tools were not open during the initial parse.
+
+**Workaround:**
+
+```
+✅ {{</* chart */>}}
+type: 'line',
+data: { labels: [...], datasets: [...] },
+options: { ... }
+{{</* /chart */>}}
+
+❌ {{</* chart */>}}
+{
+  type: 'line',
+  data: { labels: [...], datasets: [...] },
+  options: { ... }
+}
+{{</* /chart */>}}
+```
+
+The Blowfish docs do show the correct unwrapped format, but the convention is non-obvious. Most Chart.js examples on the open web (Stack Overflow, Chart.js documentation, output from AI assistants) show full object literals with outer braces. Wrapping a literal directly into the shortcode is the natural reflex and produces a silent failure.
+
+**Diagnostic recipe.** If a chart renders blank:
+1. View page source. Locate the rendered `<script>` near the chart's canvas. Look for `new Chart(ctx, {`. The next non-whitespace token should be `type: ...`, not `{`.
+2. If the next token is `{`, the shortcode body had outer braces. Strip them.
+3. If the chart still renders blank, check dev tools Console for parse errors near `new Chart`.
+
+Applies to every `{{</* chart */>}}` instance. The `/taller/` page has 11 charts; all 11 had this bug initially.
+
+### BUG-019: Per-page interactive scripts must be inlined in markdown body, not loaded via a partial
+
+**Symptom:** A small JavaScript adapter that listens for `<html>` class changes and updates Chart.js instance colors does not execute when delivered through any of these paths:
+- External file at `assets/js/chart-theme.js` referenced from `layouts/partials/extend-footer.html` via Hugo Pipes (`resources.Get | resources.Minify | resources.Fingerprint`).
+- Inline `<script>` block inside `layouts/partials/extend-footer.html` (no external file, no Pipes).
+
+The adapter's `console.log` calls never appear. A sentinel global (`window.__chartThemeLoaded = true`) never gets set. The script is unreachable.
+
+**Cause:** Not fully isolated. Suspected interaction between Blowfish's `partialCached "extend-footer.html" .` call in `themes/blowfish/layouts/partials/footer.html` and the per-page evaluation of `.Page.HasShortcode "chart"` inside the partial. Other content added inside the partial alongside the script also did not appear in the page output, which suggests the partial itself was not being rendered for `/taller/`. Browser cache and integrity-hash mismatch were ruled out by hard refresh and by removing the integrity attribute, with no change in behavior.
+
+**Workaround:** Inline the `<script>` block directly in the markdown source of the page that uses it, at the bottom of the file, surrounded by an HTML comment sentinel for easy re-finding:
+
+```html
+<!-- chart-theme-adapter -->
+<script>
+(function () {
+  // adapter body: attach MutationObserver to document.documentElement,
+  // walk Chart instances via Chart.getChart(canvas) on each class change,
+  // swap known palette hexes, call chart.update('none')
+})();
+</script>
+```
+
+`markup.goldmark.renderer.unsafe = true` (set in `markup.toml`) permits raw HTML in markdown body, so the `<script>` tag passes through unmodified into the rendered HTML. Confirmed working: the script registers, finds Chart instances, attaches a `MutationObserver` for class changes on `<html>`, swaps known palette hexes (`#0969DA` ↔ `#79C0FF`, `#000000` ↔ `#FFFFFF`, plus the matching rgba area-fill), updates grid and tick label colors, and calls `chart.update('none')` on each instance.
+
+**Verification.** Open dev tools Console on `/taller/`. Look for `[chart-theme] inline-in-markdown script registered` followed by `init: html.dark=..., charts=11`. Toggle the moon icon. Look for `switching light -> dark, charts: 11`. The chart colors should swap with no animation flash.
+
+**Why this matters.** This pattern generalizes. Any per-page interactive enhancement of Blowfish content that needs JavaScript against existing globals (Chart.js, Mermaid, KaTeX) can be inlined in markdown rather than wired through theme partials. The cost is a `<script>` block in the markdown source; the benefit is reliable execution colocated with the content it enhances. Theme partials remain useful for cross-cutting concerns; per-page enhancements live with the page.
+
+### BUG-020: Chart.js axis labels touch the canvas edge without explicit `layout.padding`
+
+**Symptom:** On small-multiple line charts (8 mini charts at 130px height inside cards on `/taller/`), x-axis tick labels (years like `1985`, `1996`, `2007`, `2018`) visually butt up against the bottom edge of the chart canvas. With the canvas sitting inside a card with a 1px border, the labels look like they are touching the card border itself, producing a cramped, edge-pinned appearance.
+
+**Cause:** Chart.js does not add internal layout padding by default. With `maintainAspectRatio: false` and a fixed-height parent, the chart fills the parent and tick labels are drawn at the canvas edges with no breathing room.
+
+**Fix applied:** Add a `layout.padding` block to the `options` of each affected chart:
+
+```js
+options: {
+  responsive: true,
+  maintainAspectRatio: false,
+  layout: { padding: { top: 2, right: 6, bottom: 4, left: 2 } },
+  plugins: { ... },
+  scales: { ... }
+}
+```
+
+Right padding (6px) prevents the rightmost x-tick label from extending past the canvas right edge when the last data point sits near the right side. Bottom padding (4px) keeps year labels off the canvas bottom edge. Top and left (2px each) provide symmetric breathing room.
+
+Applied to all 8 small multiples on `/taller/`. The annual time series (360px tall), bar chart (540px tall), and slope chart (360px tall) have enough vertical room to not need explicit padding.
+
+
 ## 11. Configuration Files
 
 ### `config/_default/hugo.toml`
