@@ -50,7 +50,7 @@ The second is gratitude. Almost nothing I build is original. Every tool sits on 
 flowchart TD
     A[I have a friction point] --> B{Does it recur?}
     B -->|No| C[Live with it - One-off pain isn't worth automating]
-    B -->|Yes| D{Does the manual version drift- or produce inconsistent output?}
+    B -->|Yes| D{Does the manual version drift or produce inconsistent output?}
     D -->|No| E[Manual is fine - Trustworthy by hand means no tool needed]
     D -->|Yes| F[Build the tool - Output has stopped being trustworthy]
 {{< /mermaid >}}
