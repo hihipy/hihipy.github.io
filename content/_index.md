@@ -36,6 +36,12 @@ Welcome to my digital casa. The Spanish room names are a small tribute to my dua
 
 [~/taller  # Built Dashboard](/taller/) · A worked dashboard example built from public data.
 
+## Case Studies
+
+[~/biblioteca  # Case Study Philosophy](/biblioteca/) · How I think about case studies, from sourcing through peer review.
+
+[~/archivo  # Case Studies](/archivo/)  {{< case-study-count archivo >}} · Phased walkthroughs of analytical work, from source to findings.
+
 ## Tooling
 
 [~/obrador  # Tool-Building Philosophy](/obrador/) · How and why I build the tools.

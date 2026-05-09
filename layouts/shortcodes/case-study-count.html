@@ -1,0 +1,18 @@
+{{- /*
+  case-study-count: returns the number of case studies (subsections) in the
+  archivo section. A case study is a subfolder containing its own _index.md
+  and one or more phase pages, distinct from project rooms where each
+  project is a single flat file.
+
+  Pass the section name as the first argument. The output is wrapped in
+  parentheses with proper pluralization: a single subsection returns
+  "(1 Case Study)", any other count returns "(N Case Studies)".
+*/ -}}
+{{- $section := .Get 0 -}}
+{{- $sectionPage := .Site.GetPage (printf "/%s" $section) -}}
+{{- $count := len $sectionPage.Sections -}}
+{{- if eq $count 1 -}}
+({{ $count }} Case Study)
+{{- else -}}
+({{ $count }} Case Studies)
+{{- end -}}
