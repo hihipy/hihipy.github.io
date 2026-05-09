@@ -88,40 +88,40 @@ For data tables, code, and terminal-style elements:
 
 **[Okabe-Ito](https://jfly.uni-koeln.de/color/).** Categorical, up to 8 categories. Default categorical in *Nature Methods*.
 
-- {{< swatch "#E69F00" >}} [Orange Peel](https://chir.ag/projects/name-that-color/#E69F00) (#E69F00)
-- {{< swatch "#56B4E9" >}} [Picton Blue](https://chir.ag/projects/name-that-color/#56B4E9) (#56B4E9)
-- {{< swatch "#009E73" >}} [Green Haze](https://chir.ag/projects/name-that-color/#009E73) (#009E73)
-- {{< swatch "#F0E442" >}} [Starship](https://chir.ag/projects/name-that-color/#F0E442) (#F0E442)
-- {{< swatch "#0072B2" >}} [Deep Cerulean](https://chir.ag/projects/name-that-color/#0072B2) (#0072B2)
-- {{< swatch "#D55E00" >}} [Tenn](https://chir.ag/projects/name-that-color/#D55E00) (#D55E00)
-- {{< swatch "#CC79A7" >}} [Hopbush](https://chir.ag/projects/name-that-color/#CC79A7) (#CC79A7)
-- {{< swatch "#000000" >}} [Black](https://chir.ag/projects/name-that-color/#000000) (#000000)
+- {{< swatch "#E69F00" >}} [Orange Peel](https://chir.ag/projects/name-that-color/#E69F00)
+- {{< swatch "#56B4E9" >}} [Picton Blue](https://chir.ag/projects/name-that-color/#56B4E9)
+- {{< swatch "#009E73" >}} [Green Haze](https://chir.ag/projects/name-that-color/#009E73)
+- {{< swatch "#F0E442" >}} [Starship](https://chir.ag/projects/name-that-color/#F0E442)
+- {{< swatch "#0072B2" >}} [Deep Cerulean](https://chir.ag/projects/name-that-color/#0072B2)
+- {{< swatch "#D55E00" >}} [Tenn](https://chir.ag/projects/name-that-color/#D55E00)
+- {{< swatch "#CC79A7" >}} [Hopbush](https://chir.ag/projects/name-that-color/#CC79A7)
+- {{< swatch "#000000" >}} [Black](https://chir.ag/projects/name-that-color/#000000)
 
 **[Paul Tol Bright](https://sronpersonalpages.nl/~pault/).** Categorical alternative, less saturated. Vibrant and Muted variants on the source page.
 
-- {{< swatch "#4477AA" >}} [San Marino](https://chir.ag/projects/name-that-color/#4477AA) (#4477AA)
-- {{< swatch "#EE6677" >}} [Froly](https://chir.ag/projects/name-that-color/#EE6677) (#EE6677)
-- {{< swatch "#228833" >}} [Forest Green](https://chir.ag/projects/name-that-color/#228833) (#228833)
-- {{< swatch "#CCBB44" >}} [Turmeric](https://chir.ag/projects/name-that-color/#CCBB44) (#CCBB44)
-- {{< swatch "#66CCEE" >}} [Sky Blue](https://chir.ag/projects/name-that-color/#66CCEE) (#66CCEE)
-- {{< swatch "#AA3377" >}} [Royal Heath](https://chir.ag/projects/name-that-color/#AA3377) (#AA3377)
-- {{< swatch "#BBBBBB" >}} [Silver](https://chir.ag/projects/name-that-color/#BBBBBB) (#BBBBBB)
+- {{< swatch "#4477AA" >}} [San Marino](https://chir.ag/projects/name-that-color/#4477AA)
+- {{< swatch "#EE6677" >}} [Froly](https://chir.ag/projects/name-that-color/#EE6677)
+- {{< swatch "#228833" >}} [Forest Green](https://chir.ag/projects/name-that-color/#228833)
+- {{< swatch "#CCBB44" >}} [Turmeric](https://chir.ag/projects/name-that-color/#CCBB44)
+- {{< swatch "#66CCEE" >}} [Sky Blue](https://chir.ag/projects/name-that-color/#66CCEE)
+- {{< swatch "#AA3377" >}} [Royal Heath](https://chir.ag/projects/name-that-color/#AA3377)
+- {{< swatch "#BBBBBB" >}} [Silver](https://chir.ag/projects/name-that-color/#BBBBBB)
 
 **[ColorBrewer Sequential (Blues 5)](https://colorbrewer2.org/#type=sequential&scheme=Blues&n=5).** Heatmaps, gradients, choropleth maps.
 
-- {{< swatch "#EFF3FF" >}} [Zircon](https://chir.ag/projects/name-that-color/#EFF3FF) (#EFF3FF)
-- {{< swatch "#BDD7E7" >}} [Periwinkle Gray](https://chir.ag/projects/name-that-color/#BDD7E7) (#BDD7E7)
-- {{< swatch "#6BAED6" >}} [Danube](https://chir.ag/projects/name-that-color/#6BAED6) (#6BAED6)
-- {{< swatch "#3182BD" >}} [Boston Blue](https://chir.ag/projects/name-that-color/#3182BD) (#3182BD)
-- {{< swatch "#08519C" >}} [Venice Blue](https://chir.ag/projects/name-that-color/#08519C) (#08519C)
+- {{< swatch "#EFF3FF" >}} [Zircon](https://chir.ag/projects/name-that-color/#EFF3FF)
+- {{< swatch "#BDD7E7" >}} [Periwinkle Gray](https://chir.ag/projects/name-that-color/#BDD7E7)
+- {{< swatch "#6BAED6" >}} [Danube](https://chir.ag/projects/name-that-color/#6BAED6)
+- {{< swatch "#3182BD" >}} [Boston Blue](https://chir.ag/projects/name-that-color/#3182BD)
+- {{< swatch "#08519C" >}} [Venice Blue](https://chir.ag/projects/name-that-color/#08519C)
 
 **[ColorBrewer Diverging (RdBu 5)](https://colorbrewer2.org/#type=diverging&scheme=RdBu&n=5).** Variance and deviation from a baseline.
 
-- {{< swatch "#CA0020" >}} [Monza](https://chir.ag/projects/name-that-color/#CA0020) (#CA0020)
-- {{< swatch "#F4A582" >}} [Tacao](https://chir.ag/projects/name-that-color/#F4A582) (#F4A582)
-- {{< swatch "#F7F7F7" >}} [Alabaster](https://chir.ag/projects/name-that-color/#F7F7F7) (#F7F7F7)
-- {{< swatch "#92C5DE" >}} [Morning Glory](https://chir.ag/projects/name-that-color/#92C5DE) (#92C5DE)
-- {{< swatch "#0571B0" >}} [Deep Cerulean](https://chir.ag/projects/name-that-color/#0571B0) (#0571B0)
+- {{< swatch "#CA0020" >}} [Monza](https://chir.ag/projects/name-that-color/#CA0020)
+- {{< swatch "#F4A582" >}} [Tacao](https://chir.ag/projects/name-that-color/#F4A582)
+- {{< swatch "#F7F7F7" >}} [Alabaster](https://chir.ag/projects/name-that-color/#F7F7F7)
+- {{< swatch "#92C5DE" >}} [Morning Glory](https://chir.ag/projects/name-that-color/#92C5DE)
+- {{< swatch "#0571B0" >}} [Deep Cerulean](https://chir.ag/projects/name-that-color/#0571B0)
 
 {{< /accordionItem >}}
 
@@ -131,21 +131,21 @@ A starting point that clears WCAG AA in both modes. The casa uses these througho
 
 For a white or near-white background:
 
-- {{< swatch "#1F2328" >}} [Shark](https://chir.ag/projects/name-that-color/#1F2328) (#1F2328). 15.80:1 against white. Body text, primary headings.
-- {{< swatch "#0969DA" >}} [Science Blue](https://chir.ag/projects/name-that-color/#0969DA) (#0969DA). 5.19:1 against white. Links, primary accents.
-- {{< swatch "#CF222E" >}} [Cardinal](https://chir.ag/projects/name-that-color/#CF222E) (#CF222E). 5.36:1 against white. Warnings, negative deltas.
-- {{< swatch "#1A7F37" >}} [Jewel](https://chir.ag/projects/name-that-color/#1A7F37) (#1A7F37). 5.08:1 against white. Success, positive deltas.
-- {{< swatch "#9A6700" >}} [Chelsea Gem](https://chir.ag/projects/name-that-color/#9A6700) (#9A6700). 4.87:1 against white. Caution, in-progress states.
-- {{< swatch "#8250DF" >}} [Medium Purple](https://chir.ag/projects/name-that-color/#8250DF) (#8250DF). 5.05:1 against white. Secondary categories, tags.
+- {{< swatch "#1F2328" >}} [Shark](https://chir.ag/projects/name-that-color/#1F2328) 15.80:1 against white. Body text, primary headings.
+- {{< swatch "#0969DA" >}} [Science Blue](https://chir.ag/projects/name-that-color/#0969DA) 5.19:1 against white. Links, primary accents.
+- {{< swatch "#CF222E" >}} [Cardinal](https://chir.ag/projects/name-that-color/#CF222E) 5.36:1 against white. Warnings, negative deltas.
+- {{< swatch "#1A7F37" >}} [Jewel](https://chir.ag/projects/name-that-color/#1A7F37) 5.08:1 against white. Success, positive deltas.
+- {{< swatch "#9A6700" >}} [Chelsea Gem](https://chir.ag/projects/name-that-color/#9A6700) 4.87:1 against white. Caution, in-progress states.
+- {{< swatch "#8250DF" >}} [Medium Purple](https://chir.ag/projects/name-that-color/#8250DF) 5.05:1 against white. Secondary categories, tags.
 
 For a dark background (the canvas color is #0D1117):
 
-- {{< swatch "#F0F6FC" >}} [Polar](https://chir.ag/projects/name-that-color/#F0F6FC) (#F0F6FC). 17.39:1 against #0D1117. Body text, primary headings.
-- {{< swatch "#79C0FF" >}} [Malibu](https://chir.ag/projects/name-that-color/#79C0FF) (#79C0FF). 9.73:1 against #0D1117. Links, primary accents.
-- {{< swatch "#FF7B72" >}} [Salmon](https://chir.ag/projects/name-that-color/#FF7B72) (#FF7B72). 7.51:1 against #0D1117. Warnings, negative deltas.
-- {{< swatch "#7EE787" >}} [Pastel Green](https://chir.ag/projects/name-that-color/#7EE787) (#7EE787). 12.32:1 against #0D1117. Success, positive deltas.
-- {{< swatch "#FFA657" >}} [Texas Rose](https://chir.ag/projects/name-that-color/#FFA657) (#FFA657). 9.77:1 against #0D1117. Caution, in-progress states.
-- {{< swatch "#D2A8FF" >}} [Mauve](https://chir.ag/projects/name-that-color/#D2A8FF) (#D2A8FF). 9.72:1 against #0D1117. Secondary categories, tags.
+- {{< swatch "#F0F6FC" >}} [Polar](https://chir.ag/projects/name-that-color/#F0F6FC) 17.39:1 against #0D1117. Body text, primary headings.
+- {{< swatch "#79C0FF" >}} [Malibu](https://chir.ag/projects/name-that-color/#79C0FF) 9.73:1 against #0D1117. Links, primary accents.
+- {{< swatch "#FF7B72" >}} [Salmon](https://chir.ag/projects/name-that-color/#FF7B72) 7.51:1 against #0D1117. Warnings, negative deltas.
+- {{< swatch "#7EE787" >}} [Pastel Green](https://chir.ag/projects/name-that-color/#7EE787) 12.32:1 against #0D1117. Success, positive deltas.
+- {{< swatch "#FFA657" >}} [Texas Rose](https://chir.ag/projects/name-that-color/#FFA657) 9.77:1 against #0D1117. Caution, in-progress states.
+- {{< swatch "#D2A8FF" >}} [Mauve](https://chir.ag/projects/name-that-color/#D2A8FF) 9.72:1 against #0D1117. Secondary categories, tags.
 
 These are the GitHub light and dark theme accent palettes. They are not the only valid choices. They are a reliable starting point: every pair clears AA for normal text, the contrast ratios are public and verifiable, and using the same palette in both modes means one design decision instead of two.
 
