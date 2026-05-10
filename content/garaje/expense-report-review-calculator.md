@@ -5,7 +5,7 @@ description: "A single-sheet Excel calculator that helps financial reviewers spo
 summary: "Flags late expense submissions."
 tags: ["excel", "finance", "calculator", "higher-ed"]
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showAuthor: false
 ---
 

@@ -5,7 +5,7 @@ description: "A small Python script that analyzes a webpage's SEO health and pro
 summary: "SEO analyzer with teaching reports."
 tags: ["python", "seo", "beautifulsoup", "pdf", "side-project"]
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showAuthor: false
 ---
 

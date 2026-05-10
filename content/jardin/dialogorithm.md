@@ -5,7 +5,7 @@ description: "A Python desktop app that turns phone numbers into PhD-level mathe
 summary: "Phone numbers as PhD math."
 tags: ["python", "tkinter", "latex", "mathematics", "side-project"]
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showAuthor: false
 ---
 

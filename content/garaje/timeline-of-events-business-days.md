@@ -5,7 +5,7 @@ description: "A small Excel timeline tool that measures every phase of a process
 summary: "Process timeline with gap detection."
 tags: ["excel", "process-improvement", "calculator", "higher-ed"]
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showAuthor: false
 ---
 

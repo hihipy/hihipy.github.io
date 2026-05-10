@@ -5,7 +5,7 @@ description: "Exploratory analysis of a 14,181-row CSV that turned out to descri
 summary: "Phase 2: Schema design from EDA"
 tags: ["sql", "sqlite", "schema-design", "python", "sqlite-utils"]
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showAuthor: false
 ---
 
@@ -76,17 +76,16 @@ ORDER BY n_funders;
 
 Result:
 
-```text
-Funders   Projects
-1           10,065
-2              209
-3               11
-4                4
-5                1
-6                2
-11               3
-19               1
-```
+| Funders | Projects |
+|---:|---:|
+| 1 | 10,065 |
+| 2 | 209 |
+| 3 | 11 |
+| 4 | 4 |
+| 5 | 1 |
+| 6 | 2 |
+| 11 | 3 |
+| 19 | 1 |
 
 The distribution reconciles cleanly. 10,065 single-funder projects + 209 + 11 + 4 + 1 + 2 + 3 + 1 = 10,296 distinct projects with at least one funder. Those 10,296 projects produce 10,601 total funder rows in the table (the math: 10,065 × 1 + 209 × 2 + 11 × 3 + 4 × 4 + 1 × 5 + 2 × 6 + 3 × 11 + 1 × 19 = 10,601). The 305-row excess of funder-rows over funder-applications is the gap explained: it is the sum of co-funding splits across the 231 multi-funder projects.
 

@@ -5,7 +5,7 @@ description: "A Python desktop app that reads a resume and produces a LinkedIn b
 summary: "AI résumé wordcloud generator."
 tags: ["python", "tkinter", "ai", "llm", "word-cloud", "matplotlib", "side-project"]
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showAuthor: false
 ---
 

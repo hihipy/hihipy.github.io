@@ -5,7 +5,7 @@ description: "A Jupyter Notebook pipeline that turns raw Qualtrics survey export
 summary: "Cleans Qualtrics survey data."
 tags: ["python", "pandas", "qualtrics", "survey-data", "etl", "jupyter"]
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showAuthor: false
 ---
 

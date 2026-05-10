@@ -5,7 +5,7 @@ description: "A Python utility that turns Qualtrics CSV exports into formatted, 
 summary: "Renders Qualtrics surveys as HTML."
 tags: ["python", "qualtrics", "html", "reporting", "higher-ed", "etl"]
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showAuthor: false
 ---
 

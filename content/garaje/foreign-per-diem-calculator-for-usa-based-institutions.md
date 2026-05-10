@@ -5,7 +5,7 @@ description: "An Excel calculator for international travel per diem at U.S.-base
 summary: "International per diem calculator."
 tags: ["excel", "per-diem", "finance", "travel", "calculator", "higher-ed"]
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showAuthor: false
 ---
 

@@ -5,7 +5,7 @@ description: "First-pass queries against the database to see what twenty-one yea
 summary: "Phase 3: First-pass queries"
 tags: ["sql", "sqlite", "exploratory-analysis", "datasette"]
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showAuthor: false
 ---
 
@@ -180,6 +180,8 @@ WESTERN KENTUCKY UNIVERSITY                               32
 The University of Kentucky and the University of Louisville together account for 12,114 of the 13,876 projects, just over 87 percent of the dataset. The Kentucky NIH funding picture is substantially the picture of two large public research universities. The long tail is small but interesting: a state public-health cabinet (380 projects), the Lexington and Louisville VA medical centers, a small biotech (Naprogenix), and three of the state's regional public universities (Murray State, Northern Kentucky, Western Kentucky) at the bottom of the top ten.
 
 The duplicate "MEDICAL" in "LOUISVILLE VA MEDICAL MEDICAL CENTER" is real, not a transcription error. RePORTER's organization-name field is unnormalized: institutions appear with whatever exact text the grant submitter entered, including typos. Phase 04's institutional comparisons treat this case carefully (the Louisville VA may show up in two distinct organization spellings across the dataset).
+
+The build script in [phase 02](/archivo/kentucky-nih/02-schema/#the-build-script) deliberately does NOT normalize organization names. The decision was: an analyst who wants to roll up VA medical center variants under a single canonical entity can write a `CASE WHEN` or a `LIKE` clause in their query; an analyst who wants to keep the variants distinct (because they may represent different organizational units, different decades of naming convention, or different administrative structures) can do that without first having to undo a normalization the build script imposed. Trusting the analyst to make the right call for their question keeps the data faithful to what RePORTER published. The cost is that any reader running aggregations against `organization_name` should double-check whether duplicate entries with similar spellings actually represent the same institution or two distinct ones — a five-second `GROUP BY organization_name LIKE '%LOUISVILLE VA%'` query answers it.
 
 This is a Kentucky-specific finding rather than a generalizable claim about state-level NIH funding. A state with three or four roughly equal research universities (Texas, North Carolina, Massachusetts) would produce a flatter distribution. Kentucky's bimodal one-and-a-half-institution shape is particular to its higher-education landscape, and the next phase looks at how UK and U of L diverge in what they fund.
 

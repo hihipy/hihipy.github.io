@@ -5,7 +5,7 @@ description: "A Python tool that turns messy 25Live scheduling exports into clea
 summary: "Cleans 25Live calendar exports."
 tags: ["python", "pandas", "etl", "data-cleaning", "audit"]
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showAuthor: false
 ---
 

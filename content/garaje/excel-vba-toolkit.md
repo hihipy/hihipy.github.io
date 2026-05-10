@@ -5,7 +5,7 @@ description: "A collection of ten Excel VBA macros covering data cleaning, struc
 summary: "Reusable Excel VBA macros."
 tags: ["vba", "excel", "data-cleaning", "documentation", "macros"]
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showAuthor: false
 ---
 

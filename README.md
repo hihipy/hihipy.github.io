@@ -152,7 +152,7 @@ description: "<30-50 word SEO description>"
 summary: "<3-6 word card label>"
 tags: ["tag1", "tag2", "tag3"]
 showDate: false
-showReadingTime: false
+showReadingTime: true   # Hugo auto-estimate; surfaced on cards too. See §10 for exceptions.
 showAuthor: false
 ---
 

@@ -5,7 +5,7 @@ description: "Where the data came from, why one state across twenty-one years, a
 summary: "Phase 1: Source data and provenance"
 tags: ["nih-reporter", "csv", "public-data", "data-quality"]
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showAuthor: false
 ---
 
@@ -42,6 +42,20 @@ Documenting the limit here is not just trivia. The [phased walkthrough](/bibliot
 ## What's In The File
 
 The export is one CSV file, roughly 58 megabytes at the time of export, 14,181 rows of data plus a six-line preamble plus a header row. Opening it in any text editor reveals seven structural details that the loader has to handle, none of which are documented in the export dialog. These observations were made when the file was originally exported; the file itself is not committed to this repository (the source of truth is NIH, not the portfolio site), so anyone re-exporting from the [search URL](#reproducing-the-export) below should expect the same structural quirks unless RePORTER has changed its export format since.
+
+The seven quirks at a glance, with the impact each one has on a naive load and the resolution the build script applies:
+
+| Quirk | Impact | Resolution |
+|---|---|---|
+| UTF-8 byte-order mark at file start | First column name corrupted by `EF BB BF` prefix | `encoding="utf-8-sig"` strips the BOM during read |
+| Six-line preamble before header row | Header is on line 7, not line 1 | `skiprows=6` |
+| 54 named columns + phantom 55th from trailing comma | Strict parsers refuse; permissive parsers invent a column | Drop the phantom column after load |
+| Quoted fields containing commas, semicolons, quotes | Splitting blindly on commas produces wrong field counts | Use a real CSV parser (pandas, csv module) that respects quoting |
+| Blank strings AND single-space strings used as null | Field equality and `IS NULL` checks fail on different rows | Coerce both `""` and `" "` to proper SQL `NULL` |
+| Dates in `MM/DD/YYYY` format | Default parsers refuse non-ISO 8601 | Explicit `format="%m/%d/%Y"` parsing |
+| 14,181 rows describe 13,876 distinct projects | Row-level aggregations double-count co-funded grants | Documented in phase 02; resolved by three-table normalized schema |
+
+The detail on each quirk follows.
 
 A UTF-8 byte-order mark at the start of the file. The BOM is three bytes (`EF BB BF`) before the first visible character. A naive CSV reader treats those bytes as part of the first column name, producing a header that does not match what subsequent reads expect.
 
@@ -193,6 +207,8 @@ The search criteria that produced this dataset are encoded in a permanent RePORT
 The filters that hash represents are: Fiscal Year 2005 through 2025, State Kentucky, Country United States. Clicking the URL takes you to the same search results I exported, with the option to download the same CSV.
 
 The CSV itself is not committed to this repository. The source of truth is NIH, not the portfolio site, and committing a 58-megabyte CSV that anyone can regenerate from the search URL would be a maintenance burden without a benefit. What is committed is the build script that turns the CSV into the SQLite database (covered in [the schema phase](/archivo/kentucky-nih/02-schema/)), the database itself (also covered there, served at `https://pgbd.casa/data/kentucky-nih.sqlite` for direct download), and the case study prose you are reading now.
+
+If RePORTER changes its export format in the future, the seven structural quirks documented above may no longer match. The build script's resolutions assume a specific shape (BOM, six-line preamble, 54-column header with a phantom 55th, dates in `MM/DD/YYYY`, blank/single-space nulls). Anyone re-running the export should re-verify each quirk against the fresh file before trusting the build script's output; a silent format change could load successfully and produce wrong data without obvious error. Treating this case study as living documentation rather than a one-time deliverable is what keeps it reproducible across years rather than just at the moment of publication.
 
 ## Looking Ahead
 

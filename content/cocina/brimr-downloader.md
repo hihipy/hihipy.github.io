@@ -5,7 +5,7 @@ description: "A Python tool that automates the download and organization of NIH 
 summary: "Downloads NIH funding rankings."
 tags: ["python", "selenium", "browser-automation", "etl", "nih", "higher-ed"]
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showAuthor: false
 ---
 

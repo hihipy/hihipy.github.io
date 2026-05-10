@@ -5,7 +5,7 @@ description: "A Python GUI that pulls words from a linguistic database covering 
 summary: "ASCII usernames in 19 languages."
 tags: ["python", "tkinter", "nltk", "wordnet", "side-project"]
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showAuthor: false
 ---
 

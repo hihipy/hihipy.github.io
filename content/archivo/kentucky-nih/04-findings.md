@@ -5,7 +5,7 @@ description: "Deeper analytical queries using window functions and common table 
 summary: "Phase 4: Window functions and CTEs"
 tags: ["sql", "sqlite", "window-functions", "ctes", "datasette"]
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showAuthor: false
 ---
 
@@ -310,13 +310,77 @@ NIAAA                    51.7                 86.2          +67
 NIDCR                    43.8                 54.8          +25
 ```
 
-Four findings worth surfacing.
+<div class="pgbd-case-chart-wrap">
+<p class="pgbd-case-chart-headline">OD and NIGMS led growth at +159% and +157%; NHLBI was the only major IC to contract, declining 13%.</p>
+<p class="pgbd-case-chart-sub">Decade-over-decade percent change in NIH funding to Kentucky by Institute or Center, 2005-2014 vs 2015-2024. Bars sorted by change descending; the diverging axis makes contraction easy to spot at a glance.</p>
+{{< chart >}}
+type: 'bar',
+data: {
+  labels: ['OD', 'NIGMS', 'NIEHS', 'NIA', 'NIAAA', 'NIDA', 'NIAID', 'NCI', 'NIDDK', 'NIDCR', 'NINDS', 'NHLBI'],
+  datasets: [
+    {
+      label: 'Change (%)',
+      data: [159, 157, 126, 96, 67, 61, 36, 34, 25, 25, 15, -13],
+      backgroundColor: function(context) {
+        var value = context.dataset.data[context.dataIndex];
+        return value < 0 ? 'rgba(191, 57, 137, 0.7)' : 'rgba(9, 105, 218, 0.7)';
+      },
+      borderColor: function(context) {
+        var value = context.dataset.data[context.dataIndex];
+        return value < 0 ? '#BF3989' : '#0969DA';
+      },
+      borderWidth: 1.5,
+    }
+  ]
+},
+options: {
+  indexAxis: 'y',
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: { display: false },
+    tooltip: {
+      callbacks: {
+        label: function(context) {
+          var v = context.parsed.x;
+          return (v >= 0 ? '+' : '') + v + '%';
+        }
+      }
+    }
+  },
+  scales: {
+    x: {
+      title: { display: true, text: 'Change (%)' },
+      ticks: {
+        callback: function(value) { return (value >= 0 ? '+' : '') + value + '%'; }
+      },
+      grid: {
+        color: function(context) {
+          return context.tick.value === 0 ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.1)';
+        },
+        lineWidth: function(context) {
+          return context.tick.value === 0 ? 1.5 : 1;
+        }
+      }
+    },
+    y: {
+      title: { display: true, text: 'Institute' }
+    }
+  },
+  interaction: { mode: 'nearest', intersect: false }
+}
+{{< /chart >}}
+</div>
+
+Five findings worth surfacing.
 
 NIGMS (the National Institute of General Medical Sciences) grew 157 percent decade-over-decade, from $99M to $254M, the largest growth rate of any major IC funding Kentucky research. NIGMS is the IC most associated with the IDeA program ([phase 03's P20 finding](/archivo/kentucky-nih/03-exploration/#the-arra-spike)), and Kentucky's IDeA designation makes it eligible for NIGMS-administered capacity-building awards that scaled up across this window.
 
 NIDA (the National Institute on Drug Abuse) grew 61 percent decade-over-decade, from $149M to $240M. That tracks the [phase 03 observation](/archivo/kentucky-nih/03-exploration/#nih-spending-categories) about Substance Misuse appearing as a top-eleven category. Kentucky's documented role as a focal point for opioid response research is visible here as a real funding shift, not a flat baseline that just happens to rank.
 
-NIA (the National Institute on Aging) grew 96 percent, from $116M to $226M. The framing on the [case study landing page](/archivo/kentucky-nih/) about Kentucky's demographic profile shows up here too: aging research nearly doubled across the window. NIEHS (Environmental Health) grew 126 percent and OD (Office of the Director) grew 159 percent, both substantial but on smaller absolute bases.
+NIA (the National Institute on Aging) grew 96 percent, from $116M to $226M. The framing on the [case study landing page](/archivo/kentucky-nih/) about Kentucky's demographic profile shows up here too: aging research nearly doubled across the window. NIEHS (Environmental Health) grew 126 percent on a $60M base, more than doubling to $136M.
+
+OD (Office of the Director) grew 159 percent, the largest percentage change in the table, from $40M to $104M. The OD funds [trans-NIH initiatives](https://www.nih.gov/institutes-nih/list-nih-institutes-centers-offices) that span multiple institutes rather than a single research domain, including the Common Fund, the IDeA Programs Office, and various cross-institute collaborative initiatives. The growth tracks the same IDeA-program story as NIGMS and consistent with Kentucky's IDeA-state designation. A reader who saw OD jump from $40M to $104M without understanding what OD does might assume it represented direct research funding to a single Institute; in fact it represents the Office that coordinates initiatives flowing through multiple Institutes, which is itself a structural finding worth surfacing.
 
 NHLBI (Heart, Lung, and Blood) is the one major IC that contracted, declining 13 percent. Most other ICs grew; NHLBI shrunk. The dataset shows the contraction; it does not show the cause, and any explanation would require external sources (institutional research priority shifts, NIH-wide budget reallocations, retirements of UK PIs in cardiovascular research, all plausible).
 

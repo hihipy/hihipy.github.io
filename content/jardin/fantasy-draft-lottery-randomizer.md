@@ -5,7 +5,7 @@ description: "A Python GUI that runs fantasy sports draft lotteries with three d
 summary: "Auditable fantasy draft lottery."
 tags: ["python", "tkinter", "asyncio", "combinatorics", "side-project"]
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showAuthor: false
 ---
 

@@ -6,7 +6,7 @@ summary: "Case study philosophy."
 draft: false
 showAuthor: false
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showWordCount: false
 showBreadcrumbs: true
 showTableOfContents: true

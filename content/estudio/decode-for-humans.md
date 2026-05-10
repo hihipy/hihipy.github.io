@@ -5,7 +5,7 @@ description: "A desktop tool that translates source code into plain-English expl
 summary: "AI source-code translator."
 tags: ["python", "ai", "llm", "multi-provider", "documentation", "customtkinter"]
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showAuthor: false
 ---
 

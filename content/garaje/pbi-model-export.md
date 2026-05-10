@@ -5,7 +5,7 @@ description: "A Tabular Editor 2 C# script that exports a Power BI model to AI-r
 summary: "Power BI to AI-ready JSON."
 tags: ["power-bi", "tabular-editor", "csharp", "dax", "bi", "ai"]
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showAuthor: false
 ---
 

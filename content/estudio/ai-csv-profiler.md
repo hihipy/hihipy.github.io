@@ -5,7 +5,7 @@ description: "A Python utility that produces concise, AI-readable JSON profiles 
 summary: "CSV profiler for LLMs."
 tags: ["python", "pandas", "data-profiling", "ai", "csv"]
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showAuthor: false
 ---
 
