@@ -65,6 +65,45 @@ The `annual_metrics` table holds year-varying metrics: enrollment by demographic
 
 The `field_of_study` table holds program-level outcomes: median debt at completion and median earnings at one, two, and three years post-completion, broken out by CIP code (academic discipline) and credential level (bachelor's, master's, doctoral, etc.). 36,610 rows because Florida four-year institutions collectively offer hundreds of distinct (CIP code, credential level) combinations, each reported across multiple cohort years.
 
+{{< mermaid >}}
+erDiagram
+    INSTITUTIONS ||--o{ ANNUAL_METRICS : "reports each year"
+    INSTITUTIONS ||--o{ FIELD_OF_STUDY : "offers programs"
+
+    INSTITUTIONS {
+        int    unitid PK "federal Unit IDentifier"
+        string instnm "institution name"
+        string city
+        string state "all rows are FL"
+        string sector "public / private_nonprofit / for_profit"
+        int    first_year_in_data "earliest cohort year reported"
+        int    last_year_in_data "latest cohort year reported"
+    }
+
+    ANNUAL_METRICS {
+        int    unitid PK,FK
+        int    cohort_year PK "2014-2023"
+        int    ugds "undergraduate enrollment"
+        float  tuitionfee_in "in-state tuition"
+        float  npt4_pub "net price (public)"
+        float  npt4_priv "net price (private nonprofit / for-profit)"
+        float  c150_4 "completion rate, 150% of normal time"
+        float  c200_4 "completion rate, 200% of normal time"
+        float  pctpell "Pell-eligible percentage"
+        float  cdr3 "3-year cohort default rate"
+        int    md_earn_wne_p10 "10-year median earnings (cohorts 2014, 2020)"
+    }
+
+    FIELD_OF_STUDY {
+        int    unitid PK,FK
+        int    cohort_year PK
+        string cipcode PK "Classification of Instructional Programs code"
+        int    credlev PK "credential level (1=bachelor, 2=master, etc.)"
+        string cipdesc "human-readable program description"
+        int    ipedscount "completers per cohort year"
+    }
+{{< /mermaid >}}
+
 ## The Scope Filter
 
 The second decision: what counts as a "Florida four-year institution"?

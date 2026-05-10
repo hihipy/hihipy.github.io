@@ -375,6 +375,47 @@ Each layer has a different audience. A reader who only needs the top gets the to
 
 A [mermaid](https://mermaid.js.org/) diagram does for structure what a paragraph cannot. Prose is sequential; a diagram is spatial. When the work has flow (data sources feeding a pipeline, decisions branching off a question, phases depending on each other), prose forces the reader to hold the structure in working memory while reading the next sentence. A diagram puts the structure on the page so the reader can see it at a glance. The first phased-walkthrough diagram in section two is a working example: a non-technical reader who would skim past the four paragraphs explaining source, schema, exploration, and findings can look at the diagram and immediately understand that these are sequential steps with peer review as the gate. The diagram does not replace the prose; it makes the prose easier to enter.
 
+Mermaid earns its place beyond flowcharts as well. Database schema is the second category where a diagram outperforms prose: prose forces the reader to track which columns belong to which table, which keys are primary and which are foreign, and which tables relate to which others by which cardinality, all while reading. An [erDiagram](https://mermaid.js.org/syntax/entityRelationshipDiagram.html) puts the structure on the page so the reader can see it at a glance. A small worked example, an e-commerce schema with four normalized tables, illustrates the form:
+
+{{< mermaid >}}
+erDiagram
+    CUSTOMERS ||--o{ ORDERS : "places"
+    ORDERS ||--|{ LINE_ITEMS : "contains"
+    PRODUCTS ||--o{ LINE_ITEMS : "appears in"
+
+    CUSTOMERS {
+        int    customer_id PK
+        string email
+        string first_name
+        string last_name
+        date   created_at
+    }
+
+    ORDERS {
+        int    order_id PK
+        int    customer_id FK
+        date   order_date
+        string status "pending / shipped / delivered"
+    }
+
+    LINE_ITEMS {
+        int    line_item_id PK
+        int    order_id FK
+        int    product_id FK
+        int    quantity
+        float  unit_price "price at time of order"
+    }
+
+    PRODUCTS {
+        int    product_id PK
+        string sku
+        string name
+        float  current_price
+    }
+{{< /mermaid >}}
+
+The same information rendered as prose ("the customers table has a one-to-many relationship with orders, which has a one-to-many relationship with line items, which has a many-to-one relationship with products") is technically correct but visually flat. The reader has to construct the diagram in their head. The rendered version is read at a glance. For a case study where the schema phase is one of four, the ER diagram is the natural form for the deliverable; a phase 02 that documents schema decisions without rendering the schema is doing the harder version of the same job.
+
 [LaTeX](https://www.latex-project.org/) rendering does the same thing for mathematics. Every reader who has been through any formal education has seen formulas typeset this way: in math textbooks, in chemistry classes, in physics labs, in statistics courses, in economics readings. By the time anyone reaches adulthood, decades of pattern matching are already baked in. A rendered formula is read fluently the way a printed paragraph is read fluently, because the visual conventions are the ones the reader has been seeing since their first arithmetic worksheet. The standard notation is a universal alphabet for quantitative work, and LaTeX is the typesetter that produces it.
 
 The same statistical claims, written two ways:
