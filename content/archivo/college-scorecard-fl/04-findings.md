@@ -9,6 +9,7 @@ showReadingTime: true
 showAuthor: false
 ---
 
+{{< katex >}}
 {{< lead >}}
 The exploration phase gave the shape; the findings phase reaches for window functions and CTEs to surface what changed.
 {{< /lead >}}

@@ -9,6 +9,7 @@ showReadingTime: true
 showAuthor: false
 ---
 
+{{< katex >}}
 {{< lead >}}
 Window functions, CTEs, and the patterns that emerge when twenty-one years of grants get cross-cut by institute, organization, and time.
 {{< /lead >}}
