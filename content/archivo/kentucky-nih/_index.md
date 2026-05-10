@@ -1,6 +1,6 @@
 ---
 title: "Two Decades of NIH Funding in Kentucky"
-weight: 10
+weight: 20
 description: "A SQL case study on twenty-one years of NIH grants in Kentucky: the 2009 ARRA stimulus that briefly doubled federal funding, the two universities that absorbed 87 percent of it, and the IDeA-program shift that drove the second decade's growth. Walked through phase by phase so every decision is auditable."
 summary: "Twenty-one years, two universities, one stimulus"
 tags: ["sql", "sqlite", "datasette", "nih-reporter", "kentucky"]
