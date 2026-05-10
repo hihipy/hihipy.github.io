@@ -138,6 +138,10 @@ The three written fields are NOT redundant. Each serves a different function and
 
 When asked to add a new project, all four tiers must be authored deliberately.
 
+**Tag accuracy is non-negotiable.** Tags should reflect what the project's source code actually imports, uses, or implements; they should NOT reflect skills the author has elsewhere. A Python project that does not actually use NumPy should not be tagged `numpy` even if the author is fluent in NumPy. The biblioteca philosophy of reproducibility-as-the-floor applies to portfolio claims as much as to case study numbers: a recruiter who clicks the `numpy` tag and reads the project should find numpy code. Skills the author has but the portfolio does not yet demonstrate belong on `~/sala` (the bio page), not in project frontmatter. When auditing tags on an existing project, run `grep -E "^import|^from" project_file.py` against the real source code; the resulting list of actual imports is the canonical tag inventory for that project.
+
+**Skill name consistency.** When a skill appears on `~/sala` AND as a project tag, the casing must match between the two. The project tag map in `layouts/partials/article-link/card.html` is the canonical source: if the map says `nltk` -> `NLTK`, then sala should write `NLTK` (not `nltk` or `Nltk`). Update both at once when adding new skills.
+
 **Important: `summary` also drives search result quality.** If `summary` is missing from a page's frontmatter, Blowfish's search index falls back to Hugo's auto-generated summary (the first ~70 words of body content). This produces noisy, bloated search results. Every page that is discoverable via search SHOULD have a `summary` field, including non-project pages (home, sala, puerta). See BUG-010.
 
 ## 6. Project Page Template

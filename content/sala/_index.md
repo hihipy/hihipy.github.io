@@ -158,7 +158,7 @@ Coursework in time value of money, capital investment decisions, risk and return
 
 #### Python Ecosystem
 
-[{{< badge >}}BeautifulSoup4{{< /badge >}}](https://www.crummy.com/software/BeautifulSoup/)
+[{{< badge >}}BeautifulSoup{{< /badge >}}](https://www.crummy.com/software/BeautifulSoup/)
 [{{< badge >}}matplotlib{{< /badge >}}](https://matplotlib.org/)
 [{{< badge >}}NLTK{{< /badge >}}](https://www.nltk.org/)
 [{{< badge >}}numpy{{< /badge >}}](https://numpy.org/)

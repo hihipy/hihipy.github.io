@@ -30,6 +30,31 @@
     {{ end }}
   </div>
 
+  {{/* Section navigation - quick jumps from any deep page */}}
+  {{/* Uses inline styles for spacing because Blowfish's Tailwind build */}}
+  {{/* does not always include gap-x-* utilities. */}}
+  <nav aria-label="Site sections" class="mt-6 pt-4 border-t border-neutral-200 dark:border-neutral-700">
+    <p class="text-xs text-neutral-500 dark:text-neutral-400" style="line-height: 1.8;">
+      <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="/biblioteca/">~/biblioteca</a>
+      <span style="margin: 0 0.6rem; opacity: 0.5;">&middot;</span>
+      <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="/archivo/">~/archivo</a>
+      <span style="margin: 0 0.6rem; opacity: 0.5;">&middot;</span>
+      <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="/mirador/">~/mirador</a>
+      <span style="margin: 0 0.6rem; opacity: 0.5;">&middot;</span>
+      <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="/taller/">~/taller</a>
+      <span style="margin: 0 0.6rem; opacity: 0.5;">&middot;</span>
+      <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="/obrador/">~/obrador</a>
+      <span style="margin: 0 0.6rem; opacity: 0.5;">&middot;</span>
+      <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="/cocina/">~/cocina</a>
+      <span style="margin: 0 0.6rem; opacity: 0.5;">&middot;</span>
+      <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="/estudio/">~/estudio</a>
+      <span style="margin: 0 0.6rem; opacity: 0.5;">&middot;</span>
+      <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="/garaje/">~/garaje</a>
+      <span style="margin: 0 0.6rem; opacity: 0.5;">&middot;</span>
+      <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="/jardin/">~/jardín</a>
+    </p>
+  </nav>
+
   {{ if not .Site.Params.disableImageZoom | default true }}
     <script>
       mediumZoom(document.querySelectorAll("img:not(.nozoom)"), {
