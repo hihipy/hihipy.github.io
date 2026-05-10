@@ -26,7 +26,7 @@ Every SQL block in this phase has a [Datasette Lite](https://lite.datasette.io/?
 
 Phase 03's annual funding chart is dominated by one artifact: the 2009 ARRA spike. The spike is real and explained, but it compresses the visible variation across the other twenty years into a narrower band. A 5-year centered moving average smooths the spike and reveals the underlying trajectory:
 
-\\[\overline{f}_{t} = \dfrac{1}{5}\sum_{i=t-2}^{t+2} f_i\\]
+\\[\overline{f_t} = \dfrac{1}{5}\sum\_{i=t-2}^{t+2} f\_i\\]
 
 where \\(\overline{f}_{t}\\) is the 5-year centered moving average at fiscal year \\(t\\), \\(f_i\\) is the actual annual NIH funding total to Kentucky institutions in fiscal year \\(i\\), and the sum runs over the five-year window centered on \\(t\\) (the year itself plus the two years before and the two years after). For years near the edges of the window (2005-2006 and 2024-2025), the SQL query's `ROWS BETWEEN 2 PRECEDING AND 2 FOLLOWING` clause produces a truncated window with fewer years; the average for those years is mathematically valid but covers fewer years than the interior values.
 
