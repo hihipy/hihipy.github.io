@@ -899,6 +899,107 @@ When the kentucky-nih case study was first drafted, multiple SQL queries had "ex
 
 First encountered: kentucky-nih case study phases 03 and 04, May 2026.
 
+### BUG-025: Bash heredoc with literal `$N,NNN` is shell-expanded before reaching Python
+
+Bash scripts that pipe content into Python via `python3 <<DELIM` will shell-expand any unescaped `$NNN` token in the heredoc body before Python sees it. When the body contains a literal SQL fragment or anchor string with currency values like `$5,896`, the bash parser interprets `$5` as the (typically unset) fifth positional parameter and substitutes the empty string, leaving `,896` in its place. Python then receives a corrupted anchor and `text.count(anchor)` returns zero matches.
+
+**Symptom:** a patch script's pre-flight check reports zero matches for an anchor that is unambiguously present in the target file. Diagnostic greps confirm the anchor exists in the file. The pre-flight failure is real but the cause is in the bash layer, not the Python layer.
+
+**Diagnostic:** `cat -A` (or `grep` with `-P` and a control-character pattern) on the script source reveals the anchor as written. Compare against what the script actually passes to Python by adding a `print(repr(old))` line at the top of the heredoc body. If the printed value differs from what's in the script source, BUG-025 is the cause.
+
+**Pattern that fails:**
+```bash
+python3 <<__DELIM__
+old = "| 2023 | Public | $5,896 | 13 |"  # bash sees $5 and expands it
+text.replace(old, new)
+__DELIM__
+```
+
+**Pattern that works:**
+```bash
+python3 <<'__DELIM__'
+old = "| 2023 | Public | $5,896 | 13 |"  # quoted heredoc disables expansion
+text.replace(old, new)
+__DELIM__
+```
+
+**Rule:** if a heredoc body contains literal `$` characters (currency values, SQL parameter syntax, regex backreferences, etc.), the heredoc delimiter must be single-quoted. The single quotes around the delimiter tell bash to pass the body verbatim.
+
+This trap is invisible at script-write time: the script source looks correct and bash syntax is valid. It only manifests at runtime when the pre-flight check fails. The mitigation is to default to quoted heredocs in any patch script that handles content with potential `$` characters; the cost of the quotes is zero.
+
+First encountered: college-scorecard-fl case study phase 03 chart-adding script, May 2026. The patch had `$5,896` in three SELECT-result anchors; the unquoted heredoc expanded `$5,896` to `,896` and the pre-flight reported zero matches for an anchor unambiguously present in the file.
+
+### BUG-026: F-string with backslash-escaped quotes inside expression is a Python SyntaxError
+
+Python f-strings do not allow backslash escape characters inside the expression part of the f-string. A line like `f"text: {variable.count('hello')}"` works because no escape is needed; a line that tries to escape quotes inside the brace expression is a SyntaxError, because the f-string parser cannot reason about backslash escapes at runtime. The fix is to bind the long string to a variable outside the f-string and reference the variable inside the expression.
+
+**Symptom:** a patch script's heredoc body fails with `SyntaxError: unexpected character after line continuation character` at the line containing the f-string. The error message points to the backslash position. The script never executes any patches.
+
+**Diagnostic:** read the failing line and look for backslash-escaped quotes inside `{...}` brackets within an f-string. If present, BUG-026 is the cause.
+
+**Pattern that fails (do not write this):**
+- An f-string where the expression inside braces contains backslash-escaped quotes around a long substring being passed to `.count()` or similar.
+
+**Pattern that works:**
+- Bind the substring to a named variable outside the f-string.
+- Reference the variable inside the f-string expression.
+
+**Rule:** never use backslash-escaped quotes inside an f-string expression. If the value to be inserted requires literal quotes, bind it to a named variable first and reference the variable in the f-string. The f-string parser handles variable lookups; it does not handle backslash escapes inside braces.
+
+This was caught at script execution time, not at script write time, because Python f-string syntax errors fire only when the interpreter parses the function or top-level expression containing the f-string. The mitigation is to extract the Python heredoc body from the bash script and run a `compile(body, 'heredoc', 'exec')` check before presenting the script. The compile-check fires the same SyntaxError that the runtime would, but at write-time when the cost of fixing it is one iteration instead of one round-trip through the user.
+
+First encountered: college-scorecard-fl phase 04 trim-earnings-chart-to-top10 script, May 2026. The audit section inlined a 200-character substring check inside an f-string with escaped quotes around the substring. The fix was to bind the substring to a named variable outside the f-string.
+
+### BUG-027: SQL alias column alignment produces excessive padding when one expression is much longer than its siblings
+
+A naive per-group SQL alias aligner that pads every line to one-space-past-the-longest-expression in a contiguous group produces clean output for typical SELECT clauses but blows up when one expression is dramatically longer than its siblings. Window functions like `RANK() OVER (PARTITION BY x ORDER BY y ASC)` or stacked aggregates like `SUM(SUM(value)) OVER (PARTITION BY year)` can be 80 to 100 characters long, and aligning all sibling expressions to that length pushes the AS aliases off the right edge of a code block on rendering.
+
+**Symptom:** SQL code blocks in case study prose have AS aliases that are not visible in the rendered HTML because they are padded past the right edge of the code block. The block scrolls horizontally on smaller viewports.
+
+**Diagnostic:** for each SQL block, find the maximum run of spaces immediately before `AS`. If the maximum exceeds approximately 50 characters, the block has an alignment-blow-up case.
+
+**Cause:** typical kentucky-nih SQL alignment is per-group (each contiguous SELECT clause aligns its AS columns) with most expressions in the 5-30 character range. The aligner script computes max expression length and pads to that. When a single expression in the group is 80-100 chars (a window function, for example), every shorter expression in the same group gets padded out to that length.
+
+**Fix:** cap alignment at a reasonable width (45 characters in the College Scorecard FL case study). When the longest expression in a group exceeds the cap, all lines in the group fall back to single-space-before-AS instead of column alignment. This produces readable output for both typical and pathological cases.
+
+**Rule:** SQL alias alignment scripts should always include a width cap. The cap value should match the typical column width of the rendered code block (around 80 characters minus indent and AS overhead). Per-group alignment is good when the longest expression is reasonable; column-aligned for-its-own-sake alignment is not the goal.
+
+First encountered: college-scorecard-fl case study phases 02-04 SQL alias realignment, May 2026. The first realigner script collapsed 60-space gaps to clean alignments for most queries but pushed Phase 04 Q1 (cost-per-completer) to 91 spaces because the RANK() OVER expression was 100 characters long. The cap at 45 characters fixed the regression.
+
+### BUG-028: College Scorecard `c150_4 = 0` is often a measurement artifact, not zero completion
+
+The College Scorecard's `c150_4` metric (completion rate within 150 percent of normal time, four-year cohort) measures specifically first-time, full-time bachelor's-seeking students who completed within six years. At institutions whose student bodies are mostly part-time, mostly transfer students, or in programs longer than four years, the metric can return zero even when the institution graduates students normally. Naive interpretation of `c150_4 = 0` as a zero-completion finding is wrong; the metric measures a specific cohort definition that does not fit every institutional profile.
+
+**Symptom:** a SELECT or visualization that includes `c150_4` returns 0.0 for institutions like Chamberlain University-Florida (a thousand-student-cohort nursing school), Polytechnic University of Puerto Rico's Florida branches, and small religious seminaries. The rate of 0 percent looks like institutional failure on first glance.
+
+**Diagnostic:** for any institution-year reporting `c150_4 = 0`, query `c200_4` (200 percent completion rate, eight-year window) for the same institution-year. If `c200_4` is meaningfully nonzero (10 percent or higher), the institution graduates students; the `c150_4 = 0` is a measurement artifact reflecting the cohort definition mismatch.
+
+**Cross-check query:**
+```sql
+-- Confirms whether c150_4 = 0 is artifact or genuine zero completion.
+-- A meaningful c200_4 value at the same institution-year proves the
+-- institution graduates students, just on a longer timeline than the
+-- six-year window measures.
+SELECT
+    i.instnm                  AS "Institution",
+    am.cohort_year            AS "Year",
+    ROUND(am.c150_4 * 100, 1) AS "c150_4 (6yr) %",
+    ROUND(am.c200_4 * 100, 1) AS "c200_4 (8yr) %"
+FROM institutions       i
+JOIN annual_metrics     am USING (unitid)
+WHERE am.c150_4 = 0
+  AND i.sector IN ('private_nonprofit', 'for_profit')
+ORDER BY i.instnm, am.cohort_year;
+```
+
+**Cause:** `c150_4` is calibrated for the canonical first-time-full-time bachelor's seeking cohort. Career-focused institutions with adult-learner populations, transfer-heavy specialty schools, religious seminaries with non-traditional programs, and branch campuses all violate the cohort assumption. The metric returns zero when the violating institution has too few first-time-full-time students to compute a meaningful rate.
+
+**Fix in case study prose:** when reporting `c150_4` averages, document the artifact rule and present a comparison row showing `c150_4 = 0` and `c200_4 > 0` for the same institutions. Filter measurement-artifact rows out of any aggregate that would mislead (e.g., HAVING COUNT >= 5 to require five years of c150_4 data).
+
+**Rule:** treat `c150_4` as a metric for traditional first-time-full-time cohorts only. Use `c200_4` as a sanity check for any institution-year where the value is suspiciously low. Document the artifact pattern in any case study that uses the metric.
+
+First encountered: college-scorecard-fl case study phase 03 (exploration), May 2026. Several institutions reported 0.0 percent c150_4 in the result table; verification with c200_4 showed meaningful eight-year completion at most of them: Argosy University-Sarasota 0.0 percent over six years and 66.7 percent over eight, Polytechnic UPR-Miami 0.0 percent and 100.0 percent, Chamberlain University-Florida 0.0 percent and 50.0 percent.
+
 ## 11. Configuration Files
 
 ### `config/_default/hugo.toml`
@@ -1259,6 +1360,36 @@ In practice, only the human running the actual database environment can produce 
 For case studies and analytical work that links to live databases or invites readers to re-run queries, every published number must reproduce. This is non-negotiable. A case study with prose that says "Kentucky NIH funding peaked at $260.9M in FY 2021" must produce $260.9M when a reader runs the query in Datasette Lite. The biblioteca page calls this reproducibility-is-the-floor: if the floor isn't there, nothing else holds.
 
 For non-published work (drafts, internal exploration, scratch analysis), looser standards are acceptable. For anything that ships under your name and links to a live database, verification is the floor.
+
+### Discipline for AI-assisted patch scripts
+
+When working with an AI assistant to maintain analytical content (case studies, SQL queries, chart configurations), the assistant's output is typically a bash script that pipes content to Python via heredoc. This pattern is powerful but has failure modes that are invisible at write-time and only manifest at runtime. The following discipline catches them at write-time.
+
+#### Pre-write Python compile check
+
+Every patch script the assistant generates should be compile-checked before presentation. The check extracts the Python heredoc body from the bash script and runs `compile()` on it. If the compile succeeds, the script's Python is syntactically valid. If it fails, the script has a write-time error that would otherwise become a runtime error after the user runs it.
+
+The compile check fires the same SyntaxError that the runtime would, but at write-time when the cost of fixing it is one iteration instead of one round-trip through the user.
+
+Run this check before sharing any patch script. It catches BUG-026-class issues (f-string escape errors, malformed string literals, mismatched brackets, and any other Python syntax error) before they become a failed run-and-iterate cycle. The cost is one extra command per script; the benefit is one fewer round-trip when the script has a syntax error.
+
+#### Always quote heredoc delimiters
+
+Default to a single-quoted heredoc delimiter (`<<'__DELIM__'` rather than `<<__DELIM__`) for any patch script. The single quotes around the delimiter tell bash to pass the heredoc body verbatim, disabling shell expansion. This prevents BUG-025 (literal `$NNN` getting shell-expanded into emptiness) and other expansion-related corruption.
+
+The cost of quoted heredocs is zero. The cost of unquoted heredocs is one debugging cycle per `$` character in the body that the writer forgets about.
+
+#### Atomic rewrites beat multi-patch sequences for complex content
+
+When a target file contains many shortcodes, custom HTML wrappers, or other parser-sensitive constructs (Hugo chart shortcodes wrapped in styled divs, for example), accumulating fixes via multiple patches can introduce hard-to-diagnose issues that compound across patches. The Phase 04 chart-rendering bug in college-scorecard-fl is the canonical example: four patches added charts incrementally, charts failed to render despite the BUG-023 rule being apparently followed, four more patches tried to fix the rendering, and the issue was finally resolved by an atomic rewrite of the entire phase using a verified-working pattern from a sibling phase.
+
+The rule: if a multi-patch sequence is already 3+ patches deep and the target output still has structural issues that don't reproduce in a sibling that was written cleanly, switch to atomic rewrite. Copy the verified-working pattern from the sibling and rewrite the target as a single replace operation. The cost is one larger patch; the benefit is the elimination of cumulative-bug hypothesis space.
+
+#### Provide reproducer commands for every claim
+
+When the assistant claims a bug is fixed (or a constraint is satisfied), the response should include the diagnostic command the user can run to verify. Phrases like "this should now work" without a verification command are weak; phrases like "run `bash script.sh`, then `grep -c 'pattern' file.md` should report N" are strong. The user is the verification step, and asking the user to verify with a specific command is a contract.
+
+This applies to both audit-after-write and audit-before-write. Pre-write audits prevent the assistant from generating prose around projected output; post-write audits prevent the user from accepting changes that don't match the claim.
 
 ## 18. Glossary
 

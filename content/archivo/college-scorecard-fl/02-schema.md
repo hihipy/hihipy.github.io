@@ -23,13 +23,7 @@ This phase walks through the schema design that took the raw download and produc
 
 The first decision: do not put all the data in one table. The College Scorecard MERGED file is denormalized by design (institution metadata, year-varying metrics, and aggregate program data all sit in one wide row), and a one-table copy would either repeat institution metadata across every cohort year (bloat) or strip it out entirely (loss). Three tables, normalized along the dimensions that vary, keeps both.
 
-The schema:
-
-| Table | Grain | Rows |
-|---|---|---|
-| `institutions` | One row per UNITID | 112 |
-| `annual_metrics` | One row per (UNITID, cohort_year) | 920 |
-| `field_of_study` | One row per (UNITID, cohort_year, CIPCODE, CREDLEV) | 36,610 |
+The schema is three tables, each with a different grain. The query that documents the design is also the query that verifies it: every row of every table either fits one of these three grains or there is a build-script bug.
 
 ```sql
 -- Verify the row counts in each of the three tables produced by
@@ -37,9 +31,9 @@ The schema:
 -- column for documentation. Phase 02's prose claims about the
 -- schema all reduce to these three numbers.
 SELECT
-    'institutions'                                          AS "Table",
-    'one row per UNITID'                                    AS "Grain",
-    COUNT(*)                                                AS "Rows"
+    'institutions'       AS "Table",
+    'one row per UNITID' AS "Grain",
+    COUNT(*)             AS "Rows"
 FROM institutions
 UNION ALL
 SELECT
@@ -55,9 +49,17 @@ SELECT
 FROM field_of_study;
 ```
 
-[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=SELECT+%27institutions%27+AS+table_name%2C+COUNT%28*%29+AS+rows+FROM+institutions+UNION+ALL+SELECT+%27annual_metrics%27%2C+COUNT%28*%29+FROM+annual_metrics+UNION+ALL+SELECT+%27field_of_study%27%2C+COUNT%28*%29+FROM+field_of_study%3B)
+[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=SELECT%0A++++%27institutions%27++++++++++++++++++++++++++++++++++++++++++AS+%22Table%22%2C%0A++++%27one+row+per+UNITID%27++++++++++++++++++++++++++++++++++++AS+%22Grain%22%2C%0A++++COUNT%28%2A%29++++++++++++++++++++++++++++++++++++++++++++++++AS+%22Rows%22%0AFROM+institutions%0AUNION+ALL%0ASELECT%0A++++%27annual_metrics%27%2C%0A++++%27one+row+per+%28UNITID%2C+cohort_year%29%27%2C%0A++++COUNT%28%2A%29%0AFROM+annual_metrics%0AUNION+ALL%0ASELECT%0A++++%27field_of_study%27%2C%0A++++%27one+row+per+%28UNITID%2C+cohort_year%2C+CIPCODE%2C+CREDLEV%29%27%2C%0A++++COUNT%28%2A%29%0AFROM+field_of_study%3B)
 
-The `institutions` table holds stable metadata: institution name, location, accreditation agency, Carnegie classifications, minority-serving institution flags, the derived `sector` column (one of "public", "private_nonprofit", "for_profit") and two derived columns (`first_year_in_data`, `last_year_in_data`) that mark when each UNITID first appeared and last appeared in the window. Those last two are essential for the closure-wave analysis in phase 04 and would be expensive to compute at runtime.
+Result:
+
+| Table | Grain | Rows |
+|---|---|---:|
+| `institutions` | one row per UNITID | 112 |
+| `annual_metrics` | one row per (UNITID, cohort_year) | 920 |
+| `field_of_study` | one row per (UNITID, cohort_year, CIPCODE, CREDLEV) | 36,610 |
+
+The `institutions` table holds stable metadata: institution name, location, accreditation agency, Carnegie classifications, minority-serving institution flags, the derived `sector` column (one of `public`, `private_nonprofit`, `for_profit`) and two derived columns (`first_year_in_data`, `last_year_in_data`) that mark when each UNITID first appeared and last appeared in the window. The lowercase-underscore form keeps joins and filters clean; queries throughout this case study translate to display names ("Public", "Private Nonprofit", "For-Profit") at presentation time using a `CASE WHEN` clause. Those last two are essential for the closure-wave analysis in phase 04 and would be expensive to compute at runtime.
 
 The `annual_metrics` table holds year-varying metrics: enrollment by demographic, cost (in-state and out-of-state tuition, average net price by sector), aid (Pell percentage, federal loan percentage), debt (median completer debt, median withdrawal debt, ten-year debt), completion rates (150 percent of normal time, 200 percent of normal time), median earnings at six, eight, and ten years post-entry, and repayment outcomes (three-year repayment rate, two-year and three-year cohort default rates). Roughly thirty-five columns of year-varying metrics per (institution, year).
 
@@ -81,27 +83,32 @@ Sector breakdown after filtering:
 -- Florida four-year institutions by sector across the full window.
 -- COUNT(*) on institutions (one row per UNITID) is the right unit:
 -- a UNITID is a UNITID regardless of how many years it reported.
--- Sectors derived during build from the CONTROL code:
--- 1=public, 2=private nonprofit, 3=for-profit.
+-- The database stores sector as 'public', 'private_nonprofit', or
+-- 'for_profit' (lowercase identifiers for clean joins and filters);
+-- the CASE WHEN below translates to display names for readability.
 SELECT
-    sector       AS "Sector",
-    COUNT(*)     AS "Institutions"
+    CASE sector
+        WHEN 'public'            THEN 'Public'
+        WHEN 'private_nonprofit' THEN 'Private Nonprofit'
+        WHEN 'for_profit'        THEN 'For-Profit'
+    END      AS "Sector",
+    COUNT(*) AS "Institutions"
 FROM institutions
 GROUP BY sector
 ORDER BY COUNT(*) DESC;
 ```
 
-[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=SELECT+sector%2C+COUNT%28*%29+AS+institutions+FROM+institutions+GROUP+BY+sector+ORDER+BY+institutions+DESC%3B)
+[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=SELECT%0A++++CASE+sector%0A++++++++WHEN+%27public%27++++++++++++THEN+%27Public%27%0A++++++++WHEN+%27private_nonprofit%27+THEN+%27Private+Nonprofit%27%0A++++++++WHEN+%27for_profit%27++++++++THEN+%27For-Profit%27%0A++++END+++++++++++++AS+%22Sector%22%2C%0A++++COUNT%28%2A%29++++++++AS+%22Institutions%22%0AFROM+institutions%0AGROUP+BY+sector%0AORDER+BY+COUNT%28%2A%29+DESC%3B)
 
 Result:
 
 | Sector | Institutions |
 |---|---:|
-| private_nonprofit | 61 |
-| for_profit | 36 |
-| public | 15 |
+| Private Nonprofit | 61 |
+| For-Profit | 36 |
+| Public | 15 |
 
-Florida's public four-year sector is small (the State University System has twelve members, plus a handful of UNITIDs that capture institutional substructure like UF Online and the pre-2020 USF satellite campuses). The private nonprofit sector is large and stable. The for-profit sector is volatile: 36 distinct institutions across the decade, but as phase 04 will show, fewer than half of those survived all ten years.
+Florida's Public four-year sector is small (the State University System has twelve members, plus a handful of UNITIDs that capture institutional substructure like UF Online and the pre-2020 USF satellite campuses). The Private Nonprofit sector is large and stable. The For-Profit sector is volatile: 36 distinct institutions across the decade, but as phase 04 will show, fewer than half of those survived all ten years.
 
 ## The Column Pruning
 
@@ -137,10 +144,10 @@ The privacy-suppression pattern is not uniform. Different metrics get suppressed
 -- percentage of rows where the metric is actually present.
 -- Six metrics span the analytical surface phase 04 will exercise.
 SELECT
-    'ugds (enrollment)'                                AS "Metric",
-    COUNT(*)                                           AS "Total Rows",
-    COUNT(ugds)                                        AS "Non-Null",
-    ROUND(100.0 * COUNT(ugds) / COUNT(*), 1)           AS "% Filled"
+    'ugds (enrollment)'                      AS "Metric",
+    COUNT(*)                                 AS "Total Rows",
+    COUNT(ugds)                              AS "Non-Null",
+    ROUND(100.0 * COUNT(ugds) / COUNT(*), 1) AS "% Filled"
 FROM annual_metrics
 UNION ALL
 SELECT
@@ -180,7 +187,7 @@ FROM annual_metrics
 ORDER BY "% Filled" DESC;
 ```
 
-[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=SELECT+%27ugds%27+AS+metric%2C+COUNT%28*%29+AS+total_rows%2C+COUNT%28ugds%29+AS+non_null%2C+ROUND%28100.0+*+COUNT%28ugds%29+%2F+COUNT%28*%29%2C+1%29+AS+pct_filled+FROM+annual_metrics+UNION+ALL+SELECT+%27tuitionfee_in%27%2C+COUNT%28*%29%2C+COUNT%28tuitionfee_in%29%2C+ROUND%28100.0+*+COUNT%28tuitionfee_in%29+%2F+COUNT%28*%29%2C+1%29+FROM+annual_metrics+UNION+ALL+SELECT+%27c150_4%27%2C+COUNT%28*%29%2C+COUNT%28c150_4%29%2C+ROUND%28100.0+*+COUNT%28c150_4%29+%2F+COUNT%28*%29%2C+1%29+FROM+annual_metrics+UNION+ALL+SELECT+%27md_earn_wne_p10%27%2C+COUNT%28*%29%2C+COUNT%28md_earn_wne_p10%29%2C+ROUND%28100.0+*+COUNT%28md_earn_wne_p10%29+%2F+COUNT%28*%29%2C+1%29+FROM+annual_metrics+UNION+ALL+SELECT+%27grad_debt_mdn%27%2C+COUNT%28*%29%2C+COUNT%28grad_debt_mdn%29%2C+ROUND%28100.0+*+COUNT%28grad_debt_mdn%29+%2F+COUNT%28*%29%2C+1%29+FROM+annual_metrics+UNION+ALL+SELECT+%27cdr3%27%2C+COUNT%28*%29%2C+COUNT%28cdr3%29%2C+ROUND%28100.0+*+COUNT%28cdr3%29+%2F+COUNT%28*%29%2C+1%29+FROM+annual_metrics+ORDER+BY+pct_filled+DESC%3B)
+[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=SELECT%0A++++%27ugds+%28enrollment%29%27++++++++++++++++++++++++++++++++AS+%22Metric%22%2C%0A++++COUNT%28%2A%29+++++++++++++++++++++++++++++++++++++++++++AS+%22Total+Rows%22%2C%0A++++COUNT%28ugds%29++++++++++++++++++++++++++++++++++++++++AS+%22Non-Null%22%2C%0A++++ROUND%28100.0+%2A+COUNT%28ugds%29+%2F+COUNT%28%2A%29%2C+1%29+++++++++++AS+%22%25+Filled%22%0AFROM+annual_metrics%0AUNION+ALL%0ASELECT%0A++++%27tuitionfee_in+%28in-state+tuition%29%27%2C%0A++++COUNT%28%2A%29%2C%0A++++COUNT%28tuitionfee_in%29%2C%0A++++ROUND%28100.0+%2A+COUNT%28tuitionfee_in%29+%2F+COUNT%28%2A%29%2C+1%29%0AFROM+annual_metrics%0AUNION+ALL%0ASELECT%0A++++%27c150_4+%28completion+rate%29%27%2C%0A++++COUNT%28%2A%29%2C%0A++++COUNT%28c150_4%29%2C%0A++++ROUND%28100.0+%2A+COUNT%28c150_4%29+%2F+COUNT%28%2A%29%2C+1%29%0AFROM+annual_metrics%0AUNION+ALL%0ASELECT%0A++++%27md_earn_wne_p10+%2810-year+earnings%29%27%2C%0A++++COUNT%28%2A%29%2C%0A++++COUNT%28md_earn_wne_p10%29%2C%0A++++ROUND%28100.0+%2A+COUNT%28md_earn_wne_p10%29+%2F+COUNT%28%2A%29%2C+1%29%0AFROM+annual_metrics%0AUNION+ALL%0ASELECT%0A++++%27grad_debt_mdn+%28median+completer+debt%29%27%2C%0A++++COUNT%28%2A%29%2C%0A++++COUNT%28grad_debt_mdn%29%2C%0A++++ROUND%28100.0+%2A+COUNT%28grad_debt_mdn%29+%2F+COUNT%28%2A%29%2C+1%29%0AFROM+annual_metrics%0AUNION+ALL%0ASELECT%0A++++%27cdr3+%283-year+default+rate%29%27%2C%0A++++COUNT%28%2A%29%2C%0A++++COUNT%28cdr3%29%2C%0A++++ROUND%28100.0+%2A+COUNT%28cdr3%29+%2F+COUNT%28%2A%29%2C+1%29%0AFROM+annual_metrics%0AORDER+BY+%22%25+Filled%22+DESC%3B)
 
 Result:
 
@@ -213,18 +220,45 @@ Looking at where the 147 filled `md_earn_wne_p10` rows actually live in the data
 -- should cluster in specific years and be sector-uniform within
 -- those years.
 SELECT
-    am.cohort_year                                              AS "Cohort Year",
-    i.sector                                                    AS "Sector",
-    COUNT(*)                                                    AS "Rows",
-    COUNT(am.md_earn_wne_p10)                                   AS "Earnings Filled",
-    ROUND(100.0 * COUNT(am.md_earn_wne_p10) / COUNT(*), 1)      AS "% Filled"
+    am.cohort_year AS "Cohort Year",
+    CASE i.sector
+        WHEN 'public'            THEN 'Public'
+        WHEN 'private_nonprofit' THEN 'Private Nonprofit'
+        WHEN 'for_profit'        THEN 'For-Profit'
+    END AS "Sector",
+    COUNT(*) AS "Rows",
+    COUNT(am.md_earn_wne_p10) AS "Earnings Filled",
+    ROUND(100.0 * COUNT(am.md_earn_wne_p10) / COUNT(*), 1) AS "% Filled"
 FROM annual_metrics am
 JOIN institutions   i USING (unitid)
 GROUP BY am.cohort_year, i.sector
 ORDER BY am.cohort_year, i.sector;
 ```
 
-[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=SELECT+am.cohort_year%2C+i.sector%2C+COUNT%28*%29+AS+rows%2C+COUNT%28am.md_earn_wne_p10%29+AS+earn_p10_filled%2C+ROUND%28100.0+*+COUNT%28am.md_earn_wne_p10%29+%2F+COUNT%28*%29%2C+1%29+AS+pct_filled+FROM+annual_metrics+am+JOIN+institutions+i+USING+%28unitid%29+GROUP+BY+am.cohort_year%2C+i.sector+ORDER+BY+am.cohort_year%2C+i.sector%3B)
+[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=SELECT%0A++++am.cohort_year++++++++++++++++++++++++++++++++++++++++++++++AS+%22Cohort+Year%22%2C%0A++++CASE+i.sector%0A++++++++WHEN+%27public%27++++++++++++THEN+%27Public%27%0A++++++++WHEN+%27private_nonprofit%27+THEN+%27Private+Nonprofit%27%0A++++++++WHEN+%27for_profit%27++++++++THEN+%27For-Profit%27%0A++++END+++++++++++++++++++++++++++++++++++++++++++++++++++++++++AS+%22Sector%22%2C%0A++++COUNT%28%2A%29++++++++++++++++++++++++++++++++++++++++++++++++++++AS+%22Rows%22%2C%0A++++COUNT%28am.md_earn_wne_p10%29+++++++++++++++++++++++++++++++++++AS+%22Earnings+Filled%22%2C%0A++++ROUND%28100.0+%2A+COUNT%28am.md_earn_wne_p10%29+%2F+COUNT%28%2A%29%2C+1%29++++++AS+%22%25+Filled%22%0AFROM+annual_metrics+am%0AJOIN+institutions+++i+USING+%28unitid%29%0AGROUP+BY+am.cohort_year%2C+i.sector%0AORDER+BY+am.cohort_year%2C+i.sector%3B)
+
+Result:
+
+(30 rows; abbreviated to highlight the pattern)
+
+| Cohort Year | Sector | Rows | Earnings Filled | % Filled |
+|---:|---|---:|---:|---:|
+| 2014 | For-Profit | 26 | 18 | 69.2 |
+| 2014 | Private Nonprofit | 58 | 45 | 77.6 |
+| 2014 | Public | 14 | 13 | 92.9 |
+| 2015 | For-Profit | 27 | 0 | 0.0 |
+| 2015 | Private Nonprofit | 57 | 0 | 0.0 |
+| 2015 | Public | 14 | 0 | 0.0 |
+| 2016 | (all sectors) | 97 | 0 | 0.0 |
+| 2017 | (all sectors) | 96 | 0 | 0.0 |
+| 2018 | (all sectors) | 90 | 0 | 0.0 |
+| 2019 | (all sectors) | 89 | 0 | 0.0 |
+| 2020 | For-Profit | 23 | 15 | 65.2 |
+| 2020 | Private Nonprofit | 52 | 44 | 84.6 |
+| 2020 | Public | 13 | 12 | 92.3 |
+| 2021 | (all sectors) | 87 | 0 | 0.0 |
+| 2022 | (all sectors) | 89 | 0 | 0.0 |
+| 2023 | (all sectors) | 88 | 0 | 0.0 |
 
 Two cohort years account for all the filled values: 2014 and 2020. Every other year reports zero filled rows for ten-year earnings, regardless of sector.
 
@@ -281,10 +315,14 @@ The eighth decision: name the coverage gaps the build produces, rather than hide
 -- every fos.* column. Sorted by last_year_in_data so closures
 -- group together at the top.
 SELECT
-    i.instnm                AS "Institution",
-    i.sector                AS "Sector",
-    i.first_year_in_data    AS "First Year",
-    i.last_year_in_data     AS "Last Year"
+    i.instnm AS "Institution",
+    CASE i.sector
+        WHEN 'public'            THEN 'Public'
+        WHEN 'private_nonprofit' THEN 'Private Nonprofit'
+        WHEN 'for_profit'        THEN 'For-Profit'
+    END                  AS "Sector",
+    i.first_year_in_data AS "First Year",
+    i.last_year_in_data  AS "Last Year"
 FROM institutions       i
 LEFT JOIN field_of_study fos
     ON i.unitid = fos.unitid
@@ -292,20 +330,39 @@ WHERE fos.unitid IS NULL
 ORDER BY i.last_year_in_data, i.instnm;
 ```
 
-[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=SELECT+i.instnm%2C+i.sector%2C+i.first_year_in_data%2C+i.last_year_in_data+FROM+institutions+i+LEFT+JOIN+field_of_study+fos+ON+i.unitid+%3D+fos.unitid+WHERE+fos.unitid+IS+NULL+ORDER+BY+i.last_year_in_data%2C+i.instnm%3B)
+[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=SELECT%0A++++i.instnm++++++++++++++++AS+%22Institution%22%2C%0A++++CASE+i.sector%0A++++++++WHEN+%27public%27++++++++++++THEN+%27Public%27%0A++++++++WHEN+%27private_nonprofit%27+THEN+%27Private+Nonprofit%27%0A++++++++WHEN+%27for_profit%27++++++++THEN+%27For-Profit%27%0A++++END+++++++++++++++++++++AS+%22Sector%22%2C%0A++++i.first_year_in_data++++AS+%22First+Year%22%2C%0A++++i.last_year_in_data+++++AS+%22Last+Year%22%0AFROM+institutions+++++++i%0ALEFT+JOIN+field_of_study+fos%0A++++ON+i.unitid+%3D+fos.unitid%0AWHERE+fos.unitid+IS+NULL%0AORDER+BY+i.last_year_in_data%2C+i.instnm%3B)
 
 Result:
 
 | Institution | Sector | First Year | Last Year |
 |---|---|---:|---:|
-| American InterContinental University-South Florida | for_profit | 2014 | 2014 |
-| Northwood University-Florida | private_nonprofit | 2014 | 2014 |
-| Knox Theological Seminary | private_nonprofit | 2014 | 2015 |
-| URBE University | for_profit | 2023 | 2023 |
+| American InterContinental University-South Florida | For-Profit | 2014 | 2014 |
+| Northwood University-Florida | Private Nonprofit | 2014 | 2014 |
+| Knox Theological Seminary | Private Nonprofit | 2014 | 2015 |
+| URBE University | For-Profit | 2023 | 2023 |
 
 Three of the four closed before field-of-study reporting was required for their cohort year. The fourth is too new to have field-of-study data yet. None of the four affect institution-level analyses, which can be run against `institutions` and `annual_metrics` directly. They become a documented limitation only for program-level questions in phase 04.
 
 The annual_metrics table also has a population that varies year to year. Not every institution reports every year:
+
+```sql
+-- Per-year reporting counts on annual_metrics. The unitid count
+-- per cohort_year is just COUNT(*) on annual_metrics grouped by
+-- year, since annual_metrics has one row per (UNITID, cohort_year).
+-- A drop in this count means an institution that reported in one
+-- year did not report in the next. Phase 04 develops this further
+-- to separate closures from intermittent reporting.
+SELECT
+    cohort_year AS "Cohort Year",
+    COUNT(*)    AS "Institutions Reporting"
+FROM annual_metrics
+GROUP BY cohort_year
+ORDER BY cohort_year;
+```
+
+[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=SELECT%0A++++cohort_year+++++++++++++AS+%22Cohort+Year%22%2C%0A++++COUNT%28%2A%29++++++++++++++++AS+%22Institutions+Reporting%22%0AFROM+annual_metrics%0AGROUP+BY+cohort_year%0AORDER+BY+cohort_year%3B)
+
+Result:
 
 | Cohort Year | Institutions Reporting |
 |---|---:|
@@ -321,6 +378,67 @@ The annual_metrics table also has a population that varies year to year. Not eve
 | 2023 | 88 |
 
 The institution count drops from 98 in 2014 to 87 in 2021, then stabilizes around 88-89 through 2023. The drop is partially the for-profit closure wave (phase 04 develops this thread) and partially small institutions that report intermittently. The 112 distinct UNITIDs across the full decade is larger than any single year's count because some institutions appear only in some years (closures, openings, accreditation gaps).
+
+## A Build Gap Worth Documenting
+
+The build script's `INSTITUTION_COLS` map includes the College Scorecard's minority-serving-institution flags: `HBCU`, `HSI`, `PBI`, `ANNHI`, `AANAPII`, `NANTI`, `TRIBAL`, `MENONLY`, `WOMENONLY`, `RELAFFIL`, and `DISTANCEONLY`. These are flags that designate institutions historically chartered or federally recognized for serving specific populations.
+
+The columns made it into the database schema. The values did not.
+
+```sql
+-- Audit the minority-serving-institution flag columns. If the
+-- build script loaded these correctly, Non-Null should be 112
+-- (every institution has a value, even if that value is 0).
+-- If Non-Null is 0, the column is empty and the flag is
+-- unusable for analytical queries.
+SELECT
+    'hbcu (Historically Black Colleges and Universities)' AS "Flag",
+    COUNT(*) AS "Total Rows",
+    COUNT(hbcu) AS "Non-Null"
+FROM institutions
+UNION ALL
+SELECT 'hsi  (Hispanic-Serving Institution)',
+       COUNT(*), COUNT(hsi)
+FROM institutions
+UNION ALL
+SELECT 'pbi  (Predominantly Black Institution)',
+       COUNT(*), COUNT(pbi)
+FROM institutions
+UNION ALL
+SELECT 'annhi (Alaska Native or Native Hawaiian-Serving)',
+       COUNT(*), COUNT(annhi)
+FROM institutions
+UNION ALL
+SELECT 'aanapii (Asian American/Pacific Islander-Serving)',
+       COUNT(*), COUNT(aanapii)
+FROM institutions
+UNION ALL
+SELECT 'tribal (Tribal College)',
+       COUNT(*), COUNT(tribal)
+FROM institutions
+ORDER BY "Flag";
+```
+
+[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=SELECT%0A++++%27hbcu+%28Historically+Black+Colleges+and+Universities%29%27+AS+%22Flag%22%2C%0A++++COUNT%28%2A%29++++++++++++++++++++++++++++++++++++++++++++++AS+%22Total+Rows%22%2C%0A++++COUNT%28hbcu%29+++++++++++++++++++++++++++++++++++++++++++AS+%22Non-Null%22%0AFROM+institutions%0AUNION+ALL%0ASELECT+%27hsi++%28Hispanic-Serving+Institution%29%27%2C%0A+++++++COUNT%28%2A%29%2C+COUNT%28hsi%29%0AFROM+institutions%0AUNION+ALL%0ASELECT+%27pbi++%28Predominantly+Black+Institution%29%27%2C%0A+++++++COUNT%28%2A%29%2C+COUNT%28pbi%29%0AFROM+institutions%0AUNION+ALL%0ASELECT+%27annhi+%28Alaska+Native+or+Native+Hawaiian-Serving%29%27%2C%0A+++++++COUNT%28%2A%29%2C+COUNT%28annhi%29%0AFROM+institutions%0AUNION+ALL%0ASELECT+%27aanapii+%28Asian+American%2FPacific+Islander-Serving%29%27%2C%0A+++++++COUNT%28%2A%29%2C+COUNT%28aanapii%29%0AFROM+institutions%0AUNION+ALL%0ASELECT+%27tribal+%28Tribal+College%29%27%2C%0A+++++++COUNT%28%2A%29%2C+COUNT%28tribal%29%0AFROM+institutions%0AORDER+BY+%22Flag%22%3B)
+
+Result:
+
+| Flag | Total Rows | Non-Null |
+|---|---:|---:|
+| aanapii (Asian American/Pacific Islander-Serving) | 112 | 0 |
+| annhi (Alaska Native or Native Hawaiian-Serving) | 112 | 0 |
+| hbcu (Historically Black Colleges and Universities) | 112 | 0 |
+| hsi  (Hispanic-Serving Institution) | 112 | 0 |
+| pbi  (Predominantly Black Institution) | 112 | 0 |
+| tribal (Tribal College) | 112 | 0 |
+
+Every flag column reports 112 total rows and zero non-null values. The columns were declared in the schema but the values were not loaded. This is a build script bug, surfaced during phase 04 work when an HBCU comparison query returned an empty result set.
+
+The root cause is not yet diagnosed. The columns are present in every MERGED CSV across the decade, the build script's column map references them with the correct names, and the cleaning logic for these columns is the same as for other flag columns that DID load correctly. A future revision of the build script should investigate, fix, and re-run.
+
+For now, [phase 04](/archivo/college-scorecard-fl/04-findings/)'s HBCU thread filters by hardcoded UNITIDs of Florida's four HBCUs (FAMU, Bethune-Cookman, Edward Waters, Florida Memorial), based on the Higher Education Act designation rather than the unreliable column. The case study exposes the workaround explicitly: where the data is unreliable, the analysis names the unreliability and substitutes external authoritative knowledge rather than failing silently.
+
+This is the kind of bug the verify-before-prose discipline catches. A case study that wrote prose first against assumed-correct data would have published the empty HBCU comparison as if it were a finding ("HBCUs do not appear in the data"). The discipline's value is exactly in catching this category of failure before it ships.
 
 ## What This Phase Doesn't Solve
 
