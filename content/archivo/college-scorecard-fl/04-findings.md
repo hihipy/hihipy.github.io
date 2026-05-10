@@ -30,6 +30,10 @@ The framing is deliberately narrow. This case study is not a comprehensive analy
 
 The exploration phase showed that public, private nonprofit, and for-profit institutions report different average completion rates and different average net prices. The ratio of those two numbers is the more useful metric: cost per completer, defined as average net price divided by average completion rate. Lower ratios mean more completion per dollar.
 
+\\[\text{cost per completer} = \dfrac{\overline{\text{net price}}}{\overline{c_{150,4}}}\\]
+
+where \\(\overline{\text{net price}}\\) is the institution's average annual net price across all years with reported data, and \\(\overline{c_{150,4}}\\) is the institution's average six-year completion rate (the College Scorecard's `c150_4` metric) across all years with reported data. The bar notation indicates a mean across the available year-rows; institutions reporting fewer than five years of data are excluded by the query's HAVING clause so the averages are not built from a single partial year.
+
 ```sql
 -- Cost-per-completer ranking within each sector, computed as average
 -- net price divided by average completion rate. The CTE first builds
