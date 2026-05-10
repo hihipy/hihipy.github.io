@@ -1000,6 +1000,43 @@ ORDER BY i.instnm, am.cohort_year;
 
 First encountered: college-scorecard-fl case study phase 03 (exploration), May 2026. Several institutions reported 0.0 percent c150_4 in the result table; verification with c200_4 showed meaningful eight-year completion at most of them: Argosy University-Sarasota 0.0 percent over six years and 66.7 percent over eight, Polytechnic UPR-Miami 0.0 percent and 100.0 percent, Chamberlain University-Florida 0.0 percent and 50.0 percent.
 
+### BUG-029: KaTeX display math `\\[...\\]` containing `}_{...}` is corrupted by markdown italic parser
+
+Hugo's goldmark markdown parser processes display math blocks (`\\[...\\]`) BEFORE KaTeX sees the source. When the LaTeX inside contains the pattern `}_{...}` (a closing brace immediately followed by underscore-brace), goldmark interprets the underscore as the start of an italic emphasis span and corrupts the source. KaTeX then receives malformed LaTeX and the formula renders as raw markdown text on the page instead of as typeset math.
+
+**Symptom:** A display formula renders as literal text on the page, e.g., `\[\overline{f}_{t} = \dfrac{1}{5}\sum_{i=t-2}^{t+2} f_i\]` shown verbatim. Inline math `\\(...\\)` on the same page using the same expressions renders correctly.
+
+**Diagnostic:** view the page source after Hugo renders it. If the display formula's raw HTML contains underscores converted to `<em>` tags or stripped entirely, BUG-029 is the cause. Compare against an equivalent inline formula on the same page; if the inline version is fine, the issue is the markdown parser specifically processing display math differently from inline math.
+
+**Cause:** display math blocks in markdown are treated as block-level content and get standard markdown processing (italic, bold, code spans). Inline math is parsed within paragraph context with different rules. The pattern `}_{...}` triggers italic-emphasis parsing because the underscore appears between two non-whitespace characters.
+
+**Pattern that fails:**
+```markdown
+\[\overline{f}_{t} = \dfrac{1}{5}\sum_{i=t-2}^{t+2} f_i\]
+```
+
+The `}_{t}` substring at position 12 looks like the start of an italic span to goldmark. Same thing happens at `\sum_{i=t-2}` and `f_i`.
+
+**Patterns that work:**
+
+Option 1: Nest subscripts inside the outer brace group so underscores are protected:
+```markdown
+\[\overline{f_t} = \dfrac{1}{5}\sum\_{i=t-2}^{t+2} f\_i\]
+```
+
+Option 2: Escape underscores with backslash so markdown ignores them:
+```markdown
+\[\overline{f}\_{t} = \dfrac{1}{5}\sum\_{i=t-2}^{t+2} f\_i\]
+```
+
+KaTeX strips backslash-escaped underscores back to plain underscores during its own parsing, so the rendered math is mathematically identical.
+
+**Rule:** when writing display math, never use the pattern `}_{` (close brace, underscore, open brace). Either nest the subscript inside the outer brace group or escape the underscore with backslash. Inline math `\\(...\\)` does not have this problem and the same expressions work without escaping.
+
+**Prevention discipline:** after adding any display formula to a page, view the rendered output in a browser. The visual check is the only reliable way to catch this; the markdown source looks correct.
+
+First encountered: kentucky-nih case study phase 04 (findings), May 2026. The 5-year centered moving average formula `\[\overline{f}_{t} = \dfrac{1}{5}\sum_{i=t-2}^{t+2} f_i\]` rendered as raw text. The college-scorecard-fl Phase 04 cost-per-completer formula on a sibling page used `\overline{c_{150,4}}` (subscript inside the outer brace) and rendered correctly, confirming that the issue is specifically the bare-underscore-between-brace-groups pattern, not KaTeX or display math in general.
+
 ## 11. Configuration Files
 
 ### `config/_default/hugo.toml`
