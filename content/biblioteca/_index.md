@@ -438,31 +438,31 @@ The same statistical claims, written two ways:
 chi-squared(2) = 14.3, p = 0.0008
 ```
 
-\\(\chi^2(2) = 14.3,\ p = 0.0008\\)
+\\[\chi^2(2) = 14.3,\ p = 0.0008\\]
 
 ```
 Cohen's d = (M1 - M2) / sqrt((s1^2 + s2^2) / 2)
 ```
 
-\\(d = \dfrac{M_1 - M_2}{\sqrt{(s_1^2 + s_2^2) / 2}}\\)
+\\[d = \dfrac{M_1 - M_2}{\sqrt{(s_1^2 + s_2^2) / 2}}\\]
 
 ```
 Pearson r = sum((xi - x_mean)(yi - y_mean)) / sqrt(sum((xi - x_mean)^2) * sum((yi - y_mean)^2))
 ```
 
-\\(r = \dfrac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i - \bar{x})^2 \sum_{i=1}^{n}(y_i - \bar{y})^2}}\\)
+\\[r = \dfrac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i - \bar{x})^2 \sum_{i=1}^{n}(y_i - \bar{y})^2}}\\]
 
 ```
 linear regression: y_hat = beta_0 + beta_1*x_1 + beta_2*x_2 + ... + beta_k*x_k
 ```
 
-\\(\hat{y} = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_k x_k\\)
+\\[\hat{y} = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_k x_k\\]
 
 ```
 Bayes: P(A given B) = P(B given A) * P(A) / P(B)
 ```
 
-\\(P(A \mid B) = \dfrac{P(B \mid A)\, P(A)}{P(B)}\\)
+\\[P(A \mid B) = \dfrac{P(B \mid A)\, P(A)}{P(B)}\\]
 
 The ASCII version of each is technically faithful, but it is visually flat. The reader has to parse the symbols character by character, holding the meaning in working memory. The rendered version is read at a glance because the reader has been seeing formulas in this exact format since elementary school. Rendered math also signals formality. It says "this number was produced by a method with a name." ASCII math says "the author typed some letters and numbers in a sentence." For a non-technical reader trying to gauge how rigorous a claim is, that distinction matters.
 
