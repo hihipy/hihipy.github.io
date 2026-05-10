@@ -40,7 +40,7 @@ SELECT
 FROM field_of_study;
 ```
 
-[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=SELECT%0A++++%27institutions%27++++++++++++++++++++++++++++++++++++++++++++++++++AS+%22Table%22%2C%0A++++COUNT%28%2A%29++++++++++++++++++++++++++++++++++++++++++++++++++++++++AS+%22Rows%22%0AFROM+institutions%0AUNION+ALL%0ASELECT%0A++++%27annual_metrics%27%2C%0A++++COUNT%28%2A%29%0AFROM+annual_metrics%0AUNION+ALL%0ASELECT%0A++++%27field_of_study%27%2C%0A++++COUNT%28%2A%29%0AFROM+field_of_study%3B)
+[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=SELECT%0A++++%27institutions%27+AS+%22Table%22%2C%0A++++COUNT%28%2A%29+++++++AS+%22Rows%22%0AFROM+institutions%0AUNION+ALL%0ASELECT%0A++++%27annual_metrics%27%2C%0A++++COUNT%28%2A%29%0AFROM+annual_metrics%0AUNION+ALL%0ASELECT%0A++++%27field_of_study%27%2C%0A++++COUNT%28%2A%29%0AFROM+field_of_study%3B)
 
 Result:
 
@@ -140,7 +140,7 @@ GROUP BY cohort_year
 ORDER BY cohort_year;
 ```
 
-[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=SELECT%0A++++cohort_year+++++++++++++++++++++++++++++++++++++++++++++++++++++AS+%22Cohort+Year%22%2C%0A++++COUNT%28%2A%29++++++++++++++++++++++++++++++++++++++++++++++++++++++++AS+%22Institutions+Reporting%22%0AFROM+annual_metrics%0AGROUP+BY+cohort_year%0AORDER+BY+cohort_year%3B)
+[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=SELECT%0A++++cohort_year+AS+%22Cohort+Year%22%2C%0A++++COUNT%28%2A%29++++AS+%22Institutions+Reporting%22%0AFROM+annual_metrics%0AGROUP+BY+cohort_year%0AORDER+BY+cohort_year%3B)
 
 Result:
 

@@ -60,16 +60,16 @@ WITH institution_summary AS (
 SELECT
     instnm AS "Institution",
     sector_display AS "Sector",
-    ROUND(avg_net_price, 0) AS "Avg Net Price",
+    CAST(ROUND(avg_net_price, 0) AS INTEGER) AS "Avg Net Price",
     ROUND(avg_completion * 100, 1) AS "Avg Completion %",
-    ROUND(avg_net_price / NULLIF(avg_completion, 0), 0) AS "Cost / Completer",
+    CAST(ROUND(avg_net_price / NULLIF(avg_completion, 0), 0) AS INTEGER) AS "Cost / Completer",
     RANK() OVER (PARTITION BY sector_display ORDER BY avg_net_price / NULLIF(avg_completion, 0) ASC) AS "Sector Rank"
 FROM institution_summary
 ORDER BY sector_display, avg_net_price / NULLIF(avg_completion, 0) ASC
 LIMIT 30;
 ```
 
-[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=WITH+institution_summary+AS+%28%0A++++SELECT%0A++++++++i.unitid%2C%0A++++++++i.instnm%2C%0A++++++++CASE+i.sector%0A++++++++++++WHEN+%27public%27++++++++++++THEN+%27Public%27%0A++++++++++++WHEN+%27private_nonprofit%27+THEN+%27Private+Nonprofit%27%0A++++++++++++WHEN+%27for_profit%27++++++++THEN+%27For-Profit%27%0A++++++++END+AS+sector_display%2C%0A++++++++AVG%28COALESCE%28am.npt4_pub%2C+am.npt4_priv%2C+am.npt4_other%29%29+AS+avg_net_price%2C%0A++++++++AVG%28am.c150_4%29+AS+avg_completion%0A++++FROM+institutions+++++++i%0A++++JOIN+annual_metrics+++++am+USING+%28unitid%29%0A++++WHERE+am.c150_4+IS+NOT+NULL%0A++++++AND+COALESCE%28am.npt4_pub%2C+am.npt4_priv%2C+am.npt4_other%29+IS+NOT+NULL%0A++++GROUP+BY+i.unitid%2C+i.instnm%2C+i.sector%0A++++HAVING+COUNT%28am.c150_4%29+%3E%3D+5%0A%29%0ASELECT%0A++++instnm++++++++++++++++++++++++++++++++++++++++++++++++++++++++++AS+%22Institution%22%2C%0A++++sector_display++++++++++++++++++++++++++++++++++++++++++++++++++AS+%22Sector%22%2C%0A++++ROUND%28avg_net_price%2C+0%29+++++++++++++++++++++++++++++++++++++++++AS+%22Avg+Net+Price%22%2C%0A++++ROUND%28avg_completion+%2A+100%2C+1%29++++++++++++++++++++++++++++++++++AS+%22Avg+Completion+%25%22%2C%0A++++ROUND%28avg_net_price+%2F+NULLIF%28avg_completion%2C+0%29%2C+0%29+++++++++++++AS+%22Cost+%2F+Completer%22%2C%0A++++RANK%28%29+OVER+%28PARTITION+BY+sector_display+ORDER+BY+avg_net_price+%2F+NULLIF%28avg_completion%2C+0%29+ASC%29+AS+%22Sector+Rank%22%0AFROM+institution_summary%0AORDER+BY+sector_display%2C+avg_net_price+%2F+NULLIF%28avg_completion%2C+0%29+ASC%0ALIMIT+30%3B)
+[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=WITH+institution_summary+AS+%28%0A++++SELECT%0A++++++++i.unitid%2C%0A++++++++i.instnm%2C%0A++++++++CASE+i.sector%0A++++++++++++WHEN+%27public%27++++++++++++THEN+%27Public%27%0A++++++++++++WHEN+%27private_nonprofit%27+THEN+%27Private+Nonprofit%27%0A++++++++++++WHEN+%27for_profit%27++++++++THEN+%27For-Profit%27%0A++++++++END+AS+sector_display%2C%0A++++++++AVG%28COALESCE%28am.npt4_pub%2C+am.npt4_priv%2C+am.npt4_other%29%29+AS+avg_net_price%2C%0A++++++++AVG%28am.c150_4%29+AS+avg_completion%0A++++FROM+institutions+++++++i%0A++++JOIN+annual_metrics+++++am+USING+%28unitid%29%0A++++WHERE+am.c150_4+IS+NOT+NULL%0A++++++AND+COALESCE%28am.npt4_pub%2C+am.npt4_priv%2C+am.npt4_other%29+IS+NOT+NULL%0A++++GROUP+BY+i.unitid%2C+i.instnm%2C+i.sector%0A++++HAVING+COUNT%28am.c150_4%29+%3E%3D+5%0A%29%0ASELECT%0A++++instnm+AS+%22Institution%22%2C%0A++++sector_display+AS+%22Sector%22%2C%0A++++CAST%28ROUND%28avg_net_price%2C+0%29+AS+INTEGER%29+AS+%22Avg+Net+Price%22%2C%0A++++ROUND%28avg_completion+%2A+100%2C+1%29+AS+%22Avg+Completion+%25%22%2C%0A++++CAST%28ROUND%28avg_net_price+%2F+NULLIF%28avg_completion%2C+0%29%2C+0%29+AS+INTEGER%29+AS+%22Cost+%2F+Completer%22%2C%0A++++RANK%28%29+OVER+%28PARTITION+BY+sector_display+ORDER+BY+avg_net_price+%2F+NULLIF%28avg_completion%2C+0%29+ASC%29+AS+%22Sector+Rank%22%0AFROM+institution_summary%0AORDER+BY+sector_display%2C+avg_net_price+%2F+NULLIF%28avg_completion%2C+0%29+ASC%0ALIMIT+30%3B)
 
 Result (top 30 by lowest cost-per-completer, ranked within each sector):
 
@@ -147,7 +147,7 @@ GROUP BY am.cohort_year, fpc.closure_status
 ORDER BY am.cohort_year, fpc.closure_status DESC;
 ```
 
-[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=WITH+for_profit_classification+AS+%28%0A++++SELECT%0A++++++++unitid%2C%0A++++++++CASE%0A++++++++++++WHEN+last_year_in_data+%3C+2023+THEN+%27Closed%27%0A++++++++++++ELSE+%27Survived%27%0A++++++++END+AS+closure_status%0A++++FROM+institutions%0A++++WHERE+sector+%3D+%27for_profit%27%0A%29%0ASELECT%0A++++am.cohort_year++++++++++++++++++++++++++++++++++++++++++++++++++AS+%22Cohort+Year%22%2C%0A++++fpc.closure_status++++++++++++++++++++++++++++++++++++++++++++++AS+%22Status%22%2C%0A++++COUNT%28%2A%29++++++++++++++++++++++++++++++++++++++++++++++++++++++++AS+%22Institutions%22%2C%0A++++SUM%28am.ugds%29++++++++++++++++++++++++++++++++++++++++++++++++++++AS+%22Total+UG+Enrollment%22%2C%0A++++ROUND%28100.0+%2A+SUM%28am.ugds%29+%2F+SUM%28SUM%28am.ugds%29%29+OVER+%28PARTITION+BY+am.cohort_year%29%2C+1%29+AS+%22%25+of+Year+Total%22%0AFROM+annual_metrics+am%0AJOIN+for_profit_classification+fpc+USING+%28unitid%29%0AWHERE+am.ugds+IS+NOT+NULL%0AGROUP+BY+am.cohort_year%2C+fpc.closure_status%0AORDER+BY+am.cohort_year%2C+fpc.closure_status+DESC%3B)
+[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=WITH+for_profit_classification+AS+%28%0A++++SELECT%0A++++++++unitid%2C%0A++++++++CASE%0A++++++++++++WHEN+last_year_in_data+%3C+2023+THEN+%27Closed%27%0A++++++++++++ELSE+%27Survived%27%0A++++++++END+AS+closure_status%0A++++FROM+institutions%0A++++WHERE+sector+%3D+%27for_profit%27%0A%29%0ASELECT%0A++++am.cohort_year+AS+%22Cohort+Year%22%2C%0A++++fpc.closure_status+AS+%22Status%22%2C%0A++++COUNT%28%2A%29+AS+%22Institutions%22%2C%0A++++SUM%28am.ugds%29+AS+%22Total+UG+Enrollment%22%2C%0A++++ROUND%28100.0+%2A+SUM%28am.ugds%29+%2F+SUM%28SUM%28am.ugds%29%29+OVER+%28PARTITION+BY+am.cohort_year%29%2C+1%29+AS+%22%25+of+Year+Total%22%0AFROM+annual_metrics+am%0AJOIN+for_profit_classification+fpc+USING+%28unitid%29%0AWHERE+am.ugds+IS+NOT+NULL%0AGROUP+BY+am.cohort_year%2C+fpc.closure_status%0AORDER+BY+am.cohort_year%2C+fpc.closure_status+DESC%3B)
 
 Result (19 rows; for-profit enrollment by closure status across the decade):
 
@@ -248,7 +248,7 @@ SELECT
     am.cohort_year            AS "Cohort Year",
     COUNT(DISTINCT am.unitid) AS "Survivors Reporting",
     SUM(am.ugds)              AS "Total Enrollment",
-    ROUND(AVG(am.ugds), 0)    AS "Avg Enrollment"
+    CAST(ROUND(AVG(am.ugds), 0) AS INTEGER)    AS "Avg Enrollment"
 FROM annual_metrics am
 JOIN survivors s USING (unitid)
 WHERE am.ugds IS NOT NULL
@@ -256,7 +256,7 @@ GROUP BY am.cohort_year
 ORDER BY am.cohort_year;
 ```
 
-[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=WITH+survivors+AS+%28%0A++++SELECT+unitid%2C+instnm%0A++++FROM+institutions%0A++++WHERE+sector+%3D+%27for_profit%27%0A++++++AND+first_year_in_data+%3C%3D+2014%0A++++++AND+last_year_in_data+%3D+2023%0A%29%0ASELECT%0A++++am.cohort_year++++++++++++++++++++++++++++++++++++++++++++++++++AS+%22Cohort+Year%22%2C%0A++++COUNT%28DISTINCT+am.unitid%29+++++++++++++++++++++++++++++++++++++++AS+%22Survivors+Reporting%22%2C%0A++++SUM%28am.ugds%29++++++++++++++++++++++++++++++++++++++++++++++++++++AS+%22Total+Enrollment%22%2C%0A++++ROUND%28AVG%28am.ugds%29%2C+0%29++++++++++++++++++++++++++++++++++++++++++AS+%22Avg+Enrollment%22%0AFROM+annual_metrics+am%0AJOIN+survivors+s+USING+%28unitid%29%0AWHERE+am.ugds+IS+NOT+NULL%0AGROUP+BY+am.cohort_year%0AORDER+BY+am.cohort_year%3B)
+[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=WITH+survivors+AS+%28%0A++++SELECT+unitid%2C+instnm%0A++++FROM+institutions%0A++++WHERE+sector+%3D+%27for_profit%27%0A++++++AND+first_year_in_data+%3C%3D+2014%0A++++++AND+last_year_in_data+%3D+2023%0A%29%0ASELECT%0A++++am.cohort_year++++++++++++AS+%22Cohort+Year%22%2C%0A++++COUNT%28DISTINCT+am.unitid%29+AS+%22Survivors+Reporting%22%2C%0A++++SUM%28am.ugds%29++++++++++++++AS+%22Total+Enrollment%22%2C%0A++++CAST%28ROUND%28AVG%28am.ugds%29%2C+0%29+AS+INTEGER%29++++AS+%22Avg+Enrollment%22%0AFROM+annual_metrics+am%0AJOIN+survivors+s+USING+%28unitid%29%0AWHERE+am.ugds+IS+NOT+NULL%0AGROUP+BY+am.cohort_year%0AORDER+BY+am.cohort_year%3B)
 
 Result:
 
@@ -342,8 +342,8 @@ SELECT
         WHEN 'private_nonprofit' THEN 'Private Nonprofit'
         WHEN 'for_profit'        THEN 'For-Profit'
     END                             AS "Sector",
-    ROUND(AVG(am.ugds), 0)          AS "Avg Enrollment",
-    ROUND(AVG(am.tuitionfee_in), 0) AS "Avg In-State Tuition",
+    CAST(ROUND(AVG(am.ugds), 0) AS INTEGER)          AS "Avg Enrollment",
+    CAST(ROUND(AVG(am.tuitionfee_in), 0) AS INTEGER) AS "Avg In-State Tuition",
     ROUND(AVG(am.pctpell) * 100, 1) AS "Avg Pell %",
     ROUND(AVG(am.c150_4) * 100, 1)  AS "Avg Completion %",
     ROUND(AVG(am.cdr3) * 100, 1)    AS "Avg Default Rate %"
@@ -354,7 +354,7 @@ GROUP BY i.unitid, i.instnm, i.sector
 ORDER BY AVG(am.ugds) DESC;
 ```
 
-[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=--+HBCU+comparison+filtered+by+UNITID+rather+than+the+i.hbcu+flag.%0A--+Phase+02+documents+that+the+HBCU+column+is+empty+in+this+database%0A--+due+to+a+build+script+gap.+Florida%27s+four+HBCUs+are+well-known+by%0A--+the+Higher+Education+Act+of+1965+designation%3B+we+hardcode+their%0A--+UNITIDs+%28verified+from+the+institutions+table+by+INSTNM%29+to+do%0A--+the+comparison+reliably.%0ASELECT%0A++++i.instnm++++++++++++++++++++++++++++++++++++++++++++++++++++++++AS+%22Institution%22%2C%0A++++CASE+i.sector%0A++++++++WHEN+%27public%27++++++++++++THEN+%27Public%27%0A++++++++WHEN+%27private_nonprofit%27+THEN+%27Private+Nonprofit%27%0A++++++++WHEN+%27for_profit%27++++++++THEN+%27For-Profit%27%0A++++END+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++AS+%22Sector%22%2C%0A++++ROUND%28AVG%28am.ugds%29%2C+0%29++++++++++++++++++++++++++++++++++++++++++AS+%22Avg+Enrollment%22%2C%0A++++ROUND%28AVG%28am.tuitionfee_in%29%2C+0%29+++++++++++++++++++++++++++++++++AS+%22Avg+In-State+Tuition%22%2C%0A++++ROUND%28AVG%28am.pctpell%29+%2A+100%2C+1%29+++++++++++++++++++++++++++++++++AS+%22Avg+Pell+%25%22%2C%0A++++ROUND%28AVG%28am.c150_4%29+%2A+100%2C+1%29++++++++++++++++++++++++++++++++++AS+%22Avg+Completion+%25%22%2C%0A++++ROUND%28AVG%28am.cdr3%29+%2A+100%2C+1%29++++++++++++++++++++++++++++++++++++AS+%22Avg+Default+Rate+%25%22%0AFROM+institutions+++++++i%0AJOIN+annual_metrics+++++am+USING+%28unitid%29%0AWHERE+i.unitid+IN+%28132602%2C+133526%2C+133650%2C+133979%29%0AGROUP+BY+i.unitid%2C+i.instnm%2C+i.sector%0AORDER+BY+AVG%28am.ugds%29+DESC%3B)
+[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=SELECT%0A++++i.instnm+AS+%22Institution%22%2C%0A++++CASE+i.sector%0A++++++++WHEN+%27public%27++++++++++++THEN+%27Public%27%0A++++++++WHEN+%27private_nonprofit%27+THEN+%27Private+Nonprofit%27%0A++++++++WHEN+%27for_profit%27++++++++THEN+%27For-Profit%27%0A++++END+++++++++++++++++++++++++++++AS+%22Sector%22%2C%0A++++CAST%28ROUND%28AVG%28am.ugds%29%2C+0%29+AS+INTEGER%29++++++++++AS+%22Avg+Enrollment%22%2C%0A++++CAST%28ROUND%28AVG%28am.tuitionfee_in%29%2C+0%29+AS+INTEGER%29+AS+%22Avg+In-State+Tuition%22%2C%0A++++ROUND%28AVG%28am.pctpell%29+%2A+100%2C+1%29+AS+%22Avg+Pell+%25%22%2C%0A++++ROUND%28AVG%28am.c150_4%29+%2A+100%2C+1%29++AS+%22Avg+Completion+%25%22%2C%0A++++ROUND%28AVG%28am.cdr3%29+%2A+100%2C+1%29++++AS+%22Avg+Default+Rate+%25%22%0AFROM+institutions+++++++i%0AJOIN+annual_metrics+++++am+USING+%28unitid%29%0AWHERE+i.unitid+IN+%28132602%2C+133526%2C+133650%2C+133979%29%0AGROUP+BY+i.unitid%2C+i.instnm%2C+i.sector%0AORDER+BY+AVG%28am.ugds%29+DESC%3B)
 
 Result:
 
@@ -381,8 +381,8 @@ SELECT
         WHEN 'private_nonprofit' THEN 'Private Nonprofit'
         WHEN 'for_profit'        THEN 'For-Profit'
     END                             AS "Sector",
-    ROUND(AVG(am.ugds), 0)          AS "Avg Enrollment",
-    ROUND(AVG(am.tuitionfee_in), 0) AS "Avg In-State Tuition",
+    CAST(ROUND(AVG(am.ugds), 0) AS INTEGER)          AS "Avg Enrollment",
+    CAST(ROUND(AVG(am.tuitionfee_in), 0) AS INTEGER) AS "Avg In-State Tuition",
     ROUND(AVG(am.pctpell) * 100, 1) AS "Avg Pell %",
     ROUND(AVG(am.c150_4) * 100, 1)  AS "Avg Completion %",
     ROUND(AVG(am.cdr3) * 100, 1)    AS "Avg Default Rate %"
@@ -392,7 +392,7 @@ GROUP BY i.sector
 ORDER BY i.sector;
 ```
 
-[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=SELECT%0A++++CASE+i.sector%0A++++++++WHEN+%27public%27++++++++++++THEN+%27Public%27%0A++++++++WHEN+%27private_nonprofit%27+THEN+%27Private+Nonprofit%27%0A++++++++WHEN+%27for_profit%27++++++++THEN+%27For-Profit%27%0A++++END+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++AS+%22Sector%22%2C%0A++++ROUND%28AVG%28am.ugds%29%2C+0%29++++++++++++++++++++++++++++++++++++++++++AS+%22Avg+Enrollment%22%2C%0A++++ROUND%28AVG%28am.tuitionfee_in%29%2C+0%29+++++++++++++++++++++++++++++++++AS+%22Avg+In-State+Tuition%22%2C%0A++++ROUND%28AVG%28am.pctpell%29+%2A+100%2C+1%29+++++++++++++++++++++++++++++++++AS+%22Avg+Pell+%25%22%2C%0A++++ROUND%28AVG%28am.c150_4%29+%2A+100%2C+1%29++++++++++++++++++++++++++++++++++AS+%22Avg+Completion+%25%22%2C%0A++++ROUND%28AVG%28am.cdr3%29+%2A+100%2C+1%29++++++++++++++++++++++++++++++++++++AS+%22Avg+Default+Rate+%25%22%0AFROM+institutions+++++++i%0AJOIN+annual_metrics+++++am+USING+%28unitid%29%0AGROUP+BY+i.sector%0AORDER+BY+i.sector%3B)
+[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=SELECT%0A++++CASE+i.sector%0A++++++++WHEN+%27public%27++++++++++++THEN+%27Public%27%0A++++++++WHEN+%27private_nonprofit%27+THEN+%27Private+Nonprofit%27%0A++++++++WHEN+%27for_profit%27++++++++THEN+%27For-Profit%27%0A++++END+++++++++++++++++++++++++++++AS+%22Sector%22%2C%0A++++CAST%28ROUND%28AVG%28am.ugds%29%2C+0%29+AS+INTEGER%29++++++++++AS+%22Avg+Enrollment%22%2C%0A++++CAST%28ROUND%28AVG%28am.tuitionfee_in%29%2C+0%29+AS+INTEGER%29+AS+%22Avg+In-State+Tuition%22%2C%0A++++ROUND%28AVG%28am.pctpell%29+%2A+100%2C+1%29+AS+%22Avg+Pell+%25%22%2C%0A++++ROUND%28AVG%28am.c150_4%29+%2A+100%2C+1%29++AS+%22Avg+Completion+%25%22%2C%0A++++ROUND%28AVG%28am.cdr3%29+%2A+100%2C+1%29++++AS+%22Avg+Default+Rate+%25%22%0AFROM+institutions+++++++i%0AJOIN+annual_metrics+++++am+USING+%28unitid%29%0AGROUP+BY+i.sector%0AORDER+BY+i.sector%3B)
 
 Result:
 
@@ -482,7 +482,7 @@ ORDER BY md_earn_wne_p10 DESC
 LIMIT 15;
 ```
 
-[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=WITH+earnings_2020+AS+%28%0A++++SELECT%0A++++++++i.unitid%2C%0A++++++++i.instnm%2C%0A++++++++CASE+i.sector%0A++++++++++++WHEN+%27public%27++++++++++++THEN+%27Public%27%0A++++++++++++WHEN+%27private_nonprofit%27+THEN+%27Private+Nonprofit%27%0A++++++++++++WHEN+%27for_profit%27++++++++THEN+%27For-Profit%27%0A++++++++END+AS+sector_display%2C%0A++++++++am.md_earn_wne_p10%0A++++FROM+institutions+++++++i%0A++++JOIN+annual_metrics+++++am+USING+%28unitid%29%0A++++WHERE+am.cohort_year+%3D+2020%0A++++++AND+am.md_earn_wne_p10+IS+NOT+NULL%0A%29%0ASELECT%0A++++instnm++++++++++++++++++++++++++++++++++++++++++++++++++++++++++AS+%22Institution%22%2C%0A++++sector_display++++++++++++++++++++++++++++++++++++++++++++++++++AS+%22Sector%22%2C%0A++++md_earn_wne_p10+++++++++++++++++++++++++++++++++++++++++++++++++AS+%2210-Year+Earnings%22%2C%0A++++RANK%28%29+OVER+%28ORDER+BY+md_earn_wne_p10+DESC%29+++++++++++++++++++++AS+%22Statewide+Rank%22%0AFROM+earnings_2020%0AORDER+BY+md_earn_wne_p10+DESC%0ALIMIT+15%3B)
+[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite#/college-scorecard-fl?sql=WITH+earnings_2020+AS+%28%0A++++SELECT%0A++++++++i.unitid%2C%0A++++++++i.instnm%2C%0A++++++++CASE+i.sector%0A++++++++++++WHEN+%27public%27++++++++++++THEN+%27Public%27%0A++++++++++++WHEN+%27private_nonprofit%27+THEN+%27Private+Nonprofit%27%0A++++++++++++WHEN+%27for_profit%27++++++++THEN+%27For-Profit%27%0A++++++++END+AS+sector_display%2C%0A++++++++am.md_earn_wne_p10%0A++++FROM+institutions+++++++i%0A++++JOIN+annual_metrics+++++am+USING+%28unitid%29%0A++++WHERE+am.cohort_year+%3D+2020%0A++++++AND+am.md_earn_wne_p10+IS+NOT+NULL%0A%29%0ASELECT%0A++++instnm++++++++++++++++++++++++++++++++++++++AS+%22Institution%22%2C%0A++++sector_display++++++++++++++++++++++++++++++AS+%22Sector%22%2C%0A++++md_earn_wne_p10+++++++++++++++++++++++++++++AS+%2210-Year+Earnings%22%2C%0A++++RANK%28%29+OVER+%28ORDER+BY+md_earn_wne_p10+DESC%29+AS+%22Statewide+Rank%22%0AFROM+earnings_2020%0AORDER+BY+md_earn_wne_p10+DESC%0ALIMIT+15%3B)
 
 Result (top 15 by 10-year-out median earnings, 2020 cohort report):
 

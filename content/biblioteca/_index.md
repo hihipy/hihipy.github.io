@@ -361,6 +361,20 @@ totals = df.groupby("region")["amount"].sum()
 
 The two versions produce the same answer. The second one survives the question "why did you exclude pending records and what did you do with the nulls" without the author being in the room. That is what audit-readability buys.
 
+Comment density is one half of audit-readability. Layout consistency is the other. The two halves work together: a reviewer auditing a pipeline does not want to spend cognitive effort decoding indentation conventions, naming rules, or where the imports go; they want to spend effort on the work. The same applies in reverse to a contributor extending the code, and to a future-self returning months later. Each language has a canonical style guide that the field has converged on. Knowing them and applying them is the cheapest available form of audit-readability:
+
+| Language | Style Guide | Covers |
+|---|---|---|
+| Python (code) | [PEP 8](https://peps.python.org/pep-0008/) | Indentation, naming, line length, imports, the official Python style |
+| Python (docstrings) | [PEP 257](https://peps.python.org/pep-0257/) | Docstring conventions, pairs with PEP 8 |
+| R | [Tidyverse Style Guide](https://style.tidyverse.org/) | Naming, syntax, pipes, packages, the `<-` vs `=` rule |
+| Julia | [Julia Style Guide](https://docs.julialang.org/en/v1/manual/style-guide/) | Naming, performance idioms, design patterns |
+| SQL | [SQL Style Guide (Holywell)](https://www.sqlstyle.guide/) | Capitalization, indentation, aliasing, the widely-cited unofficial reference |
+| JavaScript | [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript) | ES6+, naming, modules, the most-adopted JS style |
+| Bash | [Google Shell Style Guide](https://google.github.io/styleguide/shellguide.html) | Indentation, naming, quoting, error handling |
+
+What these guides share is more important than what differentiates them. Each one names the choices that consistent style takes off the table: where to put a brace, how to break a long line, when to capitalize a keyword, whether the function name uses snake_case or camelCase. The choices themselves are mostly arbitrary. The consistency is the point. A code review on a pull request that violates twelve PEP 8 rules is a code review where eleven of the twelve comments are about style instead of about the work; that is a worse review than one where the style is uniform and the comments are about the substance. The style guide is the contract that makes the review possible at the right level.
+
 **The step-ladder README.** Every case study and every supporting tool gets a README structured as a step ladder, plain English at the top and increasing technical depth as you scroll down.
 
 The top of the README answers: what is this and who is it for, in language that a non-technical reader can follow. No jargon, no library names, no version numbers.
