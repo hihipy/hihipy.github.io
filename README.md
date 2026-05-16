@@ -350,21 +350,39 @@ Usage: `{{< swatch "#E69F00" >}}`. Pass the hex value with leading `#` as the fi
 
 Existing Blowfish overrides. Their content is project-specific and should not be modified without inspection.
 
-### `layouts/partials/article-link/card.html` — tag map and card layout
+### `layouts/partials/article-link/card.html` — card layout and inline tag map
 
-Custom Blowfish override. Renders project cards with the tags row at the bottom, applying a display-time formatting map that converts lowercase-kebab-case frontmatter tags to their proper display casing. Frontmatter tags stay lowercase (clean URLs, easy alphabetization); the map at runtime produces `JSON`, `PostgreSQL`, `Power BI`, `CustomTkinter`, and so on.
+Custom Blowfish override. Renders project cards with the tags row at the bottom, applying a display-time formatting map that converts lowercase-kebab-case frontmatter tags to their proper display casing **on room landing pages**. Frontmatter tags stay lowercase (clean URLs, easy alphabetization); the map at runtime produces `JSON`, `PostgreSQL`, `Power BI`, `CustomTkinter`, and so on as the inline pills under each project card.
+
+**Important:** this map ONLY controls tag display on room cards. The search modal, the tag taxonomy term pages (`/tags/sql/`, `/tags/mysql/`, etc.), and the breadcrumbs on those term pages use a separate display path that comes from `content/tags/<tag>/_index.md` files. See the next subsection. Both sources of truth must stay in sync. See BUG-031 for what happens when they drift.
 
 **Tag map currently covers** (alphabetical):
 
-`ai`, `api`, `asyncio`, `audit`, `beautifulsoup`, `bigquery`, `bi`, `browser-automation`, `calculator`, `cnn`, `combinatorics`, `csharp`, `csv`, `ctes`, `customtkinter`, `data-analysis`, `data-cleaning`, `data-profiling`, `data-quality`, `datasette`, `dax`, `documentation`, `etl`, `excel`, `exploratory-analysis`, `finance`, `firebird`, `higher-ed`, `html`, `json`, `jupyter`, `kentucky`, `latex`, `llm`, `macros`, `mariadb`, `mathematics`, `matplotlib`, `ml-models`, `multi-provider`, `mysql`, `nih`, `nih-reporter`, `nlp`, `nltk`, `oracle`, `pandas`, `pdf`, `per-diem`, `postgresql`, `power-bi`, `process-improvement`, `public-data`, `python`, `qualtrics`, `reporting`, `schema-design`, `selenium`, `seo`, `side-project`, `sql`, `sql-server`, `sqlite`, `sqlite-utils`, `survey-data`, `tabular-editor`, `tkinter`, `travel`, `vba`, `window-functions`, `word-cloud`, `wordnet`
+`ai`, `api`, `asyncio`, `audit`, `beautifulsoup`, `bigquery`, `bi`, `browser-automation`, `calculator`, `cnn`, `college-scorecard`, `combinatorics`, `csharp`, `csv`, `ctes`, `customtkinter`, `data-analysis`, `data-cleaning`, `data-profiling`, `data-quality`, `datasette`, `dax`, `documentation`, `etl`, `excel`, `exploratory-analysis`, `finance`, `firebird`, `florida`, `higher-ed`, `html`, `json`, `jupyter`, `kentucky`, `latex`, `llm`, `macros`, `mariadb`, `mathematics`, `matplotlib`, `ml-models`, `multi-provider`, `mysql`, `nih`, `nih-reporter`, `nlp`, `nltk`, `oracle`, `pandas`, `pdf`, `per-diem`, `postgresql`, `power-bi`, `process-improvement`, `public-data`, `python`, `qualtrics`, `reporting`, `schema-design`, `selenium`, `seo`, `side-project`, `sql`, `sql-server`, `sqlite`, `sqlite-utils`, `survey-data`, `tabular-editor`, `tkinter`, `travel`, `vba`, `window-functions`, `word-cloud`, `wordnet`
 
 **Fallback for missing tags:** any frontmatter tag NOT in the map renders via `{{ replace $tag "-" " " | title }}`. Hyphens become spaces and the result is title-cased. A future tag like `machine-learning` renders correctly as "Machine Learning" without a map update. Single-word tags without map entries also render via `title` (e.g., a future `kotlin` renders as `Kotlin`).
 
-**When to add a map entry:** when the fallback produces something wrong. The fallback breaks on acronyms (`json` → `Json`, should be `JSON`), proper-cased brand names (`postgresql` → `Postgresql`, should be `PostgreSQL`), and library names that style themselves in non-title-case (`pandas` stays lowercase; `BeautifulSoup` uses internal capitals). Multi-word tags that title-case correctly (`Side Project`, `Power BI`) work via the fallback but are added to the map anyway for explicitness, so the map serves as the single source of truth for tag display.
+**When to add a map entry:** when the fallback produces something wrong. The fallback breaks on acronyms (`json` → `Json`, should be `JSON`), proper-cased brand names (`postgresql` → `Postgresql`, should be `PostgreSQL`), and library names that style themselves in non-title-case (`pandas` stays lowercase; `BeautifulSoup` uses internal capitals). Multi-word tags that title-case correctly (`Side Project`, `Power BI`) work via the fallback but are added to the map anyway for explicitness, so the map serves as the single source of truth for tag display on cards.
 
 **Where it lives:** the map is a `dict` literal inside the `{{ with .Params.tags }}` block of `layouts/partials/article-link/card.html`. It's the only customization in an otherwise-vanilla Blowfish card template, so future Blowfish theme updates can be applied by re-pulling card.html and re-adding the map.
 
-Adding a new project that introduces a tag not in the map (and not handled correctly by the fallback) requires updating the map AND the project's frontmatter `tags` line in the same commit.
+### `content/tags/<tag>/_index.md` — taxonomy term pages and search-index display
+
+Per-tag content files that set the canonical title used by the tag taxonomy term pages (`/tags/sql/`, `/tags/mysql/`, and so on), the search modal results, and the breadcrumbs on those term pages. Each file is four lines of frontmatter:
+
+```yaml
+---
+title: "SQL"
+---
+```
+
+**Why these files exist:** Hugo auto-generates a term page for every unique tag used in any page's `tags:` array. The page's `.Title` defaults to `humanize` of the slug, which produces "Sql", "Mysql", "Sql-Server" and so on. The search index (`/index.json`) reads `.Title` directly, so the search modal shows the auto-humanized title regardless of what `card.html` does. The fix is to set `.Title` explicitly in a content file. See BUG-031.
+
+**One file per tag in use.** As of May 2026 there are 69 such files, one for every tag referenced by at least one frontmatter `tags:` array across all 27 pages with tags (17 project pages + 10 archivo case-study phase pages). Tags that exist only in the `card.html` map but are not yet used by any page do not need a content file, because Hugo only generates a term page when at least one content page references the tag.
+
+**Two sources of truth, kept in sync.** The display title for a tag now lives in two places: the `card.html` map (for room-card pills) and the `content/tags/<tag>/_index.md` file (for taxonomy pages, search, breadcrumbs). They must agree. When introducing a new tag, update both at once. The long-term fix is to move both behind a single `data/tagmap.toml` file that both `card.html` and a custom term layout read from; until then, the dual-update discipline is the contract.
+
+**Regenerating the files.** A `tools/create_tag_term_pages.py` script (root of the repo) reads a canonical list of tag-to-title mappings and creates/rewrites every `_index.md` to match. It is idempotent: re-running it only touches files whose title disagrees. Run it after adding a new tag (after also updating the canonical list inside the script).
 
 ### `assets/icons/` — 25 custom SVGs
 
@@ -1071,6 +1089,27 @@ First encountered: kentucky-nih case study phase 04 (findings), May 2026. The 5-
 
 First encountered: sql-x-ray project page authored May 2026. The first draft followed §8 (`showReadingTime: false`) and rendered without a "N mins" label, breaking visual consistency with the other three estudio cards. Discovered by spot-reading the live frontmatter of all 16 existing project pages, every one of which uses `showReadingTime: true`.
 
+### BUG-031: Search modal renders tag taxonomy results with Hugo's auto-humanized titles, not the `card.html` tag-map values
+
+**Symptom:** searching for `sql` in the site search modal (press `/`) returns tag results titled "Sql", "Mysql", "Postgresql", "Sql-Server", "Sqlite", "Sqlite-Utils" instead of the properly-cased "SQL", "MySQL", "PostgreSQL", "SQL Server", "SQLite", "sqlite-utils". Room cards on the same site show the same tags with correct casing, so the inconsistency is visible to anyone who searches.
+
+**Diagnostic:** open the search modal and search for a tag whose proper casing involves an acronym or non-title-case form (`sql`, `mysql`, `ai`, `json`, `csv`, `pandas`). If the result row's title is Hugo's humanized version of the slug rather than the casing shown on room cards, BUG-031 is the cause. Confirm by visiting the corresponding term page (e.g., `/tags/sql/`) directly: the H1 there will also show the auto-humanized title.
+
+**Cause:** the search index at `/index.json` is built by Hugo from each page's `.Title` field at build time. For tag taxonomy term pages, Hugo auto-generates `.Title` from the slug via `humanize`, which preserves hyphens and does not know about acronyms. The `card.html` tag map runs at template render time on room landing pages, but never touches the term pages' `.Title`, so the map has no effect on the search index. There are effectively two separate display paths: `card.html` for inline pills on room cards, and Hugo's auto-humanization for everything else (term pages, search results, breadcrumbs).
+
+**Fix applied:** created `content/tags/<tag>/_index.md` for every tag in use across the site (69 files as of May 2026), each with frontmatter `title:` set to the correct display value. Hugo prefers explicit content over auto-generated humanization, so the term page `.Title` is now whatever the content file specifies. This propagates to the search index entry, the term page H1, and the breadcrumb at the top of the term page.
+
+**Rule:** tag display has TWO sources of truth. The `card.html` tag map controls how tags render on room landing pages (the inline pills under each project card). The `content/tags/<tag>/_index.md` files control how tags render everywhere else (search results, taxonomy term pages, breadcrumbs). Both must agree. When adding a new tag that needs explicit display formatting, update both at once or the search modal will silently drift from the cards.
+
+**Prevention discipline:** when adding a new tag to any project, two steps in addition to adding it to the project's frontmatter:
+
+1. Add the tag to the `card.html` map in alphabetical position with the correct display label.
+2. Create `content/tags/<new-tag>/_index.md` with frontmatter `title: "Display Label"` matching the card.html label exactly.
+
+The `tools/create_tag_term_pages.py` script can be re-run after step 1 to regenerate step 2 from a canonical list, but the canonical list inside the script has to be updated by hand. There is currently no single-file source of truth that both `card.html` and the script read from. Future cleanup: move both consumers behind `data/tagmap.toml` and read from there.
+
+**First encountered:** May 2026, after the sql-x-ray project page added eight new tags (`postgresql`, `mysql`, `mariadb`, `sql-server`, `bigquery`, `firebird`, `oracle`, `json`). The `card.html` tag map was updated and the room cards rendered correctly. The search modal continued showing the auto-humanized fallbacks ("Sql", "Mysql", "Postgresql") because no one had previously noticed that the taxonomy pages were a separate display path. Found by spot-checking search results after the sql-x-ray page deployment.
+
 ## 11. Configuration Files
 
 ### `config/_default/hugo.toml`
@@ -1265,6 +1304,8 @@ Create `content/<room>/<repo-name>.md` using the template in §6. Author all fou
 - [ ] `description` is 30-50 words, recruiter-readable
 - [ ] `summary` is 3-6 words (CRITICAL for clean search results, see BUG-010)
 - [ ] `tags` includes language, libraries, and domain
+- [ ] Any new tag introduced by this project is also added to the `card.html` map in alphabetical position (see §9)
+- [ ] Any new tag also has a matching `content/tags/<new-tag>/_index.md` file with title matching the `card.html` map value (see §9, BUG-031). Re-run `tools/create_tag_term_pages.py` after updating the script's canonical list
 - [ ] `weight` is set; will be re-assigned in Step 3
 - [ ] `{{< lead >}}` block is 12-20 words
 - [ ] `{{< katex >}}` is BEFORE the lead block if math is used (BUG-003)
