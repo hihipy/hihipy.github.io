@@ -103,6 +103,7 @@ Listed in alphabetical order within each room (matches Hugo render order, see §
 | `ai-csv-profiler.md` | ai-csv-profiler | CSV profiler for LLMs. |
 | `decode-for-humans.md` | decode-for-humans | AI source-code translator. |
 | `linkedin-banner-wordcloud-generator.md` | linkedin-banner-wordcloud-generator | AI résumé wordcloud generator. |
+| `sql-x-ray.md` | sql-x-ray | SQL schema dump for LLMs. |
 
 ### `/garaje/`
 
@@ -268,7 +269,7 @@ description: "<30-50 word SEO description>"
 summary: "<3-6 word card label>"
 tags: ["..."]
 showDate: false
-showReadingTime: false
+showReadingTime: true
 showAuthor: false
 ```
 
@@ -288,7 +289,8 @@ Pages within a room are sorted alphabetically by enforcing weights in alphabetic
 | `description` | `<meta name="description">`, Open Graph, Twitter card |
 | `summary` | Card label on the room landing page AND search result snippet |
 | `tags` | Currently unused for navigation but indexed; reserve for future tag pages |
-| `showDate`, `showReadingTime`, `showAuthor` | All `false` to keep pages stripped of clutter |
+| `showDate`, `showAuthor` | Both `false` to keep pages stripped of clutter |
+| `showReadingTime` | `true` — surfaces Hugo's auto-estimated reading time on cards ("10 mins") and on the page itself. The only `true` of the three; see BUG-030 for the §8/§6 drift that previously documented this as `false` |
 
 ### Forbidden in frontmatter
 
@@ -347,6 +349,22 @@ Usage: `{{< swatch "#E69F00" >}}`. Pass the hex value with leading `#` as the fi
 ### `layouts/partials/header.html` and `footer.html`
 
 Existing Blowfish overrides. Their content is project-specific and should not be modified without inspection.
+
+### `layouts/partials/article-link/card.html` — tag map and card layout
+
+Custom Blowfish override. Renders project cards with the tags row at the bottom, applying a display-time formatting map that converts lowercase-kebab-case frontmatter tags to their proper display casing. Frontmatter tags stay lowercase (clean URLs, easy alphabetization); the map at runtime produces `JSON`, `PostgreSQL`, `Power BI`, `CustomTkinter`, and so on.
+
+**Tag map currently covers** (alphabetical):
+
+`ai`, `api`, `asyncio`, `audit`, `beautifulsoup`, `bigquery`, `bi`, `browser-automation`, `calculator`, `cnn`, `combinatorics`, `csharp`, `csv`, `ctes`, `customtkinter`, `data-analysis`, `data-cleaning`, `data-profiling`, `data-quality`, `datasette`, `dax`, `documentation`, `etl`, `excel`, `exploratory-analysis`, `finance`, `firebird`, `higher-ed`, `html`, `json`, `jupyter`, `kentucky`, `latex`, `llm`, `macros`, `mariadb`, `mathematics`, `matplotlib`, `ml-models`, `multi-provider`, `mysql`, `nih`, `nih-reporter`, `nlp`, `nltk`, `oracle`, `pandas`, `pdf`, `per-diem`, `postgresql`, `power-bi`, `process-improvement`, `public-data`, `python`, `qualtrics`, `reporting`, `schema-design`, `selenium`, `seo`, `side-project`, `sql`, `sql-server`, `sqlite`, `sqlite-utils`, `survey-data`, `tabular-editor`, `tkinter`, `travel`, `vba`, `window-functions`, `word-cloud`, `wordnet`
+
+**Fallback for missing tags:** any frontmatter tag NOT in the map renders via `{{ replace $tag "-" " " | title }}`. Hyphens become spaces and the result is title-cased. A future tag like `machine-learning` renders correctly as "Machine Learning" without a map update. Single-word tags without map entries also render via `title` (e.g., a future `kotlin` renders as `Kotlin`).
+
+**When to add a map entry:** when the fallback produces something wrong. The fallback breaks on acronyms (`json` → `Json`, should be `JSON`), proper-cased brand names (`postgresql` → `Postgresql`, should be `PostgreSQL`), and library names that style themselves in non-title-case (`pandas` stays lowercase; `BeautifulSoup` uses internal capitals). Multi-word tags that title-case correctly (`Side Project`, `Power BI`) work via the fallback but are added to the map anyway for explicitness, so the map serves as the single source of truth for tag display.
+
+**Where it lives:** the map is a `dict` literal inside the `{{ with .Params.tags }}` block of `layouts/partials/article-link/card.html`. It's the only customization in an otherwise-vanilla Blowfish card template, so future Blowfish theme updates can be applied by re-pulling card.html and re-adding the map.
+
+Adding a new project that introduces a tag not in the map (and not handled correctly by the fallback) requires updating the map AND the project's frontmatter `tags` line in the same commit.
 
 ### `assets/icons/` — 25 custom SVGs
 
@@ -1036,6 +1054,22 @@ KaTeX strips backslash-escaped underscores back to plain underscores during its 
 **Prevention discipline:** after adding any display formula to a page, view the rendered output in a browser. The visual check is the only reliable way to catch this; the markdown source looks correct.
 
 First encountered: kentucky-nih case study phase 04 (findings), May 2026. The 5-year centered moving average formula `\[\overline{f}_{t} = \dfrac{1}{5}\sum_{i=t-2}^{t+2} f_i\]` rendered as raw text. The college-scorecard-fl Phase 04 cost-per-completer formula on a sibling page used `\overline{c_{150,4}}` (subscript inside the outer brace) and rendered correctly, confirming that the issue is specifically the bare-underscore-between-brace-groups pattern, not KaTeX or display math in general.
+
+### BUG-030: README §8 frontmatter `showReadingTime` documented as `false` while all live pages use `true`
+
+**Symptom:** A new project page authored strictly from the README §8 "Required fields on every project page" template lacks the "N mins" reading-time label that appears on every other card on the room landing page. The label is missing from the project page body too.
+
+**Diagnostic:** check any existing project page's frontmatter against §8. The §6 template block shows `showReadingTime: true   # Hugo auto-estimate; surfaced on cards too`. The §8 required-fields block (until this fix) showed `showReadingTime: false`. The two disagreed.
+
+**Cause:** the §8 block was authored before the reading-time feature was enabled on cards. When the feature was enabled, the §6 template was updated but §8 was not, and the "Field role reminders" table that follows §8 still described `showDate`, `showReadingTime`, `showAuthor` together as "All `false` to keep pages stripped of clutter." The rationale text became wrong at the same moment the field value did, but in three places at once that all had to be updated together.
+
+**Fix applied:** §8 required-fields block updated to `showReadingTime: true`. The field-role-reminders table now lists `showReadingTime` on its own row with its own rationale (surfaces Hugo's auto-estimated reading time on cards and on the page), while `showDate` and `showAuthor` keep the original `false`-to-strip-clutter rationale on a shared row.
+
+**Rule:** when §6 (the template) and §8 (the required-fields spec) disagree, §6 wins. §6 is what authors actually copy from, so it is the de facto live spec; §8 is a documentation summary that can drift. Any future change to the frontmatter contract has to update both at once, and the field-role-reminders rationale text has to be re-read to confirm it still describes reality.
+
+**Prevention discipline:** when authoring a new project page, do not just follow §8. Read the frontmatter of one existing project page in the same room and confirm it matches §8 before treating §8 as authoritative. If they disagree, the live page wins and §8 needs a BUG entry.
+
+First encountered: sql-x-ray project page authored May 2026. The first draft followed §8 (`showReadingTime: false`) and rendered without a "N mins" label, breaking visual consistency with the other three estudio cards. Discovered by spot-reading the live frontmatter of all 16 existing project pages, every one of which uses `showReadingTime: true`.
 
 ## 11. Configuration Files
 
