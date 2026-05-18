@@ -1,0 +1,39 @@
+{{/*
+  Chart.js theme-aware defaults override.
+
+  Blowfish's themes/blowfish/assets/js/chart.js sets Chart.defaults for
+  primary-colored elements (bar/line/point/arc), but NOT for tick text,
+  legend text, or grid lines. The result is that on dark mode, axis labels
+  and gridlines fall back to Chart.js's hardcoded gray (#666 /
+  rgba(0,0,0,0.1)) which is illegible.
+
+  This script runs AFTER Chart.js loads (via the vendor.html bundle) and
+  sets the three missing defaults to theme-aware CSS variables that swap
+  automatically when the user toggles light/dark mode.
+
+  --color-neutral-700 is dark gray in light theme, light gray in dark theme.
+  --color-neutral-200 is subtle gridlines in either theme.
+
+  Note: Chart.defaults are evaluated once at script load, so the live theme
+  toggle does not update chart text colors until the page is reloaded. This
+  matches the behavior of every other Chart.defaults call Blowfish makes
+  and is therefore not a regression.
+
+  The typeof guard makes this safe on pages without charts; the script
+  does nothing if Chart.js is not loaded.
+
+  See README BUG-035 for full context.
+*/}}
+<script>
+  (function() {
+    if (typeof Chart === 'undefined') return;
+    function css(name) {
+      return "rgb(" + getComputedStyle(document.documentElement).getPropertyValue(name) + ")";
+    }
+    Chart.defaults.color = css("--color-neutral-700");
+    Chart.defaults.borderColor = css("--color-neutral-300");
+    if (Chart.defaults.scale && Chart.defaults.scale.grid) {
+      Chart.defaults.scale.grid.color = css("--color-neutral-200");
+    }
+  })();
+</script>

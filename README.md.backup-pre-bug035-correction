@@ -1156,49 +1156,30 @@ First encountered: Penobscot NCLEX-RN case study, May 2026, between Step 1 (data
 
 First encountered: Penobscot case study Phase 01/03/04, May 2026. Four charts deployed with hardcoded black tick/grid colors and one black dataset hue. Discovered by viewing each phase page in dark mode after the initial chart deployment. Patched by replacing the four chart configs in a single sweep; final hex audit confirmed only `#0969DA` and `#BF8700` remained.
 
-### BUG-035: Site-level asset override of `assets/js/chart.js` is not picked up by Hugo Pipes; use `extend-footer.html` partial instead
+### BUG-035: Blowfish chart.js theme-aware Chart.defaults requires direct theme file edit; site-level asset override is not picked up
 
 **Symptom:** the site needed Chart.js's default text color (`Chart.defaults.color`) and grid line color (`Chart.defaults.scale.grid.color`) to be theme-aware so axis labels would automatically render in the correct contrast color in both light and dark mode. The Hugo-canonical approach is to override `themes/blowfish/assets/js/chart.js` by creating `assets/js/chart.js` at the project root, which Hugo Pipes is supposed to prefer over the theme version. Created the override file with three additional lines: `Chart.defaults.color = css("--color-neutral-700")`, `Chart.defaults.borderColor = css("--color-neutral-300")`, and `Chart.defaults.scale.grid.color = css("--color-neutral-200")`. Forced a full rebuild with `rm -rf resources/_gen/assets public/js/chart.bundle.*.js && hugo --cleanDestinationDir`. The resulting bundle did NOT contain the override; bundled output was the theme version verbatim.
 
 **Diagnostic:** after creating `assets/js/chart.js` and forcing a rebuild, run `grep -c "neutral-700" public/js/chart.bundle.*.js`. If the count is 0, the override is not in the bundle. Confirm by `tail -c 800 public/js/chart.bundle.*.js` and visually checking the end of the minified bundle for the expected `Chart.defaults.color=css("--color-neutral-700")` call.
 
-**Cause:** Blowfish's `vendor.html` partial uses `resources.Get "js/chart.js"` which in standard Hugo SHOULD resolve `assets/` at the project root first and fall back to `themes/blowfish/assets/` only if missing. In this codebase the override resolution does not work; the bundle continues to pick up the theme version. Why is unclear (possibly a Hugo version-specific behavior, possibly an unstated asset mount config). Investigation budget was not justified when a different mechanism works cleanly.
+**Cause:** Blowfish's `vendor.html` partial uses `resources.Get "js/chart.js"` which in standard Hugo SHOULD resolve `assets/` at the project root first and fall back to `themes/blowfish/assets/` only if missing. In this codebase the override resolution does not work; the bundle continues to pick up the theme version. Why is unclear (possibly a Hugo version-specific behavior, possibly an unstated asset mount config, possibly a caching layer not fully invalidated by `rm -rf resources/`). The investigation budget did not justify deeper debugging when a direct edit of `themes/blowfish/assets/js/chart.js` works.
 
-**Solution (the correct one):** use the `extend-footer.html` partial pattern. Blowfish's `footer.html` (and the site-level override of footer.html in this codebase) contains a hook block:
+**Workaround:** append the override lines directly to `themes/blowfish/assets/js/chart.js` with a backup of the original at `chart.js.backup-pre-override`. The theme file is vendored in this repo (not a Hugo Modules-managed dependency that pulls fresh), so the direct edit survives builds and rebuilds. Document the change at the bottom of the file with a comment so future-you understands what to re-apply if the theme is ever updated.
 
-```hugo
-{{ if templates.Exists "partials/extend-footer.html" }}
-  {{ partialCached "extend-footer.html" . }}
-{{ end }}
+**Rule:** the asset-override pattern is the elegant solution but does not work in this codebase. The direct theme edit is the working solution. Document the edit in the theme file itself AND in this BUG entry so the customization is recoverable if the theme is ever updated.
+
+**Prevention discipline:** when updating Blowfish (rare), check `themes/blowfish/assets/js/chart.js` against the upstream version before the update and reapply the three customization lines at the bottom of the file. The current customization adds:
+
+```javascript
+// pgbd.casa site customization: theme-aware text + grid colors
+Chart.defaults.color = css("--color-neutral-700");
+Chart.defaults.borderColor = css("--color-neutral-300");
+if (Chart.defaults.scale && Chart.defaults.scale.grid) {
+  Chart.defaults.scale.grid.color = css("--color-neutral-200");
+}
 ```
 
-Create `layouts/partials/extend-footer.html` with an inline script that runs after Chart.js loads. The script lives entirely in YOUR repo (not in the Blowfish submodule), so it survives Blowfish updates and never triggers a fork suggestion in GitHub Desktop.
-
-```html
-<script>
-  (function() {
-    if (typeof Chart === 'undefined') return;
-    function css(name) {
-      return "rgb(" + getComputedStyle(document.documentElement).getPropertyValue(name) + ")";
-    }
-    Chart.defaults.color = css("--color-neutral-700");
-    Chart.defaults.borderColor = css("--color-neutral-300");
-    if (Chart.defaults.scale && Chart.defaults.scale.grid) {
-      Chart.defaults.scale.grid.color = css("--color-neutral-200");
-    }
-  })();
-</script>
-```
-
-The `typeof Chart === 'undefined'` guard means the script is a no-op on pages without charts. It is safe to inject on every page; the cost is roughly 800 bytes of inline HTML and a single guard check.
-
-**Rule:** when customizing Chart.js (or any other vendored JS in Blowfish), do NOT edit the theme file directly even though it would work. Use the `extend-head.html` (loaded in `<head>`) or `extend-footer.html` (loaded near `</body>`) partial pattern. The partials hook is defined in the site-level `layouts/partials/footer.html` override and survives Blowfish updates without modification.
-
-**Anti-pattern that surfaced first:** the initial fix was to append the override lines directly to `themes/blowfish/assets/js/chart.js`. This works locally (the bundle picks up the modified theme file) but GitHub Desktop sees the modification as a pending commit on the Blowfish submodule, prompts the user to fork the Blowfish repo, and creates pressure to either fork (which is wrong; Blowfish is a third-party theme) or discard the work. The `extend-footer.html` mechanism produces the same runtime behavior without any of those problems.
-
-**Prevention discipline:** for any Chart.js customization, KaTeX setting, Mermaid config, or other vendored-JS-default the site needs to adjust, write the customization as an inline script in `layouts/partials/extend-footer.html`. Never edit files inside `themes/blowfish/`. If a theme file MUST be modified (rare), document why in this README and explain how to track upstream changes.
-
-First encountered: May 2026, during the Penobscot chart contrast fix (BUG-034). The initial workaround was a direct edit of the theme; the proper solution via `extend-footer.html` was identified after GitHub Desktop surfaced the submodule modification and offered to fork Blowfish. After switching to the `extend-footer.html` mechanism, the Blowfish submodule has zero modified files (the only untracked file is the harmless backup left from the initial workaround, removable via `rm`).
+First encountered: May 2026, during the Penobscot chart contrast fix (BUG-034). The site-level asset override was created and tested but did not appear in the built bundle; the direct theme edit was applied as a workaround. After the direct edit, the bundle contained the customization (verified by `grep -c "neutral-700" public/js/chart.bundle.*.js` returning 1) and axis labels in all chart pages auto-themed correctly.
 
 ### BUG-036: SQL number formatting via `printf('%,d', expr)` portfolio convention
 
