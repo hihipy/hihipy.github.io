@@ -15,14 +15,6 @@ showAuthor: false
 Three findings worth following at depth. A campus spread that suggests where intervention should focus, a cohort decline that runs slightly steeper than the national trend, and a retake-conversion pattern that reframes as a problem of engagement rather than conversion.
 {{< /lead >}}
 
-
-<style>
-  .pgbd-case-chart-wrap { margin: 1.5rem 0 2rem; }
-  .pgbd-case-chart-wrap > .chart { height: 360px; }
-  .pgbd-case-chart-headline { font-size: 1.1rem; font-weight: 700; margin: 0 0 0.25rem; line-height: 1.3; }
-  .pgbd-case-chart-sub { font-size: 0.85rem; opacity: 0.7; margin: 0 0 1rem; }
-</style>
-
 ## At a Glance
 
 Phase 03 ran six orientation queries that named the obvious dimensions and the shape of the data inside each one. Phase 04 develops three of those threads at depth. The campus spread is the largest in magnitude and the most actionable. The cohort decline is real but smaller than initial framings suggested. The retake conversion finding reframes a common assumption about where to focus retake support. The phase closes with a predictive-modeling subsection in R that names what a model could and could not do with this dataset, given the structural data limitations [phase 01](/archivo/penobscot-nclex/01-source/#structural-quirks-worth-documenting) flagged.
@@ -53,7 +45,7 @@ WITH campus AS (
 SELECT
   region                                      AS "Region",
   COUNT(*)                                    AS "Campuses",
-  printf('%,d', SUM(n))                       AS "First Attempts",
+  SUM(n)                                      AS "First Attempts",
   ROUND(100.0 * MIN(p), 2)                    AS "Min Campus %",
   ROUND(100.0 * MAX(p), 2)                    AS "Max Campus %",
   ROUND(100.0 * (MAX(p) - MIN(p)), 2)         AS "Within-Region Spread %"
@@ -93,7 +85,7 @@ Phase 03's cohort breakdown showed first-time pass rates dropping from a 2024 av
 -- 2025 directly.
 SELECT
   CAST(substr(testing_cohort, 1, 4) AS INTEGER)         AS "Year",
-  printf('%,d', COUNT(*))                               AS "First Attempts",
+  COUNT(*)                                              AS "First Attempts",
   ROUND(100.0 * AVG(CAST(result AS REAL)), 2)           AS "Pass Rate %",
   ROUND(100.0 *
     (AVG(CAST(result AS REAL)) -
@@ -133,7 +125,7 @@ data: {
   labels: ['2024','2025'],
   datasets: [
     { label: 'Institution (Penobscot)', data: [88.64, 84.06], backgroundColor: '#0969DA', borderColor: '#0969DA', pointBackgroundColor: '#0969DA', pointBorderColor: '#0969DA', borderWidth: 0 },
-    { label: 'NCSBN National (U.S.-educated)', data: [91.20, 87.50], backgroundColor: '#BF8700', borderColor: '#BF8700', pointBackgroundColor: '#BF8700', pointBorderColor: '#BF8700', borderWidth: 0 }
+    { label: 'NCSBN National (U.S.-educated)', data: [91.20, 87.50], backgroundColor: '#000000', borderColor: '#000000', pointBackgroundColor: '#000000', pointBorderColor: '#000000', borderWidth: 0 }
   ]
 },
 options: {
@@ -141,18 +133,16 @@ options: {
   maintainAspectRatio: false,
   layout: { padding: { top: 12, right: 16, bottom: 8, left: 8 } },
   plugins: {
-    legend: { position: 'top' },
+    legend: { position: 'top', labels: { color: '#000000' } },
     tooltip: { callbacks: { label: function(ctx) { return ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(2) + '%'; } } }
   },
   scales: {
-    y: { min: 80, max: 95, title: { display: true, text: 'First-time pass rate (%)' } },
-    x: { grid: { display: false } }
+    y: { min: 80, max: 95, title: { display: true, text: 'First-time pass rate (%)' }, grid: { color: 'rgba(0,0,0,0.12)' }, ticks: { color: '#000000' } },
+    x: { grid: { color: 'rgba(0,0,0,0)' }, ticks: { color: '#000000' } }
   }
 }
 {{< /chart >}}
 </div>
-
-The chart is interactive. Hover over any bar or point to see the exact value; the chart re-themes automatically when the page toggles light or dark mode.
 
 What this finding does *not* support is the framing that the institution is in a uniquely bad position. The institution is on the wrong side of the national trend by about a point and a quarter. That is a problem worth addressing, but it is not the dominant story. The campus spread is a larger and more institution-specific concern, both in absolute magnitude (21 points across campuses versus 4.58 points across years) and in actionability (campus-level intervention is more concrete than "respond to NGN").
 
@@ -193,14 +183,14 @@ strict_eventually_passed AS (
   WHERE t2.ordinal > ff.fail_ord AND a2.result = 1
 )
 SELECT
-  printf('%,d', (SELECT COUNT(*) FROM first_failers))                                          AS "First-Time Failures",
-  printf('%,d', (SELECT COUNT(*) FROM strict_retakers))                                        AS "Retook",
-  printf('%,d', (SELECT COUNT(*) FROM first_failers) - (SELECT COUNT(*) FROM strict_retakers)) AS "Did Not Retake",
+  (SELECT COUNT(*) FROM first_failers)                                          AS "First-Time Failures",
+  (SELECT COUNT(*) FROM strict_retakers)                                        AS "Retook",
+  (SELECT COUNT(*) FROM first_failers) - (SELECT COUNT(*) FROM strict_retakers) AS "Did Not Retake",
   ROUND(100.0 * (SELECT COUNT(*) FROM strict_retakers)
-                / (SELECT COUNT(*) FROM first_failers), 2)                                     AS "% Retook",
-  printf('%,d', (SELECT COUNT(*) FROM strict_eventually_passed))                               AS "Eventually Passed",
+                / (SELECT COUNT(*) FROM first_failers), 2)                      AS "% Retook",
+  (SELECT COUNT(*) FROM strict_eventually_passed)                               AS "Eventually Passed",
   ROUND(100.0 * (SELECT COUNT(*) FROM strict_eventually_passed)
-                / (SELECT COUNT(*) FROM strict_retakers), 2)                                   AS "Conversion %";
+                / (SELECT COUNT(*) FROM strict_retakers), 2)                    AS "Conversion %";
 ```
 
 [Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/penobscot-nclex.sqlite#/penobscot-nclex?sql=WITH+first_failers+AS+%28%0A++SELECT+a.student_id%2C+t.ordinal+AS+fail_ord%0A++FROM+attempts+a%0A++JOIN+term_order+t+ON+t.cohort+%3D+a.testing_cohort%0A++WHERE+a.attempt_number+%3D+1+AND+a.result+%3D+0%0A%29%2C%0Astrict_retakers+AS+%28%0A++SELECT+DISTINCT+ff.student_id%0A++FROM+first_failers+ff%0A++JOIN+attempts+a2++ON+a2.student_id+%3D+ff.student_id%0A++JOIN+term_order+t2+ON+t2.cohort+%3D+a2.testing_cohort%0A++WHERE+t2.ordinal+%3E+ff.fail_ord%0A%29%2C%0Astrict_eventually_passed+AS+%28%0A++SELECT+DISTINCT+ff.student_id%0A++FROM+first_failers+ff%0A++JOIN+attempts+a2++ON+a2.student_id+%3D+ff.student_id%0A++JOIN+term_order+t2+ON+t2.cohort+%3D+a2.testing_cohort%0A++WHERE+t2.ordinal+%3E+ff.fail_ord+AND+a2.result+%3D+1%0A%29%0ASELECT%0A++%28SELECT+COUNT%28%2A%29+FROM+first_failers%29+++++++++++++++++++++++++++++++++++++AS+%22First-Time+Failures%22%2C%0A++%28SELECT+COUNT%28%2A%29+FROM+strict_retakers%29+++++++++++++++++++++++++++++++++++++AS+%22Retook%22%2C%0A++%28SELECT+COUNT%28%2A%29+FROM+first_failers%29+-+%28SELECT+COUNT%28%2A%29+FROM+strict_retakers%29+AS+%22Did+Not+Retake%22%2C%0A++ROUND%28100.0+%2A+%28SELECT+COUNT%28%2A%29+FROM+strict_retakers%29%0A++++++++++++++++%2F+%28SELECT+COUNT%28%2A%29+FROM+first_failers%29%2C+2%29+++++++++++++++++++++++++AS+%22%25+Retook%22%2C%0A++%28SELECT+COUNT%28%2A%29+FROM+strict_eventually_passed%29+++++++++++++++++++++++++++++++++AS+%22Eventually+Passed%22%2C%0A++ROUND%28100.0+%2A+%28SELECT+COUNT%28%2A%29+FROM+strict_eventually_passed%29%0A++++++++++++++++%2F+%28SELECT+COUNT%28%2A%29+FROM+strict_retakers%29%2C+2%29+++++++++++++++++++++++++AS+%22Conversion+%25%22%3B)
@@ -231,10 +221,10 @@ data: {
   datasets: [{
     label: 'Students',
     data: [943, 552, 391, 301],
-    backgroundColor: ['#0969DA','#BF8700','#0969DA','#0969DA'],
-    borderColor: ['#0969DA','#BF8700','#0969DA','#0969DA'],
-    pointBackgroundColor: ['#0969DA','#BF8700','#0969DA','#0969DA'],
-    pointBorderColor: ['#0969DA','#BF8700','#0969DA','#0969DA'],
+    backgroundColor: ['#0969DA','#000000','#0969DA','#0969DA'],
+    borderColor: ['#0969DA','#000000','#0969DA','#0969DA'],
+    pointBackgroundColor: ['#0969DA','#000000','#0969DA','#0969DA'],
+    pointBorderColor: ['#0969DA','#000000','#0969DA','#0969DA'],
     borderWidth: 0
   }]
 },
@@ -248,14 +238,12 @@ options: {
     tooltip: { callbacks: { label: function(ctx) { return ctx.parsed.x + ' students'; } } }
   },
   scales: {
-    x: { min: 0, max: 1000, title: { display: true, text: 'Students' } },
-    y: { ticks: { autoSkip: false }, grid: { display: false } }
+    x: { min: 0, max: 1000, title: { display: true, text: 'Students' }, grid: { color: 'rgba(0,0,0,0.12)' }, ticks: { color: '#000000' } },
+    y: { grid: { color: 'rgba(0,0,0,0)' }, ticks: { color: '#000000', autoSkip: false } }
   }
 }
 {{< /chart >}}
 </div>
-
-The chart is interactive. Hover over any bar or point to see the exact value; the chart re-themes automatically when the page toggles light or dark mode.
 
 
 
@@ -281,8 +269,8 @@ strict_retakers AS (
 )
 SELECT
   ff.fail_cohort                                       AS "Testing Cohort",
-  printf('%,d', COUNT(*))                              AS "First-Time Failures",
-  printf('%,d', COUNT(*) - COUNT(sr.student_id))       AS "Did Not Retake",
+  COUNT(*)                                             AS "First-Time Failures",
+  COUNT(*) - COUNT(sr.student_id)                      AS "Did Not Retake",
   ROUND(100.0 * (COUNT(*) - COUNT(sr.student_id)) /
                 COUNT(*), 2)                           AS "% Did Not Retake"
 FROM first_failers ff
@@ -402,3 +390,51 @@ What an institutional follow-up would look like, given access to the institution
 The case study's contribution is making these analytical questions sharp enough that they can be acted on. The methodology is replicable: the [source phase](/archivo/penobscot-nclex/01-source/) documents what the published dataset is and why the institution is anonymized, the [schema phase](/archivo/penobscot-nclex/02-schema/) documents the table design that lets every query in this case study run cleanly, and the [exploration phase](/archivo/penobscot-nclex/03-exploration/) documents the orientation queries that surface the threads this phase developed.
 
 The reproducibility-is-the-floor commitment the [biblioteca](/biblioteca/#reproducibility-is-the-floor-review-is-the-ceiling) page makes holds throughout: every number in this case study traces to a query the reader can run against the published SQLite, in the browser, with no setup. The R code in the predictive-modeling section is the only piece that requires a local environment; everything else is one click away.
+
+<!-- chart-theme-adapter -->
+<script>
+(function () {
+  var SWAP = { '#0969DA': '#79C0FF', '#79C0FF': '#0969DA', '#000000': '#FFFFFF', '#FFFFFF': '#000000' };
+  function swap(c) { if (!c || typeof c !== 'string') return c; var up = c.toUpperCase(); return SWAP[up] || c; }
+  function applyTheme(isDark) {
+    if (typeof Chart === 'undefined' || !Chart.instances) return;
+    var ids = Object.keys(Chart.instances);
+    for (var i = 0; i < ids.length; i++) {
+      var chart = Chart.instances[ids[i]];
+      var ds = chart.data.datasets || [];
+      for (var j = 0; j < ds.length; j++) {
+        var d = ds[j];
+        ['borderColor', 'backgroundColor', 'pointBackgroundColor', 'pointBorderColor'].forEach(function (k) {
+          var v = d[k];
+          if (Array.isArray(v)) { d[k] = v.map(swap); }
+          else if (typeof v === 'string') { d[k] = swap(v); }
+        });
+      }
+      var tickColor = isDark ? '#FFFFFF' : '#000000';
+      var gridColor = isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)';
+      if (chart.options && chart.options.scales) {
+        Object.keys(chart.options.scales).forEach(function (sk) {
+          var sc = chart.options.scales[sk]; if (!sc) return;
+          sc.ticks = sc.ticks || {}; sc.ticks.color = tickColor;
+          sc.grid = sc.grid || {}; sc.grid.color = gridColor;
+          if (sc.title) { sc.title.color = tickColor; }
+        });
+      }
+      if (chart.options && chart.options.plugins) {
+        if (chart.options.plugins.legend && chart.options.plugins.legend.labels) {
+          chart.options.plugins.legend.labels.color = tickColor;
+        }
+      }
+      chart.update();
+    }
+  }
+  function isDarkNow() { return document.documentElement.classList.contains('dark'); }
+  var observer = new MutationObserver(function () { applyTheme(isDarkNow()); });
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { applyTheme(isDarkNow()); });
+  } else {
+    setTimeout(function () { applyTheme(isDarkNow()); }, 0);
+  }
+})();
+</script>

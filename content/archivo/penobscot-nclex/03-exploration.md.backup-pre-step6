@@ -15,14 +15,6 @@ showAuthor: false
 Six queries that cover the obvious dimensions: region, campus, program, cohort, time from graduation to test, and retake outcomes.
 {{< /lead >}}
 
-
-<style>
-  .pgbd-case-chart-wrap { margin: 1.5rem 0 2rem; }
-  .pgbd-case-chart-wrap > .chart { height: 360px; }
-  .pgbd-case-chart-headline { font-size: 1.1rem; font-weight: 700; margin: 0 0 0.25rem; line-height: 1.3; }
-  .pgbd-case-chart-sub { font-size: 0.85rem; opacity: 0.7; margin: 0 0 1rem; }
-</style>
-
 ## At a Glance
 
 The schema phase produced a queryable database with three tables and known relationships. The natural first move is breadth before depth: run a handful of queries that cover the obvious dimensions (region, campus, program, cohort, retake count, and time from graduation to test) without yet reaching for window functions or model fits. See what the data says at a glance, then decide which questions are worth following further in phase 04.
@@ -62,7 +54,7 @@ WITH region_stats AS (
 )
 SELECT
   region                                                AS "Region",
-  printf('%,d', n)                                      AS "First Attempts",
+  n                                                     AS "First Attempts",
   ROUND(100.0 * p, 2)                                   AS "Pass Rate %",
   ROUND(100.0 * (p - 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Lower %",
   ROUND(100.0 * (p + 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Upper %"
@@ -110,7 +102,7 @@ WITH campus_stats AS (
 SELECT
   campus                                                AS "Campus",
   region                                                AS "Region",
-  printf('%,d', n)                                      AS "First Attempts",
+  n                                                     AS "First Attempts",
   ROUND(100.0 * p, 2)                                   AS "Pass Rate %",
   ROUND(100.0 * (p - 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Lower %",
   ROUND(100.0 * (p + 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Upper %"
@@ -179,7 +171,7 @@ WITH prog_stats AS (
 SELECT
   pathway                                               AS "Pathway",
   program                                               AS "Program",
-  printf('%,d', n)                                      AS "First Attempts",
+  n                                                     AS "First Attempts",
   ROUND(100.0 * p, 2)                                   AS "Pass Rate %",
   ROUND(100.0 * (p - 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Lower %",
   ROUND(100.0 * (p + 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Upper %"
@@ -230,7 +222,7 @@ WITH cohort_stats AS (
 )
 SELECT
   testing_cohort                                        AS "Testing Cohort",
-  printf('%,d', n)                                      AS "First Attempts",
+  n                                                     AS "First Attempts",
   ROUND(100.0 * p, 2)                                   AS "Pass Rate %",
   ROUND(100.0 * (p - 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Lower %",
   ROUND(100.0 * (p + 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Upper %"
@@ -261,45 +253,6 @@ Phase 04 reads this as the post-NGN decline pattern. The NCSBN published nationa
 
 The case study does not claim the NGN transition is the *cause* of the drop. It is one plausible explanation and the most prominent industry-level event in the window. Phase 04 develops the rest.
 
-<div class="pgbd-case-chart-wrap">
-<p class="pgbd-case-chart-headline">First-time pass rates drift downward across the post-NGN window.</p>
-<p class="pgbd-case-chart-sub">Quarterly first-time NCLEX-RN pass rate at the institution, 2024SPQ through 2025WIQ, in chronological order. 6,705 first-time test takers across the eight quarters.</p>
-{{< chart >}}
-type: 'line',
-data: {
-  labels: ['2024SPQ','2024SUQ','2024FAQ','2024WIQ','2025SPQ','2025SUQ','2025FAQ','2025WIQ'],
-  datasets: [{
-    label: 'First-time pass rate (%)',
-    data: [88.74, 91.78, 87.28, 87.42, 85.50, 83.51, 83.96, 83.32],
-    borderColor: '#0969DA',
-    backgroundColor: '#0969DA',
-    pointBackgroundColor: '#0969DA',
-    pointBorderColor: '#0969DA',
-    borderWidth: 2,
-    pointRadius: 5,
-    pointHoverRadius: 7,
-    tension: 0.2,
-    fill: false
-  }]
-},
-options: {
-  responsive: true,
-  maintainAspectRatio: false,
-  layout: { padding: { top: 12, right: 16, bottom: 8, left: 8 } },
-  plugins: {
-    legend: { display: false },
-    tooltip: { callbacks: { label: function(ctx) { return ctx.parsed.y.toFixed(2) + '%'; } } }
-  },
-  scales: {
-    y: { min: 80, max: 95, title: { display: true, text: 'First-time pass rate (%)' } },
-    x: { title: { display: true, text: 'Testing cohort (chronological)' }, grid: { display: false } }
-  }
-}
-{{< /chart >}}
-</div>
-
-The chart is interactive. Hover over any bar or point to see the exact value; the chart re-themes automatically when the page toggles light or dark mode.
-
 ## Time From Graduation To First Test
 
 The phase 01 quirks section flagged a concentrated distribution of `terms_grad_to_first_test`. The schema phase precomputed this column on `students`, so phase 03 can query it directly.
@@ -320,10 +273,10 @@ WITH dist AS (
 )
 SELECT
   terms                                                AS "Terms After Graduation",
-  printf('%,d', students)                              AS "Students",
+  students                                             AS "Students",
   ROUND(100.0 * students /
     (SELECT COUNT(*) FROM students), 2)                AS "% of Students",
-  printf('%,d', SUM(students) OVER (ORDER BY terms))   AS "Cumulative Students",
+  SUM(students) OVER (ORDER BY terms)                  AS "Cumulative Students",
   ROUND(100.0 * SUM(students) OVER (ORDER BY terms) /
     (SELECT COUNT(*) FROM students), 2)                AS "Cumulative %"
 FROM dist
@@ -366,10 +319,10 @@ The last orientation cut is by retake count: how often students take multiple at
 -- and never retake; among retakers, eventual pass rates remain
 -- well above 50 percent through five attempts.
 SELECT
-  total_attempts                                      AS "Total Attempts",
-  printf('%,d', COUNT(*))                             AS "Students",
-  printf('%,d', SUM(eventually_passed))               AS "Eventually Passed",
-  printf('%,d', COUNT(*) - SUM(eventually_passed))    AS "Never Passed",
+  total_attempts        AS "Total Attempts",
+  COUNT(*)              AS "Students",
+  SUM(eventually_passed) AS "Eventually Passed",
+  COUNT(*) - SUM(eventually_passed) AS "Never Passed",
   ROUND(100.0 * SUM(eventually_passed) / COUNT(*), 2) AS "Eventually Passed %"
 FROM students
 GROUP BY total_attempts

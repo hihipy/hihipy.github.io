@@ -25,18 +25,18 @@ The U.S. Department of Education's [College Scorecard](https://collegescorecard.
 -- number of institutions, ten years of annual reports, and dozens to
 -- hundreds of program-level rows per institution.
 SELECT
-    'institutions'           AS "Table",
-    printf('%,d', COUNT(*))  AS "Rows"
+    'institutions' AS "Table",
+    COUNT(*)       AS "Rows"
 FROM institutions
 UNION ALL
 SELECT
     'annual_metrics',
-    printf('%,d', COUNT(*))
+    COUNT(*)
 FROM annual_metrics
 UNION ALL
 SELECT
     'field_of_study',
-    printf('%,d', COUNT(*))
+    COUNT(*)
 FROM field_of_study;
 ```
 

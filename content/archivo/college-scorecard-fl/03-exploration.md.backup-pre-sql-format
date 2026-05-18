@@ -166,14 +166,14 @@ The second obvious cut: who actually does the educating?
 -- ugds values per institution, so the reader can see whether the
 -- average is across the full window or a partial window.
 SELECT
-    i.instnm                                                  AS "Institution",
+    i.instnm AS "Institution",
     CASE i.sector
         WHEN 'public'            THEN 'Public'
         WHEN 'private_nonprofit' THEN 'Private Nonprofit'
         WHEN 'for_profit'        THEN 'For-Profit'
-    END                                                       AS "Sector",
-    printf('%,d', CAST(ROUND(AVG(am.ugds), 0) AS INTEGER))    AS "Avg UG Enrollment",
-    COUNT(am.ugds)                                            AS "Years Reporting"
+    END                    AS "Sector",
+    CAST(ROUND(AVG(am.ugds), 0) AS INTEGER) AS "Avg UG Enrollment",
+    COUNT(am.ugds)         AS "Years Reporting"
 FROM annual_metrics am
 JOIN institutions   i USING (unitid)
 WHERE am.ugds IS NOT NULL
@@ -220,14 +220,14 @@ The third orientation: how has the price changed?
 -- column shows how many institutions per sector contributed to
 -- each year's average so the reader can spot small-N risks.
 SELECT
-    am.cohort_year                                                       AS "Cohort Year",
+    am.cohort_year AS "Cohort Year",
     CASE i.sector
         WHEN 'public'            THEN 'Public'
         WHEN 'private_nonprofit' THEN 'Private Nonprofit'
         WHEN 'for_profit'        THEN 'For-Profit'
-    END                                                                  AS "Sector",
-    printf('%,d', CAST(ROUND(AVG(am.tuitionfee_in), 0) AS INTEGER))      AS "Avg In-State Tuition",
-    COUNT(am.tuitionfee_in)                                              AS "Reporting"
+    END                             AS "Sector",
+    CAST(ROUND(AVG(am.tuitionfee_in), 0) AS INTEGER) AS "Avg In-State Tuition",
+    COUNT(am.tuitionfee_in)         AS "Reporting"
 FROM annual_metrics am
 JOIN institutions   i USING (unitid)
 WHERE am.tuitionfee_in IS NOT NULL
@@ -473,7 +473,7 @@ The fifth orientation: what did the for-profit institutions that closed look lik
 SELECT
     i.instnm                  AS "Institution",
     i.last_year_in_data       AS "Last Year",
-    printf('%,d', am.ugds)    AS "Final Enrollment",
+    am.ugds                   AS "Final Enrollment",
     ROUND(am.c150_4 * 100, 1) AS "Completion %",
     ROUND(am.cdr3 * 100, 1)   AS "Default Rate %"
 FROM institutions       i
@@ -525,7 +525,7 @@ SELECT
     fos.cipdesc                AS "Program",
     fos.creddesc               AS "Credential",
     COUNT(DISTINCT fos.unitid) AS "Institutions",
-    printf('%,d', COUNT(*))    AS "Program-Year Rows"
+    COUNT(*)                   AS "Program-Year Rows"
 FROM field_of_study fos
 GROUP BY fos.cipcode, fos.credlev, fos.cipdesc, fos.creddesc
 ORDER BY COUNT(DISTINCT fos.unitid) DESC, COUNT(*) DESC

@@ -65,8 +65,8 @@ WITH funder_counts AS (
     GROUP BY application_id
 )
 SELECT
-    n_funders                AS "Funders",
-    printf('%,d', COUNT(*))  AS "Projects"
+    n_funders   AS "Funders",
+    COUNT(*)    AS "Projects"
 FROM funder_counts
 GROUP BY n_funders
 ORDER BY n_funders;
@@ -120,12 +120,11 @@ The same verification can be run against the database after it is built, which c
 -- total_cost_ic across its rows in project_funders. CAST converts
 -- the float-stored dollar amounts to integers for clean display.
 SELECT
-    p.application_id                              AS "Application",
-    printf('%,d', CAST(p.total_cost AS INTEGER))  AS "Project Total Cost ($)",
-    printf('%,d', (SELECT CAST(SUM(total_cost_ic) AS INTEGER)
-                   FROM project_funders
-                   WHERE application_id = p.application_id))
-                                                  AS "Sum of IC Splits ($)"
+    p.application_id                       AS "Application",
+    CAST(p.total_cost AS INTEGER)          AS "Project Total Cost ($)",
+    (SELECT CAST(SUM(total_cost_ic) AS INTEGER)
+     FROM project_funders
+     WHERE application_id = p.application_id) AS "Sum of IC Splits ($)"
 FROM projects p
 WHERE p.application_id = '6874256';
 ```
@@ -176,7 +175,7 @@ The check at the project level, against the database:
 -- disclose cost data for. The expected count from the source CSV
 -- analysis is 3,580.
 SELECT
-    printf('%,d', COUNT(*))  AS "Projects Without Funder Data"
+    COUNT(*)  AS "Projects Without Funder Data"
 FROM projects p
 WHERE NOT EXISTS (
     SELECT 1
@@ -217,10 +216,10 @@ WITH cat_counts AS (
     GROUP BY application_id
 )
 SELECT
-    ROUND(AVG(n_cats), 1)    AS "Avg Categories",
-    MIN(n_cats)              AS "Min",
-    MAX(n_cats)              AS "Max",
-    printf('%,d', COUNT(*))  AS "Projects"
+    ROUND(AVG(n_cats), 1)  AS "Avg Categories",
+    MIN(n_cats)            AS "Min",
+    MAX(n_cats)            AS "Max",
+    COUNT(*)               AS "Projects"
 FROM cat_counts;
 ```
 

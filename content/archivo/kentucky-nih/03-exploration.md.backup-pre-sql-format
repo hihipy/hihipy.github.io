@@ -151,8 +151,8 @@ The second obvious cut: who actually does this research?
 -- a project is a project regardless of how many funders co-funded it.
 -- Display-friendly aliases keep the result readable.
 SELECT
-    organization_name        AS "Institution",
-    printf('%,d', COUNT(*))  AS "Projects"
+    organization_name AS "Institution",
+    COUNT(*)          AS "Projects"
 FROM projects
 GROUP BY organization_name
 ORDER BY COUNT(*) DESC
@@ -195,8 +195,8 @@ The category breakdown across the full twenty-one-year window. The schema phase 
 -- projects that predate categorization or have not yet been tagged); it
 -- would otherwise crowd the top of the list with non-information.
 SELECT
-    c.category               AS "Category",
-    printf('%,d', COUNT(*))  AS "Projects"
+    c.category  AS "Category",
+    COUNT(*)    AS "Projects"
 FROM project_categories c
 WHERE c.category != 'No NIH Category available'
 GROUP BY c.category
@@ -230,8 +230,8 @@ This is a recognizably general-research portrait dominated by Neurosciences and 
 -- might predict for the state given its demographic and agricultural
 -- profile. The query checks their actual project counts.
 SELECT
-    c.category               AS "Category",
-    printf('%,d', COUNT(*))  AS "Projects"
+    c.category  AS "Category",
+    COUNT(*)    AS "Projects"
 FROM project_categories c
 WHERE c.category IN (
     'Substance Misuse',
@@ -270,7 +270,7 @@ The grant count tells the story more clearly than the dollar total. 2009 had 896
 -- and the 2011 return to baseline. Five rows is enough to see the shape.
 SELECT
     CAST(fiscal_year AS INTEGER)  AS "Fiscal Year",
-    printf('%,d', COUNT(*))       AS "Projects"
+    COUNT(*)                      AS "Projects"
 FROM projects
 WHERE fiscal_year BETWEEN 2007 AND 2011
 GROUP BY fiscal_year
@@ -301,8 +301,8 @@ The 896 in 2009 is roughly 150 projects above the 720-746 baseline range surroun
 -- or stimulus-driven; an unusual frequency of supplemental mechanisms
 -- (P-series, R03, R21) signals stimulus.
 SELECT
-    activity_code            AS "Activity Code",
-    printf('%,d', COUNT(*))  AS "Grants"
+    activity_code  AS "Activity Code",
+    COUNT(*)       AS "Grants"
 FROM projects
 WHERE fiscal_year = 2009
 GROUP BY activity_code

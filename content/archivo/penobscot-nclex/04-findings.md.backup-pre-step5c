@@ -15,14 +15,6 @@ showAuthor: false
 Three findings worth following at depth. A campus spread that suggests where intervention should focus, a cohort decline that runs slightly steeper than the national trend, and a retake-conversion pattern that reframes as a problem of engagement rather than conversion.
 {{< /lead >}}
 
-
-<style>
-  .pgbd-case-chart-wrap { margin: 1.5rem 0 2rem; }
-  .pgbd-case-chart-wrap > .chart { height: 360px; }
-  .pgbd-case-chart-headline { font-size: 1.1rem; font-weight: 700; margin: 0 0 0.25rem; line-height: 1.3; }
-  .pgbd-case-chart-sub { font-size: 0.85rem; opacity: 0.7; margin: 0 0 1rem; }
-</style>
-
 ## At a Glance
 
 Phase 03 ran six orientation queries that named the obvious dimensions and the shape of the data inside each one. Phase 04 develops three of those threads at depth. The campus spread is the largest in magnitude and the most actionable. The cohort decline is real but smaller than initial framings suggested. The retake conversion finding reframes a common assumption about where to focus retake support. The phase closes with a predictive-modeling subsection in R that names what a model could and could not do with this dataset, given the structural data limitations [phase 01](/archivo/penobscot-nclex/01-source/#structural-quirks-worth-documenting) flagged.
@@ -53,7 +45,7 @@ WITH campus AS (
 SELECT
   region                                      AS "Region",
   COUNT(*)                                    AS "Campuses",
-  printf('%,d', SUM(n))                       AS "First Attempts",
+  SUM(n)                                      AS "First Attempts",
   ROUND(100.0 * MIN(p), 2)                    AS "Min Campus %",
   ROUND(100.0 * MAX(p), 2)                    AS "Max Campus %",
   ROUND(100.0 * (MAX(p) - MIN(p)), 2)         AS "Within-Region Spread %"
@@ -78,7 +70,7 @@ The Hudson Valley Region has a within-region campus spread of 19.17 percentage p
 
 The reading: most of the institution's variance is within regions, not between them. A regional leadership intervention that addresses Hudson Valley's regional average would do nothing for the `POU`-versus-`SCH` gap, since those campuses sit on opposite ends of the regional distribution. The lever is at the campus level, not the regional level.
 
-How much would campus-level intervention lift the institution's overall rate? The cleanest framing is per-campus lift in absolute passes: for each underperforming campus, the number of additional first-time passes a lift to the institution-wide rate would produce. Filtering to campuses with at least 100 first-time attempts (the threshold below which Wald CIs become uninformative), the two clearest targets are `POU` (n=235, 73.62 percent first-time pass) and `SPR` (n=335, 75.52 percent). Lifting each to the institution-wide 85.94 percent would produce 29 additional passes at `POU` and 35 at `SPR`: 64 additional first-time passes across the two-year testing window, or roughly 32 per year. That is the magnitude an institution can act on at the campus-by-campus level. It is not a transformation; it is a recoverable gap.
+How much would campus-level intervention lift the institution's overall rate? A counterfactual: if the bottom quartile of campuses (five campuses, 893 first-time attempts) were lifted to the institution's overall median pass rate, the institution-wide rate would move from 85.94 percent to roughly 87.3 percent, a 1.36-point lift. That is a meaningful magnitude in a context where the national rate moved 3.7 points in a single year. It is not a transformation; it is a recoverable gap.
 
 The intervention design that follows from this finding is bottom-up campus-by-campus diagnosis, not top-down regional benchmarking. The case study cannot say what specifically explains the `POU`-versus-`SCH` gap; the dataset has no faculty-quality, curriculum-fidelity, or student-support metrics. But the analytical case for prioritizing campus-level inquiry over regional aggregates is direct.
 
@@ -93,7 +85,7 @@ Phase 03's cohort breakdown showed first-time pass rates dropping from a 2024 av
 -- 2025 directly.
 SELECT
   CAST(substr(testing_cohort, 1, 4) AS INTEGER)         AS "Year",
-  printf('%,d', COUNT(*))                               AS "First Attempts",
+  COUNT(*)                                              AS "First Attempts",
   ROUND(100.0 * AVG(CAST(result AS REAL)), 2)           AS "Pass Rate %",
   ROUND(100.0 *
     (AVG(CAST(result AS REAL)) -
@@ -124,193 +116,151 @@ For comparison, the [NCSBN](https://www.ncsbn.org/exams/exam-statistics-and-publ
 
 This is a meaningfully steeper decline than the national trend, but it is not the "twice the national rate" framing that initial readings of the data sometimes suggest. The honest statement is: the institution declined alongside the national trend, slightly faster than the national rate. The most prominent industry-level event in the window is the [Next Generation NCLEX (NGN)](https://www.ncsbn.org/exams/next-generation-nclex.page) format launching in April 2023, with 2024 cohorts largely composed of students trained before NGN took effect and 2025 cohorts largely composed of students trained after. The case study does not claim the NGN transition caused the institution-level decline; the national decline is consistent with that explanation, and the institution's slight extra magnitude is consistent with institution-specific factors compounding the national pattern.
 
-<div class="pgbd-case-chart-wrap">
-<p class="pgbd-case-chart-headline">The institution tracks the national decline at a similar pace, sitting 2 to 4 points below national in both years.</p>
-<p class="pgbd-case-chart-sub">First-time NCLEX-RN pass rate, institution vs NCSBN U.S.-educated national benchmark. NCSBN 2024 = 91.20%, 2025 estimate ~ 87.50%.</p>
-{{< chart >}}
-type: 'bar',
-data: {
-  labels: ['2024','2025'],
-  datasets: [
-    { label: 'Institution (Penobscot)', data: [88.64, 84.06], backgroundColor: '#0969DA', borderColor: '#0969DA', pointBackgroundColor: '#0969DA', pointBorderColor: '#0969DA', borderWidth: 0 },
-    { label: 'NCSBN National (U.S.-educated)', data: [91.20, 87.50], backgroundColor: '#BF8700', borderColor: '#BF8700', pointBackgroundColor: '#BF8700', pointBorderColor: '#BF8700', borderWidth: 0 }
-  ]
-},
-options: {
-  responsive: true,
-  maintainAspectRatio: false,
-  layout: { padding: { top: 12, right: 16, bottom: 8, left: 8 } },
-  plugins: {
-    legend: { position: 'top' },
-    tooltip: { callbacks: { label: function(ctx) { return ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(2) + '%'; } } }
-  },
-  scales: {
-    y: { min: 80, max: 95, title: { display: true, text: 'First-time pass rate (%)' } },
-    x: { grid: { display: false } }
-  }
-}
-{{< /chart >}}
-</div>
-
-The chart is interactive. Hover over any bar or point to see the exact value; the chart re-themes automatically when the page toggles light or dark mode.
-
 What this finding does *not* support is the framing that the institution is in a uniquely bad position. The institution is on the wrong side of the national trend by about a point and a quarter. That is a problem worth addressing, but it is not the dominant story. The campus spread is a larger and more institution-specific concern, both in absolute magnitude (21 points across campuses versus 4.58 points across years) and in actionability (campus-level intervention is more concrete than "respond to NGN").
 
 ## Finding 3: Retake Conversion as Engagement Story
 
-The retake-attempt distribution from phase 03 showed eventual pass rates remaining above 50 percent through five attempts. The national [NCSBN data](https://www.ncsbn.org/exams/exam-statistics-and-publications/nclex-pass-rates.page) for repeat U.S.-educated NCLEX-RN candidates shows a pass rate around 53 percent for the relevant quarters. Two reasonable definitions of "retake" exist in the data: every row with `attempt_number > 1` (which counts all retake sittings, including third and fourth attempts), and the student-level definition of a failed first-timer who returned in a later testing cohort. The two definitions give different numbers, and the methodological choice matters for what the data is being asked.
-
-The student-level definition is more defensible. It counts students rather than test sittings, which avoids double-counting students who failed multiple retakes. It also constrains "retake" to attempts in a strictly later quarter, separating retake behavior from the NCLEX 45-day waiting period that allows two attempts within the same testing cohort. The framing this finding develops is at the student level: of the first-time failers, how many returned, and of those who returned, how many eventually passed.
+The retake-attempt distribution from phase 03 showed eventual pass rates remaining above 50 percent through five attempts. The national [NCSBN data](https://www.ncsbn.org/exams/exam-statistics-and-publications/nclex-pass-rates.page) for repeat U.S.-educated NCLEX-RN candidates shows a pass rate around 53 percent for the relevant quarters. A natural framing is to compare these two numbers directly.
 
 ```sql
--- EDA-aligned retake funnel at the student level. The
--- first_failers CTE finds every student whose attempt 1 was
--- a failure, with the ordinal of that testing cohort. The
--- strict_retakers CTE finds those who returned in a strictly
--- later cohort (any later quarter, any attempt number).
--- The strict_eventually_passed CTE filters strict retakers
--- to those who eventually passed on any later-cohort attempt.
--- The final SELECT assembles the funnel: failures, retook,
--- did-not-retake, retook-and-eventually-passed.
-WITH first_failers AS (
-  SELECT a.student_id, t.ordinal AS fail_ord
-  FROM attempts a
-  JOIN term_order t ON t.cohort = a.testing_cohort
-  WHERE a.attempt_number = 1 AND a.result = 0
-),
-strict_retakers AS (
-  SELECT DISTINCT ff.student_id
-  FROM first_failers ff
-  JOIN attempts a2  ON a2.student_id = ff.student_id
-  JOIN term_order t2 ON t2.cohort = a2.testing_cohort
-  WHERE t2.ordinal > ff.fail_ord
-),
-strict_eventually_passed AS (
-  SELECT DISTINCT ff.student_id
-  FROM first_failers ff
-  JOIN attempts a2  ON a2.student_id = ff.student_id
-  JOIN term_order t2 ON t2.cohort = a2.testing_cohort
-  WHERE t2.ordinal > ff.fail_ord AND a2.result = 1
-)
+-- Pass rate on retake attempts. attempt_number > 1 isolates
+-- retake sittings (so the row count is the number of retake
+-- attempts, not the number of retake students). The result
+-- is a one-row table.
 SELECT
-  printf('%,d', (SELECT COUNT(*) FROM first_failers))                                          AS "First-Time Failures",
-  printf('%,d', (SELECT COUNT(*) FROM strict_retakers))                                        AS "Retook",
-  printf('%,d', (SELECT COUNT(*) FROM first_failers) - (SELECT COUNT(*) FROM strict_retakers)) AS "Did Not Retake",
-  ROUND(100.0 * (SELECT COUNT(*) FROM strict_retakers)
-                / (SELECT COUNT(*) FROM first_failers), 2)                                     AS "% Retook",
-  printf('%,d', (SELECT COUNT(*) FROM strict_eventually_passed))                               AS "Eventually Passed",
-  ROUND(100.0 * (SELECT COUNT(*) FROM strict_eventually_passed)
-                / (SELECT COUNT(*) FROM strict_retakers), 2)                                   AS "Conversion %";
+  COUNT(*)                                              AS "Retake Attempts",
+  SUM(result)                                           AS "Retake Passes",
+  ROUND(100.0 * AVG(CAST(result AS REAL)), 2)           AS "Retake Pass Rate %",
+  ROUND(100.0 *
+    (AVG(CAST(result AS REAL)) -
+     1.96 * SQRT(AVG(CAST(result AS REAL)) *
+                 (1 - AVG(CAST(result AS REAL))) / COUNT(*))), 2) AS "CI Lower %",
+  ROUND(100.0 *
+    (AVG(CAST(result AS REAL)) +
+     1.96 * SQRT(AVG(CAST(result AS REAL)) *
+                 (1 - AVG(CAST(result AS REAL))) / COUNT(*))), 2) AS "CI Upper %"
+FROM attempts
+WHERE attempt_number > 1;
 ```
 
-[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/penobscot-nclex.sqlite#/penobscot-nclex?sql=WITH+first_failers+AS+%28%0A++SELECT+a.student_id%2C+t.ordinal+AS+fail_ord%0A++FROM+attempts+a%0A++JOIN+term_order+t+ON+t.cohort+%3D+a.testing_cohort%0A++WHERE+a.attempt_number+%3D+1+AND+a.result+%3D+0%0A%29%2C%0Astrict_retakers+AS+%28%0A++SELECT+DISTINCT+ff.student_id%0A++FROM+first_failers+ff%0A++JOIN+attempts+a2++ON+a2.student_id+%3D+ff.student_id%0A++JOIN+term_order+t2+ON+t2.cohort+%3D+a2.testing_cohort%0A++WHERE+t2.ordinal+%3E+ff.fail_ord%0A%29%2C%0Astrict_eventually_passed+AS+%28%0A++SELECT+DISTINCT+ff.student_id%0A++FROM+first_failers+ff%0A++JOIN+attempts+a2++ON+a2.student_id+%3D+ff.student_id%0A++JOIN+term_order+t2+ON+t2.cohort+%3D+a2.testing_cohort%0A++WHERE+t2.ordinal+%3E+ff.fail_ord+AND+a2.result+%3D+1%0A%29%0ASELECT%0A++%28SELECT+COUNT%28%2A%29+FROM+first_failers%29+++++++++++++++++++++++++++++++++++++AS+%22First-Time+Failures%22%2C%0A++%28SELECT+COUNT%28%2A%29+FROM+strict_retakers%29+++++++++++++++++++++++++++++++++++++AS+%22Retook%22%2C%0A++%28SELECT+COUNT%28%2A%29+FROM+first_failers%29+-+%28SELECT+COUNT%28%2A%29+FROM+strict_retakers%29+AS+%22Did+Not+Retake%22%2C%0A++ROUND%28100.0+%2A+%28SELECT+COUNT%28%2A%29+FROM+strict_retakers%29%0A++++++++++++++++%2F+%28SELECT+COUNT%28%2A%29+FROM+first_failers%29%2C+2%29+++++++++++++++++++++++++AS+%22%25+Retook%22%2C%0A++%28SELECT+COUNT%28%2A%29+FROM+strict_eventually_passed%29+++++++++++++++++++++++++++++++++AS+%22Eventually+Passed%22%2C%0A++ROUND%28100.0+%2A+%28SELECT+COUNT%28%2A%29+FROM+strict_eventually_passed%29%0A++++++++++++++++%2F+%28SELECT+COUNT%28%2A%29+FROM+strict_retakers%29%2C+2%29+++++++++++++++++++++++++AS+%22Conversion+%25%22%3B)
+[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/penobscot-nclex.sqlite#/penobscot-nclex?sql=SELECT%0A++COUNT%28%2A%29++++++++++++++++++++++++++++++++++++++++++++++++AS+%22Retake+Attempts%22%2C%0A++SUM%28result%29+++++++++++++++++++++++++++++++++++++++++++++++AS+%22Retake+Passes%22%2C%0A++ROUND%28100.0+%2A+AVG%28CAST%28result+AS+REAL%29%29%2C+2%29+++++++++++AS+%22Retake+Pass+Rate+%25%22%2C%0A++ROUND%28100.0+%2A%0A++++%28AVG%28CAST%28result+AS+REAL%29%29+-%0A+++++1.96+%2A+SQRT%28AVG%28CAST%28result+AS+REAL%29%29+%2A%0A+++++++++++++++++%281+-+AVG%28CAST%28result+AS+REAL%29%29%29+%2F+COUNT%28%2A%29%29%29%2C+2%29+AS+%22CI+Lower+%25%22%2C%0A++ROUND%28100.0+%2A%0A++++%28AVG%28CAST%28result+AS+REAL%29%29+%2B%0A+++++1.96+%2A+SQRT%28AVG%28CAST%28result+AS+REAL%29%29+%2A%0A+++++++++++++++++%281+-+AVG%28CAST%28result+AS+REAL%29%29%29+%2F+COUNT%28%2A%29%29%29%2C+2%29+AS+%22CI+Upper+%25%22%0AFROM+attempts%0AWHERE+attempt_number+%3E+1%3B)
 
 Result:
 
-| First-Time Failures | Retook | Did Not Retake | % Retook | Eventually Passed | Conversion % |
-|---:|---:|---:|---:|---:|---:|
-| 943 | 391 | 552 | 41.46 | 301 | 76.98 |
+| Retake Attempts | Retake Passes | Retake Pass Rate % | CI Lower % | CI Upper % |
+|---:|---:|---:|---:|---:|
+| 930 | 580 | 62.37 | 59.26 | 65.48 |
 
-The conversion number is striking: 76.98 percent of strict-later-term retakers eventually pass. The NCSBN national benchmark for repeat U.S.-educated NCLEX-RN takers sits around 53 percent. The institution's retakers convert at about 24 percentage points above national, a gap large enough that it is unlikely to be explained by sampling, cohort timing, or methodological choice.
+62.37 percent on retake attempts, versus the national 53 percent. The institution's retakers outperform the national average by roughly 9 percentage points, with a confidence interval that does not include the national figure.
 
-The naive reading is "the retake support is working." That reading is correct as far as it goes, but it leads to the wrong next step. If retake support is already converting at 77 percent against a national baseline of 53 percent, the lever for further improvement is not making the retake program better. The lever is getting more first-time failers to engage with the retake program in the first place.
-
-Two caveats on the funnel before the per-cohort breakdown. First, 552 first-time failers did not retake in a later testing cohort within the window. Some unknown share of these students retook after the window closed (right-censoring) and the funnel cannot see those returns. The 41.46 percent retook rate is a within-window observation, not a lifetime estimate. Second, the strict-later-term definition excludes students who retook within the same testing cohort as their first failure. The NCLEX 45-day waiting period allows this, and 196 first-time failers fall into this category. Including them as retakers raises the within-window engagement rate but does not change the conversion direction.
-
-The counterfactual question is what would happen if the 552 first-time failers who did not retake within the window had returned at the observed conversion rate. 552 students multiplied by 76.98 percent conversion equals roughly 425 additional eventual passes. Adding those 425 to the 6,320 students who already eventually passed lifts the eventually-passed rate from 92.68 percent to 98.91 percent: a 6.23 percentage-point gain. That is meaningfully larger than the campus-spread lift from finding one (32 additional first-time passes per year), and it operates at a different leverage point: campus-level intervention is about teaching and curriculum, engagement-level intervention is about outreach and support for students who already failed once.
-
-The counterfactual is bounded above by 100 percent realistic engagement, which no institution achieves. A more realistic target is engagement parity with the higher-engagement cohorts: lifting the 552 non-retakers to a 70 percent retake rate (which the higher-engaging cohorts in the per-cohort breakdown below approximate) would produce roughly 297 additional passes and lift the eventually-passed rate to about 97.04 percent. Either framing makes the same point. The retake program is doing real work; the unfilled space is engagement.
-
-<div class="pgbd-case-chart-wrap">
-<p class="pgbd-case-chart-headline">The retake funnel: most first-time failers do not return within the window.</p>
-<p class="pgbd-case-chart-sub">Of 943 first-time failers, 552 did not retake in a later quarter within the testing window, 391 did, and 301 of those retakers eventually passed (76.98% conversion).</p>
-{{< chart >}}
-type: 'bar',
-data: {
-  labels: ['First-Time Failures','Did Not Retake','Retook (Later Quarter)','Eventually Passed'],
-  datasets: [{
-    label: 'Students',
-    data: [943, 552, 391, 301],
-    backgroundColor: ['#0969DA','#BF8700','#0969DA','#0969DA'],
-    borderColor: ['#0969DA','#BF8700','#0969DA','#0969DA'],
-    pointBackgroundColor: ['#0969DA','#BF8700','#0969DA','#0969DA'],
-    pointBorderColor: ['#0969DA','#BF8700','#0969DA','#0969DA'],
-    borderWidth: 0
-  }]
-},
-options: {
-  indexAxis: 'y',
-  responsive: true,
-  maintainAspectRatio: false,
-  layout: { padding: { top: 8, right: 32, bottom: 8, left: 8 } },
-  plugins: {
-    legend: { display: false },
-    tooltip: { callbacks: { label: function(ctx) { return ctx.parsed.x + ' students'; } } }
-  },
-  scales: {
-    x: { min: 0, max: 1000, title: { display: true, text: 'Students' } },
-    y: { ticks: { autoSkip: false }, grid: { display: false } }
-  }
-}
-{{< /chart >}}
-</div>
-
-The chart is interactive. Hover over any bar or point to see the exact value; the chart re-themes automatically when the page toggles light or dark mode.
-
-
+The naive reading is "the retake support is working." That reading is correct as far as it goes, but it leads to the wrong next step. If retake support is already working at 62 percent against a national baseline of 53 percent, the lever for further improvement is not making the retake program better. The lever is getting more first-time failers to engage with the retake program in the first place.
 
 ```sql
--- Per-cohort breakdown of the "did not retake" pattern under the
--- strict-later-term definition. For each testing cohort, count
--- failed first-timers and how many returned in a strictly later
--- quarter. The 2025WIQ row will read 100 percent because 2025WIQ
--- is the last cohort in the window; the right-censoring
--- discussion below addresses why.
-WITH first_failers AS (
-  SELECT a.student_id, a.testing_cohort AS fail_cohort, t.ordinal AS fail_ord
-  FROM attempts a
-  JOIN term_order t ON t.cohort = a.testing_cohort
-  WHERE a.attempt_number = 1 AND a.result = 0
+-- Engagement among first-time failers. Of students whose first
+-- visible attempt failed, how many took another attempt within
+-- the window? The CTE finds each student's first attempt and
+-- joins to the students table to read total_attempts.
+WITH first_attempt AS (
+  SELECT student_id, MIN(attempt_number) AS min_attempt
+  FROM attempts
+  GROUP BY student_id
 ),
-strict_retakers AS (
-  SELECT DISTINCT ff.student_id, ff.fail_cohort, ff.fail_ord
-  FROM first_failers ff
-  JOIN attempts a2  ON a2.student_id = ff.student_id
-  JOIN term_order t2 ON t2.cohort = a2.testing_cohort
-  WHERE t2.ordinal > ff.fail_ord
+first_result AS (
+  SELECT
+    a.student_id,
+    a.result            AS first_result,
+    a.testing_cohort    AS first_cohort
+  FROM attempts a
+  JOIN first_attempt f
+    ON a.student_id = f.student_id
+   AND a.attempt_number = f.min_attempt
 )
 SELECT
-  ff.fail_cohort                                       AS "Testing Cohort",
-  printf('%,d', COUNT(*))                              AS "First-Time Failures",
-  printf('%,d', COUNT(*) - COUNT(sr.student_id))       AS "Did Not Retake",
-  ROUND(100.0 * (COUNT(*) - COUNT(sr.student_id)) /
-                COUNT(*), 2)                           AS "% Did Not Retake"
-FROM first_failers ff
-LEFT JOIN strict_retakers sr ON sr.student_id = ff.student_id
-GROUP BY ff.fail_cohort, ff.fail_ord
-ORDER BY ff.fail_ord;
+  COUNT(*)                                                AS "First-Time Failures",
+  SUM(CASE WHEN s.total_attempts > 1 THEN 1 ELSE 0 END)   AS "Retook",
+  SUM(CASE WHEN s.total_attempts = 1 THEN 1 ELSE 0 END)   AS "Did Not Retake",
+  ROUND(100.0 *
+    SUM(CASE WHEN s.total_attempts > 1 THEN 1 ELSE 0 END) /
+    COUNT(*), 2)                                          AS "% Retook",
+  SUM(CASE WHEN s.total_attempts > 1
+            AND s.eventually_passed = 1 THEN 1 ELSE 0 END) AS "Retook and Passed",
+  ROUND(100.0 *
+    SUM(CASE WHEN s.total_attempts > 1
+              AND s.eventually_passed = 1 THEN 1 ELSE 0 END) /
+    NULLIF(SUM(CASE WHEN s.total_attempts > 1 THEN 1 ELSE 0 END), 0), 2) AS "Conversion %"
+FROM first_result fr
+JOIN students s ON s.student_id = fr.student_id
+WHERE fr.first_result = 0;
 ```
 
-[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/penobscot-nclex.sqlite#/penobscot-nclex?sql=WITH+first_failers+AS+%28%0A++SELECT+a.student_id%2C+a.testing_cohort+AS+fail_cohort%2C+t.ordinal+AS+fail_ord%0A++FROM+attempts+a%0A++JOIN+term_order+t+ON+t.cohort+%3D+a.testing_cohort%0A++WHERE+a.attempt_number+%3D+1+AND+a.result+%3D+0%0A%29%2C%0Astrict_retakers+AS+%28%0A++SELECT+DISTINCT+ff.student_id%2C+ff.fail_cohort%2C+ff.fail_ord%0A++FROM+first_failers+ff%0A++JOIN+attempts+a2++ON+a2.student_id+%3D+ff.student_id%0A++JOIN+term_order+t2+ON+t2.cohort+%3D+a2.testing_cohort%0A++WHERE+t2.ordinal+%3E+ff.fail_ord%0A%29%0ASELECT%0A++ff.fail_cohort+++++++++++++++++++++++++++++++++++++++++++AS+%22Testing+Cohort%22%2C%0A++COUNT%28%2A%29++++++++++++++++++++++++++++++++++++++++++++++++AS+%22First-Time+Failures%22%2C%0A++COUNT%28%2A%29+-+COUNT%28sr.student_id%29++++++++++++++++++++++++++AS+%22Did+Not+Retake%22%2C%0A++ROUND%28100.0+%2A+%28COUNT%28%2A%29+-+COUNT%28sr.student_id%29%29+%2F%0A++++++++++++++++COUNT%28%2A%29%2C+2%29+++++++++++++++++++++++++++++++++AS+%22%25+Did+Not+Retake%22%0AFROM+first_failers+ff%0ALEFT+JOIN+strict_retakers+sr+ON+sr.student_id+%3D+ff.student_id%0AGROUP+BY+ff.fail_cohort%2C+ff.fail_ord%0AORDER+BY+ff.fail_ord%3B)
+[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/penobscot-nclex.sqlite#/penobscot-nclex?sql=WITH+first_attempt+AS+%28%0A++SELECT+student_id%2C+MIN%28attempt_number%29+AS+min_attempt%0A++FROM+attempts%0A++GROUP+BY+student_id%0A%29%2C%0Afirst_result+AS+%28%0A++SELECT%0A++++a.student_id%2C%0A++++a.result++++++++++++AS+first_result%2C%0A++++a.testing_cohort++++AS+first_cohort%0A++FROM+attempts+a%0A++JOIN+first_attempt+f%0A++++ON+a.student_id+%3D+f.student_id%0A+++AND+a.attempt_number+%3D+f.min_attempt%0A%29%0ASELECT%0A++COUNT%28%2A%29++++++++++++++++++++++++++++++++++++++++++++++++AS+%22First-Time+Failures%22%2C%0A++SUM%28CASE+WHEN+s.total_attempts+%3E+1+THEN+1+ELSE+0+END%29+++AS+%22Retook%22%2C%0A++SUM%28CASE+WHEN+s.total_attempts+%3D+1+THEN+1+ELSE+0+END%29+++AS+%22Did+Not+Retake%22%2C%0A++ROUND%28100.0+%2A%0A++++SUM%28CASE+WHEN+s.total_attempts+%3E+1+THEN+1+ELSE+0+END%29+%2F%0A++++COUNT%28%2A%29%2C+2%29++++++++++++++++++++++++++++++++++++++++++++AS+%22%25+Retook%22%2C%0A++SUM%28CASE+WHEN+s.total_attempts+%3E+1%0A++++++++++++AND+s.eventually_passed+%3D+1+THEN+1+ELSE+0+END%29+AS+%22Retook+and+Passed%22%2C%0A++ROUND%28100.0+%2A%0A++++SUM%28CASE+WHEN+s.total_attempts+%3E+1%0A++++++++++++++AND+s.eventually_passed+%3D+1+THEN+1+ELSE+0+END%29+%2F%0A++++NULLIF%28SUM%28CASE+WHEN+s.total_attempts+%3E+1+THEN+1+ELSE+0+END%29%2C+0%29%2C+2%29+AS+%22Conversion+%25%22%0AFROM+first_result+fr%0AJOIN+students+s+ON+s.student_id+%3D+fr.student_id%0AWHERE+fr.first_result+%3D+0%3B)
+
+Result:
+
+| First-Time Failures | Retook | Did Not Retake | % Retook | Retook and Passed | Conversion % |
+|---:|---:|---:|---:|---:|---:|
+| 989 | 608 | 381 | 61.48 | 490 | 80.59 |
+
+989 students failed their first NCLEX attempt within the window. 608 retook at some point (61.48 percent of failers). Of those who retook, 490 eventually passed (80.59 percent conversion). The remaining 381 first-time failers did not take another attempt within the window.
+
+The 381 non-retakers are the engagement-lever group. If those 381 students had retaken at the same observed conversion rate (80.59 percent), the institution would have produced roughly 307 additional eventual passes. The eventually-passed rate would lift from 92.68 percent to 97.18 percent, a 4.5 percentage-point gain. That is a larger lift than the campus-spread counterfactual from finding one.
+
+```sql
+-- Per-cohort breakdown of the "did not retake" pattern. Each
+-- testing cohort's first-time failers, with the count and
+-- percentage that did not return for a retake attempt within
+-- the window. The 2025WIQ pattern is the outlier worth
+-- naming separately.
+WITH first_attempt AS (
+  SELECT student_id, MIN(attempt_number) AS min_attempt
+  FROM attempts
+  GROUP BY student_id
+),
+first_result AS (
+  SELECT
+    a.student_id,
+    a.result            AS first_result,
+    a.testing_cohort    AS first_cohort
+  FROM attempts a
+  JOIN first_attempt f
+    ON a.student_id = f.student_id
+   AND a.attempt_number = f.min_attempt
+)
+SELECT
+  fr.first_cohort                                       AS "Testing Cohort",
+  COUNT(*)                                              AS "First-Time Failures",
+  SUM(CASE WHEN s.total_attempts = 1 THEN 1 ELSE 0 END) AS "Did Not Retake",
+  ROUND(100.0 *
+    SUM(CASE WHEN s.total_attempts = 1 THEN 1 ELSE 0 END) /
+    COUNT(*), 2)                                        AS "% Did Not Retake"
+FROM first_result fr
+JOIN students s ON s.student_id = fr.student_id
+JOIN term_order t ON t.cohort = fr.first_cohort
+WHERE fr.first_result = 0
+GROUP BY fr.first_cohort, t.ordinal
+ORDER BY t.ordinal;
+```
+
+[Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/penobscot-nclex.sqlite#/penobscot-nclex?sql=WITH+first_attempt+AS+%28%0A++SELECT+student_id%2C+MIN%28attempt_number%29+AS+min_attempt%0A++FROM+attempts%0A++GROUP+BY+student_id%0A%29%2C%0Afirst_result+AS+%28%0A++SELECT%0A++++a.student_id%2C%0A++++a.result++++++++++++AS+first_result%2C%0A++++a.testing_cohort++++AS+first_cohort%0A++FROM+attempts+a%0A++JOIN+first_attempt+f%0A++++ON+a.student_id+%3D+f.student_id%0A+++AND+a.attempt_number+%3D+f.min_attempt%0A%29%0ASELECT%0A++fr.first_cohort+++++++++++++++++++++++++++++++++++++++++++AS+%22Testing+Cohort%22%2C%0A++COUNT%28%2A%29++++++++++++++++++++++++++++++++++++++++++++++++AS+%22First-Time+Failures%22%2C%0A++SUM%28CASE+WHEN+s.total_attempts+%3D+1+THEN+1+ELSE+0+END%29+AS+%22Did+Not+Retake%22%2C%0A++ROUND%28100.0+%2A%0A++++SUM%28CASE+WHEN+s.total_attempts+%3D+1+THEN+1+ELSE+0+END%29+%2F%0A++++COUNT%28%2A%29%2C+2%29++++++++++++++++++++++++++++++++++++++++++++AS+%22%25+Did+Not+Retake%22%0AFROM+first_result+fr%0AJOIN+students+s+ON+s.student_id+%3D+fr.student_id%0AJOIN+term_order+t+ON+t.cohort+%3D+fr.first_cohort%0AWHERE+fr.first_result+%3D+0%0AGROUP+BY+fr.first_cohort%2C+t.ordinal%0AORDER+BY+t.ordinal%3B)
 
 Result:
 
 | Testing Cohort | First-Time Failures | Did Not Retake | % Did Not Retake |
 |---|---:|---:|---:|
-| 2024SPQ | 78 | 47 | 60.26 |
-| 2024SUQ | 48 | 33 | 68.75 |
-| 2024FAQ | 93 | 47 | 50.54 |
-| 2024WIQ | 93 | 39 | 41.94 |
-| 2025SPQ | 143 | 53 | 37.06 |
-| 2025SUQ | 160 | 86 | 53.75 |
-| 2025FAQ | 150 | 69 | 46.00 |
-| 2025WIQ | 178 | 178 | 100.00 |
+| 2024WIQ | 100 | 34 | 34.00 |
+| 2024SPQ | 88 | 37 | 42.05 |
+| 2024SUQ | 54 | 23 | 42.59 |
+| 2024FAQ | 96 | 29 | 30.21 |
+| 2025WIQ | 180 | 137 | 76.11 |
+| 2025SPQ | 151 | 34 | 22.52 |
+| 2025SUQ | 167 | 41 | 24.55 |
+| 2025FAQ | 153 | 46 | 30.07 |
 
-The final row, 2025WIQ at 100 percent no-retake, is right-censoring rather than substance: 2025WIQ is the last cohort in the testing window, so no strictly-later-quarter retakes are visible. Those students may well have retaken in 2026, but the data does not reach forward into 2026 to find them. The same right-censoring affects every cohort to a lesser degree (later cohorts have fewer subsequent quarters in which their retakes could be observed), and the rates above are within-window observations rather than lifetime estimates.
+The 2024 cohorts show non-retake rates between 30 and 43 percent. The 2025 cohorts other than winter show non-retake rates between 22 and 30 percent. The 2025 winter cohort sits at 76 percent. That number is not explainable by the closing of the testing window: the 2025WIQ cohort had three subsequent quarters in the window to retake (`2025SPQ`, `2025SUQ`, `2025FAQ`), more than the 2025FAQ cohort had. Yet 2025WIQ's non-retake rate is roughly two and a half times the next-highest 2025 cohort.
 
-The cohort-to-cohort variation among the seven non-final cohorts is what the case study can actually read. Non-retake rates range from 37 percent (2025SPQ) to 69 percent (2024SUQ), a 32-point spread that does not pattern cleanly by year, season, or testing volume. 2024SUQ at 69 percent and 2024WIQ at 42 percent are two cohorts six months apart in the same calendar year with substantially different return behavior. The variation is real, but its source is not legible from the available data.
+The case study cannot say from this data alone what drove the 2025WIQ anomaly. The most likely candidates worth surfacing for institutional investigation: a regional or programmatic policy change taking effect for that specific cohort, a contemporaneous external event (a tuition or financial-aid change, a state board policy adjustment, an institutional communication about retake support), or a measurement artifact in how the source data tracks retakes for that quarter. The pattern is concentrated enough in one quarter that the explanation is plausibly identifiable by anyone with access to institutional records for that period.
 
-The institution-level implication is the same regardless: the engagement gap is the lever, not the conversion rate. Two analytical follow-ups would clarify the cohort-to-cohort pattern. First, an extension of the testing window to 2026 cohorts would reduce the right-censoring distortion. Second, an institutional-record investigation of operational differences across the seven cohorts (regional policy changes, financial-aid timing, communication cadence with first-time failers) would surface the operational factors that the funnel arithmetic cannot.
+The institution-level implication, independent of what specifically explains 2025WIQ, is that the engagement gap is real and concentrated. The 4.5-point counterfactual gain from full engagement assumes uniform retake behavior. The actual data shows engagement varies substantially across cohorts, which means the lever is reachable at the cohort level: identify the specific operational factors in 2024WIQ (when non-retake rate was 34 percent) versus 2025WIQ (when it was 76 percent) and apply them consistently.
 
 ## Predictive Modeling: A Ceiling Analysis
 
@@ -397,8 +347,8 @@ The case study's predictive-modeling conclusion is structural. With the availabl
 
 The case study ends here as a published artifact. The three findings (campus spread, cohort decline, retake engagement) and the predictive-modeling ceiling are the analytical conclusions the data supports.
 
-What an institutional follow-up would look like, given access to the institution's full source data prior to anonymization, is straightforward to sketch. The campus-spread finding points to bottom-up diagnosis at the five campuses below the institution median, with comparison against the four campuses above (Lehigh Valley's `BTH` and `REA`, Hudson Valley's `SCH` and `KIN`). The retake-engagement finding points to a 2025WIQ-cohort post-mortem and a sustained engagement campaign for first-time failers at all cohorts. The predictive-modeling finding points to the data-integration work that would make per-student early-warning models possible.
+What an institutional follow-up would look like, given access to the source data the synthesis was built from, is straightforward to sketch. The campus-spread finding points to bottom-up diagnosis at the five campuses below the institution median, with comparison against the four campuses above (Lehigh Valley's `BTH` and `REA`, Hudson Valley's `SCH` and `KIN`). The retake-engagement finding points to a 2025WIQ-cohort post-mortem and a sustained engagement campaign for first-time failers at all cohorts. The predictive-modeling finding points to the data-integration work that would make per-student early-warning models possible.
 
-The case study's contribution is making these analytical questions sharp enough that they can be acted on. The methodology is replicable: the [source phase](/archivo/penobscot-nclex/01-source/) documents what the published dataset is and why the institution is anonymized, the [schema phase](/archivo/penobscot-nclex/02-schema/) documents the table design that lets every query in this case study run cleanly, and the [exploration phase](/archivo/penobscot-nclex/03-exploration/) documents the orientation queries that surface the threads this phase developed.
+The case study's contribution is making these analytical questions sharp enough that they can be acted on. The methodology is replicable: the [source phase](/archivo/penobscot-nclex/01-source/) documents what the published dataset is and why it is synthetic, the [schema phase](/archivo/penobscot-nclex/02-schema/) documents the table design that lets every query in this case study run cleanly, and the [exploration phase](/archivo/penobscot-nclex/03-exploration/) documents the orientation queries that surface the threads this phase developed.
 
 The reproducibility-is-the-floor commitment the [biblioteca](/biblioteca/#reproducibility-is-the-floor-review-is-the-ceiling) page makes holds throughout: every number in this case study traces to a query the reader can run against the published SQLite, in the browser, with no setup. The R code in the predictive-modeling section is the only piece that requires a local environment; everything else is one click away.

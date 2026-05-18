@@ -13,14 +13,6 @@ showAuthor: false
 The institution is anonymized. The findings are not. Counts, pass rates, attempt patterns, and analytical conclusions are the institution's real data, with only the institution name, region names, and one program-code suffix replaced for privacy.
 {{< /lead >}}
 
-
-<style>
-  .pgbd-case-chart-wrap { margin: 1.5rem 0 2rem; }
-  .pgbd-case-chart-wrap > .chart { height: 360px; }
-  .pgbd-case-chart-headline { font-size: 1.1rem; font-weight: 700; margin: 0 0 0.25rem; line-height: 1.3; }
-  .pgbd-case-chart-sub { font-size: 0.85rem; opacity: 0.7; margin: 0 0 1rem; }
-</style>
-
 ## At a Glance
 
 This case study takes a 7,635-attempt slice of NCLEX-RN data covering two academic years (eight quarters from 2024SPQ through 2025WIQ) at a multi-campus nursing college. The slice represents 6,819 unique students across 19 campuses in five regions. Source columns: student identifier, region, campus, program code, starting cohort, graduating cohort, testing cohort, attempt number, and a binary pass/fail result. Nothing else: no demographics, no academic readiness scores, no test-section breakdowns. The full nine-column schema is what was available in the source engagement, and what is published here is the anonymized version of it: the institution name (Penobscot College of Nursing), region names, and one program-code suffix are replaced; every count, every pass rate, every retake outcome, every analytical finding is the institution's real data.
@@ -33,18 +25,18 @@ This case study takes a 7,635-attempt slice of NCLEX-RN data covering two academ
 -- students retake; fewer cohort terms than the calendar suggests because
 -- the source data does not include every quarter in the 21-year window.
 SELECT
-    'attempts'                  AS "Table",
-    printf('%,d', COUNT(*))     AS "Rows"
+    'attempts'   AS "Table",
+    COUNT(*)     AS "Rows"
 FROM attempts
 UNION ALL
 SELECT
     'students',
-    printf('%,d', COUNT(*))
+    COUNT(*)
 FROM students
 UNION ALL
 SELECT
     'term_order',
-    printf('%,d', COUNT(*))
+    COUNT(*)
 FROM term_order;
 ```
 
@@ -110,42 +102,6 @@ The window is two academic years of testing (eight quarters from `2024SPQ` throu
 
 The institution-level scope (multi-campus, five regions, 19 campuses) lets a campus-spread thread emerge that a single-campus scope could not. Campus is the highest-resolution categorical variable in the data, and as the next section shows, it is also where the most interesting variation lives.
 
-<div class="pgbd-case-chart-wrap">
-<p class="pgbd-case-chart-headline">Nineteen campuses, a 21-point spread in first-time pass rates.</p>
-<p class="pgbd-case-chart-sub">First-time NCLEX-RN pass rate by campus, eight quarters from 2024SPQ through 2025WIQ. Sorted descending. Sample sizes on the y-axis labels.</p>
-{{< chart >}}
-type: 'bar',
-data: {
-  labels: ['BTH (n=194)','SCH (n=387)','REA (n=246)','KIN (n=291)','ALB (n=708)','POR (n=36)','WOR (n=456)','WTB (n=68)','ALL (n=848)','SCR (n=341)','BRI (n=76)','NHV (n=271)','BOS (n=1,514)','HAR (n=376)','MAN (n=11)','LOW (n=267)','SPR (n=335)','POU (n=235)','NEW (n=45)'],
-  datasets: [{
-    label: 'First-time pass rate (%)',
-    data: [94.33, 92.51, 91.46, 90.03, 89.83, 88.89, 87.72, 86.76, 85.85, 85.63, 85.53, 85.24, 85.07, 84.57, 81.82, 81.27, 75.52, 73.62, 73.33],
-    backgroundColor: '#0969DA',
-    borderColor: '#0969DA',
-    pointBackgroundColor: '#0969DA',
-    pointBorderColor: '#0969DA',
-    borderWidth: 0
-  }]
-},
-options: {
-  indexAxis: 'y',
-  responsive: true,
-  maintainAspectRatio: false,
-  layout: { padding: { top: 8, right: 16, bottom: 8, left: 8 } },
-  plugins: {
-    legend: { display: false },
-    tooltip: { callbacks: { label: function(ctx) { return ctx.parsed.x.toFixed(2) + '%'; } } }
-  },
-  scales: {
-    x: { min: 60, max: 100, title: { display: true, text: 'First-time pass rate (%)' } },
-    y: { ticks: { autoSkip: false }, grid: { display: false } }
-  }
-}
-{{< /chart >}}
-</div>
-
-The chart is interactive. Hover over any bar or point to see the exact value; the chart re-themes automatically when the page toggles light or dark mode.
-
 ## The 21-Point Campus Spread
 
 The first analytical thread surfaces from a single `GROUP BY campus` query. First-time pass rate by campus, sorted ascending:
@@ -159,7 +115,7 @@ The first analytical thread surfaces from a single `GROUP BY campus` query. Firs
 -- 21-point spread between highest and lowest is the first thing visible.
 SELECT
     campus                          AS "Campus",
-    printf('%,d', COUNT(*))         AS "First Attempts",
+    COUNT(*)                        AS "First Attempts",
     ROUND(100.0 * AVG(result), 2)   AS "Pass Rate %"
 FROM attempts
 WHERE attempt_number = 1

@@ -62,7 +62,7 @@ WITH region_stats AS (
 )
 SELECT
   region                                                AS "Region",
-  printf('%,d', n)                                      AS "First Attempts",
+  n                                                     AS "First Attempts",
   ROUND(100.0 * p, 2)                                   AS "Pass Rate %",
   ROUND(100.0 * (p - 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Lower %",
   ROUND(100.0 * (p + 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Upper %"
@@ -110,7 +110,7 @@ WITH campus_stats AS (
 SELECT
   campus                                                AS "Campus",
   region                                                AS "Region",
-  printf('%,d', n)                                      AS "First Attempts",
+  n                                                     AS "First Attempts",
   ROUND(100.0 * p, 2)                                   AS "Pass Rate %",
   ROUND(100.0 * (p - 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Lower %",
   ROUND(100.0 * (p + 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Upper %"
@@ -179,7 +179,7 @@ WITH prog_stats AS (
 SELECT
   pathway                                               AS "Pathway",
   program                                               AS "Program",
-  printf('%,d', n)                                      AS "First Attempts",
+  n                                                     AS "First Attempts",
   ROUND(100.0 * p, 2)                                   AS "Pass Rate %",
   ROUND(100.0 * (p - 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Lower %",
   ROUND(100.0 * (p + 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Upper %"
@@ -230,7 +230,7 @@ WITH cohort_stats AS (
 )
 SELECT
   testing_cohort                                        AS "Testing Cohort",
-  printf('%,d', n)                                      AS "First Attempts",
+  n                                                     AS "First Attempts",
   ROUND(100.0 * p, 2)                                   AS "Pass Rate %",
   ROUND(100.0 * (p - 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Lower %",
   ROUND(100.0 * (p + 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Upper %"
@@ -320,10 +320,10 @@ WITH dist AS (
 )
 SELECT
   terms                                                AS "Terms After Graduation",
-  printf('%,d', students)                              AS "Students",
+  students                                             AS "Students",
   ROUND(100.0 * students /
     (SELECT COUNT(*) FROM students), 2)                AS "% of Students",
-  printf('%,d', SUM(students) OVER (ORDER BY terms))   AS "Cumulative Students",
+  SUM(students) OVER (ORDER BY terms)                  AS "Cumulative Students",
   ROUND(100.0 * SUM(students) OVER (ORDER BY terms) /
     (SELECT COUNT(*) FROM students), 2)                AS "Cumulative %"
 FROM dist
@@ -366,10 +366,10 @@ The last orientation cut is by retake count: how often students take multiple at
 -- and never retake; among retakers, eventual pass rates remain
 -- well above 50 percent through five attempts.
 SELECT
-  total_attempts                                      AS "Total Attempts",
-  printf('%,d', COUNT(*))                             AS "Students",
-  printf('%,d', SUM(eventually_passed))               AS "Eventually Passed",
-  printf('%,d', COUNT(*) - SUM(eventually_passed))    AS "Never Passed",
+  total_attempts        AS "Total Attempts",
+  COUNT(*)              AS "Students",
+  SUM(eventually_passed) AS "Eventually Passed",
+  COUNT(*) - SUM(eventually_passed) AS "Never Passed",
   ROUND(100.0 * SUM(eventually_passed) / COUNT(*), 2) AS "Eventually Passed %"
 FROM students
 GROUP BY total_attempts

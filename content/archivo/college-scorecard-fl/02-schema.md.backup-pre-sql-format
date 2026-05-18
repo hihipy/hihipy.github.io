@@ -31,21 +31,21 @@ The schema is three tables, each with a different grain. The query that document
 -- column for documentation. Phase 02's prose claims about the
 -- schema all reduce to these three numbers.
 SELECT
-    'institutions'           AS "Table",
-    'one row per UNITID'     AS "Grain",
-    printf('%,d', COUNT(*))  AS "Rows"
+    'institutions'       AS "Table",
+    'one row per UNITID' AS "Grain",
+    COUNT(*)             AS "Rows"
 FROM institutions
 UNION ALL
 SELECT
     'annual_metrics',
     'one row per (UNITID, cohort_year)',
-    printf('%,d', COUNT(*))
+    COUNT(*)
 FROM annual_metrics
 UNION ALL
 SELECT
     'field_of_study',
     'one row per (UNITID, cohort_year, CIPCODE, CREDLEV)',
-    printf('%,d', COUNT(*))
+    COUNT(*)
 FROM field_of_study;
 ```
 
@@ -184,43 +184,43 @@ The privacy-suppression pattern is not uniform. Different metrics get suppressed
 -- Six metrics span the analytical surface phase 04 will exercise.
 SELECT
     'ugds (enrollment)'                      AS "Metric",
-    printf('%,d', COUNT(*))                  AS "Total Rows",
-    printf('%,d', COUNT(ugds))               AS "Non-Null",
+    COUNT(*)                                 AS "Total Rows",
+    COUNT(ugds)                              AS "Non-Null",
     ROUND(100.0 * COUNT(ugds) / COUNT(*), 1) AS "% Filled"
 FROM annual_metrics
 UNION ALL
 SELECT
     'tuitionfee_in (in-state tuition)',
-    printf('%,d', COUNT(*)),
-    printf('%,d', COUNT(tuitionfee_in)),
+    COUNT(*),
+    COUNT(tuitionfee_in),
     ROUND(100.0 * COUNT(tuitionfee_in) / COUNT(*), 1)
 FROM annual_metrics
 UNION ALL
 SELECT
     'c150_4 (completion rate)',
-    printf('%,d', COUNT(*)),
-    printf('%,d', COUNT(c150_4)),
+    COUNT(*),
+    COUNT(c150_4),
     ROUND(100.0 * COUNT(c150_4) / COUNT(*), 1)
 FROM annual_metrics
 UNION ALL
 SELECT
     'md_earn_wne_p10 (10-year earnings)',
-    printf('%,d', COUNT(*)),
-    printf('%,d', COUNT(md_earn_wne_p10)),
+    COUNT(*),
+    COUNT(md_earn_wne_p10),
     ROUND(100.0 * COUNT(md_earn_wne_p10) / COUNT(*), 1)
 FROM annual_metrics
 UNION ALL
 SELECT
     'grad_debt_mdn (median completer debt)',
-    printf('%,d', COUNT(*)),
-    printf('%,d', COUNT(grad_debt_mdn)),
+    COUNT(*),
+    COUNT(grad_debt_mdn),
     ROUND(100.0 * COUNT(grad_debt_mdn) / COUNT(*), 1)
 FROM annual_metrics
 UNION ALL
 SELECT
     'cdr3 (3-year default rate)',
-    printf('%,d', COUNT(*)),
-    printf('%,d', COUNT(cdr3)),
+    COUNT(*),
+    COUNT(cdr3),
     ROUND(100.0 * COUNT(cdr3) / COUNT(*), 1)
 FROM annual_metrics
 ORDER BY "% Filled" DESC;
@@ -259,14 +259,14 @@ Looking at where the 147 filled `md_earn_wne_p10` rows actually live in the data
 -- should cluster in specific years and be sector-uniform within
 -- those years.
 SELECT
-    am.cohort_year                                         AS "Cohort Year",
+    am.cohort_year AS "Cohort Year",
     CASE i.sector
         WHEN 'public'            THEN 'Public'
         WHEN 'private_nonprofit' THEN 'Private Nonprofit'
         WHEN 'for_profit'        THEN 'For-Profit'
-    END                                                    AS "Sector",
-    printf('%,d', COUNT(*))                                AS "Rows",
-    printf('%,d', COUNT(am.md_earn_wne_p10))               AS "Earnings Filled",
+    END AS "Sector",
+    COUNT(*) AS "Rows",
+    COUNT(am.md_earn_wne_p10) AS "Earnings Filled",
     ROUND(100.0 * COUNT(am.md_earn_wne_p10) / COUNT(*), 1) AS "% Filled"
 FROM annual_metrics am
 JOIN institutions   i USING (unitid)
@@ -432,28 +432,28 @@ The columns made it into the database schema. The values did not.
 -- unusable for analytical queries.
 SELECT
     'hbcu (Historically Black Colleges and Universities)' AS "Flag",
-    printf('%,d', COUNT(*))                               AS "Total Rows",
-    printf('%,d', COUNT(hbcu))                            AS "Non-Null"
+    COUNT(*) AS "Total Rows",
+    COUNT(hbcu) AS "Non-Null"
 FROM institutions
 UNION ALL
 SELECT 'hsi  (Hispanic-Serving Institution)',
-       printf('%,d', COUNT(*)), printf('%,d', COUNT(hsi))
+       COUNT(*), COUNT(hsi)
 FROM institutions
 UNION ALL
 SELECT 'pbi  (Predominantly Black Institution)',
-       printf('%,d', COUNT(*)), printf('%,d', COUNT(pbi))
+       COUNT(*), COUNT(pbi)
 FROM institutions
 UNION ALL
 SELECT 'annhi (Alaska Native or Native Hawaiian-Serving)',
-       printf('%,d', COUNT(*)), printf('%,d', COUNT(annhi))
+       COUNT(*), COUNT(annhi)
 FROM institutions
 UNION ALL
 SELECT 'aanapii (Asian American/Pacific Islander-Serving)',
-       printf('%,d', COUNT(*)), printf('%,d', COUNT(aanapii))
+       COUNT(*), COUNT(aanapii)
 FROM institutions
 UNION ALL
 SELECT 'tribal (Tribal College)',
-       printf('%,d', COUNT(*)), printf('%,d', COUNT(tribal))
+       COUNT(*), COUNT(tribal)
 FROM institutions
 ORDER BY "Flag";
 ```

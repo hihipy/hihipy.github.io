@@ -33,18 +33,18 @@ This case study takes a 7,635-attempt slice of NCLEX-RN data covering two academ
 -- students retake; fewer cohort terms than the calendar suggests because
 -- the source data does not include every quarter in the 21-year window.
 SELECT
-    'attempts'                  AS "Table",
-    printf('%,d', COUNT(*))     AS "Rows"
+    'attempts'   AS "Table",
+    COUNT(*)     AS "Rows"
 FROM attempts
 UNION ALL
 SELECT
     'students',
-    printf('%,d', COUNT(*))
+    COUNT(*)
 FROM students
 UNION ALL
 SELECT
     'term_order',
-    printf('%,d', COUNT(*))
+    COUNT(*)
 FROM term_order;
 ```
 
@@ -159,7 +159,7 @@ The first analytical thread surfaces from a single `GROUP BY campus` query. Firs
 -- 21-point spread between highest and lowest is the first thing visible.
 SELECT
     campus                          AS "Campus",
-    printf('%,d', COUNT(*))         AS "First Attempts",
+    COUNT(*)                        AS "First Attempts",
     ROUND(100.0 * AVG(result), 2)   AS "Pass Rate %"
 FROM attempts
 WHERE attempt_number = 1

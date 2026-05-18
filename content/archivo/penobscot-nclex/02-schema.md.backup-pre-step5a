@@ -15,7 +15,7 @@ Three tables. One mirrors the source CSV. One derives per-student aggregates the
 
 ## At a Glance
 
-The source phase produced the anonymized CSV (7,635 rows, nine columns, no missingness) and the first analytical thread to follow (a 21-point first-time pass rate spread between campuses). This phase walks through the schema design that turned the CSV into a queryable SQLite database: why three tables rather than one, what derived columns earn a place in the per-student table, what the term-order lookup does that an inlined `CASE WHEN` cannot, and what readers can run to verify the schema design themselves.
+The source phase produced a randomized CSV (7,635 rows, nine columns, no missingness) and the first analytical thread to follow (a 21-point first-time pass rate spread between campuses). This phase walks through the schema design that turned the CSV into a queryable SQLite database: why three tables rather than one, what derived columns earn a place in the per-student table, what the term-order lookup does that an inlined `CASE WHEN` cannot, and what readers can run to verify the schema design themselves.
 
 The schema is three tables, each with a different grain. The query that documents the design is also the query that verifies it: every row in every table either fits one of these three grains or there is a build-script bug.
 
@@ -96,8 +96,8 @@ erDiagram
     TERM_ORDER {
         string cohort PK "e.g. 2024FAQ"
         int    year
-        string term "SPQ/SUQ/FAQ/WIQ"
-        int    term_idx "1-4"
+        string term "WIQ/SPQ/SUQ/FAQ"
+        int    term_idx "0-3"
         int    ordinal "monotonic"
     }
 {{< /mermaid >}}
@@ -140,7 +140,7 @@ One detail worth naming before phase 03 builds on it. The `total_attempts` colum
 
 ## The Term-Order Lookup
 
-Academic terms in the source data are encoded as three-letter suffixes attached to a four-digit year: `SPQ` for spring, `SUQ` for summer, `FAQ` for fall, `WIQ` for winter. The within-year ordering is `SPQ < SUQ < FAQ < WIQ`, validated empirically by a 24-permutation search across all possible orderings of the four codes: the winning ordering produces only 4 row-level constraint violations across 7,635 rows; the next-best ordering produces over 1,500. A three-orders-of-magnitude separation makes this an empirical finding rather than an assumption. The lexical ordering of the cohort strings does not match the chronological ordering: `2024FAQ` sorts before `2024SPQ` lexically (because `F` precedes `S`) but comes after it chronologically. Any query that orders by cohort string directly will produce wrong results.
+Academic terms in the source data are encoded as four-letter suffixes attached to a four-digit year: `WIQ` for winter, `SPQ` for spring, `SUQ` for summer, `FAQ` for fall. The four-letter ordering within a year is `WIQ < SPQ < SUQ < FAQ`, validated empirically by chasing single-student attempt sequences in the source data. The lexical ordering of the cohort strings does not match this ordering: `2024FAQ` sorts before `2024SUQ` lexically (because `F` precedes `S`) but comes after it chronologically. Any query that orders by cohort string directly will produce wrong results.
 
 Two ways to handle this. The first is to inline the translation in every query that does term math, with a `CASE WHEN` clause that converts the term suffix to a number `0..3` and combines it with the year to get a monotonic ordinal. The second is to do that translation once at build time and store the ordinal in a lookup table, then JOIN against the lookup wherever term math is needed.
 
@@ -191,20 +191,20 @@ Both queries return:
 
 | Terms (grad to test) | Students |
 |---:|---:|
-| −3 | 1 |
-| −1 | 2 |
+| −5 | 1 |
+| −3 | 1,609 |
+| −2 | 57 |
+| −1 | 6 |
 | 0 | 443 |
-| +1 | 6,014 |
-| +2 | 226 |
-| +3 | 41 |
+| +1 | 2,910 |
+| +2 | 117 |
+| +3 | 31 |
 | +4 | 21 |
-| +5 | 7 |
-| +6 | 8 |
-| +7 | 6 |
+| +5 | 1,505 |
 
 The shape of the distribution is the same in both. The query that produced it is much easier to read in the first version. The case study takes term_order as a hard prerequisite for the rest of phase 03's term math.
 
-The distribution is heavily concentrated at one quarter post-graduation: 6,014 students (88.19 percent of the cohort) tested exactly one quarter after their recorded graduating cohort. Another 443 (6.50 percent) tested in the same quarter as graduation, and 226 (3.31 percent) tested two quarters later. The remaining 136 students scatter across a thin tail running from three to forty-four quarters out. Only three students show a negative gap, testing in a term before their recorded graduating cohort, which under the validated term ordering reduces to a small handful of data-entry quirks rather than a structural pattern. Phase 03 develops the delay-distribution analysis with regional and campus breakdowns.
+The multimodal shape of the distribution is the structural quirk phase 01 [flagged](/archivo/penobscot-nclex/01-source/#structural-quirks-worth-documenting): three modes at minus three, plus one, and plus five terms. The most likely explanation is that the `Graduating Cohort` field on the source data is set at enrollment time as an expected graduation date and is not updated when actual graduation slips later, so students appear to test before they graduated. Phase 03 develops this further with a regional and campus breakdown.
 
 ## Left-Censored Students: A Flag, Not An Exclusion
 
@@ -236,6 +236,6 @@ Result:
 
 ## Looking Ahead
 
-[Phase 03 (Exploration)](/archivo/penobscot-nclex/03-exploration/) takes the schema as given and runs the orientation queries: first-time pass rates by region, campus, program, and cohort, with confidence intervals computed inline in SQL using the standard `1.96 * SQRT(p * (1 - p) / n)` formula. The campus spread phase 01 surfaced gets its first full breakdown with sample-size context. The cohort trend across the two-year window gets its first visualization. The retake-attempt distribution and the time-from-graduation-to-test concentration at one quarter get their first development.
+[Phase 03 (Exploration)](/archivo/penobscot-nclex/03-exploration/) takes the schema as given and runs the orientation queries: first-time pass rates by region, campus, program, and cohort, with confidence intervals computed inline in SQL using the standard `1.96 * SQRT(p * (1 - p) / n)` formula. The campus spread phase 01 surfaced gets its first full breakdown with sample-size context. The cohort trend across the two-year window gets its first visualization. The retake-attempt distribution and the time-from-graduation-to-test multimodal pattern get their first development.
 
-[Phase 04 (Findings)](/archivo/penobscot-nclex/04-findings/) develops the three threads worth following at depth: the 21-point campus spread and what its size implies about where intervention should focus, the post-NGN cohort decline that tracks the national rate at a similar pace while sitting two to three points below national throughout, and the retake conversion rate that runs more than twenty percentage points above the [NCSBN](https://www.ncsbn.org/) national benchmark for repeat NCLEX-RN takers. The predictive-modeling discussion at the end of phase 04 switches briefly to R for the logistic regression and AUC discussion, where SQL hits its analytical ceiling.
+[Phase 04 (Findings)](/archivo/penobscot-nclex/04-findings/) develops the three threads worth following at depth: the campus spread and what its size implies about where intervention should focus, the post-2023 cohort decline running roughly twice the national rate, and the retake conversion rate that runs about nine percentage points above the [NCSBN](https://www.ncsbn.org/) national benchmark. The predictive-modeling discussion at the end of phase 04 switches briefly to R for the logistic regression and AUC discussion, where SQL hits its analytical ceiling.

@@ -138,12 +138,12 @@ The third query shows what a single project actually looks like by pulling the m
 -- the trailing .0 from the float storage; CAST on total_cost converts
 -- the dollar amount to an integer for clean display.
 SELECT
-    application_id                              AS "Application",
-    CAST(fiscal_year AS INTEGER)                AS "Fiscal Year",
-    organization_name                           AS "Institution",
-    administering_ic                            AS "Administering IC",
-    activity_code                               AS "Activity Code",
-    printf('%,d', CAST(total_cost AS INTEGER))  AS "Total Cost ($)"
+    application_id                          AS "Application",
+    CAST(fiscal_year AS INTEGER)            AS "Fiscal Year",
+    organization_name                       AS "Institution",
+    administering_ic                        AS "Administering IC",
+    activity_code                           AS "Activity Code",
+    CAST(total_cost AS INTEGER)             AS "Total Cost ($)"
 FROM projects
 WHERE application_id = '6874256';
 ```
@@ -168,8 +168,8 @@ The fourth query previews the analytical shape ahead by showing the top 10 admin
 -- regardless of how many funders are on the project_funders table.
 -- This previews the analytical shape phases 03 and 04 work with.
 SELECT
-    administering_ic         AS "Administering IC",
-    printf('%,d', COUNT(*))  AS "Projects"
+    administering_ic  AS "Administering IC",
+    COUNT(*)          AS "Projects"
 FROM projects
 GROUP BY administering_ic
 ORDER BY COUNT(*) DESC

@@ -15,14 +15,6 @@ showAuthor: false
 Six queries that cover the obvious dimensions: region, campus, program, cohort, time from graduation to test, and retake outcomes.
 {{< /lead >}}
 
-
-<style>
-  .pgbd-case-chart-wrap { margin: 1.5rem 0 2rem; }
-  .pgbd-case-chart-wrap > .chart { height: 360px; }
-  .pgbd-case-chart-headline { font-size: 1.1rem; font-weight: 700; margin: 0 0 0.25rem; line-height: 1.3; }
-  .pgbd-case-chart-sub { font-size: 0.85rem; opacity: 0.7; margin: 0 0 1rem; }
-</style>
-
 ## At a Glance
 
 The schema phase produced a queryable database with three tables and known relationships. The natural first move is breadth before depth: run a handful of queries that cover the obvious dimensions (region, campus, program, cohort, retake count, and time from graduation to test) without yet reaching for window functions or model fits. See what the data says at a glance, then decide which questions are worth following further in phase 04.
@@ -62,7 +54,7 @@ WITH region_stats AS (
 )
 SELECT
   region                                                AS "Region",
-  printf('%,d', n)                                      AS "First Attempts",
+  n                                                     AS "First Attempts",
   ROUND(100.0 * p, 2)                                   AS "Pass Rate %",
   ROUND(100.0 * (p - 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Lower %",
   ROUND(100.0 * (p + 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Upper %"
@@ -110,7 +102,7 @@ WITH campus_stats AS (
 SELECT
   campus                                                AS "Campus",
   region                                                AS "Region",
-  printf('%,d', n)                                      AS "First Attempts",
+  n                                                     AS "First Attempts",
   ROUND(100.0 * p, 2)                                   AS "Pass Rate %",
   ROUND(100.0 * (p - 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Lower %",
   ROUND(100.0 * (p + 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Upper %"
@@ -179,7 +171,7 @@ WITH prog_stats AS (
 SELECT
   pathway                                               AS "Pathway",
   program                                               AS "Program",
-  printf('%,d', n)                                      AS "First Attempts",
+  n                                                     AS "First Attempts",
   ROUND(100.0 * p, 2)                                   AS "Pass Rate %",
   ROUND(100.0 * (p - 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Lower %",
   ROUND(100.0 * (p + 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Upper %"
@@ -230,7 +222,7 @@ WITH cohort_stats AS (
 )
 SELECT
   testing_cohort                                        AS "Testing Cohort",
-  printf('%,d', n)                                      AS "First Attempts",
+  n                                                     AS "First Attempts",
   ROUND(100.0 * p, 2)                                   AS "Pass Rate %",
   ROUND(100.0 * (p - 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Lower %",
   ROUND(100.0 * (p + 1.96 * SQRT(p * (1 - p) / n)), 2)  AS "CI Upper %"
@@ -291,14 +283,12 @@ options: {
     tooltip: { callbacks: { label: function(ctx) { return ctx.parsed.y.toFixed(2) + '%'; } } }
   },
   scales: {
-    y: { min: 80, max: 95, title: { display: true, text: 'First-time pass rate (%)' } },
-    x: { title: { display: true, text: 'Testing cohort (chronological)' }, grid: { display: false } }
+    y: { min: 80, max: 95, title: { display: true, text: 'First-time pass rate (%)' }, grid: { color: 'rgba(0,0,0,0.12)' }, ticks: { color: '#000000' } },
+    x: { title: { display: true, text: 'Testing cohort (chronological)' }, grid: { color: 'rgba(0,0,0,0)' }, ticks: { color: '#000000' } }
   }
 }
 {{< /chart >}}
 </div>
-
-The chart is interactive. Hover over any bar or point to see the exact value; the chart re-themes automatically when the page toggles light or dark mode.
 
 ## Time From Graduation To First Test
 
@@ -320,10 +310,10 @@ WITH dist AS (
 )
 SELECT
   terms                                                AS "Terms After Graduation",
-  printf('%,d', students)                              AS "Students",
+  students                                             AS "Students",
   ROUND(100.0 * students /
     (SELECT COUNT(*) FROM students), 2)                AS "% of Students",
-  printf('%,d', SUM(students) OVER (ORDER BY terms))   AS "Cumulative Students",
+  SUM(students) OVER (ORDER BY terms)                  AS "Cumulative Students",
   ROUND(100.0 * SUM(students) OVER (ORDER BY terms) /
     (SELECT COUNT(*) FROM students), 2)                AS "Cumulative %"
 FROM dist
@@ -366,10 +356,10 @@ The last orientation cut is by retake count: how often students take multiple at
 -- and never retake; among retakers, eventual pass rates remain
 -- well above 50 percent through five attempts.
 SELECT
-  total_attempts                                      AS "Total Attempts",
-  printf('%,d', COUNT(*))                             AS "Students",
-  printf('%,d', SUM(eventually_passed))               AS "Eventually Passed",
-  printf('%,d', COUNT(*) - SUM(eventually_passed))    AS "Never Passed",
+  total_attempts        AS "Total Attempts",
+  COUNT(*)              AS "Students",
+  SUM(eventually_passed) AS "Eventually Passed",
+  COUNT(*) - SUM(eventually_passed) AS "Never Passed",
   ROUND(100.0 * SUM(eventually_passed) / COUNT(*), 2) AS "Eventually Passed %"
 FROM students
 GROUP BY total_attempts
@@ -401,3 +391,51 @@ The two outlier rows (one student at six attempts who passed, one student at nin
 [Phase 04 (Findings)](/archivo/penobscot-nclex/04-findings/) develops the three analytical threads that the orientation queries above point to. The 21-point campus spread becomes a structured argument for campus-level intervention targeting, with the within-region campus variance the actual lever rather than the regional or programmatic aggregates. The 2024-to-2025 cohort decline becomes a comparison against the NCSBN national trend, with the institution declining at about 1.24 times the national magnitude while sitting two to three points below national throughout. And the retake-attempt distribution becomes the entry point to the retake-engagement framing: the case study's strongest counterintuitive finding, that the conversion rate among retakers is already well above national and the lever is engagement, not conversion.
 
 Phase 04's predictive-modeling subsection switches briefly to R for the logistic regression and AUC discussion, where SQL hits its analytical ceiling. The structural data limits identified in phase 01 (binary outcome, no demographics, no academic-readiness scores) shape what any model could and could not do with this dataset.
+
+<!-- chart-theme-adapter -->
+<script>
+(function () {
+  var SWAP = { '#0969DA': '#79C0FF', '#79C0FF': '#0969DA', '#000000': '#FFFFFF', '#FFFFFF': '#000000' };
+  function swap(c) { if (!c || typeof c !== 'string') return c; var up = c.toUpperCase(); return SWAP[up] || c; }
+  function applyTheme(isDark) {
+    if (typeof Chart === 'undefined' || !Chart.instances) return;
+    var ids = Object.keys(Chart.instances);
+    for (var i = 0; i < ids.length; i++) {
+      var chart = Chart.instances[ids[i]];
+      var ds = chart.data.datasets || [];
+      for (var j = 0; j < ds.length; j++) {
+        var d = ds[j];
+        ['borderColor', 'backgroundColor', 'pointBackgroundColor', 'pointBorderColor'].forEach(function (k) {
+          var v = d[k];
+          if (Array.isArray(v)) { d[k] = v.map(swap); }
+          else if (typeof v === 'string') { d[k] = swap(v); }
+        });
+      }
+      var tickColor = isDark ? '#FFFFFF' : '#000000';
+      var gridColor = isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)';
+      if (chart.options && chart.options.scales) {
+        Object.keys(chart.options.scales).forEach(function (sk) {
+          var sc = chart.options.scales[sk]; if (!sc) return;
+          sc.ticks = sc.ticks || {}; sc.ticks.color = tickColor;
+          sc.grid = sc.grid || {}; sc.grid.color = gridColor;
+          if (sc.title) { sc.title.color = tickColor; }
+        });
+      }
+      if (chart.options && chart.options.plugins) {
+        if (chart.options.plugins.legend && chart.options.plugins.legend.labels) {
+          chart.options.plugins.legend.labels.color = tickColor;
+        }
+      }
+      chart.update();
+    }
+  }
+  function isDarkNow() { return document.documentElement.classList.contains('dark'); }
+  var observer = new MutationObserver(function () { applyTheme(isDarkNow()); });
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { applyTheme(isDarkNow()); });
+  } else {
+    setTimeout(function () { applyTheme(isDarkNow()); }, 0);
+  }
+})();
+</script>

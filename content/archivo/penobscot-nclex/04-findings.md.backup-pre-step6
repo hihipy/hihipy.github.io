@@ -15,14 +15,6 @@ showAuthor: false
 Three findings worth following at depth. A campus spread that suggests where intervention should focus, a cohort decline that runs slightly steeper than the national trend, and a retake-conversion pattern that reframes as a problem of engagement rather than conversion.
 {{< /lead >}}
 
-
-<style>
-  .pgbd-case-chart-wrap { margin: 1.5rem 0 2rem; }
-  .pgbd-case-chart-wrap > .chart { height: 360px; }
-  .pgbd-case-chart-headline { font-size: 1.1rem; font-weight: 700; margin: 0 0 0.25rem; line-height: 1.3; }
-  .pgbd-case-chart-sub { font-size: 0.85rem; opacity: 0.7; margin: 0 0 1rem; }
-</style>
-
 ## At a Glance
 
 Phase 03 ran six orientation queries that named the obvious dimensions and the shape of the data inside each one. Phase 04 develops three of those threads at depth. The campus spread is the largest in magnitude and the most actionable. The cohort decline is real but smaller than initial framings suggested. The retake conversion finding reframes a common assumption about where to focus retake support. The phase closes with a predictive-modeling subsection in R that names what a model could and could not do with this dataset, given the structural data limitations [phase 01](/archivo/penobscot-nclex/01-source/#structural-quirks-worth-documenting) flagged.
@@ -53,7 +45,7 @@ WITH campus AS (
 SELECT
   region                                      AS "Region",
   COUNT(*)                                    AS "Campuses",
-  printf('%,d', SUM(n))                       AS "First Attempts",
+  SUM(n)                                      AS "First Attempts",
   ROUND(100.0 * MIN(p), 2)                    AS "Min Campus %",
   ROUND(100.0 * MAX(p), 2)                    AS "Max Campus %",
   ROUND(100.0 * (MAX(p) - MIN(p)), 2)         AS "Within-Region Spread %"
@@ -93,7 +85,7 @@ Phase 03's cohort breakdown showed first-time pass rates dropping from a 2024 av
 -- 2025 directly.
 SELECT
   CAST(substr(testing_cohort, 1, 4) AS INTEGER)         AS "Year",
-  printf('%,d', COUNT(*))                               AS "First Attempts",
+  COUNT(*)                                              AS "First Attempts",
   ROUND(100.0 * AVG(CAST(result AS REAL)), 2)           AS "Pass Rate %",
   ROUND(100.0 *
     (AVG(CAST(result AS REAL)) -
@@ -123,36 +115,6 @@ The 2024 and 2025 confidence intervals do not overlap, so the decline is statist
 For comparison, the [NCSBN](https://www.ncsbn.org/exams/exam-statistics-and-publications/nclex-pass-rates.page) reports first-time, U.S.-educated NCLEX-RN pass rates of 91.2 percent for the full year 2024, declining to roughly 87.5 percent through most of 2025. The national year-over-year drop is approximately 3.7 percentage points. The institution's drop is 4.58 percentage points: roughly 1.24 times the national magnitude.
 
 This is a meaningfully steeper decline than the national trend, but it is not the "twice the national rate" framing that initial readings of the data sometimes suggest. The honest statement is: the institution declined alongside the national trend, slightly faster than the national rate. The most prominent industry-level event in the window is the [Next Generation NCLEX (NGN)](https://www.ncsbn.org/exams/next-generation-nclex.page) format launching in April 2023, with 2024 cohorts largely composed of students trained before NGN took effect and 2025 cohorts largely composed of students trained after. The case study does not claim the NGN transition caused the institution-level decline; the national decline is consistent with that explanation, and the institution's slight extra magnitude is consistent with institution-specific factors compounding the national pattern.
-
-<div class="pgbd-case-chart-wrap">
-<p class="pgbd-case-chart-headline">The institution tracks the national decline at a similar pace, sitting 2 to 4 points below national in both years.</p>
-<p class="pgbd-case-chart-sub">First-time NCLEX-RN pass rate, institution vs NCSBN U.S.-educated national benchmark. NCSBN 2024 = 91.20%, 2025 estimate ~ 87.50%.</p>
-{{< chart >}}
-type: 'bar',
-data: {
-  labels: ['2024','2025'],
-  datasets: [
-    { label: 'Institution (Penobscot)', data: [88.64, 84.06], backgroundColor: '#0969DA', borderColor: '#0969DA', pointBackgroundColor: '#0969DA', pointBorderColor: '#0969DA', borderWidth: 0 },
-    { label: 'NCSBN National (U.S.-educated)', data: [91.20, 87.50], backgroundColor: '#BF8700', borderColor: '#BF8700', pointBackgroundColor: '#BF8700', pointBorderColor: '#BF8700', borderWidth: 0 }
-  ]
-},
-options: {
-  responsive: true,
-  maintainAspectRatio: false,
-  layout: { padding: { top: 12, right: 16, bottom: 8, left: 8 } },
-  plugins: {
-    legend: { position: 'top' },
-    tooltip: { callbacks: { label: function(ctx) { return ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(2) + '%'; } } }
-  },
-  scales: {
-    y: { min: 80, max: 95, title: { display: true, text: 'First-time pass rate (%)' } },
-    x: { grid: { display: false } }
-  }
-}
-{{< /chart >}}
-</div>
-
-The chart is interactive. Hover over any bar or point to see the exact value; the chart re-themes automatically when the page toggles light or dark mode.
 
 What this finding does *not* support is the framing that the institution is in a uniquely bad position. The institution is on the wrong side of the national trend by about a point and a quarter. That is a problem worth addressing, but it is not the dominant story. The campus spread is a larger and more institution-specific concern, both in absolute magnitude (21 points across campuses versus 4.58 points across years) and in actionability (campus-level intervention is more concrete than "respond to NGN").
 
@@ -193,14 +155,14 @@ strict_eventually_passed AS (
   WHERE t2.ordinal > ff.fail_ord AND a2.result = 1
 )
 SELECT
-  printf('%,d', (SELECT COUNT(*) FROM first_failers))                                          AS "First-Time Failures",
-  printf('%,d', (SELECT COUNT(*) FROM strict_retakers))                                        AS "Retook",
-  printf('%,d', (SELECT COUNT(*) FROM first_failers) - (SELECT COUNT(*) FROM strict_retakers)) AS "Did Not Retake",
+  (SELECT COUNT(*) FROM first_failers)                                          AS "First-Time Failures",
+  (SELECT COUNT(*) FROM strict_retakers)                                        AS "Retook",
+  (SELECT COUNT(*) FROM first_failers) - (SELECT COUNT(*) FROM strict_retakers) AS "Did Not Retake",
   ROUND(100.0 * (SELECT COUNT(*) FROM strict_retakers)
-                / (SELECT COUNT(*) FROM first_failers), 2)                                     AS "% Retook",
-  printf('%,d', (SELECT COUNT(*) FROM strict_eventually_passed))                               AS "Eventually Passed",
+                / (SELECT COUNT(*) FROM first_failers), 2)                      AS "% Retook",
+  (SELECT COUNT(*) FROM strict_eventually_passed)                               AS "Eventually Passed",
   ROUND(100.0 * (SELECT COUNT(*) FROM strict_eventually_passed)
-                / (SELECT COUNT(*) FROM strict_retakers), 2)                                   AS "Conversion %";
+                / (SELECT COUNT(*) FROM strict_retakers), 2)                    AS "Conversion %";
 ```
 
 [Run this query in Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/penobscot-nclex.sqlite#/penobscot-nclex?sql=WITH+first_failers+AS+%28%0A++SELECT+a.student_id%2C+t.ordinal+AS+fail_ord%0A++FROM+attempts+a%0A++JOIN+term_order+t+ON+t.cohort+%3D+a.testing_cohort%0A++WHERE+a.attempt_number+%3D+1+AND+a.result+%3D+0%0A%29%2C%0Astrict_retakers+AS+%28%0A++SELECT+DISTINCT+ff.student_id%0A++FROM+first_failers+ff%0A++JOIN+attempts+a2++ON+a2.student_id+%3D+ff.student_id%0A++JOIN+term_order+t2+ON+t2.cohort+%3D+a2.testing_cohort%0A++WHERE+t2.ordinal+%3E+ff.fail_ord%0A%29%2C%0Astrict_eventually_passed+AS+%28%0A++SELECT+DISTINCT+ff.student_id%0A++FROM+first_failers+ff%0A++JOIN+attempts+a2++ON+a2.student_id+%3D+ff.student_id%0A++JOIN+term_order+t2+ON+t2.cohort+%3D+a2.testing_cohort%0A++WHERE+t2.ordinal+%3E+ff.fail_ord+AND+a2.result+%3D+1%0A%29%0ASELECT%0A++%28SELECT+COUNT%28%2A%29+FROM+first_failers%29+++++++++++++++++++++++++++++++++++++AS+%22First-Time+Failures%22%2C%0A++%28SELECT+COUNT%28%2A%29+FROM+strict_retakers%29+++++++++++++++++++++++++++++++++++++AS+%22Retook%22%2C%0A++%28SELECT+COUNT%28%2A%29+FROM+first_failers%29+-+%28SELECT+COUNT%28%2A%29+FROM+strict_retakers%29+AS+%22Did+Not+Retake%22%2C%0A++ROUND%28100.0+%2A+%28SELECT+COUNT%28%2A%29+FROM+strict_retakers%29%0A++++++++++++++++%2F+%28SELECT+COUNT%28%2A%29+FROM+first_failers%29%2C+2%29+++++++++++++++++++++++++AS+%22%25+Retook%22%2C%0A++%28SELECT+COUNT%28%2A%29+FROM+strict_eventually_passed%29+++++++++++++++++++++++++++++++++AS+%22Eventually+Passed%22%2C%0A++ROUND%28100.0+%2A+%28SELECT+COUNT%28%2A%29+FROM+strict_eventually_passed%29%0A++++++++++++++++%2F+%28SELECT+COUNT%28%2A%29+FROM+strict_retakers%29%2C+2%29+++++++++++++++++++++++++AS+%22Conversion+%25%22%3B)
@@ -220,44 +182,6 @@ Two caveats on the funnel before the per-cohort breakdown. First, 552 first-time
 The counterfactual question is what would happen if the 552 first-time failers who did not retake within the window had returned at the observed conversion rate. 552 students multiplied by 76.98 percent conversion equals roughly 425 additional eventual passes. Adding those 425 to the 6,320 students who already eventually passed lifts the eventually-passed rate from 92.68 percent to 98.91 percent: a 6.23 percentage-point gain. That is meaningfully larger than the campus-spread lift from finding one (32 additional first-time passes per year), and it operates at a different leverage point: campus-level intervention is about teaching and curriculum, engagement-level intervention is about outreach and support for students who already failed once.
 
 The counterfactual is bounded above by 100 percent realistic engagement, which no institution achieves. A more realistic target is engagement parity with the higher-engagement cohorts: lifting the 552 non-retakers to a 70 percent retake rate (which the higher-engaging cohorts in the per-cohort breakdown below approximate) would produce roughly 297 additional passes and lift the eventually-passed rate to about 97.04 percent. Either framing makes the same point. The retake program is doing real work; the unfilled space is engagement.
-
-<div class="pgbd-case-chart-wrap">
-<p class="pgbd-case-chart-headline">The retake funnel: most first-time failers do not return within the window.</p>
-<p class="pgbd-case-chart-sub">Of 943 first-time failers, 552 did not retake in a later quarter within the testing window, 391 did, and 301 of those retakers eventually passed (76.98% conversion).</p>
-{{< chart >}}
-type: 'bar',
-data: {
-  labels: ['First-Time Failures','Did Not Retake','Retook (Later Quarter)','Eventually Passed'],
-  datasets: [{
-    label: 'Students',
-    data: [943, 552, 391, 301],
-    backgroundColor: ['#0969DA','#BF8700','#0969DA','#0969DA'],
-    borderColor: ['#0969DA','#BF8700','#0969DA','#0969DA'],
-    pointBackgroundColor: ['#0969DA','#BF8700','#0969DA','#0969DA'],
-    pointBorderColor: ['#0969DA','#BF8700','#0969DA','#0969DA'],
-    borderWidth: 0
-  }]
-},
-options: {
-  indexAxis: 'y',
-  responsive: true,
-  maintainAspectRatio: false,
-  layout: { padding: { top: 8, right: 32, bottom: 8, left: 8 } },
-  plugins: {
-    legend: { display: false },
-    tooltip: { callbacks: { label: function(ctx) { return ctx.parsed.x + ' students'; } } }
-  },
-  scales: {
-    x: { min: 0, max: 1000, title: { display: true, text: 'Students' } },
-    y: { ticks: { autoSkip: false }, grid: { display: false } }
-  }
-}
-{{< /chart >}}
-</div>
-
-The chart is interactive. Hover over any bar or point to see the exact value; the chart re-themes automatically when the page toggles light or dark mode.
-
-
 
 ```sql
 -- Per-cohort breakdown of the "did not retake" pattern under the
@@ -281,8 +205,8 @@ strict_retakers AS (
 )
 SELECT
   ff.fail_cohort                                       AS "Testing Cohort",
-  printf('%,d', COUNT(*))                              AS "First-Time Failures",
-  printf('%,d', COUNT(*) - COUNT(sr.student_id))       AS "Did Not Retake",
+  COUNT(*)                                             AS "First-Time Failures",
+  COUNT(*) - COUNT(sr.student_id)                      AS "Did Not Retake",
   ROUND(100.0 * (COUNT(*) - COUNT(sr.student_id)) /
                 COUNT(*), 2)                           AS "% Did Not Retake"
 FROM first_failers ff

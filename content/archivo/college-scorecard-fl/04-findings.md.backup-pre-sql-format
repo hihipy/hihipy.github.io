@@ -63,12 +63,12 @@ WITH institution_summary AS (
     HAVING COUNT(am.c150_4) >= 5
 )
 SELECT
-    instnm                                                                                              AS "Institution",
-    sector_display                                                                                      AS "Sector",
-    printf('%,d', CAST(ROUND(avg_net_price, 0) AS INTEGER))                                             AS "Avg Net Price",
-    ROUND(avg_completion * 100, 1)                                                                      AS "Avg Completion %",
-    printf('%,d', CAST(ROUND(avg_net_price / NULLIF(avg_completion, 0), 0) AS INTEGER))                 AS "Cost / Completer",
-    RANK() OVER (PARTITION BY sector_display ORDER BY avg_net_price / NULLIF(avg_completion, 0) ASC)    AS "Sector Rank"
+    instnm AS "Institution",
+    sector_display AS "Sector",
+    CAST(ROUND(avg_net_price, 0) AS INTEGER) AS "Avg Net Price",
+    ROUND(avg_completion * 100, 1) AS "Avg Completion %",
+    CAST(ROUND(avg_net_price / NULLIF(avg_completion, 0), 0) AS INTEGER) AS "Cost / Completer",
+    RANK() OVER (PARTITION BY sector_display ORDER BY avg_net_price / NULLIF(avg_completion, 0) ASC) AS "Sector Rank"
 FROM institution_summary
 ORDER BY sector_display, avg_net_price / NULLIF(avg_completion, 0) ASC
 LIMIT 30;
@@ -140,11 +140,11 @@ WITH for_profit_classification AS (
     WHERE sector = 'for_profit'
 )
 SELECT
-    am.cohort_year                                                                              AS "Cohort Year",
-    fpc.closure_status                                                                          AS "Status",
-    COUNT(*)                                                                                    AS "Institutions",
-    printf('%,d', SUM(am.ugds))                                                                 AS "Total UG Enrollment",
-    ROUND(100.0 * SUM(am.ugds) / SUM(SUM(am.ugds)) OVER (PARTITION BY am.cohort_year), 1)       AS "% of Year Total"
+    am.cohort_year AS "Cohort Year",
+    fpc.closure_status AS "Status",
+    COUNT(*) AS "Institutions",
+    SUM(am.ugds) AS "Total UG Enrollment",
+    ROUND(100.0 * SUM(am.ugds) / SUM(SUM(am.ugds)) OVER (PARTITION BY am.cohort_year), 1) AS "% of Year Total"
 FROM annual_metrics am
 JOIN for_profit_classification fpc USING (unitid)
 WHERE am.ugds IS NOT NULL
@@ -250,10 +250,10 @@ WITH survivors AS (
       AND last_year_in_data = 2023
 )
 SELECT
-    am.cohort_year                                            AS "Cohort Year",
-    COUNT(DISTINCT am.unitid)                                 AS "Survivors Reporting",
-    printf('%,d', SUM(am.ugds))                               AS "Total Enrollment",
-    printf('%,d', CAST(ROUND(AVG(am.ugds), 0) AS INTEGER))    AS "Avg Enrollment"
+    am.cohort_year            AS "Cohort Year",
+    COUNT(DISTINCT am.unitid) AS "Survivors Reporting",
+    SUM(am.ugds)              AS "Total Enrollment",
+    CAST(ROUND(AVG(am.ugds), 0) AS INTEGER)    AS "Avg Enrollment"
 FROM annual_metrics am
 JOIN survivors s USING (unitid)
 WHERE am.ugds IS NOT NULL
@@ -341,17 +341,17 @@ The query filters by UNITID rather than by the `hbcu` flag, because [phase 02 do
 -- UNITIDs (verified from the institutions table by INSTNM) to do
 -- the comparison reliably.
 SELECT
-    i.instnm                                                            AS "Institution",
+    i.instnm AS "Institution",
     CASE i.sector
         WHEN 'public'            THEN 'Public'
         WHEN 'private_nonprofit' THEN 'Private Nonprofit'
         WHEN 'for_profit'        THEN 'For-Profit'
-    END                                                                 AS "Sector",
-    printf('%,d', CAST(ROUND(AVG(am.ugds), 0) AS INTEGER))              AS "Avg Enrollment",
-    printf('%,d', CAST(ROUND(AVG(am.tuitionfee_in), 0) AS INTEGER))     AS "Avg In-State Tuition",
-    ROUND(AVG(am.pctpell) * 100, 1)                                     AS "Avg Pell %",
-    ROUND(AVG(am.c150_4) * 100, 1)                                      AS "Avg Completion %",
-    ROUND(AVG(am.cdr3) * 100, 1)                                        AS "Avg Default Rate %"
+    END                             AS "Sector",
+    CAST(ROUND(AVG(am.ugds), 0) AS INTEGER)          AS "Avg Enrollment",
+    CAST(ROUND(AVG(am.tuitionfee_in), 0) AS INTEGER) AS "Avg In-State Tuition",
+    ROUND(AVG(am.pctpell) * 100, 1) AS "Avg Pell %",
+    ROUND(AVG(am.c150_4) * 100, 1)  AS "Avg Completion %",
+    ROUND(AVG(am.cdr3) * 100, 1)    AS "Avg Default Rate %"
 FROM institutions       i
 JOIN annual_metrics     am USING (unitid)
 WHERE i.unitid IN (132602, 133526, 133650, 133979)
@@ -385,12 +385,12 @@ SELECT
         WHEN 'public'            THEN 'Public'
         WHEN 'private_nonprofit' THEN 'Private Nonprofit'
         WHEN 'for_profit'        THEN 'For-Profit'
-    END                                                                 AS "Sector",
-    printf('%,d', CAST(ROUND(AVG(am.ugds), 0) AS INTEGER))              AS "Avg Enrollment",
-    printf('%,d', CAST(ROUND(AVG(am.tuitionfee_in), 0) AS INTEGER))     AS "Avg In-State Tuition",
-    ROUND(AVG(am.pctpell) * 100, 1)                                     AS "Avg Pell %",
-    ROUND(AVG(am.c150_4) * 100, 1)                                      AS "Avg Completion %",
-    ROUND(AVG(am.cdr3) * 100, 1)                                        AS "Avg Default Rate %"
+    END                             AS "Sector",
+    CAST(ROUND(AVG(am.ugds), 0) AS INTEGER)          AS "Avg Enrollment",
+    CAST(ROUND(AVG(am.tuitionfee_in), 0) AS INTEGER) AS "Avg In-State Tuition",
+    ROUND(AVG(am.pctpell) * 100, 1) AS "Avg Pell %",
+    ROUND(AVG(am.c150_4) * 100, 1)  AS "Avg Completion %",
+    ROUND(AVG(am.cdr3) * 100, 1)    AS "Avg Default Rate %"
 FROM institutions       i
 JOIN annual_metrics     am USING (unitid)
 GROUP BY i.sector
@@ -480,7 +480,7 @@ WITH earnings_2020 AS (
 SELECT
     instnm                                      AS "Institution",
     sector_display                              AS "Sector",
-    printf('%,d', md_earn_wne_p10)              AS "10-Year Earnings",
+    md_earn_wne_p10                             AS "10-Year Earnings",
     RANK() OVER (ORDER BY md_earn_wne_p10 DESC) AS "Statewide Rank"
 FROM earnings_2020
 ORDER BY md_earn_wne_p10 DESC
