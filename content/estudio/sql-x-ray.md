@@ -236,6 +236,437 @@ A natural diff prompt:
 
 The dump is enough to produce a usable data dictionary, one section per table, columns with types and FK references. It is also enough for the LLM to produce a high-level domain map that groups tables into clusters (auth, billing, content, audit, and so on) inferred from naming patterns and FK density. Both artifacts are the kind of thing that takes a senior engineer half a day to draft from scratch and an LLM about a minute given the dump as priming context.
 
+## A Worked Example: A Live Database in the Browser
+
+Every example above uses a synthetic e-commerce schema. Here is the tool against a real one: `penobscot-nclex.sqlite`, the SQLite database behind the [Penobscot NCLEX case study](/archivo/penobscot-nclex/), running entirely in your browser through [Datasette Lite](https://lite.datasette.io/). No install, no server, and nothing leaves the page.
+
+[Open it in Datasette Lite with the script pre-loaded](https://lite.datasette.io/?url=https://pgbd.casa/data/penobscot-nclex.sqlite#/penobscot-nclex?sql=--%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0A--%20sql-x-ray%20for%20SQLite%203.16%2B%20%28compatibility%20build%29%0A--%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0A--%20Same%20output%20as%20the%203.44%2B%20script%2C%20but%20avoids%20ORDER%20BY%20inside%0A--%20aggregate%20functions%20%28a%203.44%20feature%29.%20Ordering%20is%20established%20in%0A--%20inner%20subqueries%20and%20preserved%20by%20the%20outer%20aggregation%2C%20so%20this%0A--%20runs%20on%20older%20engines%20such%20as%20the%20SQLite%20build%20inside%20Datasette%0A--%20Lite%20%2F%20Pyodide.%0A--%20%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%0A%0AWITH%0A%0A--%20COLUMNS%20------------------------------------------------------------%0Acols_src%20AS%20%28%0A%20%20%20%20SELECT%0A%20%20%20%20%20%20%20%20m.name%20AS%20table_name%2C%0A%20%20%20%20%20%20%20%20p.cid%20%20AS%20sort_key%2C%0A%20%20%20%20%20%20%20%20json_object%28%0A%20%20%20%20%20%20%20%20%20%20%20%20%27name%27%2C%20%20%20%20%20%20%20%20%20p.name%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27position%27%2C%20%20%20%20%20p.cid%20%2B%201%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27data_type%27%2C%20%20%20%20p.type%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27nullable%27%2C%20%20%20%20%20CASE%20p.%22notnull%22%20WHEN%201%20THEN%20json%28%27false%27%29%20ELSE%20json%28%27true%27%29%20END%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27has_default%27%2C%20%20CASE%20WHEN%20p.dflt_value%20IS%20NOT%20NULL%20THEN%20json%28%27true%27%29%20ELSE%20json%28%27false%27%29%20END%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27is_pk%27%2C%20%20%20%20%20%20%20%20CASE%20WHEN%20p.pk%20%3E%200%20THEN%20json%28%27true%27%29%20ELSE%20json%28%27false%27%29%20END%0A%20%20%20%20%20%20%20%20%29%20AS%20obj%0A%20%20%20%20FROM%20sqlite_master%20m%2C%20pragma_table_info%28m.name%29%20p%0A%20%20%20%20WHERE%20m.type%20%3D%20%27table%27%0A%20%20%20%20%20%20AND%20m.name%20NOT%20LIKE%20%27sqlite_%25%27%0A%20%20%20%20ORDER%20BY%20m.name%2C%20p.cid%0A%29%2C%0Acols%20AS%20%28%0A%20%20%20%20SELECT%20table_name%2C%20json_group_array%28json%28obj%29%29%20AS%20columns%0A%20%20%20%20FROM%20cols_src%0A%20%20%20%20GROUP%20BY%20table_name%0A%29%2C%0A%0A--%20PRIMARY%20KEYS%20-------------------------------------------------------%0Apks_src%20AS%20%28%0A%20%20%20%20SELECT%20m.name%20AS%20table_name%2C%20p.pk%20AS%20sort_key%2C%20p.name%20AS%20col_name%0A%20%20%20%20FROM%20sqlite_master%20m%2C%20pragma_table_info%28m.name%29%20p%0A%20%20%20%20WHERE%20m.type%20%3D%20%27table%27%0A%20%20%20%20%20%20AND%20m.name%20NOT%20LIKE%20%27sqlite_%25%27%0A%20%20%20%20%20%20AND%20p.pk%20%3E%200%0A%20%20%20%20ORDER%20BY%20m.name%2C%20p.pk%0A%29%2C%0Apks%20AS%20%28%0A%20%20%20%20SELECT%20table_name%2C%0A%20%20%20%20%20%20%20%20%20%20%20json_object%28%27columns%27%2C%20json_group_array%28col_name%29%29%20AS%20primary_key%0A%20%20%20%20FROM%20pks_src%0A%20%20%20%20GROUP%20BY%20table_name%0A%29%2C%0A%0A--%20FOREIGN%20KEYS%20-------------------------------------------------------%0Afk_cols_src%20AS%20%28%0A%20%20%20%20SELECT%0A%20%20%20%20%20%20%20%20m.name%20AS%20table_name%2C%0A%20%20%20%20%20%20%20%20f.id%20%20%20AS%20fk_id%2C%0A%20%20%20%20%20%20%20%20f.%22table%22%20AS%20to_table%2C%0A%20%20%20%20%20%20%20%20f.on_delete%2C%0A%20%20%20%20%20%20%20%20f.seq%20%20AS%20sort_key%2C%0A%20%20%20%20%20%20%20%20f.%22from%22%20AS%20from_col%2C%0A%20%20%20%20%20%20%20%20f.%22to%22%20%20%20AS%20to_col%0A%20%20%20%20FROM%20sqlite_master%20m%2C%20pragma_foreign_key_list%28m.name%29%20f%0A%20%20%20%20WHERE%20m.type%20%3D%20%27table%27%0A%20%20%20%20%20%20AND%20m.name%20NOT%20LIKE%20%27sqlite_%25%27%0A%20%20%20%20ORDER%20BY%20m.name%2C%20f.id%2C%20f.seq%0A%29%2C%0Afk_grouped%20AS%20%28%0A%20%20%20%20SELECT%0A%20%20%20%20%20%20%20%20table_name%2C%20fk_id%2C%20to_table%2C%20on_delete%2C%0A%20%20%20%20%20%20%20%20json_group_array%28from_col%29%20AS%20from_columns%2C%0A%20%20%20%20%20%20%20%20json_group_array%28to_col%29%20%20%20AS%20to_columns%0A%20%20%20%20FROM%20fk_cols_src%0A%20%20%20%20GROUP%20BY%20table_name%2C%20fk_id%2C%20to_table%2C%20on_delete%0A%29%2C%0Afk_obj_src%20AS%20%28%0A%20%20%20%20SELECT%0A%20%20%20%20%20%20%20%20table_name%2C%0A%20%20%20%20%20%20%20%20fk_id%20AS%20sort_key%2C%0A%20%20%20%20%20%20%20%20json_object%28%0A%20%20%20%20%20%20%20%20%20%20%20%20%27from_columns%27%2C%20json%28from_columns%29%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27to_table%27%2C%20%20%20%20%20to_table%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27to_columns%27%2C%20%20%20json%28to_columns%29%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27on_delete%27%2C%20%20%20%20on_delete%0A%20%20%20%20%20%20%20%20%29%20AS%20obj%0A%20%20%20%20FROM%20fk_grouped%0A%20%20%20%20ORDER%20BY%20table_name%2C%20fk_id%0A%29%2C%0Afks%20AS%20%28%0A%20%20%20%20SELECT%20table_name%2C%20json_group_array%28json%28obj%29%29%20AS%20foreign_keys%0A%20%20%20%20FROM%20fk_obj_src%0A%20%20%20%20GROUP%20BY%20table_name%0A%29%2C%0A%0A--%20INDEXES%20%28origin%20%27c%27%20only%29%20------------------------------------------%0Aidx_col_src%20AS%20%28%0A%20%20%20%20SELECT%0A%20%20%20%20%20%20%20%20m.name%20%20AS%20table_name%2C%0A%20%20%20%20%20%20%20%20il.name%20AS%20index_name%2C%0A%20%20%20%20%20%20%20%20il.%22unique%22%20AS%20is_unique%2C%0A%20%20%20%20%20%20%20%20ii.seqno%20AS%20sort_key%2C%0A%20%20%20%20%20%20%20%20ii.name%20%20AS%20col_name%0A%20%20%20%20FROM%20sqlite_master%20m%2C%0A%20%20%20%20%20%20%20%20%20pragma_index_list%28m.name%29%20il%2C%0A%20%20%20%20%20%20%20%20%20pragma_index_info%28il.name%29%20ii%0A%20%20%20%20WHERE%20m.type%20%3D%20%27table%27%0A%20%20%20%20%20%20AND%20m.name%20NOT%20LIKE%20%27sqlite_%25%27%0A%20%20%20%20%20%20AND%20il.origin%20%3D%20%27c%27%0A%20%20%20%20ORDER%20BY%20m.name%2C%20il.name%2C%20ii.seqno%0A%29%2C%0Aidx_cols%20AS%20%28%0A%20%20%20%20SELECT%20table_name%2C%20index_name%2C%20is_unique%2C%0A%20%20%20%20%20%20%20%20%20%20%20json_group_array%28col_name%29%20AS%20columns%0A%20%20%20%20FROM%20idx_col_src%0A%20%20%20%20GROUP%20BY%20table_name%2C%20index_name%2C%20is_unique%0A%29%2C%0Aidx_obj_src%20AS%20%28%0A%20%20%20%20SELECT%0A%20%20%20%20%20%20%20%20table_name%2C%0A%20%20%20%20%20%20%20%20index_name%20AS%20sort_key%2C%0A%20%20%20%20%20%20%20%20json_object%28%0A%20%20%20%20%20%20%20%20%20%20%20%20%27name%27%2C%20%20%20%20index_name%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27method%27%2C%20%20%27btree%27%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27unique%27%2C%20%20CASE%20is_unique%20WHEN%201%20THEN%20json%28%27true%27%29%20ELSE%20json%28%27false%27%29%20END%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27columns%27%2C%20json%28columns%29%0A%20%20%20%20%20%20%20%20%29%20AS%20obj%0A%20%20%20%20FROM%20idx_cols%0A%20%20%20%20ORDER%20BY%20table_name%2C%20index_name%0A%29%2C%0Aidx%20AS%20%28%0A%20%20%20%20SELECT%20table_name%2C%20json_group_array%28json%28obj%29%29%20AS%20indexes%0A%20%20%20%20FROM%20idx_obj_src%0A%20%20%20%20GROUP%20BY%20table_name%0A%29%2C%0A%0A--%20TRIGGER%20COUNTS%20-----------------------------------------------------%0Atrigger_counts%20AS%20%28%0A%20%20%20%20SELECT%20tbl_name%20AS%20table_name%2C%20COUNT%28%2A%29%20AS%20trigger_count%0A%20%20%20%20FROM%20sqlite_master%0A%20%20%20%20WHERE%20type%20%3D%20%27trigger%27%0A%20%20%20%20GROUP%20BY%20tbl_name%0A%29%2C%0A%0A--%20TABLES%20-------------------------------------------------------------%0Atables_src%20AS%20%28%0A%20%20%20%20SELECT%0A%20%20%20%20%20%20%20%20json_object%28%0A%20%20%20%20%20%20%20%20%20%20%20%20%27schema%27%2C%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%27main%27%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27name%27%2C%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20m.name%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27kind%27%2C%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%27table%27%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27is_partitioned%27%2C%20%20%20%20%20%20%20%20%20json%28%27false%27%29%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27primary_key%27%2C%20%20%20%20%20%20%20%20%20%20%20%20json%28pks.primary_key%29%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27foreign_keys%27%2C%20%20%20%20%20%20%20%20%20%20%20json%28fks.foreign_keys%29%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27unique_constraints%27%2C%20%20%20%20%20json%28%27%5B%5D%27%29%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27check_constraint_count%27%2C%200%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27indexes%27%2C%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20json%28idx.indexes%29%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27trigger_count%27%2C%20%20%20%20%20%20%20%20%20%20COALESCE%28tc.trigger_count%2C%200%29%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27columns%27%2C%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20json%28cols.columns%29%0A%20%20%20%20%20%20%20%20%29%20AS%20obj%0A%20%20%20%20FROM%20sqlite_master%20m%0A%20%20%20%20LEFT%20JOIN%20cols%20%20%20%20%20%20%20%20%20%20%20ON%20cols.table_name%20%3D%20m.name%0A%20%20%20%20LEFT%20JOIN%20pks%20%20%20%20%20%20%20%20%20%20%20%20ON%20pks.table_name%20%20%3D%20m.name%0A%20%20%20%20LEFT%20JOIN%20fks%20%20%20%20%20%20%20%20%20%20%20%20ON%20fks.table_name%20%20%3D%20m.name%0A%20%20%20%20LEFT%20JOIN%20idx%20%20%20%20%20%20%20%20%20%20%20%20ON%20idx.table_name%20%20%3D%20m.name%0A%20%20%20%20LEFT%20JOIN%20trigger_counts%20tc%20ON%20tc.table_name%20%3D%20m.name%0A%20%20%20%20WHERE%20m.type%20%3D%20%27table%27%0A%20%20%20%20%20%20AND%20m.name%20NOT%20LIKE%20%27sqlite_%25%27%0A%20%20%20%20ORDER%20BY%20m.name%0A%29%2C%0Atables_json%20AS%20%28%0A%20%20%20%20SELECT%20json_group_array%28json%28obj%29%29%20AS%20payload%20FROM%20tables_src%0A%29%2C%0A%0A--%20VIEWS%20--------------------------------------------------------------%0Aview_col_src%20AS%20%28%0A%20%20%20%20SELECT%0A%20%20%20%20%20%20%20%20m.name%20AS%20view_name%2C%0A%20%20%20%20%20%20%20%20p.cid%20%20AS%20sort_key%2C%0A%20%20%20%20%20%20%20%20json_object%28%0A%20%20%20%20%20%20%20%20%20%20%20%20%27name%27%2C%20%20%20%20%20%20p.name%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27position%27%2C%20%20p.cid%20%2B%201%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27data_type%27%2C%20p.type%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27nullable%27%2C%20%20CASE%20p.%22notnull%22%20WHEN%201%20THEN%20json%28%27false%27%29%20ELSE%20json%28%27true%27%29%20END%0A%20%20%20%20%20%20%20%20%29%20AS%20obj%0A%20%20%20%20FROM%20sqlite_master%20m%2C%20pragma_table_info%28m.name%29%20p%0A%20%20%20%20WHERE%20m.type%20%3D%20%27view%27%0A%20%20%20%20%20%20AND%20m.name%20NOT%20LIKE%20%27sqlite_%25%27%0A%20%20%20%20ORDER%20BY%20m.name%2C%20p.cid%0A%29%2C%0Aview_cols%20AS%20%28%0A%20%20%20%20SELECT%20view_name%2C%20json_group_array%28json%28obj%29%29%20AS%20columns%0A%20%20%20%20FROM%20view_col_src%0A%20%20%20%20GROUP%20BY%20view_name%0A%29%2C%0Aviews_src%20AS%20%28%0A%20%20%20%20SELECT%0A%20%20%20%20%20%20%20%20json_object%28%0A%20%20%20%20%20%20%20%20%20%20%20%20%27schema%27%2C%20%20%27main%27%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27name%27%2C%20%20%20%20m.name%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27kind%27%2C%20%20%20%20%27view%27%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27columns%27%2C%20json%28COALESCE%28vc.columns%2C%20%27%5B%5D%27%29%29%0A%20%20%20%20%20%20%20%20%29%20AS%20obj%0A%20%20%20%20FROM%20sqlite_master%20m%0A%20%20%20%20LEFT%20JOIN%20view_cols%20vc%20ON%20vc.view_name%20%3D%20m.name%0A%20%20%20%20WHERE%20m.type%20%3D%20%27view%27%0A%20%20%20%20%20%20AND%20m.name%20NOT%20LIKE%20%27sqlite_%25%27%0A%20%20%20%20ORDER%20BY%20m.name%0A%29%2C%0Aviews_json%20AS%20%28%0A%20%20%20%20SELECT%20json_group_array%28json%28obj%29%29%20AS%20payload%20FROM%20views_src%0A%29%2C%0A%0A--%20METADATA%20-----------------------------------------------------------%0Ameta%20AS%20%28%0A%20%20%20%20SELECT%20json_object%28%0A%20%20%20%20%20%20%20%20%27tool_name%27%2C%20%20%20%20%20%20%27sql-x-ray%27%2C%0A%20%20%20%20%20%20%20%20%27engine%27%2C%20%20%20%20%20%20%20%20%20%27sqlite%27%2C%0A%20%20%20%20%20%20%20%20%27engine_version%27%2C%20sqlite_version%28%29%2C%0A%20%20%20%20%20%20%20%20%27database%27%2C%20%20%20%20%20%20%20%27main%27%2C%0A%20%20%20%20%20%20%20%20%27generated_at%27%2C%20%20%20strftime%28%27%25Y-%25m-%25dT%25H%3A%25M%3A%25SZ%27%2C%20%27now%27%29%2C%0A%20%20%20%20%20%20%20%20%27schema_filter%27%2C%20%20%27main%27%2C%0A%20%20%20%20%20%20%20%20%27schemas%27%2C%20%20%20%20%20%20%20%20json_array%28%27main%27%29%2C%0A%20%20%20%20%20%20%20%20%27object_counts%27%2C%20%20json_object%28%0A%20%20%20%20%20%20%20%20%20%20%20%20%27tables%27%2C%20%28SELECT%20COUNT%28%2A%29%20FROM%20sqlite_master%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20WHERE%20type%20%3D%20%27table%27%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20AND%20name%20NOT%20LIKE%20%27sqlite_%25%27%29%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27views%27%2C%20%20%28SELECT%20COUNT%28%2A%29%20FROM%20sqlite_master%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20WHERE%20type%20%3D%20%27view%27%29%0A%20%20%20%20%20%20%20%20%29%2C%0A%20%20%20%20%20%20%20%20%27privacy_note%27%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27This%20document%20contains%20only%20structural%20metadata.%20%27%20%7C%7C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27It%20deliberately%20excludes%20default%20value%20literals%2C%20%27%20%7C%7C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27check%20constraint%20expressions%20%28SQLite%20stores%20these%20%27%20%7C%7C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27inside%20CREATE%20TABLE%20SQL%20which%20we%20do%20not%20parse%29%2C%20%27%20%7C%7C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27view%20and%20trigger%20bodies%2C%20and%20all%20row%20data.%20Existence%20%27%20%7C%7C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27is%20recorded%20via%20counts%20%28e.g.%20trigger_count%29%3B%20%27%20%7C%7C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27contents%20are%20not.%27%0A%20%20%20%20%29%20AS%20payload%0A%29%0A%0A--%20FINAL%20ASSEMBLY%20-----------------------------------------------------%0ASELECT%20json_object%28%0A%20%20%20%20%27metadata%27%2C%20%20json%28%28SELECT%20payload%20FROM%20meta%29%29%2C%0A%20%20%20%20%27tables%27%2C%20%20%20%20json%28COALESCE%28%28SELECT%20payload%20FROM%20tables_json%29%2C%20%27%5B%5D%27%29%29%2C%0A%20%20%20%20%27views%27%2C%20%20%20%20%20json%28COALESCE%28%28SELECT%20payload%20FROM%20views_json%29%2C%20%20%27%5B%5D%27%29%29%2C%0A%20%20%20%20%27routines%27%2C%20%20json%28%27%5B%5D%27%29%2C%0A%20%20%20%20%27sequences%27%2C%20json%28%27%5B%5D%27%29%2C%0A%20%20%20%20%27packages%27%2C%20%20json%28%27%5B%5D%27%29%2C%0A%20%20%20%20%27types%27%2C%20%20%20%20%20json%28%27%5B%5D%27%29%0A%29%20AS%20schema_dump%3B%0A). The SQL editor opens already filled in, so just press **Run SQL** and one JSON cell comes back. (The full script is also in the accordion at the end of this section if you would rather paste it by hand.)
+
+### Why This Is a Good Fit
+
+`penobscot-nclex` is a hypothetical nursing school and the data is synthetic, but it is shaped to mirror the kind of internal record a real program actually keeps: one row per student per NCLEX licensure attempt, carrying region, campus, program, cohort timing, attempt number, and a pass-or-fail result. Were it live data it would sit squarely under FERPA, and several of those columns are quasi-identifiers, since region plus campus plus program plus cohort can narrow to a single person well before any name is involved.
+
+That is the textbook case for a structure-only dump. You might reasonably want an LLM to help write a cohort pass-rate query, draft an ER diagram, or scaffold ORM models against this schema, but you cannot paste student records into a consumer chat, and you should not paste the full `CREATE TABLE` text either, because defaults and check constraint expressions can carry sensitive strings of their own. sql-x-ray threads that needle: the model receives the table names, columns, types, keys, and indexes it needs to be useful, while a data governance reviewer has nothing to flag, because no row, no value, and no constraint expression ever leaves the database. Everything below is that trade running on a realistic stand-in for protected institutional data.
+
+### The SQLite 3.44 Wrinkle
+
+Datasette Lite runs SQLite compiled to WebAssembly through [Pyodide](https://pyodide.org/), and that build currently reports `3.39.0`. The canonical script targets 3.44+ because it sorts inside the aggregate, putting `ORDER BY` directly in `json_group_array`, which is a feature added in [SQLite 3.44](https://www.sqlite.org/releaselog/3_44_0.html). On 3.39 the parser stops at the first one with `near "ORDER": syntax error`.
+
+The fix is the same move the Firebird script makes for the same reason (see *Engine quirks the scripts paper over* below): relocate every `ORDER BY` out of the aggregate and into a subquery that pre-sorts the rows, so the outer aggregation consumes them already in order. Set against the `cols` CTE shown earlier:
+
+```sql
+cols_src AS (
+    SELECT
+        m.name AS table_name,
+        p.cid  AS sort_key,
+        json_object( 'name', p.name, 'position', p.cid + 1, 'data_type', p.type, ... ) AS obj
+    FROM sqlite_master m, pragma_table_info(m.name) p
+    WHERE m.type = 'table' AND m.name NOT LIKE 'sqlite_%'
+    ORDER BY m.name, p.cid          -- ordering lives here now, not in the aggregate
+),
+cols AS (
+    SELECT table_name, json_group_array(json(obj)) AS columns
+    FROM cols_src
+    GROUP BY table_name             -- plain aggregate, no ORDER BY argument
+)
+```
+
+The output is byte-identical to the 3.44+ script; only the sorting mechanism changes. This compatibility build runs unchanged on any SQLite from 3.16 upward.
+
+### The Output
+
+Trimmed to the metadata header and one table:
+
+```json
+{
+  "metadata": {
+    "tool_name":      "sql-x-ray",
+    "engine":         "sqlite",
+    "engine_version": "3.39.0",
+    "database":       "main",
+    "schemas":        ["main"],
+    "object_counts":  { "tables": 3, "views": 0 }
+  },
+  "tables": [
+    {
+      "schema": "main",
+      "name":   "attempts",
+      "kind":   "table",
+      "primary_key":  null,
+      "foreign_keys": null,
+      "check_constraint_count": 0,
+      "indexes": [
+        { "name": "ix_attempts_campus",         "method": "btree", "unique": false, "columns": ["campus"] },
+        { "name": "ix_attempts_student_attempt","method": "btree", "unique": true,  "columns": ["student_id", "attempt_number"] },
+        { "name": "ix_attempts_testing_cohort", "method": "btree", "unique": false, "columns": ["testing_cohort"] }
+      ],
+      "trigger_count": 0,
+      "columns": [
+        { "name": "student_id",        "position": 1, "data_type": "TEXT",    "nullable": false, "has_default": false, "is_pk": false },
+        { "name": "region",            "position": 2, "data_type": "TEXT",    "nullable": false, "has_default": false, "is_pk": false },
+        { "name": "campus",            "position": 3, "data_type": "TEXT",    "nullable": false, "has_default": false, "is_pk": false },
+        { "name": "program",           "position": 4, "data_type": "TEXT",    "nullable": false, "has_default": false, "is_pk": false },
+        { "name": "starting_cohort",   "position": 5, "data_type": "TEXT",    "nullable": true,  "has_default": false, "is_pk": false },
+        { "name": "graduating_cohort", "position": 6, "data_type": "TEXT",    "nullable": true,  "has_default": false, "is_pk": false },
+        { "name": "testing_cohort",    "position": 7, "data_type": "TEXT",    "nullable": false, "has_default": false, "is_pk": false },
+        { "name": "attempt_number",    "position": 8, "data_type": "INTEGER", "nullable": false, "has_default": false, "is_pk": false },
+        { "name": "result",            "position": 9, "data_type": "INTEGER", "nullable": false, "has_default": false, "is_pk": false }
+      ]
+    }
+  ]
+}
+```
+
+Every column name is exposed (`student_id`, `region`, `campus`, `program`); not one student record is. That is the structure-only guarantee made concrete on data shaped like the protected real thing.
+
+### What the Nulls Tell You
+
+`foreign_keys` is `null` on all three tables. This database declares no foreign keys, so sql-x-ray, which reports only what the catalog declares and infers nothing, draws an edgeless diagram: three tables, no connections.
+
+{{< mermaid >}}
+erDiagram
+    attempts {
+        TEXT student_id
+        TEXT region
+        TEXT campus
+        TEXT program
+        TEXT starting_cohort
+        TEXT graduating_cohort
+        TEXT testing_cohort
+        INTEGER attempt_number
+        INTEGER result
+    }
+    students {
+        TEXT student_id PK
+        TEXT region
+        TEXT campus
+        TEXT program
+        INTEGER total_attempts
+        INTEGER eventually_passed
+        INTEGER first_visible_attempt
+        TEXT first_testing_cohort
+        TEXT last_testing_cohort
+        INTEGER terms_grad_to_first_test
+        TEXT graduating_cohort
+        TEXT starting_cohort
+    }
+    term_order {
+        TEXT cohort PK
+        INTEGER year
+        TEXT term
+        INTEGER term_idx
+        INTEGER ordinal
+    }
+{{< /mermaid >}}
+
+The relationships are nonetheless real. `attempts.student_id` matches `students.student_id`, and the `*_cohort` columns match `term_order.cohort`. They live in the pipeline that built the tables, not in the schema. Drawn from column names and join logic rather than read from the catalog, the **implied** schema is this:
+
+{{< mermaid >}}
+erDiagram
+    students ||--o{ attempts : student_id
+    term_order ||--o{ attempts : "cohort lookups"
+    term_order ||--o{ students : "cohort lookups"
+    attempts {
+        TEXT student_id FK
+        TEXT region
+        TEXT campus
+        TEXT program
+        TEXT starting_cohort FK
+        TEXT graduating_cohort FK
+        TEXT testing_cohort FK
+        INTEGER attempt_number
+        INTEGER result
+    }
+    students {
+        TEXT student_id PK
+        TEXT region
+        TEXT campus
+        TEXT program
+        INTEGER total_attempts
+        INTEGER eventually_passed
+        INTEGER first_visible_attempt
+        TEXT first_testing_cohort FK
+        TEXT last_testing_cohort FK
+        INTEGER terms_grad_to_first_test
+        TEXT graduating_cohort FK
+        TEXT starting_cohort FK
+    }
+    term_order {
+        TEXT cohort PK
+        INTEGER year
+        TEXT term
+        INTEGER term_idx
+        INTEGER ordinal
+    }
+{{< /mermaid >}}
+
+This second diagram is an inference, not a reading. The `FK` markers and the edges are what a careful analyst (or an LLM handed the dump) would reconstruct from the naming, and they are labeled as implied for exactly that reason. The database is deliberately left unchanged. SQLite cannot add a foreign key without rebuilding each table, and for a derived, read-only analytical dataset whose referential integrity is already guaranteed by the build pipeline, that rebuild would be a manual mutation drifting away from the pipeline for no query-time benefit. Documenting the implied schema here is the honest middle path: it shows the relationships without pretending the engine enforces them.
+
+The gap between the two diagrams is the entire argument for declared constraints. A database can be perfectly relational in practice while telling an introspection tool, a new analyst, or an LLM nothing about how its tables connect. sql-x-ray draws only the first diagram, because the first diagram is the only one that is true of the schema as written.
+
+{{< accordion mode="collapse" separated="true" >}}
+
+{{< accordionItem title="Full compatibility script (SQLite 3.16+)" >}}
+
+The complete browser-ready build. Paste it into the Datasette Lite SQL box linked above.
+
+```sql
+-- =====================================================================
+-- sql-x-ray for SQLite 3.16+ (compatibility build)
+-- =====================================================================
+-- Same output as the 3.44+ script, but avoids ORDER BY inside
+-- aggregate functions (a 3.44 feature). Ordering is established in
+-- inner subqueries and preserved by the outer aggregation, so this
+-- runs on older engines such as the SQLite build inside Datasette
+-- Lite / Pyodide.
+-- =====================================================================
+
+WITH
+
+-- COLUMNS ------------------------------------------------------------
+cols_src AS (
+    SELECT
+        m.name AS table_name,
+        p.cid  AS sort_key,
+        json_object(
+            'name',         p.name,
+            'position',     p.cid + 1,
+            'data_type',    p.type,
+            'nullable',     CASE p."notnull" WHEN 1 THEN json('false') ELSE json('true') END,
+            'has_default',  CASE WHEN p.dflt_value IS NOT NULL THEN json('true') ELSE json('false') END,
+            'is_pk',        CASE WHEN p.pk > 0 THEN json('true') ELSE json('false') END
+        ) AS obj
+    FROM sqlite_master m, pragma_table_info(m.name) p
+    WHERE m.type = 'table'
+      AND m.name NOT LIKE 'sqlite_%'
+    ORDER BY m.name, p.cid
+),
+cols AS (
+    SELECT table_name, json_group_array(json(obj)) AS columns
+    FROM cols_src
+    GROUP BY table_name
+),
+
+-- PRIMARY KEYS -------------------------------------------------------
+pks_src AS (
+    SELECT m.name AS table_name, p.pk AS sort_key, p.name AS col_name
+    FROM sqlite_master m, pragma_table_info(m.name) p
+    WHERE m.type = 'table'
+      AND m.name NOT LIKE 'sqlite_%'
+      AND p.pk > 0
+    ORDER BY m.name, p.pk
+),
+pks AS (
+    SELECT table_name,
+           json_object('columns', json_group_array(col_name)) AS primary_key
+    FROM pks_src
+    GROUP BY table_name
+),
+
+-- FOREIGN KEYS -------------------------------------------------------
+fk_cols_src AS (
+    SELECT
+        m.name AS table_name,
+        f.id   AS fk_id,
+        f."table" AS to_table,
+        f.on_delete,
+        f.seq  AS sort_key,
+        f."from" AS from_col,
+        f."to"   AS to_col
+    FROM sqlite_master m, pragma_foreign_key_list(m.name) f
+    WHERE m.type = 'table'
+      AND m.name NOT LIKE 'sqlite_%'
+    ORDER BY m.name, f.id, f.seq
+),
+fk_grouped AS (
+    SELECT
+        table_name, fk_id, to_table, on_delete,
+        json_group_array(from_col) AS from_columns,
+        json_group_array(to_col)   AS to_columns
+    FROM fk_cols_src
+    GROUP BY table_name, fk_id, to_table, on_delete
+),
+fk_obj_src AS (
+    SELECT
+        table_name,
+        fk_id AS sort_key,
+        json_object(
+            'from_columns', json(from_columns),
+            'to_table',     to_table,
+            'to_columns',   json(to_columns),
+            'on_delete',    on_delete
+        ) AS obj
+    FROM fk_grouped
+    ORDER BY table_name, fk_id
+),
+fks AS (
+    SELECT table_name, json_group_array(json(obj)) AS foreign_keys
+    FROM fk_obj_src
+    GROUP BY table_name
+),
+
+-- INDEXES (origin 'c' only) ------------------------------------------
+idx_col_src AS (
+    SELECT
+        m.name  AS table_name,
+        il.name AS index_name,
+        il."unique" AS is_unique,
+        ii.seqno AS sort_key,
+        ii.name  AS col_name
+    FROM sqlite_master m,
+         pragma_index_list(m.name) il,
+         pragma_index_info(il.name) ii
+    WHERE m.type = 'table'
+      AND m.name NOT LIKE 'sqlite_%'
+      AND il.origin = 'c'
+    ORDER BY m.name, il.name, ii.seqno
+),
+idx_cols AS (
+    SELECT table_name, index_name, is_unique,
+           json_group_array(col_name) AS columns
+    FROM idx_col_src
+    GROUP BY table_name, index_name, is_unique
+),
+idx_obj_src AS (
+    SELECT
+        table_name,
+        index_name AS sort_key,
+        json_object(
+            'name',    index_name,
+            'method',  'btree',
+            'unique',  CASE is_unique WHEN 1 THEN json('true') ELSE json('false') END,
+            'columns', json(columns)
+        ) AS obj
+    FROM idx_cols
+    ORDER BY table_name, index_name
+),
+idx AS (
+    SELECT table_name, json_group_array(json(obj)) AS indexes
+    FROM idx_obj_src
+    GROUP BY table_name
+),
+
+-- TRIGGER COUNTS -----------------------------------------------------
+trigger_counts AS (
+    SELECT tbl_name AS table_name, COUNT(*) AS trigger_count
+    FROM sqlite_master
+    WHERE type = 'trigger'
+    GROUP BY tbl_name
+),
+
+-- TABLES -------------------------------------------------------------
+tables_src AS (
+    SELECT
+        json_object(
+            'schema',                 'main',
+            'name',                   m.name,
+            'kind',                   'table',
+            'is_partitioned',         json('false'),
+            'primary_key',            json(pks.primary_key),
+            'foreign_keys',           json(fks.foreign_keys),
+            'unique_constraints',     json('[]'),
+            'check_constraint_count', 0,
+            'indexes',                json(idx.indexes),
+            'trigger_count',          COALESCE(tc.trigger_count, 0),
+            'columns',                json(cols.columns)
+        ) AS obj
+    FROM sqlite_master m
+    LEFT JOIN cols           ON cols.table_name = m.name
+    LEFT JOIN pks            ON pks.table_name  = m.name
+    LEFT JOIN fks            ON fks.table_name  = m.name
+    LEFT JOIN idx            ON idx.table_name  = m.name
+    LEFT JOIN trigger_counts tc ON tc.table_name = m.name
+    WHERE m.type = 'table'
+      AND m.name NOT LIKE 'sqlite_%'
+    ORDER BY m.name
+),
+tables_json AS (
+    SELECT json_group_array(json(obj)) AS payload FROM tables_src
+),
+
+-- VIEWS --------------------------------------------------------------
+view_col_src AS (
+    SELECT
+        m.name AS view_name,
+        p.cid  AS sort_key,
+        json_object(
+            'name',      p.name,
+            'position',  p.cid + 1,
+            'data_type', p.type,
+            'nullable',  CASE p."notnull" WHEN 1 THEN json('false') ELSE json('true') END
+        ) AS obj
+    FROM sqlite_master m, pragma_table_info(m.name) p
+    WHERE m.type = 'view'
+      AND m.name NOT LIKE 'sqlite_%'
+    ORDER BY m.name, p.cid
+),
+view_cols AS (
+    SELECT view_name, json_group_array(json(obj)) AS columns
+    FROM view_col_src
+    GROUP BY view_name
+),
+views_src AS (
+    SELECT
+        json_object(
+            'schema',  'main',
+            'name',    m.name,
+            'kind',    'view',
+            'columns', json(COALESCE(vc.columns, '[]'))
+        ) AS obj
+    FROM sqlite_master m
+    LEFT JOIN view_cols vc ON vc.view_name = m.name
+    WHERE m.type = 'view'
+      AND m.name NOT LIKE 'sqlite_%'
+    ORDER BY m.name
+),
+views_json AS (
+    SELECT json_group_array(json(obj)) AS payload FROM views_src
+),
+
+-- METADATA -----------------------------------------------------------
+meta AS (
+    SELECT json_object(
+        'tool_name',      'sql-x-ray',
+        'engine',         'sqlite',
+        'engine_version', sqlite_version(),
+        'database',       'main',
+        'generated_at',   strftime('%Y-%m-%dT%H:%M:%SZ', 'now'),
+        'schema_filter',  'main',
+        'schemas',        json_array('main'),
+        'object_counts',  json_object(
+            'tables', (SELECT COUNT(*) FROM sqlite_master
+                       WHERE type = 'table'
+                         AND name NOT LIKE 'sqlite_%'),
+            'views',  (SELECT COUNT(*) FROM sqlite_master
+                       WHERE type = 'view')
+        ),
+        'privacy_note',
+            'This document contains only structural metadata. ' ||
+            'It deliberately excludes default value literals, ' ||
+            'check constraint expressions (SQLite stores these ' ||
+            'inside CREATE TABLE SQL which we do not parse), ' ||
+            'view and trigger bodies, and all row data. Existence ' ||
+            'is recorded via counts (e.g. trigger_count); ' ||
+            'contents are not.'
+    ) AS payload
+)
+
+-- FINAL ASSEMBLY -----------------------------------------------------
+SELECT json_object(
+    'metadata',  json((SELECT payload FROM meta)),
+    'tables',    json(COALESCE((SELECT payload FROM tables_json), '[]')),
+    'views',     json(COALESCE((SELECT payload FROM views_json),  '[]')),
+    'routines',  json('[]'),
+    'sequences', json('[]'),
+    'packages',  json('[]'),
+    'types',     json('[]')
+) AS schema_dump;
+```
+
+{{< /accordionItem >}}
+
+{{< /accordion >}}
+
 ## Under The Hood
 
 For the technically curious, three of the more interesting implementation pieces.
