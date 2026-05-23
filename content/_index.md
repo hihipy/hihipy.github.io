@@ -22,7 +22,7 @@ La Meva Casa Digital és La Teva Casa Digital
 {{< /typeit >}}
 {{< /lead >}}
 
-Welcome to my digital casa. The Spanish room names are a small tribute to my dual U.S. and Spanish citizenship, with the rotating welcome adding nods to my Catalan and Greek heritage. Feel free to wander between rooms.
+Welcome to my digital casa. I'm Philip Bachas-Daunert, a Data Analyst at the University of Miami Miller School of Medicine, and this is my portfolio: case studies, dashboards, and the tools behind them. The Spanish room names are a small tribute to my dual U.S. and Spanish citizenship, with the rotating welcome adding nods to my Catalan and Greek heritage. Feel free to wander between rooms.
 
 ## Who I Am
 
