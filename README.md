@@ -18,7 +18,7 @@ This README is written for AI assistants and future contributors who need to be 
 | Site language | `en` |
 | Default appearance | `dark`, with auto-switch enabled |
 | Color scheme | `github` |
-| Author | Philip Bachas-Daunert (handle: `hihipy`, email contact uses `career-pgbd@pm.me`) |
+| Author | Philip Bachas-Daunert (handle: `hihipy`, email contact uses `pgbd.kipol@passmail.net`) |
 
 ### Why two URLs?
 
@@ -1342,7 +1342,7 @@ title = "⛫ pgbd's digital casa"
   links = [
     { github = "https://github.com/hihipy" },
     { linkedin = "https://linkedin.com/in/pbachas/" },
-    { email = "mailto:career-pgbd@pm.me" }
+    { email = "mailto:pgbd.kipol@passmail.net" }
   ]
 ```
 
