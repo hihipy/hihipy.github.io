@@ -53,7 +53,7 @@ The site is organized as a "digital casa" (Spanish for "house"). Each top-level 
 
 The home page lead is a rotating typing animation (Blowfish `{{< typeit >}}` shortcode wrapped inside `{{< lead >}}`, looping with `breakLines=false`) that cycles through four languages: Spanish (`Mi Casa Digital es Su Casa Digital`, canonical and matched by the site's `description` meta tag), English (`My Digital Home is Your Digital Home`), Catalan (`La Meva Casa Digital és La Teva Casa Digital`), and Greek (`Το Ψηφιακό Σπίτι μου είναι Το Ψηφιακό Σπίτι σου`). All four use the same casing rule (see §7). Spanish and English reflect citizenship (Spain and U.S. respectively); Catalan and Greek reflect heritage. The welcome paragraph immediately below the lead names all four connections explicitly.
 
-This pattern extends to all nine room landing pages. Each `{{< lead >}}` contains a typing animation cycling a short page-purpose tagline through the same four languages in the same order. Each tagline describes what is actually on the page, not the room name itself, so a visitor who lands on cocina or estudio without context understands what they are looking at. The taglines are: puerta cycles `Mi Currículum / My Résumé / El Meu Currículum / Το Βιογραφικό μου`; sala cycles `Mi Trayectoria / My Background / La Meva Trajectòria / Το Υπόβαθρό μου`; mirador cycles `Mi Filosofía de Dashboards / My Dashboard Philosophy / La Meva Filosofia de Dashboards / Η Φιλοσοφία μου για Dashboards`; taller cycles `Mi Dashboard / My Dashboard / El Meu Dashboard / Το Dashboard μου`; obrador cycles `Mi Filosofía de Herramientas / My Tool-Building Philosophy / La Meva Filosofia d'Eines / Η Φιλοσοφία μου για τα Εργαλεία`; cocina cycles `Mis Pipelines de Datos / My Data Pipelines / Els Meus Pipelines de Dades / Τα Pipelines Δεδομένων μου`; estudio cycles `Mis Experimentos con IA / My AI Experiments / Els Meus Experiments amb IA / Τα Πειράματά μου με AI`; garaje cycles `Mis Utilidades de Analista / My Analyst Utilities / Les Meves Utilitats d'Analista / Τα Εργαλεία Αναλυτή μου`; jardín cycles `Mis Proyectos Personales / My Side Projects / Els Meus Projectes Personals / Τα Προσωπικά Έργα μου`. Greek possessive clitics (`μου`) stay lowercase per native convention; Greek proparoxytone words (`Πειράματα`, `Υπόβαθρο`) take the secondary accent when followed by the clitic (`Πειράματά μου`, `Υπόβαθρό μου`).
+This pattern extends to all twelve room landing pages. Each `{{< lead >}}` contains a typing animation cycling a short page-purpose tagline through the same four languages in the same order. Each tagline describes what is actually on the page, not the room name itself, so a visitor who lands on cocina or estudio without context understands what they are looking at. The taglines are: puerta cycles `Mi Currículum / My Résumé / El Meu Currículum / Το Βιογραφικό μου`; sala cycles `Mi Trayectoria / My Background / La Meva Trajectòria / Το Υπόβαθρό μου`; mirador cycles `Mi Filosofía de Dashboards / My Dashboard Philosophy / La Meva Filosofia de Dashboards / Η Φιλοσοφία μου για Dashboards`; taller cycles `Mi Dashboard / My Dashboard / El Meu Dashboard / Το Dashboard μου`; obrador cycles `Mi Filosofía de Herramientas / My Tool-Building Philosophy / La Meva Filosofia d'Eines / Η Φιλοσοφία μου για τα Εργαλεία`; cocina cycles `Mis Pipelines de Datos / My Data Pipelines / Els Meus Pipelines de Dades / Τα Pipelines Δεδομένων μου`; estudio cycles `Mis Experimentos con IA / My AI Experiments / Els Meus Experiments amb IA / Τα Πειράματά μου με AI`; garaje cycles `Mis Utilidades de Analista / My Analyst Utilities / Les Meves Utilitats d'Analista / Τα Εργαλεία Αναλυτή μου`; jardín cycles `Mis Proyectos Personales / My Side Projects / Els Meus Projectes Personals / Τα Προσωπικά Έργα μου`; despacho cycles `Mis Ensayos de Datos / My Data Essays / Els Meus Assajos de Dades / Τα Δοκίμια Δεδομένων μου`. The biblioteca and archivo taglines follow the same four-language pattern and live in their respective `_index.md`; transcribe them here when reconciling. Greek possessive clitics (`μου`) stay lowercase per native convention; Greek proparoxytone words (`Πειράματα`, `Υπόβαθρο`) take the secondary accent when followed by the clitic (`Πειράματά μου`, `Υπόβαθρό μου`).
 
 On puerta and sala, the previous static lead content (résumé explainer and professional summary respectively) is preserved as a regular paragraph immediately below the new animated lead. The puerta page also drops the redundant separate download button — the inline PDF embed has its own download control in the browser-native PDF toolbar.
 
@@ -63,7 +63,7 @@ The casa metaphor extends to the 404 page, which uses casa language ("No room he
 
 ## 3. Room Inventory
 
-Nine rooms total. Two non-project rooms (puerta, sala), two dashboard rooms (mirador, taller), one tool-building methodology room (obrador), and four project rooms (cocina, estudio, garaje, jardín).
+Twelve rooms total, organized as four practice areas bracketed by two entry pages. Entry: puerta, sala. Dashboards: mirador (philosophy) and taller (applied). Case studies: biblioteca (philosophy) and archivo (applied). Tooling: obrador (philosophy) and four project rooms (cocina, estudio, garaje, jardín). Data essays: despacho.
 
 | Room | Path | Title (Title Case) | Role |
 |---|---|---|---|
@@ -71,17 +71,20 @@ Nine rooms total. Two non-project rooms (puerta, sala), two dashboard rooms (mir
 | `sala` | `/sala/` | About Me | Living room, about page. Terminal page with long-form bio (Experience / Education / Certifications / Skills). |
 | `mirador` | `/mirador/` | Dashboard Philosophy | Lookout, methodology room. Holds dashboard design philosophy and methodology essays. Not a project room. |
 | `taller` | `/taller/` | Built Dashboard | Workshop, applied room. Holds a worked dashboard example built from public data. Not a project room. |
+| `biblioteca` | `/biblioteca/` | Case Study Philosophy | Library, methodology room. Holds case-study philosophy: sourcing, reproducibility, peer review. Not a project room. |
+| `archivo` | `/archivo/` | Case Studies | Archive, applied room. Holds phased case-study walkthroughs from source to findings. Not a project room. |
 | `obrador` | `/obrador/` | Tool-Building Philosophy | Craft workshop, methodology room. Holds tool-building philosophy: when to automate, how to work with AI, identifier protection. Not a project room. |
 | `cocina` | `/cocina/` | Data Prep & ETL | Kitchen, data preparation tools. |
 | `estudio` | `/estudio/` | AI & Experiments | Studio, AI-augmented analytics tools. |
 | `garaje` | `/garaje/` | Analyst Utilities | Garage, Excel macros, calculators, processing scripts. |
 | `jardin` | `/jardín/` | Side Projects | Garden, personal projects and miscellaneous experiments. |
+| `despacho` | `/despacho/` | Data Essays | Study/home-office, content room. Holds long-form, sourced data essays that reason with data. Not a project room. |
 
 Room symbol rationale: room pages have **no** decorative symbol prefix. The terminal-prompt path (`~/sala`, `~/cocina`, etc.) is the room identity; an additional symbol prefix is redundant decoration. The site went through three iterations on this. First, mixed Unicode glyphs (`◰ § ⛁ ✦ ⛭ ❀`) — visually distinct but five of six were not in MonoLisa and rendered via system font fallback (BUG-013 in its original form). Second, Greek capitals (`Π Σ Δ Ψ Ω Φ`) — fully present in MonoLisa with a defensible thematic mapping (Σαλόνι, Δεδομένα, golden ratio in plant biology). Third, none — the realization that the Greek letters were redundant decoration in front of already-distinctive paths, and that the homepage `⛫` castle was doing the symbolic work for the entire site without needing per-room reinforcement. The terminal-prompt format alone is the room identity. The homepage `⛫` (castle) is the brand anchor and remains the only symbolic glyph on the site. Anyone tempted to add per-room symbols back should weigh the symbolic redundancy against the visual flourish; previous iterations are documented for reference but were removed deliberately.
 
-**Home page order (intentional):** Three sections separated by H2 headers. *Who I Am* contains `puerta`, `sala` (puerta first because the metaphor is "visitor walks through the door first"). *Dashboards* contains `mirador`, `taller` (alphabetical, which also reads philosophy-first). *Tooling* contains `obrador` first (the methodology room) followed by the four project rooms alphabetically (`cocina`, `estudio`, `garaje`, `jardín`). This structure is non-negotiable; do not reorder without instruction.
+**Home page order (intentional):** Five sections separated by H2 headers, ordered to build toward the strongest work for a job-portfolio reader. *Who I Am* contains `puerta`, `sala` (puerta first because the metaphor is "visitor walks through the door first"). *Tooling* contains `obrador` first (the methodology room) followed by the four project rooms alphabetically (`cocina`, `estudio`, `garaje`, `jardín`). *Dashboards* contains `mirador`, `taller`. *Case Studies* contains `biblioteca`, `archivo`. *Data Essays* contains `despacho`. Within each practice area the philosophy room precedes the applied room. This structure is non-negotiable; do not reorder without instruction.
 
-Project counts are NOT listed in this table by design. The four project rooms render their counts dynamically on the live site via the `section-count` shortcode (see §9), so manual counts here would be a maintenance burden and a source of drift. For the actual contents of each room, see §4.
+Counts are NOT listed in this table by design. The four project rooms render their counts dynamically via the `section-count` shortcode, `archivo` via `case-study-count`, and `despacho` via `essay-count` (see §9), so manual counts here would be a maintenance burden and a source of drift. For the actual contents of each room, see §4.
 
 ## 4. Project Pages — Complete Inventory
 
@@ -316,6 +319,14 @@ GitHub Pages automatically serves `/404.html` (which Hugo generates from this la
 
 Auto-counts pages in a section and renders `(N Project)` or `(N Projects)` with proper pluralization. Used on the home page next to project room links.
 
+### `layouts/shortcodes/case-study-count.html`
+
+Same mechanism as `section-count`, pluralizing as `(N Case Study)` / `(N Case Studies)`. Used on the home page next to the `archivo` room link.
+
+### `layouts/shortcodes/essay-count.html`
+
+Same mechanism, pluralizing as `(N Essay)` / `(N Essays)`. Used on the home page next to the `despacho` room link. Added May 2026 with the despacho room. The three count shortcodes are near-identical and differ only in the pluralized noun; a future cleanup could consolidate them into one parameterized shortcode taking the noun as a second argument.
+
 ### `layouts/shortcodes/swatch.html`
 
 Renders an inline color swatch (small colored square) followed by the hex code in monospace. Used in `~/mirador` to make the named palettes actually viewable as colors rather than as bare hex strings the reader has to mentally translate.
@@ -405,6 +416,7 @@ Custom CSS overrides, roughly 5KB. Concerns:
 5. Mermaid diagrams and figures centered with auto margins
 6. Mobile timeline overflow fix at `@media (max-width: 640px)` — see BUG-012
 7. Mobile typing-animation lead font shrink + min-height to prevent bounce — see typing animation work in §2
+8. Markdown tables centered with `width: fit-content` + auto margins, and cells center-aligned — see BUG-038
 
 Inspect before modifying — every rule has a reason.
 
@@ -1257,6 +1269,30 @@ First encountered: portfolio-wide sweep, May 2026. The Penobscot case study's pr
 **Prevention discipline:** when running cache-clearing commands (`rm -rf resources/`, `rm -rf public/`, `hugo --cleanDestinationDir`), verify content/ files immediately after with `grep -c <pattern> content/<path>` to confirm nothing in content/ regressed. The check costs 1 second and prevents silent rollback. If a dev server is running, restart it after any `rm -rf` to avoid stale-cache re-emission.
 
 First encountered: Penobscot SQL-formatting sweep, May 2026. Phase 01 lost its 4 printfs between Step 7 verification and Step 7 Phase 04 attempt. Detected by post-Phase-04 portfolio audit. Recovered by re-applying the Phase 01 patch as part of the Phase 04 script (`step7_p01_p04_redo.py`). After the redo, Phase 01 had 4 printfs and Phase 04 had 8 printfs, matching plan.
+
+### BUG-038: Markdown tables render left-pinned; centering the block needs `width: fit-content`, not just `margin: auto`
+
+**Symptom:** Markdown tables sit against the left edge of the content column with dead space to their right. Cell *text* can be centered with the `:---:` column-alignment syntax, but the table *block* stays left, and `margin-left/right: auto` on the table has no visible effect.
+
+**Cause:** Blowfish styles article content with the Tailwind Typography (`prose`) plugin, which renders the table to fill the full content width as a block. A box already at full width has no horizontal slack, so `margin: auto` has nothing to distribute and cannot center it; the cell grid simply shrink-wraps to the left inside the full-width box. Separately, Typography sets `'th, td': { text-align: start }` with no `!important` and a `:where()` (single-class) specificity, which is why an inline `style="text-align: center"` emitted by Hugo from `:---:` overrides it and the cell text *does* center while the block does not.
+
+**Fix:** Give the table `width: fit-content` first (shrinks the box to its content width), then `margin-left: auto; margin-right: auto` to center the now-narrower box; `max-width: 100%` keeps it inside a narrow viewport. A backstop `th, td { text-align: center }` guarantees cell centering independent of the inline style. Canonical home is `assets/css/custom.css` (loaded after theme styles, so no `!important` is needed there), alongside the existing figure-centering rule:
+
+```css
+.prose table, article table {
+  width: fit-content;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.prose th, .prose td { text-align: center; }
+```
+
+The despacho "2026 Job Application Paradox" essay carries the same rule in its page-scoped `<style>` block (with `!important`, since an inline block's order relative to theme CSS is less predictable) as an interim measure. Once the `custom.css` rule is in place, the inline duplicate can be removed.
+
+**Detection:** in devtools, a header cell computes `text-align: center` (cell text is fine) but the `<table>` computed width equals the container width while its visible content is narrower — the tell that the block is full-width and needs `fit-content`. Confirmed via console: `getComputedStyle(table).width` vs `table.parentElement.clientWidth`.
+
+First encountered: despacho "2026 Job Application Paradox" essay, May 2026.
 
 ## 11. Configuration Files
 
