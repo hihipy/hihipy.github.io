@@ -57,7 +57,7 @@ A single office application now converts more rarely than a Harvard acceptance. 
 </div>
 </div>
 
-## 1. The Ladder, Easiest to Hardest
+## The Ladder, Easiest to Hardest
 
 Each row shows the odds, a "1 in X" reading, and the kind of number it is (this last column is the key to reading the table honestly). Source numbers map to the references at the end.
 
@@ -140,7 +140,7 @@ options: {
 
 ***
 
-## 2. The Core Number: Where 0.4% Comes From
+## The Core Number: Where 0.4% Comes From
 
 The average opening now draws about 242 applications and fills roughly one seat [24]. Treating a single application as one independent trial, the per-application probability of success is
 
@@ -168,7 +168,7 @@ which sits right beside the 0.413% figure. Good intuition pump. Now the part the
 
 ***
 
-## 3. "Per Application" Is Not Your Real Odds
+## "Per Application" Is Not Your Real Odds
 
 The seductive error is reading 0.4% as your chance of getting *a* job. It is not. It is the chance that *one specific submission* lands. A real job hunt is many submissions. If each application is an independent trial with success probability \\(p\\), the probability of landing **at least one** offer from \\(n\\) applications is the complement of failing every time:
 
@@ -381,7 +381,7 @@ options: {
 
 ***
 
-## 4. Noise Versus Difficulty: The Qualified-Pool Model
+## Noise Versus Difficulty: The Qualified-Pool Model
 
 Why is the per-application number so punishing in the first place? Because the denominator is padded with submissions that were never real contenders. Model the pile with three quantities:
 
@@ -428,7 +428,7 @@ For a random applicant that is \\(1/p_{\text{app}} = 242\\) tries. For a qualifi
 
 ***
 
-## 5. The Big Caveat: Did Office Jobs Really Get Harder Than SpaceX?
+## The Big Caveat: Did Office Jobs Really Get Harder Than SpaceX?
 
 Not in the way it sounds, and the math says exactly why. This is the part to internalize before sharing the ladder.
 
@@ -454,7 +454,7 @@ In plain terms, SpaceX's pile is roughly 2.4 times less diluted by noise. Nobody
 
 ***
 
-## 6. Reading the Ladder Honestly: Ratios and Log Scale
+## Reading the Ladder Honestly: Ratios and Log Scale
 
 It is tempting to say "an office application is 10x rarer than getting into Harvard." The arithmetic is real,
 
@@ -492,7 +492,7 @@ from "3 in 4" down to "1 in 3,300." The office job sits at \\(-2.38\\), deep in 
 
 ***
 
-## 7. What Actually Changed Since 2021: The Volume Math
+## What Actually Changed Since 2021: The Volume Math
 
 The collapse in per-application odds is almost entirely a denominator story, and it decomposes cleanly.
 
@@ -535,13 +535,13 @@ Even at the optimistic end (\\(N = 100\\), roughly the pre-2021 norm), reaching 
 
 ***
 
-## 8. The Macro Backdrop: The Market Did Cool
+## The Macro Backdrop: The Market Did Cool
 
 The per-application math explains most of the pain, but it is not the whole story. White collar hiring genuinely softened. The US job-openings-to-unemployed ratio dipped below 1.0 in March 2025 and bottomed near 0.87 in December 2025, and information-sector openings fell about 33% year over year, the steepest of any private sector, per Bureau of Labor Statistics JOLTS data and Indeed Hiring Lab analysis [34] [35]. So the picture is two effects stacked: a modestly tighter market, and a per-application denominator that exploded. The second effect is the larger and less understood one, which is why this note focuses on it.
 
 ***
 
-## 9. What This Means for You
+## What This Means for You
 
 The model points to a precise strategy, not vague encouragement. Your real odds are \\(p_{\text{qualified}} = p_{\text{app}} / f\\), so you win by raising \\(f\\) for your own application or by raising \\(n\\) while keeping quality intact.
 
@@ -554,7 +554,7 @@ The volume game is rigged against volume. The way out is signal.
 
 ***
 
-## 10. Methodology and Data Quality
+## Methodology and Data Quality
 
 Not all of these figures are equal, and an honest analysis says so. They fall into three tiers.
 
@@ -573,7 +573,7 @@ A few specific notes on the trickier numbers:
 
 ***
 
-## 11. Limitations and Assumptions
+## Limitations and Assumptions
 
 - The independence assumption in Section 3 (\\(1 - (1-p)^n\\)) overstates real odds, because applications from one person are correlated. Read those numbers as an upper bound on a persistent applicant's odds.
 - The qualified-pool model in Section 4 treats one hire per opening and equal odds among qualified applicants. Real hiring is messier, but the order-of-magnitude gap between per-application and per-qualified odds is robust to reasonable choices of \\(q\\).
