@@ -78,7 +78,7 @@ Each row shows the odds, a "1 in X" reading, and the kind of number it is (this 
 |  Win a Rhodes Scholarship  |  \~0.7%  |  1 in 143  |  per applicant  |  [19]  |
 |  Land a Goldman Sachs internship  |  \~0.7%  |  1 in 143  |  per applicant  |  [20] [21]  |
 |  Become a Jeopardy contestant  |  \~0.5%  |  1 in 200  |  per applicant  |  [22] [23]  |
-|  **LAND ONE OFFICE JOB APPLICATION**  |  **\~0.4%**  |  **1 in 250**  |  **per application**  |  [24]  |
+|  **LAND ONE OFFICE JOB APPLICATION**  |  **\~0.4%**  |  **1 in 242**  |  **per application**  |  [24]  |
 |  Win a US green card lottery  |  \~0.3%  |  1 in 360  |  pure chance  |  [25]  |
 |  Get hired at Google  |  \~0.2%  |  1 in 500  |  per application  |  [26]  |
 |  Get picked as a NASA astronaut  |  0.125%  |  1 in 800  |  per applicant  |  [27] [28]  |
