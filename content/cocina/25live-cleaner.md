@@ -3,7 +3,7 @@ title: "25live-cleaner"
 weight: 10
 description: "A Python tool that turns messy 25Live scheduling exports into clean data ready for analysis, with a full record of every change made."
 summary: "Cleans 25Live calendar exports."
-tags: ["python", "pandas", "etl", "data-cleaning", "audit"]
+tags: ["audit", "data-cleaning", "etl", "pandas", "python"]
 showDate: false
 showReadingTime: true
 showAuthor: false

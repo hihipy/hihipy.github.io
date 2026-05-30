@@ -3,7 +3,7 @@ title: "Exploration"
 weight: 30
 description: "First-pass queries against the database to see what twenty-one years of NIH funding in Kentucky actually looks like, including yearly trends, the institutional concentration, and the ARRA stimulus visible in the 2009 data."
 summary: "Phase 3: First-pass queries"
-tags: ["sql", "sqlite", "exploratory-analysis", "datasette"]
+tags: ["datasette", "exploratory-analysis", "sql", "sqlite"]
 showDate: false
 showReadingTime: true
 showAuthor: false

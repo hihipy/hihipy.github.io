@@ -3,7 +3,7 @@ title: "Source"
 weight: 10
 description: "The source-of-truth phase. Where College Scorecard's data comes from, the 39-CSV file structure, the 3,308-column reality of each MERGED file, the structural quirks of the export, and the scope decision: Florida four-year institutions, 2014-2023."
 summary: "Where the data comes from and what's actually in it"
-tags: ["sql", "college-scorecard", "csv", "public-data", "data-quality"]
+tags: ["college-scorecard", "csv", "data-quality", "public-data", "sql"]
 showDate: false
 showReadingTime: true
 showAuthor: false

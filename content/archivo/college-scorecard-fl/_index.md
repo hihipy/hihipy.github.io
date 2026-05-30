@@ -3,7 +3,7 @@ title: "Florida Four-Year Institutions"
 weight: 10
 description: "A SQL case study on outcomes, costs, and the for-profit closure wave at Florida four-year institutions, 2014-2023. College Scorecard data normalized into a queryable database, walked through phase by phase so every analytical decision is auditable."
 summary: "Outcomes, costs, and a closure wave"
-tags: ["sql", "sqlite", "datasette", "college-scorecard", "higher-ed", "florida"]
+tags: ["college-scorecard", "datasette", "florida", "higher-ed", "sql", "sqlite"]
 showDate: false
 showReadingTime: false
 showAuthor: false

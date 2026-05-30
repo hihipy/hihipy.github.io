@@ -3,7 +3,7 @@ title: "Exploration"
 weight: 30
 description: "Six orientation queries across the obvious dimensions: region, campus, program pathway, testing cohort, time from graduation to test, and retake outcomes. Confidence intervals computed inline in SQL using the Wald formula. The campus spread phase 01 surfaced gets its first full breakdown with sample-size context."
 summary: "Six queries that get the shape of the data"
-tags: ["sql", "sqlite", "exploratory-analysis", "datasette"]
+tags: ["datasette", "exploratory-analysis", "sql", "sqlite"]
 showDate: false
 showReadingTime: true
 showAuthor: false

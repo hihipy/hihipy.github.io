@@ -3,7 +3,7 @@ title: "brimr-downloader"
 weight: 20
 description: "A Python tool that automates the download and organization of NIH funding ranking data from the BRIMR website. Built for academic medical center analysts who need years of data without spending an afternoon clicking links."
 summary: "Downloads NIH funding rankings."
-tags: ["python", "selenium", "browser-automation", "etl", "nih", "higher-ed"]
+tags: ["browser-automation", "etl", "higher-ed", "nih", "python", "selenium"]
 showDate: false
 showReadingTime: true
 showAuthor: false

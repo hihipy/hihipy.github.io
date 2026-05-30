@@ -3,7 +3,7 @@ title: "decode-for-humans"
 weight: 20
 description: "A desktop tool that translates source code into plain-English explanations using one of five AI providers. Built for the people who own the decisions code makes but can't read code themselves."
 summary: "AI source-code translator."
-tags: ["python", "ai", "llm", "multi-provider", "documentation", "customtkinter"]
+tags: ["ai", "customtkinter", "documentation", "llm", "multi-provider", "python"]
 showDate: false
 showReadingTime: true
 showAuthor: false

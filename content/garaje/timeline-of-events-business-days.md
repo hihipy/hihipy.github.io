@@ -3,7 +3,7 @@ title: "timeline-of-events-business-days"
 weight: 50
 description: "A small Excel timeline tool that measures every phase of a process in business days, including the gaps between phases. Built for spotting where time actually goes in a multi-step workflow."
 summary: "Process timeline with gap detection."
-tags: ["excel", "process-improvement", "calculator", "higher-ed"]
+tags: ["calculator", "excel", "higher-ed", "process-improvement"]
 showDate: false
 showReadingTime: true
 showAuthor: false

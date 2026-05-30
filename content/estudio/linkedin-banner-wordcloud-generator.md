@@ -3,7 +3,7 @@ title: "linkedin-banner-wordcloud-generator"
 weight: 30
 description: "A Python desktop app that reads a resume and produces a LinkedIn banner word cloud weighted by what actually matters in the document. Multi-provider AI extraction, interactive term editing, multi-language font support."
 summary: "AI résumé wordcloud generator."
-tags: ["python", "tkinter", "ai", "llm", "word-cloud", "matplotlib", "side-project"]
+tags: ["ai", "llm", "matplotlib", "python", "side-project", "tkinter", "word-cloud"]
 showDate: false
 showReadingTime: true
 showAuthor: false

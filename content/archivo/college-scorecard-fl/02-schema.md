@@ -3,7 +3,7 @@ title: "Schema"
 weight: 20
 description: "The schema design phase. Three normalized tables (institutions, annual_metrics, field_of_study), the column-pruning logic that took 3,308 columns down to ~70, the privacy-suppression handling, and the build script as a documented artifact."
 summary: "Three tables, seventy columns, and a build script that verifies itself"
-tags: ["sql", "sqlite", "schema-design", "python", "etl"]
+tags: ["etl", "python", "schema-design", "sql", "sqlite"]
 showDate: false
 showReadingTime: true
 showAuthor: false

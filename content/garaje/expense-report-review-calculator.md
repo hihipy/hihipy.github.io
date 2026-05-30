@@ -3,7 +3,7 @@ title: "expense-report-review-calculator"
 weight: 20
 description: "A single-sheet Excel calculator that helps financial reviewers spot late-submitted expenses against an institution's reimbursement window. Small in scope, careful in design."
 summary: "Flags late expense submissions."
-tags: ["excel", "finance", "calculator", "higher-ed"]
+tags: ["calculator", "excel", "finance", "higher-ed"]
 showDate: false
 showReadingTime: true
 showAuthor: false

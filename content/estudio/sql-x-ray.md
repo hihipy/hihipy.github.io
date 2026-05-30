@@ -3,7 +3,7 @@ title: "sql-x-ray"
 weight: 40
 description: "A privacy-safe SQL schema dump tool for LLM context priming. Single-file SQL scripts for eight engines (PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, SQLite, BigQuery, Firebird) produce a structured JSON map of tables, columns, keys, and indexes. Structure only, never row data, defaults, or constraint expressions."
 summary: "SQL schema dump for LLMs."
-tags: ["sql", "postgresql", "mysql", "mariadb", "sql-server", "oracle", "sqlite", "bigquery", "firebird", "json", "llm"]
+tags: ["bigquery", "firebird", "json", "llm", "mariadb", "mysql", "oracle", "postgresql", "sql", "sql-server", "sqlite"]
 showDate: false
 showReadingTime: true
 showAuthor: false

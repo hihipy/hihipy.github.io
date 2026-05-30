@@ -3,7 +3,7 @@ title: "Earth's History, Lived in 78 Years"
 weight: 10
 description: "A data essay that scales Earth's 4.54-billion-year history onto a single 78-year human life, anchored to the present day. Tables, a proportional timeline, and an eon-by-eon walk show how recently life, animals, and humans arrive."
 summary: "Deep time as one lifetime"
-tags: ["public-data", "data-visualization", "deep-time"]
+tags: ["data-visualization", "deep-time", "public-data"]
 showDate: false
 showReadingTime: true
 showAuthor: false

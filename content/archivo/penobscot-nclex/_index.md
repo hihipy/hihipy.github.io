@@ -3,7 +3,7 @@ title: "Two Years of NCLEX-RN Outcomes at Penobscot College of Nursing"
 weight: 30
 description: "A SQL case study on two years of NCLEX-RN performance at a multi-campus nursing college, built on the institution's real outcome data under standard anonymization. Three findings emerge: a 21-point campus spread, a cohort decline tracking the national post-NGN trend, and retake conversion reframed as engagement. Walked through phase by phase so every analytical decision is auditable."
 summary: "NCLEX-RN, 19 campuses, two years"
-tags: ["sql", "r", "sqlite", "datasette", "nclex", "nursing-education"]
+tags: ["datasette", "nclex", "nursing-education", "r", "sql", "sqlite"]
 showDate: false
 showReadingTime: false
 showAuthor: false

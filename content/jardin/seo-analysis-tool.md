@@ -3,7 +3,7 @@ title: "seo-analysis-tool"
 weight: 40
 description: "A small Python script that analyzes a webpage's SEO health and produces a PDF report with calibrated recommendations. Built for the case where you want to teach someone what's wrong, not just tell them their score."
 summary: "SEO analyzer with teaching reports."
-tags: ["python", "seo", "beautifulsoup", "pdf", "side-project"]
+tags: ["beautifulsoup", "pdf", "python", "seo", "side-project"]
 showDate: false
 showReadingTime: true
 showAuthor: false

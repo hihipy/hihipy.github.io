@@ -3,7 +3,7 @@ title: "qualtrics-processing-pipeline"
 weight: 30
 description: "A Jupyter Notebook pipeline that turns raw Qualtrics survey exports into a documented, analysis-ready package. Question-aware type detection, non-destructive quality flagging, and an HTML report at the end."
 summary: "Cleans Qualtrics survey data."
-tags: ["python", "pandas", "qualtrics", "survey-data", "etl", "jupyter"]
+tags: ["etl", "jupyter", "pandas", "python", "qualtrics", "survey-data"]
 showDate: false
 showReadingTime: true
 showAuthor: false

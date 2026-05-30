@@ -3,7 +3,7 @@ title: "Source"
 weight: 10
 description: "Where the data came from, why the institution is anonymized, what the nine source columns hold, and the 21-point campus spread that surfaces in a single GROUP BY query."
 summary: "Phase 1: Anonymized institution, real outcomes, and the first thread"
-tags: ["nclex", "nursing-education", "csv", "public-data", "data-quality"]
+tags: ["csv", "data-quality", "nclex", "nursing-education", "public-data"]
 showDate: false
 showReadingTime: true
 showAuthor: false

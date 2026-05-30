@@ -3,7 +3,7 @@ title: "Findings"
 weight: 40
 description: "Window functions, CTEs, and the patterns that emerge when ten years of Florida four-year outcomes get cross-cut by sector, cost, and time. The for-profit closure wave, the cost-vs-outcome ratios, and the HBCU thread."
 summary: "Five findings worth surfacing"
-tags: ["sql", "sqlite", "window-functions", "ctes", "datasette"]
+tags: ["ctes", "datasette", "sql", "sqlite", "window-functions"]
 showDate: false
 showReadingTime: true
 showAuthor: false

@@ -3,7 +3,7 @@ title: "foreign-per-diem-calculator-for-usa-based-institutions"
 weight: 30
 description: "An Excel calculator for international travel per diem at U.S.-based institutions, with the State Department's Appendix B meal-deduction table embedded as a lookup source. Built for analysts processing post-trip reimbursements."
 summary: "International per diem calculator."
-tags: ["excel", "per-diem", "finance", "travel", "calculator", "higher-ed"]
+tags: ["calculator", "excel", "finance", "higher-ed", "per-diem", "travel"]
 showDate: false
 showReadingTime: true
 showAuthor: false
