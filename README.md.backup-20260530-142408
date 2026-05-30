@@ -1294,33 +1294,6 @@ The despacho "2026 Job Application Paradox" essay carries the same rule in its p
 
 First encountered: despacho "2026 Job Application Paradox" essay, May 2026.
 
-### Eon Color Palette: Colorblind-Safe and Theme-Aware (despacho deep-time essay)
-
-The deep-time essay tags each geologic eon with one fixed color that repeats across the scale bar, the at-a-glance timeline rows, and the eon section headings, so a reader learns one color per eon. The palette is the Okabe-Ito colorblind-safe set (yellow and black dropped, leaving six), reordered warm/cool so neighboring eons never share a hue family:
-
-| Eon | Light | Okabe-Ito name |
-| --- | --- | --- |
-| Hadean | `#D55E00` | vermillion |
-| Archean | `#56B4E9` | sky blue |
-| Proterozoic | `#E69F00` | orange |
-| Paleozoic | `#009E73` | bluish green |
-| Mesozoic | `#CC79A7` | reddish purple |
-| Cenozoic | `#0072B2` | blue |
-
-Two of the six are blues (sky blue and blue): they sit at positions 2 and 6, so they are never adjacent in the bar or in consecutive timeline rows.
-
-Theme adaptation. The colors are CSS custom properties (`--eon-hadean` through `--eon-cenozoic`) declared in the page's inlined `<style>`. The `.dark` rule overrides only the colors too dim on the dark background, currently just Cenozoic, lifted from `#0072B2` to `#007FC6`. Every colored mark is a fill, border, or underline placed beside the eon's name, so color is always redundant with text and never the sole signal.
-
-Bar labels. Only the three widest bands (Hadean, Archean, Proterozoic) carry a text label; the narrow three are label-free but stay hoverable and keyboard-focusable, with the detail surfaced in the info line below the bar. Label text is black on all three, chosen by WCAG contrast against the fill.
-
-Verification. `tools/eon_palette_audit.py` prints, for both themes, the WCAG non-text contrast of each color against white and dark backgrounds, plus the adjacent-eon separation (CIE dE76) under deuteranopia, protanopia, and tritanopia via the Machado 2009 simulation. Reproduce with:
-
-```bash
-python3 tools/eon_palette_audit.py
-```
-
-Current result: every adjacent pair stays above dE76 18 under all three colorblindness types (worst case deuteranopia at 18.1), versus the earlier Tailwind-700 palette whose closest adjacent pair was an order of magnitude smaller.
-
 ## 11. Configuration Files
 
 ### `config/_default/hugo.toml`
@@ -1729,35 +1702,6 @@ The rule: if a multi-patch sequence is already 3+ patches deep and the target ou
 When the assistant claims a bug is fixed (or a constraint is satisfied), the response should include the diagnostic command the user can run to verify. Phrases like "this should now work" without a verification command are weak; phrases like "run `bash script.sh`, then `grep -c 'pattern' file.md` should report N" are strong. The user is the verification step, and asking the user to verify with a specific command is a contract.
 
 This applies to both audit-after-write and audit-before-write. Pre-write audits prevent the assistant from generating prose around projected output; post-write audits prevent the user from accepting changes that don't match the claim.
-
-### Choosing the delivery mode: console fix vs download-to-repo
-
-Two delivery modes cover almost every change to this repo. Picking the right one up front saves a round-trip.
-
-**Run Python in the console; never paste it interactively.** When a change needs Python (an audit, a bulk find-and-replace, a generated file), the assistant should hand over a script delivered with a quoted heredoc and run in one chained command, not a block of Python to paste at an interactive prompt. Pasting multi-line Python into an interactive shell triggers `zsh: parse error` on the first blank line or dedent. The canonical pattern is the same inline, single-quoted-delimiter discipline documented above for patch scripts:
-
-```bash
-cat > /tmp/task.py <<'PYEOF' && python3 /tmp/task.py
-# ... script body ...
-PYEOF
-```
-
-It applies to any console Python, not only patch scripts. See "Bundle patch scripts inline" and "Always quote heredoc delimiters" for the why.
-
-**Small things: fix in the console.** For an edit that is small and well-scoped (a typo, a frontmatter field, a weight renumber, a one-line CSS rule, a find-and-replace across a few files), do it directly in the console with a short script or a targeted replace. The change is faster to apply than to download, and the diff shows up in `git diff` immediately. Back up before in-place surgery on a tracked file: `cp file "file.backup-$(date +%Y%m%d-%H%M%S)"`.
-
-**Big things: download to repo.** For a new page, a full rewrite, or any deliverable large enough that pasting or scripting it inline is error-prone (a new despacho essay, a regenerated case-study phase, a new tool), the assistant produces the complete file as a download. It lands in `~/Downloads`, and a single console command moves it into the repo at its final path. This keeps large content out of the chat-to-console copy path, where whitespace, smart quotes, and long heredocs are fragile, and it makes the repo the source of truth. The canonical move, reusable for any single-file handoff:
-
-```bash
-REPO="$HOME/Library/CloudStorage/ProtonDrive-philgbd@pm.me-folder/Code/coding-workspace/hihipy.github.io"
-SRC="$HOME/Downloads/<filename>.md"
-DST="$REPO/content/<room>/<filename>.md"
-
-[ -f "$DST" ] && cp "$DST" "$DST.backup-$(date +%Y%m%d-%H%M%S)"   # backup only if overwriting
-mv "$SRC" "$DST" && echo "Landed: $DST" && wc -l "$DST"
-```
-
-**The line between the two:** if the change fits comfortably in a heredoc body and reads clearly in `git diff`, it is a console fix. If it is a whole file authored from scratch or rewritten end to end, it is a download-to-repo handoff. When in doubt, download: a file move is cheaper than reconstructing content mangled in transit.
 
 ## 18. Glossary
 

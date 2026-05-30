@@ -1294,33 +1294,6 @@ The despacho "2026 Job Application Paradox" essay carries the same rule in its p
 
 First encountered: despacho "2026 Job Application Paradox" essay, May 2026.
 
-### Eon Color Palette: Colorblind-Safe and Theme-Aware (despacho deep-time essay)
-
-The deep-time essay tags each geologic eon with one fixed color that repeats across the scale bar, the at-a-glance timeline rows, and the eon section headings, so a reader learns one color per eon. The palette is the Okabe-Ito colorblind-safe set (yellow and black dropped, leaving six), reordered warm/cool so neighboring eons never share a hue family:
-
-| Eon | Light | Okabe-Ito name |
-| --- | --- | --- |
-| Hadean | `#D55E00` | vermillion |
-| Archean | `#56B4E9` | sky blue |
-| Proterozoic | `#E69F00` | orange |
-| Paleozoic | `#009E73` | bluish green |
-| Mesozoic | `#CC79A7` | reddish purple |
-| Cenozoic | `#0072B2` | blue |
-
-Two of the six are blues (sky blue and blue): they sit at positions 2 and 6, so they are never adjacent in the bar or in consecutive timeline rows.
-
-Theme adaptation. The colors are CSS custom properties (`--eon-hadean` through `--eon-cenozoic`) declared in the page's inlined `<style>`. The `.dark` rule overrides only the colors too dim on the dark background, currently just Cenozoic, lifted from `#0072B2` to `#007FC6`. Every colored mark is a fill, border, or underline placed beside the eon's name, so color is always redundant with text and never the sole signal.
-
-Bar labels. Only the three widest bands (Hadean, Archean, Proterozoic) carry a text label; the narrow three are label-free but stay hoverable and keyboard-focusable, with the detail surfaced in the info line below the bar. Label text is black on all three, chosen by WCAG contrast against the fill.
-
-Verification. `tools/eon_palette_audit.py` prints, for both themes, the WCAG non-text contrast of each color against white and dark backgrounds, plus the adjacent-eon separation (CIE dE76) under deuteranopia, protanopia, and tritanopia via the Machado 2009 simulation. Reproduce with:
-
-```bash
-python3 tools/eon_palette_audit.py
-```
-
-Current result: every adjacent pair stays above dE76 18 under all three colorblindness types (worst case deuteranopia at 18.1), versus the earlier Tailwind-700 palette whose closest adjacent pair was an order of magnitude smaller.
-
 ## 11. Configuration Files
 
 ### `config/_default/hugo.toml`
