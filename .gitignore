@@ -19,3 +19,9 @@ Thumbs.db
 # Node modules
 node_modules/
 package-lock.json
+
+# generated + local backups
+public/
+resources/
+*.backup-*
+.DS_Store
