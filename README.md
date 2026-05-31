@@ -4,6 +4,8 @@ This is the source repository for **pgbd.casa**, the personal portfolio of Phili
 
 This README is written for AI assistants and future contributors who need to be productive on the codebase quickly. It documents what the site is, how it is structured, every non-default decision, every quirk encountered during development, and the exact templates required to extend it. It is dense by design.
 
+---
+
 ## 1. Site Facts
 
 | Property | Value |
@@ -47,6 +49,8 @@ The `pgbd.us` zone is configured in Cloudflare to 301-redirect all traffic to `h
 
 If the redirect needs to be modified, the rule lives in the `pgbd.us` zone under Rules → Redirect Rules. SSL/TLS settings are under SSL/TLS → Overview. Account security for the Cloudflare account itself is documented in §15.
 
+---
+
 ## 2. The Casa Metaphor
 
 The site is organized as a "digital casa" (Spanish for "house"). Each top-level navigation entry is a "room" with a Spanish name. This is a deliberate brand element, not decoration. Do not change it without explicit instruction.
@@ -60,6 +64,8 @@ On puerta and sala, the previous static lead content (résumé explainer and pro
 The metaphor is the differentiator. When in doubt, choose the option that strengthens the casa framing rather than the conventional portfolio framing.
 
 The casa metaphor extends to the 404 page, which uses casa language ("No room here. The hallway you walked down doesn't lead anywhere"). See §9.
+
+---
 
 ## 3. Room Inventory
 
@@ -85,6 +91,8 @@ Room symbol rationale: room pages have **no** decorative symbol prefix. The term
 **Home page order (intentional):** Five sections separated by H2 headers, ordered to build toward the strongest work for a job-portfolio reader. *Who I Am* contains `puerta`, `sala` (puerta first because the metaphor is "visitor walks through the door first"). *Tooling* contains `obrador` first (the methodology room) followed by the four project rooms alphabetically (`cocina`, `estudio`, `garaje`, `jardín`). *Dashboards* contains `mirador`, `taller`. *Case Studies* contains `biblioteca`, `archivo`. *Data Essays* contains `despacho`. Within each practice area the philosophy room precedes the applied room. This structure is non-negotiable; do not reorder without instruction.
 
 Counts are NOT listed in this table by design. The four project rooms render their counts dynamically via the `section-count` shortcode, `archivo` via `case-study-count`, and `despacho` via `essay-count` (see §9), so manual counts here would be a maintenance burden and a source of drift. For the actual contents of each room, see §4.
+
+---
 
 ## 4. Project Pages: Complete Inventory
 
@@ -127,6 +135,8 @@ Listed in alphabetical order within each room (matches Hugo render order, see §
 | `fantasy-draft-lottery-randomizer.md` | fantasy-draft-lottery-randomizer | Auditable fantasy draft lottery. |
 | `seo-analysis-tool.md` | seo-analysis-tool | SEO analyzer with teaching reports. |
 
+---
+
 ## 5. The Three-Tier Complexity Gradient
 
 Every project page exposes three distinct text fields, each targeting a different audience and reading depth. Understanding this gradient is essential for editing existing pages or writing new ones.
@@ -147,6 +157,8 @@ When asked to add a new project, all four tiers must be authored deliberately.
 **Skill name consistency.** When a skill appears on `~/sala` AND as a project tag, the casing must match between the two. The project tag map in `layouts/partials/article-link/card.html` is the canonical source: if the map says `nltk` -> `NLTK`, then sala should write `NLTK` (not `nltk` or `Nltk`). Update both at once when adding new skills.
 
 **Important: `summary` also drives search result quality.** If `summary` is missing from a page's frontmatter, Blowfish's search index falls back to Hugo's auto-generated summary (the first ~70 words of body content). This produces noisy, bloated search results. Every page that is discoverable via search SHOULD have a `summary` field, including non-project pages (home, sala, puerta). See BUG-010.
+
+---
 
 ## 6. Project Page Template
 
@@ -241,6 +253,8 @@ NOT this order:
 ## At a Glance
 ```
 
+---
+
 ## 7. Tone and Style Conventions
 
 These are established conventions across all 16 project pages. Match them when authoring new content.
@@ -260,6 +274,8 @@ These are established conventions across all 16 project pages. Match them when a
 | **Mention Miller School only when project genuinely connects** | Not as decoration. |
 | **No invented content, no redundancy** | If two fields say the same thing, one of them is wrong. |
 | **Backticks for inline code/paths** | `~/sala`, `Path.glob()`, `summaryLength = 70`. |
+
+---
 
 ## 8. Frontmatter Conventions
 
@@ -300,6 +316,8 @@ Pages within a room are sorted alphabetically by enforcing weights in alphabetic
 - `date`: not set anywhere; presence triggers reverse-chronological sort fallback
 - `lastmod`: handled automatically by `enableGitInfo`
 - `draft: true`, never used; commit only when ready
+
+---
 
 ## 9. Custom Infrastructure
 
@@ -423,6 +441,8 @@ Inspect before modifying; every rule has a reason.
 ### `assets/img/favicon-source.svg`
 
 Canonical SVG source for the favicon set. Donut chart in Blowfish github palette: primary blue (`#0969da`), light blue tint (`#54aeff`), neutral gray (`#656d76`). Three segments at 50/30/20 percent with 4-degree gaps. The PNG/ICO files in `static/` are derived from this source. To regenerate the full favicon pack from this SVG, see §13.
+
+---
 
 ## 10. Bug Catalog (BUG-NNN format)
 
@@ -1321,6 +1341,8 @@ python3 tools/eon_palette_audit.py
 
 Current result: every adjacent pair stays above dE76 18 under all three colorblindness types (worst case deuteranopia at 18.1), versus the earlier Tailwind-700 palette whose closest adjacent pair was an order of magnitude smaller.
 
+---
+
 ## 11. Configuration Files
 
 ### `config/_default/hugo.toml`
@@ -1417,6 +1439,8 @@ Three social links: linkedin, email, github. Order via `weight` field (10, 20, 3
 
 Existing markup configuration. Inspect before modifying.
 
+---
+
 ## 12. Directory Layout
 
 ```
@@ -1487,6 +1511,8 @@ hihipy.github.io/
 - `static/resume.pdf` is served verbatim at `/resume.pdf` regardless of which content page links to it.
 - Favicon files are donut chart in github palette, see BUG-009. Source SVG at `assets/img/favicon-source.svg`.
 - The `pgbd.us` redirect alias is configured in Cloudflare DNS + Rules, see §1. Not a file in this repo.
+
+---
 
 ## 13. Adding a New Project Page: Procedure
 
@@ -1571,6 +1597,8 @@ If the favicon design needs to change, regenerate from `assets/img/favicon-sourc
 
 The full generation script used to produce the current favicon set is preserved in this session's history.
 
+---
+
 ## 14. Build and Deploy
 
 ### Local development
@@ -1588,6 +1616,8 @@ GitHub Pages handles this automatically on push to `main`. No manual build step.
 ### Deployment URL chain
 
 `main` branch push → GitHub Pages builds → serves at `https://hihipy.github.io` → CNAME redirects to `https://pgbd.casa`. Separately, `https://pgbd.us` 301-redirects to `https://pgbd.casa` via Cloudflare, see §1.
+
+---
 
 ## 15. Account & Access Security
 
@@ -1623,6 +1653,8 @@ Re-verify the posture above whenever:
 - A new admin or member account is created on any of the critical services
 - An OAuth integration is added or removed between any of the three account systems
 
+---
+
 ## 16. Outstanding Items / Known Issues
 
 | Item | Notes |
@@ -1630,6 +1662,8 @@ Re-verify the posture above whenever:
 | Sala description discrepancy | The `description` field in `content/sala/index.md` says "Institutional research analyst" but other contexts (the Blowfish `[params.author]` headline) say "Data analyst." If they refer to the same role under different terminology, fine. If alignment is desired, update the sala frontmatter. |
 | Four unused icons | `building-columns`, `certificate`, `compass`, `house` in `assets/icons/` are not referenced anywhere. Kept available for future use. The `certificate` icon is the most likely candidate for sala's Certifications section if one is added. |
 | Newly-registered domain blocking | The University of Miami network has been observed blocking both `pgbd.casa` and `pgbd.us` for some time after each domain's registration. This is BUG-011, a generic enterprise filter for newly-observed domains, not site-specific. Expected to resolve on its own after 30-90 days as the domains age. Affects only highly-restrictive corporate networks; the site is accessible from cellular, residential, and most non-restrictive networks. |
+
+---
 
 ## 17. Working with AI on Analytical Content
 
@@ -1759,6 +1793,8 @@ mv "$SRC" "$DST" && echo "Landed: $DST" && wc -l "$DST"
 
 **The line between the two:** if the change fits comfortably in a heredoc body and reads clearly in `git diff`, it is a console fix. If it is a whole file authored from scratch or rewritten end to end, it is a download-to-repo handoff. When in doubt, download: a file move is cheaper than reconstructing content mangled in transit.
 
+---
+
 ## 18. Glossary
 
 | Term | Meaning |
@@ -1774,6 +1810,8 @@ mv "$SRC" "$DST" && echo "Landed: $DST" && wc -l "$DST"
 | Puerta-first | The convention that `puerta` (door) comes first on the home page. |
 | Redirect alias | A second domain (`pgbd.us`) that 301-redirects to the canonical `pgbd.casa`. See §1. |
 
+---
+
 ## 19. Reference Links
 
 - Hugo docs: https://gohugo.io/documentation/
@@ -1783,6 +1821,8 @@ mv "$SRC" "$DST" && echo "Landed: $DST" && wc -l "$DST"
 - Hugo shortcode reference: https://gohugo.io/templates/shortcode-templates/
 - GitHub Pages custom domain setup: https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site
 - Cloudflare Redirect Rules: https://developers.cloudflare.com/rules/url-forwarding/single-redirects/
+
+---
 
 ## 20. Document Maintenance
 
