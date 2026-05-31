@@ -56,6 +56,6 @@ Welcome to my digital casa. I'm Philip Gregory Bachas-Daunert, a Data Analyst at
 
 ## Data Essays
 
-[~/despacho  # Data Essays](/despacho/)  {{< essay-count despacho >}} · Long-form, sourced explainers that reason with data, from job-market probability to deep time.
+[~/despacho  # Data Essays](/despacho/)  {{< essay-count despacho >}} · Long-form, sourced explainers that reason through a single question with data.
 
 *Press <kbd>/</kbd> to search.*

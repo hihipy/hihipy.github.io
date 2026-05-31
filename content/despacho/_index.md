@@ -16,4 +16,4 @@ Els Meus Assajos de Dades
 {{< /typeit >}}
 {{< /lead >}}
 
-The despacho is where I write long-form data essays: pieces that take a single question and reason through it with numbers, sources, and explicit assumptions. These are not tutorials or case studies tied to a database, but standalone explainers that show their work, from the probability behind a flooded job market to the scale of Earth's history measured against one human lifespan. The intent is the same rigor the rest of the site brings to its tools and case studies, turned toward writing meant to be read on its own.
+The despacho is where I write long-form data essays: pieces that take a single question and reason through it with numbers, sources, and explicit assumptions. These are not tutorials or case studies tied to a database, but standalone explainers that show their work. The intent is the same rigor the rest of the site brings to its tools and case studies, turned toward writing meant to be read on its own.
