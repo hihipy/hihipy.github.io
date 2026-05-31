@@ -1,4 +1,4 @@
-# pgbd.casa — Repository Reference
+# pgbd.casa: Repository Reference
 
 This is the source repository for **pgbd.casa**, the personal portfolio of Philip Bachas-Daunert. It is a Hugo + Blowfish static site deployed via GitHub Pages.
 
@@ -55,7 +55,7 @@ The home page lead is a rotating typing animation (Blowfish `{{< typeit >}}` sho
 
 This pattern extends to all twelve room landing pages. Each `{{< lead >}}` contains a typing animation cycling a short page-purpose tagline through the same four languages in the same order. Each tagline describes what is actually on the page, not the room name itself, so a visitor who lands on cocina or estudio without context understands what they are looking at. The taglines are: puerta cycles `Mi Currículum / My Résumé / El Meu Currículum / Το Βιογραφικό μου`; sala cycles `Mi Trayectoria / My Background / La Meva Trajectòria / Το Υπόβαθρό μου`; mirador cycles `Mi Filosofía de Dashboards / My Dashboard Philosophy / La Meva Filosofia de Dashboards / Η Φιλοσοφία μου για Dashboards`; taller cycles `Mi Dashboard / My Dashboard / El Meu Dashboard / Το Dashboard μου`; obrador cycles `Mi Filosofía de Herramientas / My Tool-Building Philosophy / La Meva Filosofia d'Eines / Η Φιλοσοφία μου για τα Εργαλεία`; cocina cycles `Mis Pipelines de Datos / My Data Pipelines / Els Meus Pipelines de Dades / Τα Pipelines Δεδομένων μου`; estudio cycles `Mis Experimentos con IA / My AI Experiments / Els Meus Experiments amb IA / Τα Πειράματά μου με AI`; garaje cycles `Mis Utilidades de Analista / My Analyst Utilities / Les Meves Utilitats d'Analista / Τα Εργαλεία Αναλυτή μου`; jardín cycles `Mis Proyectos Personales / My Side Projects / Els Meus Projectes Personals / Τα Προσωπικά Έργα μου`; despacho cycles `Mis Ensayos de Datos / My Data Essays / Els Meus Assajos de Dades / Τα Δοκίμια Δεδομένων μου`. The biblioteca and archivo taglines follow the same four-language pattern and live in their respective `_index.md`; transcribe them here when reconciling. Greek possessive clitics (`μου`) stay lowercase per native convention; Greek proparoxytone words (`Πειράματα`, `Υπόβαθρο`) take the secondary accent when followed by the clitic (`Πειράματά μου`, `Υπόβαθρό μου`).
 
-On puerta and sala, the previous static lead content (résumé explainer and professional summary respectively) is preserved as a regular paragraph immediately below the new animated lead. The puerta page also drops the redundant separate download button — the inline PDF embed has its own download control in the browser-native PDF toolbar.
+On puerta and sala, the previous static lead content (résumé explainer and professional summary respectively) is preserved as a regular paragraph immediately below the new animated lead. The puerta page also drops the redundant separate download button, since the inline PDF embed has its own download control in the browser-native PDF toolbar.
 
 The metaphor is the differentiator. When in doubt, choose the option that strengthens the casa framing rather than the conventional portfolio framing.
 
@@ -80,13 +80,13 @@ Twelve rooms total, organized as four practice areas bracketed by two entry page
 | `jardin` | `/jardín/` | Side Projects | Garden, personal projects and miscellaneous experiments. |
 | `despacho` | `/despacho/` | Data Essays | Study/home-office, content room. Holds long-form, sourced data essays that reason with data. Not a project room. |
 
-Room symbol rationale: room pages have **no** decorative symbol prefix. The terminal-prompt path (`~/sala`, `~/cocina`, etc.) is the room identity; an additional symbol prefix is redundant decoration. The site went through three iterations on this. First, mixed Unicode glyphs (`◰ § ⛁ ✦ ⛭ ❀`) — visually distinct but five of six were not in MonoLisa and rendered via system font fallback (BUG-013 in its original form). Second, Greek capitals (`Π Σ Δ Ψ Ω Φ`) — fully present in MonoLisa with a defensible thematic mapping (Σαλόνι, Δεδομένα, golden ratio in plant biology). Third, none — the realization that the Greek letters were redundant decoration in front of already-distinctive paths, and that the homepage `⛫` castle was doing the symbolic work for the entire site without needing per-room reinforcement. The terminal-prompt format alone is the room identity. The homepage `⛫` (castle) is the brand anchor and remains the only symbolic glyph on the site. Anyone tempted to add per-room symbols back should weigh the symbolic redundancy against the visual flourish; previous iterations are documented for reference but were removed deliberately.
+Room symbol rationale: room pages have **no** decorative symbol prefix. The terminal-prompt path (`~/sala`, `~/cocina`, etc.) is the room identity; an additional symbol prefix is redundant decoration. The site went through three iterations on this. First, mixed Unicode glyphs (`◰ § ⛁ ✦ ⛭ ❀`), visually distinct but five of six were not in MonoLisa and rendered via system font fallback (BUG-013 in its original form). Second, Greek capitals (`Π Σ Δ Ψ Ω Φ`), fully present in MonoLisa with a defensible thematic mapping (Σαλόνι, Δεδομένα, golden ratio in plant biology). Third, none: the realization that the Greek letters were redundant decoration in front of already-distinctive paths, and that the homepage `⛫` castle was doing the symbolic work for the entire site without needing per-room reinforcement. The terminal-prompt format alone is the room identity. The homepage `⛫` (castle) is the brand anchor and remains the only symbolic glyph on the site. Anyone tempted to add per-room symbols back should weigh the symbolic redundancy against the visual flourish; previous iterations are documented for reference but were removed deliberately.
 
 **Home page order (intentional):** Five sections separated by H2 headers, ordered to build toward the strongest work for a job-portfolio reader. *Who I Am* contains `puerta`, `sala` (puerta first because the metaphor is "visitor walks through the door first"). *Tooling* contains `obrador` first (the methodology room) followed by the four project rooms alphabetically (`cocina`, `estudio`, `garaje`, `jardín`). *Dashboards* contains `mirador`, `taller`. *Case Studies* contains `biblioteca`, `archivo`. *Data Essays* contains `despacho`. Within each practice area the philosophy room precedes the applied room. This structure is non-negotiable; do not reorder without instruction.
 
 Counts are NOT listed in this table by design. The four project rooms render their counts dynamically via the `section-count` shortcode, `archivo` via `case-study-count`, and `despacho` via `essay-count` (see §9), so manual counts here would be a maintenance burden and a source of drift. For the actual contents of each room, see §4.
 
-## 4. Project Pages — Complete Inventory
+## 4. Project Pages: Complete Inventory
 
 Listed in alphabetical order within each room (matches Hugo render order, see §8).
 
@@ -252,7 +252,7 @@ These are established conventions across all 16 project pages. Match them when a
 | **Title Case for headings** | "Data Prep & ETL", "AI & Experiments", "Side Projects". |
 | **Body and most headings: Atkinson Hyperlegible** | Sans-serif designed by the Braille Institute for low-vision and dyslexic readers. Loaded from `static/fonts/AtkinsonHyperlegible-{Regular,Bold,Italic,BoldItalic}.woff2`. Switched from MonoLisa Italic + SS02 cursive in BUG-016. |
 | **Page titles (H1) and typing animations: MonoLisa upright** | Terminal-prompt strings like `Σ ~/sala  # About Me` and the {{< typeit >}} animations keep the monospace look. Upright (not italic) is fine for short strings; italic cursive was the dyslexia barrier. |
-| **Code blocks: MonoLisa upright with ligatures** | Unchanged — code retains identity-defining typography. |
+| **Code blocks: MonoLisa upright with ligatures** | Unchanged; code retains identity-defining typography. |
 | **Sentence case for descriptions and body prose** | "Cleans messy data exports." not "Cleans Messy Data Exports." |
 | **Title case for the home page typing animation** | Content words capitalized, verbs/copulas lowercase. Applies across all four languages in the rotation: `es` (Spanish), `is` (English), `és` (Catalan), `είναι` (Greek) all stay lowercase. Greek exception: possessive clitics `μου` and `σου` also stay lowercase per native convention (they follow the noun and aren't capitalized mid-sentence even in display text). See §2 for the full phrases. |
 | **Audience: HR/recruiter with bachelor's degree, no coding background** | Avoid jargon in leads and summaries. Domain terms acceptable in body. |
@@ -293,13 +293,13 @@ Pages within a room are sorted alphabetically by enforcing weights in alphabetic
 | `summary` | Card label on the room landing page AND search result snippet |
 | `tags` | Currently unused for navigation but indexed; reserve for future tag pages |
 | `showDate`, `showAuthor` | Both `false` to keep pages stripped of clutter |
-| `showReadingTime` | `true` — surfaces Hugo's auto-estimated reading time on cards ("10 mins") and on the page itself. The only `true` of the three; see BUG-030 for the §8/§6 drift that previously documented this as `false` |
+| `showReadingTime` | `true`: surfaces Hugo's auto-estimated reading time on cards ("10 mins") and on the page itself. The only `true` of the three; see BUG-030 for the §8/§6 drift that previously documented this as `false` |
 
 ### Forbidden in frontmatter
 
-- `date` — not set anywhere; presence triggers reverse-chronological sort fallback
-- `lastmod` — handled automatically by `enableGitInfo`
-- `draft: true` — never used; commit only when ready
+- `date`: not set anywhere; presence triggers reverse-chronological sort fallback
+- `lastmod`: handled automatically by `enableGitInfo`
+- `draft: true`, never used; commit only when ready
 
 ## 9. Custom Infrastructure
 
@@ -333,7 +333,7 @@ Renders an inline color swatch (small colored square) followed by the hex code i
 
 Usage: `{{< swatch "#E69F00" >}}`. Pass the hex value with leading `#` as the first positional argument. The shortcode emits a 0.85em colored square with a faint inset border (so very light colors stay visible against light backgrounds) followed by the hex code in a `<code>` tag.
 
-**Color naming convention.** When a color in mirador needs a name (palette entries, recommended pairings), the name comes from [chir.ag's Name That Color](https://chir.ag/projects/name-that-color/) tool. The format on the page is: swatch shortcode, then linked color name, then hex in parens, e.g. `{{< swatch "#56B4E9" >}} [Picton Blue](https://chir.ag/projects/name-that-color/#56B4E9) (#56B4E9)`. The link points to chir.ag with the hex as URL fragment (uppercase, no `#` in the URL itself — the fragment marker is the literal `#` separator). The link text MUST match what chir.ag's live tool actually returns for that hex; do not transcribe a name from a search result or a port of the ntc.js algorithm, since neither reliably matches the live tool's output. Verify by clicking the chir.ag link and reading the name from the live page. This convention exists so the page's prose stays in sync with the link target — a reader who clicks "Picton Blue" should land on a page that confirms it's Picton Blue, not Sky Blue or anything else.
+**Color naming convention.** When a color in mirador needs a name (palette entries, recommended pairings), the name comes from [chir.ag's Name That Color](https://chir.ag/projects/name-that-color/) tool. The format on the page is: swatch shortcode, then linked color name, then hex in parens, e.g. `{{< swatch "#56B4E9" >}} [Picton Blue](https://chir.ag/projects/name-that-color/#56B4E9) (#56B4E9)`. The link points to chir.ag with the hex as URL fragment (uppercase, no `#` in the URL itself; the fragment marker is the literal `#` separator). The link text MUST match what chir.ag's live tool actually returns for that hex; do not transcribe a name from a search result or a port of the ntc.js algorithm, since neither reliably matches the live tool's output. Verify by clicking the chir.ag link and reading the name from the live page. This convention exists so the page's prose stays in sync with the link target; a reader who clicks "Picton Blue" should land on a page that confirms it's Picton Blue, not Sky Blue or anything else.
 
 ```go-html-template
 {{- /*
@@ -355,13 +355,13 @@ Usage: `{{< swatch "#E69F00" >}}`. Pass the hex value with leading `#` as the fi
 {{- end -}}
 ```
 
-**Invocation:** `{{< section-count cocina >}}` — UNQUOTED single token argument. See BUG-001 for why.
+**Invocation:** `{{< section-count cocina >}}` takes an unquoted single-token argument. See BUG-001 for why.
 
 ### `layouts/partials/header.html` and `footer.html`
 
 Existing Blowfish overrides. Their content is project-specific and should not be modified without inspection.
 
-### `layouts/partials/article-link/card.html` — card layout and inline tag map
+### `layouts/partials/article-link/card.html`: card layout and inline tag map
 
 Custom Blowfish override. Renders project cards with the tags row at the bottom, applying a display-time formatting map that converts lowercase-kebab-case frontmatter tags to their proper display casing **on room landing pages**. Frontmatter tags stay lowercase (clean URLs, easy alphabetization); the map at runtime produces `JSON`, `PostgreSQL`, `Power BI`, `CustomTkinter`, and so on as the inline pills under each project card.
 
@@ -377,7 +377,7 @@ Custom Blowfish override. Renders project cards with the tags row at the bottom,
 
 **Where it lives:** the map is a `dict` literal inside the `{{ with .Params.tags }}` block of `layouts/partials/article-link/card.html`. It's the only customization in an otherwise-vanilla Blowfish card template, so future Blowfish theme updates can be applied by re-pulling card.html and re-adding the map.
 
-### `content/tags/<tag>/_index.md` — taxonomy term pages and search-index display
+### `content/tags/<tag>/_index.md`: taxonomy term pages and search-index display
 
 Per-tag content files that set the canonical title used by the tag taxonomy term pages (`/tags/sql/`, `/tags/mysql/`, and so on), the search modal results, and the breadcrumbs on those term pages. Each file is four lines of frontmatter:
 
@@ -395,7 +395,7 @@ title: "SQL"
 
 **Regenerating the files.** A `tools/create_tag_term_pages.py` script (root of the repo) reads a canonical list of tag-to-title mappings and creates/rewrites every `_index.md` to match. It is idempotent: re-running it only touches files whose title disagrees. Run it after adding a new tag (after also updating the canonical list inside the script).
 
-### `assets/icons/` — 25 custom SVGs
+### `assets/icons/`: 25 custom SVGs
 
 Used primarily by `content/sala/index.md` (about page) and a few project pages. Inventory:
 
@@ -410,15 +410,15 @@ Used primarily by `content/sala/index.md` (about page) and a few project pages. 
 Custom CSS overrides, roughly 5KB. Concerns:
 
 1. Atkinson Hyperlegible `@font-face` declarations (Regular, Italic, Bold, BoldItalic, all woff2 self-hosted from `static/fonts/`)
-2. MonoLisa `@font-face` declaration (variable, upright only — italic was retired in BUG-016)
+2. MonoLisa `@font-face` declaration (variable, upright only; italic was retired in BUG-016)
 3. Body and most headings (h2-h6) use Atkinson sans-serif for readability; H1 page titles and typeit animations use MonoLisa upright to preserve terminal-prompt aesthetic; code blocks use MonoLisa upright with ligatures
-4. `white-space: nowrap !important` on Blowfish badge spans — prevents date ranges from breaking ugly across lines
+4. `white-space: nowrap !important` on Blowfish badge spans: prevents date ranges from breaking ugly across lines
 5. Mermaid diagrams and figures centered with auto margins
-6. Mobile timeline overflow fix at `@media (max-width: 640px)` — see BUG-012
-7. Mobile typing-animation lead font shrink + min-height to prevent bounce — see typing animation work in §2
-8. Markdown tables centered with `width: fit-content` + auto margins, and cells center-aligned — see BUG-038
+6. Mobile timeline overflow fix at `@media (max-width: 640px)`, see BUG-012
+7. Mobile typing-animation lead font shrink + min-height to prevent bounce, see typing animation work in §2
+8. Markdown tables centered with `width: fit-content` + auto margins, and cells center-aligned, see BUG-038
 
-Inspect before modifying — every rule has a reason.
+Inspect before modifying; every rule has a reason.
 
 ### `assets/img/favicon-source.svg`
 
@@ -443,7 +443,7 @@ Hugo and Blowfish quirks discovered during development. Reference these when AI-
 
 This works for any argument that is a single word with no spaces or special characters. Section names, room names, and identifiers all qualify.
 
-For arguments that require spaces (or quotes for any reason), the alternative is to disable smartypants in `markup.toml`, but this affects all body content — undesirable for a portfolio site where résumé/résumés should still get smart quotes.
+For arguments that require spaces (or quotes for any reason), the alternative is to disable smartypants in `markup.toml`, but this affects all body content, which is undesirable for a portfolio site where résumé/résumés should still get smart quotes.
 
 ### BUG-002: Hugo template comments parse `*/` as terminator inside `{{- /* */ -}}`
 
@@ -455,7 +455,7 @@ For arguments that require spaces (or quotes for any reason), the alternative is
 
 ### BUG-003: `{{< katex >}}` adjacent to `{{< lead >}}...{{< /lead >}}` breaks rendering
 
-**Symptom:** On project pages with both shortcodes, the lead block fails to render — the closing `{{< /lead >}}` shows as literal text in the body, KaTeX expressions later on the page render as raw `\(...\)` source.
+**Symptom:** On project pages with both shortcodes, the lead block fails to render; the closing `{{< /lead >}}` shows as literal text in the body, KaTeX expressions later on the page render as raw `\(...\)` source.
 
 **Cause:** Specific interaction between Hugo's shortcode parser and the paired-vs-standalone shortcode arrangement. The bug is triggered when a paired block (`{{< lead >}}...{{< /lead >}}`) is immediately followed by a standalone shortcode (`{{< katex >}}`) with only blank lines between them, before any prose content.
 
@@ -508,7 +508,7 @@ This affects 7 of the 16 project pages currently:
 
 This applies to every Mermaid diagram in the codebase. New diagrams must follow this convention.
 
-Mermaid is enabled per-page via `mermaid = true` in `params.toml` `[article]` block, and invoked via `{{< mermaid >}}...{{< /mermaid >}}` shortcode (NOT triple-backtick code blocks — that's a different render path that doesn't work with Blowfish's setup).
+Mermaid is enabled per-page via `mermaid = true` in `params.toml` `[article]` block, and invoked via `{{< mermaid >}}...{{< /mermaid >}}` shortcode (NOT triple-backtick code blocks; that's a different render path that doesn't work with Blowfish's setup).
 
 ### BUG-005: Mobile rendering issue with U+2699 gear icon
 
@@ -546,7 +546,7 @@ The site originally tried `⚙` followed by U+FE0E (TEXT VARIATION SELECTOR) as 
 
 ### BUG-009: Bar chart favicon reads as cellular signal strength
 
-**Symptom:** Original favicon (three vertical ascending bars) was visually ambiguous — read as cellular signal indicator rather than data analytics.
+**Symptom:** Original favicon (three vertical ascending bars) was visually ambiguous, reading as a cellular signal indicator rather than data analytics.
 
 **Cause:** Vertical bars of uniformly increasing height are the universal symbol for cellular signal strength in mobile UIs (status bar icons). The bar chart shape, while semantically correct for "data analytics," is visually overloaded.
 
@@ -584,7 +584,7 @@ The site originally tried `⚙` followed by U+FE0E (TEXT VARIATION SELECTOR) as 
 
 **Symptom:** On viewports under ~640px (phones), timeline entries in `content/sala/index.md` overflow horizontally. The header wraps word-by-word into a tall stack, the date badge gets clipped at the right edge, and body text is cut off mid-word past the viewport.
 
-**Cause:** Blowfish's `timelineItem.html` shortcode places the entry header and date badge inside a `<div class="flex justify-between">`. On desktop this works — title left, badge right. On mobile, the badge has `white-space: nowrap !important` (set in `custom.css` to prevent date ranges like `Apr 2023 - Mar 2025` from breaking across lines), and the heading refuses to share a line with the badge. The row demands more horizontal space than a phone viewport offers. The parent card is `flex-1` with default `min-width: auto`, so it cannot shrink below its content's natural width — the entire card overflows, dragging body text past the right edge.
+**Cause:** Blowfish's `timelineItem.html` shortcode places the entry header and date badge inside a `<div class="flex justify-between">`. On desktop this works: title left, badge right. On mobile, the badge has `white-space: nowrap !important` (set in `custom.css` to prevent date ranges like `Apr 2023 - Mar 2025` from breaking across lines), and the heading refuses to share a line with the badge. The row demands more horizontal space than a phone viewport offers. The parent card is `flex-1` with default `min-width: auto`, so it cannot shrink below its content's natural width, and the entire card overflows, dragging body text past the right edge.
 
 **Fix applied:** Added a mobile-only media query block to `assets/css/custom.css`:
 
@@ -603,13 +603,13 @@ The site originally tried `⚙` followed by U+FE0E (TEXT VARIATION SELECTOR) as 
 
 Under 640px, this stacks header above badge and lets the card shrink below its natural content width. The `nowrap` on the badge is preserved (date ranges still don't break ugly).
 
-The selectors target Blowfish's Tailwind utility classes (`.shadow-2xl.flex-1.ms-6` matches the timelineItem's outer card div). If upstream Blowfish ever changes those class names, this rule needs re-targeting — check `themes/blowfish/layouts/shortcodes/timelineItem.html` for the current selector.
+The selectors target Blowfish's Tailwind utility classes (`.shadow-2xl.flex-1.ms-6` matches the timelineItem's outer card div). If upstream Blowfish ever changes those class names, this rule needs re-targeting; check `themes/blowfish/layouts/shortcodes/timelineItem.html` for the current selector.
 
 **Coverage:** Selector-based, not page-based. Applies anywhere `{{< timelineItem >}}` is used. On `sala`, that's Experience, Education, and Certifications sections, plus any future timeline entry. No per-page work when adding entries.
 
 ### BUG-013: Five of six room symbols are not in MonoLisa's character map [RESOLVED]
 
-**Resolution (April 2026):** Room symbols removed entirely. After two iterations (original mixed Unicode glyphs `◰ § ⛁ ✦ ⛭ ❀`, then Greek capitals `Π Σ Δ Ψ Ω Φ`), the conclusion was that the per-room symbol prefix was redundant decoration in front of already-distinctive terminal-prompt paths (`~/sala`, `~/cocina`, etc.). The Greek-letter intermediate iteration *did* eliminate the font-fallback issue (Greek capitals are fully present in MonoLisa), so it would have resolved this bug if kept. Removing the symbols entirely also resolves the bug while simplifying the visual identity. The homepage `⛫` (castle) is preserved as the single brand anchor and is the only symbol on the site that renders via system font fallback; that one instance is acceptable because the castle is the brand and is contained to a single location. Bug retained in this catalog as historical context — anyone tempted to re-introduce per-room symbols should know the constraints (must render in MonoLisa to avoid fallback inconsistency) and the reasoning for removal (symbolic redundancy with the path).
+**Resolution (April 2026):** Room symbols removed entirely. After two iterations (original mixed Unicode glyphs `◰ § ⛁ ✦ ⛭ ❀`, then Greek capitals `Π Σ Δ Ψ Ω Φ`), the conclusion was that the per-room symbol prefix was redundant decoration in front of already-distinctive terminal-prompt paths (`~/sala`, `~/cocina`, etc.). The Greek-letter intermediate iteration *did* eliminate the font-fallback issue (Greek capitals are fully present in MonoLisa), so it would have resolved this bug if kept. Removing the symbols entirely also resolves the bug while simplifying the visual identity. The homepage `⛫` (castle) is preserved as the single brand anchor and is the only symbol on the site that renders via system font fallback; that one instance is acceptable because the castle is the brand and is contained to a single location. Bug retained in this catalog as historical context; anyone tempted to re-introduce per-room symbols should know the constraints (must render in MonoLisa to avoid fallback inconsistency) and the reasoning for removal (symbolic redundancy with the path).
 
 **Symptom:** The room symbols `⛫` (homepage), `⛁` (cocina), `✦` (estudio), `⛭` (garaje), and `❀` (jardín) render via system font fallback rather than from MonoLisa. Visual rendering of these glyphs varies by OS and browser depending on which fallback font supplies them. Only `◰` (puerta) and `§` (sala) are confirmed present in MonoLisa.
 
@@ -644,7 +644,7 @@ This requires `pip install fonttools brotli` (Brotli is needed because woff2 is 
 
 **Status:** Not a site bug. The behavior is browser-side and cannot be suppressed from the site without removing the multilingual content that makes the typing animation interesting in the first place. The overlay is dismissable via the browser's address bar UI (Safari: tap `ᴀA` icon → cancel translation prompt) or by disabling translation in browser settings.
 
-**Why this matters for the README:** Anyone troubleshooting an unexpected UI element on the site should first rule out browser-injected translation widgets before assuming it is a site rendering issue. This is parallel to BUG-011 (newly-registered domain blocks at the network level) — the symptom appears on the site but the cause is external infrastructure.
+**Why this matters for the README:** Anyone troubleshooting an unexpected UI element on the site should first rule out browser-injected translation widgets before assuming it is a site rendering issue. This is parallel to BUG-011 (newly-registered domain blocks at the network level), where the symptom appears on the site but the cause is external infrastructure.
 
 ### BUG-015: Email address leaked in plain HTML via menu rendering
 
@@ -654,7 +654,7 @@ This requires `pip install fonttools brotli` (Brotli is needed because woff2 is 
 
 1. The `[params.author].links` block in `languages.en.toml` is rendered by `themes/blowfish/layouts/partials/author-links.html`. That partial special-cases email entries: it writes `href="#"`, encodes the real address into a `data-email="..."` base64 attribute, and adds a `class="email-link"` hook that JavaScript uses to decode and trigger `mailto:` on click. This path is properly obfuscated and safe.
 
-2. The `[[main]]` entries in `menus.en.toml` are rendered by Blowfish's generic menu partials (`header/components/desktop-menu.html` and `header/components/mobile-menu.html`). These use a generic `<a href="{{ .URL }}">` template that does *not* special-case email URLs. Whatever URL is in the menu entry — including `mailto:`-prefixed ones — gets written literally to HTML.
+2. The `[[main]]` entries in `menus.en.toml` are rendered by Blowfish's generic menu partials (`header/components/desktop-menu.html` and `header/components/mobile-menu.html`). These use a generic `<a href="{{ .URL }}">` template that does *not* special-case email URLs. Whatever URL is in the menu entry, including `mailto:`-prefixed ones, gets written literally to HTML.
 
 The site had the email address in *both* places: as a `params.author.links` entry (safe) and as a `[[main]]` menu entry (leaking). The menu version was the actual scraping target.
 
@@ -674,13 +674,13 @@ Should return zero matches. The obfuscated `data-email="..."` base64-encoded val
 
 ### BUG-016: MonoLisa Italic + SS02 cursive script unreadable for dyslexic readers
 
-**Symptom:** A reader with dyslexia reported the body text was hard to read. The site shipped MonoLisa Italic with `font-feature-settings: "ss02" 1` everywhere except code blocks. SS02 is MonoLisa's stylistic alternate that turns italic into a flowing cursive script — visually striking but functionally a script font for body text and headings.
+**Symptom:** A reader with dyslexia reported the body text was hard to read. The site shipped MonoLisa Italic with `font-feature-settings: "ss02" 1` everywhere except code blocks. SS02 is MonoLisa's stylistic alternate that turns italic into a flowing cursive script, visually striking but functionally a script font for body text and headings.
 
 **Cause:** Italic-as-body-text is unconventional and creates real reading friction for many readers. Cursive-style italic specifically (which SS02 is) compounds the issue because the connected, sloped letterforms reduce per-character visual distinctiveness. Dyslexic readers in particular rely on per-character distinctiveness to disambiguate similar letters (b/d, p/q, m/w). The italic cursive collapses this distinctiveness across all letters, not just the typically-confused pairs.
 
 **Fix applied:** Switched to a hybrid typography system. Body text and most headings (h2-h6) now use **Atkinson Hyperlegible**, a sans-serif designed by the Braille Institute specifically for low-vision and dyslexic readers. The font has visually distinct letterforms (no I/l/1 collisions, no b/d mirroring) which helps every reader, not just dyslexic ones. Loaded as four self-hosted woff2 files (Regular, Italic, Bold, BoldItalic) from `static/fonts/`, converted from upstream TTF via fontTools at ~24KB each.
 
-H1 page titles (the terminal-prompt strings like `Σ ~/sala  # About Me`) and the {{< typeit >}} typing animations remain in MonoLisa upright. These are the identity-defining typography of the site, and upright MonoLisa is not the readability barrier — italic cursive was. Keeping the terminal-prompt look in H1s and animations preserves the brand without re-introducing the dyslexia issue. Code blocks remain in MonoLisa upright with ligatures, unchanged.
+H1 page titles (the terminal-prompt strings like `Σ ~/sala  # About Me`) and the {{< typeit >}} typing animations remain in MonoLisa upright. These are the identity-defining typography of the site, and upright MonoLisa is not the readability barrier; italic cursive was. Keeping the terminal-prompt look in H1s and animations preserves the brand without re-introducing the dyslexia issue. Code blocks remain in MonoLisa upright with ligatures, unchanged.
 
 **Implementation in `assets/css/custom.css`:**
 
@@ -692,7 +692,7 @@ H1 page titles (the terminal-prompt strings like `Σ ~/sala  # About Me`) and th
 
 **Verification:** Load any page on the site. Body text and h2/h3 headings should render in Atkinson Hyperlegible (clean sans-serif). H1 page titles like `Σ ~/sala  # About Me` should render in MonoLisa upright (monospace). The cycling typing animations should also render in MonoLisa upright. Code blocks in project pages should render in MonoLisa with ligatures, unchanged from before.
 
-**Why this matters generally:** The original cursive script was visually distinctive but it traded readability for aesthetics across every page. The fix demonstrates that "identity-defining typography" and "accessible typography" are not always in conflict — they can coexist by scoping each to where it does its best work. The terminal-prompt look defines the brand in short strings (page titles, animations); long-form prose needs to be read by humans, including those for whom italic cursive is a real barrier.
+**Why this matters generally:** The original cursive script was visually distinctive but it traded readability for aesthetics across every page. The fix demonstrates that "identity-defining typography" and "accessible typography" are not always in conflict; they can coexist by scoping each to where it does its best work. The terminal-prompt look defines the brand in short strings (page titles, animations); long-form prose needs to be read by humans, including those for whom italic cursive is a real barrier.
 
 ### BUG-017: Inline KaTeX requires `\\(...\\)` (double-backslash) in markdown source
 
@@ -859,7 +859,7 @@ Applied to all 8 small multiples on `/taller/`. The annual time series (360px ta
 
 **Cause:** Two compounding issues, each plausible-sounding on its own:
 
-1. **CVD-safe palette is not the same as high-contrast palette.** Okabe-Ito was designed for distinguishability across color-vision deficiencies on the gray paper backgrounds typical in scientific journals. Several of its colors (`#56B4E9`, `#E69F00`, `#F0E442`) are deliberately bright and pale — perfect for distinguishability, terrible for contrast against a pure-white web background. Adopting the palette without measuring per-color contrast against the actual canvas color produces silent failures.
+1. **CVD-safe palette is not the same as high-contrast palette.** Okabe-Ito was designed for distinguishability across color-vision deficiencies on the gray paper backgrounds typical in scientific journals. Several of its colors (`#56B4E9`, `#E69F00`, `#F0E442`) are deliberately bright and pale: perfect for distinguishability, terrible for contrast against a pure-white web background. Adopting the palette without measuring per-color contrast against the actual canvas color produces silent failures.
 
 2. **A theme adapter that swaps a documented light hex (e.g., `#0969DA`) to its documented dark equivalent (e.g., `#79C0FF`) only protects the swapped colors.** Any chart series color outside the swap map (every Okabe-Ito hue) renders identically in both themes. A series at AA-text in light mode may collapse to AA-large in dark mode (or vice versa) without any code change, just because the background flipped.
 
@@ -884,7 +884,7 @@ LIGHT MODE — chart series colors against #FFFFFF
 **Diagnostic recipe.** When building a new dashboard:
 
 1. Run the audit before the first commit. Note any FAIL entries; those need new colors.
-2. AA-large/non-text entries (3.0–4.49:1) are within mirador's documented 3:1 floor for chart elements but require a deliberate decision: accept the marginal contrast to preserve palette identity, or push the color darker/lighter at the cost of palette recognizability. Whichever you pick, **document the choice inline in the chart config** so future-you doesn't "fix" it unknowingly.
+2. AA-large/non-text entries (3.0-4.49:1) are within mirador's documented 3:1 floor for chart elements but require a deliberate decision: accept the marginal contrast to preserve palette identity, or push the color darker/lighter at the cost of palette recognizability. Whichever you pick, **document the choice inline in the chart config** so future-you doesn't "fix" it unknowingly.
 3. After every theme-adapter change, rerun the audit. The map and the audit must stay in sync.
 
 **Why this matters.** Three rounds of "the colors look fine" preceded the FAIL discovery on `/taller/`. Visual inspection on a single monitor in a single lighting condition by a single non-CVD viewer is not an accessibility test. The math is the test. A 100-line Python script is enough to make it permanent and re-runnable; treating contrast as a one-time eyeball check is what produces silent inaccessibility in production dashboards.
@@ -941,7 +941,7 @@ When the kentucky-nih case study was first drafted, multiple SQL queries had "ex
 
 **Cause:** when an AI assistant is asked to write a multi-section case study with multiple SQL queries and expected outputs, the temptation is to generate plausible-looking numbers that fit the prose narrative rather than running queries to capture real output. This works in textbook contexts (where the data is hypothetical) and fails catastrophically for case studies built on real databases. The discipline that prevents it is documented in §17.
 
-**Fix:** comprehensive rewrite of phases 02, 03, and 04 against verified output. Every SQL query was run against the live database, the actual output was captured with `sqlite3 -header -column`, and the prose, result blocks, and Chart.js data arrays were rebuilt from the captured output. Phase 04's "2025 Cliff" section was deleted entirely (the cliff doesn't exist in the data); phase 03's "What's Worth Following Further" section was rewritten to reflect threads the data actually supports. The corrected case study reproduces — anyone running any query gets exactly the numbers shown in the prose.
+**Fix:** a full rewrite of phases 02, 03, and 04 against verified output. Every SQL query was run against the live database, the actual output was captured with `sqlite3 -header -column`, and the prose, result blocks, and Chart.js data arrays were rebuilt from the captured output. Phase 04's "2025 Cliff" section was deleted entirely (the cliff doesn't exist in the data); phase 03's "What's Worth Following Further" section was rewritten to reflect threads the data actually supports. The corrected case study reproduces; anyone running any query gets exactly the numbers shown in the prose.
 
 **Prevention:** see §17. Before writing prose around a SQL result, run the query and capture the real output. Build prose from captured output, not the reverse. After draft, re-run every query and confirm the result blocks match.
 
@@ -1290,7 +1290,7 @@ First encountered: Penobscot SQL-formatting sweep, May 2026. Phase 01 lost its 4
 
 The despacho "2026 Job Application Paradox" essay carries the same rule in its page-scoped `<style>` block (with `!important`, since an inline block's order relative to theme CSS is less predictable) as an interim measure. Once the `custom.css` rule is in place, the inline duplicate can be removed.
 
-**Detection:** in devtools, a header cell computes `text-align: center` (cell text is fine) but the `<table>` computed width equals the container width while its visible content is narrower — the tell that the block is full-width and needs `fit-content`. Confirmed via console: `getComputedStyle(table).width` vs `table.parentElement.clientWidth`.
+**Detection:** in devtools, a header cell computes `text-align: center` (cell text is fine) but the `<table>` computed width equals the container width while its visible content is narrower, the tell that the block is full-width and needs `fit-content`. Confirmed via console: `getComputedStyle(table).width` vs `table.parentElement.clientWidth`.
 
 First encountered: despacho "2026 Job Application Paradox" essay, May 2026.
 
@@ -1356,7 +1356,7 @@ enableGitInfo = true         # see BUG-006
     maxAge = "720h"
 ```
 
-### `config/_default/params.toml` — non-default values only
+### `config/_default/params.toml`: non-default values only
 
 ```toml
 colorScheme = "github"
@@ -1485,10 +1485,10 @@ hihipy.github.io/
 - `content/sala/index.md` is a single-file page, NOT `_index.md` (no underscore). This makes `/sala/` a regular page with body content rather than a section listing.
 - `content/puerta/_index.md` is a section index because puerta is technically a section (with no children currently).
 - `static/resume.pdf` is served verbatim at `/resume.pdf` regardless of which content page links to it.
-- Favicon files are donut chart in github palette — see BUG-009. Source SVG at `assets/img/favicon-source.svg`.
-- The `pgbd.us` redirect alias is configured in Cloudflare DNS + Rules — see §1. Not a file in this repo.
+- Favicon files are donut chart in github palette, see BUG-009. Source SVG at `assets/img/favicon-source.svg`.
+- The `pgbd.us` redirect alias is configured in Cloudflare DNS + Rules, see §1. Not a file in this repo.
 
-## 13. Adding a New Project Page — Procedure
+## 13. Adding a New Project Page: Procedure
 
 When adding a new project to the portfolio, follow this exact procedure.
 
@@ -1587,7 +1587,7 @@ GitHub Pages handles this automatically on push to `main`. No manual build step.
 
 ### Deployment URL chain
 
-`main` branch push → GitHub Pages builds → serves at `https://hihipy.github.io` → CNAME redirects to `https://pgbd.casa`. Separately, `https://pgbd.us` 301-redirects to `https://pgbd.casa` via Cloudflare — see §1.
+`main` branch push → GitHub Pages builds → serves at `https://hihipy.github.io` → CNAME redirects to `https://pgbd.casa`. Separately, `https://pgbd.us` 301-redirects to `https://pgbd.casa` via Cloudflare, see §1.
 
 ## 15. Account & Access Security
 
@@ -1629,7 +1629,7 @@ Re-verify the posture above whenever:
 |---|---|
 | Sala description discrepancy | The `description` field in `content/sala/index.md` says "Institutional research analyst" but other contexts (the Blowfish `[params.author]` headline) say "Data analyst." If they refer to the same role under different terminology, fine. If alignment is desired, update the sala frontmatter. |
 | Four unused icons | `building-columns`, `certificate`, `compass`, `house` in `assets/icons/` are not referenced anywhere. Kept available for future use. The `certificate` icon is the most likely candidate for sala's Certifications section if one is added. |
-| Newly-registered domain blocking | The University of Miami network has been observed blocking both `pgbd.casa` and `pgbd.us` for some time after each domain's registration. This is BUG-011 — a generic enterprise filter for newly-observed domains, not site-specific. Expected to resolve on its own after 30-90 days as the domains age. Affects only highly-restrictive corporate networks; the site is accessible from cellular, residential, and most non-restrictive networks. |
+| Newly-registered domain blocking | The University of Miami network has been observed blocking both `pgbd.casa` and `pgbd.us` for some time after each domain's registration. This is BUG-011, a generic enterprise filter for newly-observed domains, not site-specific. Expected to resolve on its own after 30-90 days as the domains age. Affects only highly-restrictive corporate networks; the site is accessible from cellular, residential, and most non-restrictive networks. |
 
 ## 17. Working with AI on Analytical Content
 
@@ -1670,7 +1670,7 @@ The verification pass is short relative to the drafting work. It is the differen
 
 ### Treat AI output like an over-eager intern
 
-The framing from the obrador philosophy applies directly: an AI assistant producing analytical content should be treated like work from an over-eager intern who is fast, capable, and confident — but who has not actually run the query and is filling in plausible numbers from context. Every number, organization name, date, and percentage requires verification before it ships. The intern doesn't know they're confabulating; they're trying to be helpful. The verification step is what turns helpful-looking work into trustworthy work.
+The framing from the obrador philosophy applies directly: an AI assistant producing analytical content should be treated like work from an over-eager intern who is fast, capable, and confident, but who has not actually run the query and is filling in plausible numbers from context. Every number, organization name, date, and percentage requires verification before it ships. The intern doesn't know they're confabulating; they're trying to be helpful. The verification step is what turns helpful-looking work into trustworthy work.
 
 ### When the AI says it ran the query, ask to see the output
 
