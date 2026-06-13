@@ -30,15 +30,15 @@ On June 12, 2026, the public market debut of SpaceX pushed Elon Musk's combined 
 
 ## Results First
 
-| The claim | The number |
+| The Claim | The Number |
 | --- | --- |
-| Median U.S. household net worths it equals | about 5.45 million |
-| Dollars his paper wealth gained per second on IPO day | about $8 million |
-| Times that exceeds a median worker's earning rate | about 10 billion |
-| Billion-dollar fortunes it contains | about 1,050 |
-| Years at the U.S. median income to match it | about 40 million |
-| Years at the world median income | about 311 million |
-| National economies larger than it | only about nineteen |
+| Median U.S. Household Net Worths It Equals | About 5.45 Million |
+| Dollars His Paper Wealth Gained per Second on IPO Day | About $8 Million |
+| Times That Exceeds a Median Worker's Earning Rate | About 10 Billion |
+| Billion-Dollar Fortunes It Contains | About 1,050 |
+| Years at the U.S. Median Income to Match It | About 40 Million |
+| Years at the World Median Income | About 311 Million |
+| National Economies Larger Than It | Only About Nineteen |
 
 ## One Family, and Then Him
 
