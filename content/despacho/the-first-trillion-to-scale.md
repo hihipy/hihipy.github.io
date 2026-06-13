@@ -58,7 +58,7 @@ In the block below, every pixel is one household. The counter at the top of the 
 <div style="font-weight:700;font-size:1.05rem;margin-bottom:.3rem;">One Household, One Pixel</div>
 <div style="font-size:.92rem;line-height:1.55;margin-bottom:.7rem;">Every pixel is one median U.S. household, 192,700 dollars. The whole block is the 1.05 trillion dollar fortune: 5,448,884 of them. One pixel is barely visible. The white lines mark each additional million households, and the readout counts the line just beneath it. Scroll all the way down and the count reaches the full 5,448,884, the entire fortune, each pixel a family's whole net worth.</div>
 <div id="nwscroll" style="position:relative;width:100%;height:78vh;max-height:760px;overflow-y:auto;overflow-x:hidden;background:#06121c;border:1px solid rgba(128,128,128,.45);border-radius:8px;">
-<div id="nwodo" style="position:sticky;top:0;z-index:4;background:rgba(4,12,20,.96);color:#fff;font:600 15px/1.35 system-ui,-apple-system,sans-serif;padding:9px 13px;border-bottom:1px solid rgba(255,255,255,.3);">0 Households &middot; $0</div>
+<div id="nwodo" style="position:sticky;top:0;z-index:4;background:rgba(4,12,20,.96);color:#fff;font:600 15px/1.35 system-ui,-apple-system,sans-serif;padding:9px 13px;border-bottom:1px solid rgba(255,255,255,.3);">0 Households | $0</div>
 <div id="nwinner" style="position:relative;">
 <canvas id="nwcanvas" style="display:block;width:100%;height:auto;"></canvas>
 </div>
@@ -73,7 +73,7 @@ In the block below, every pixel is one household. The counter at the top of the 
  function fmt(n){return Math.round(n).toLocaleString('en-US');}
  var lastW=-1, rows=0, w=0;
  function build(force){
-  var CW=Math.floor(sc.clientWidth)||690; w=Math.max(CW,690);
+  var CW=Math.floor(sc.clientWidth)||690; w=Math.max(CW,1500);
   if(!force && w===lastW) return; lastW=w;
   rows=Math.ceil(N/w); cv.width=w; cv.height=rows;
   var ctx=cv.getContext('2d'); var img=ctx.createImageData(w,rows); var d=img.data;
@@ -94,7 +94,7 @@ In the block below, every pixel is one household. The counter at the top of the 
   for(var k=1;k*1000000<N;k++){ addBand(k*1000000,(k*1000000/N)*Hd,false); }
   addBand(N,Hd-1,true);
  }
- function tick(){ var Hd=cv.clientHeight||1; var hh=Math.min(N,Math.max(0,Math.round((sc.scrollTop/Hd)*N))); odo.innerHTML=fmt(hh)+' Households &middot; $'+fmt(hh*M); }
+ function tick(){ var Hd=cv.clientHeight||1; var hh=Math.min(N,Math.max(0,Math.round((sc.scrollTop/Hd)*N))); odo.innerHTML=fmt(hh)+' Households | $'+fmt(hh*M); }
  build(true);
  requestAnimationFrame(function(){layout();tick();});
  sc.addEventListener('scroll',tick);
