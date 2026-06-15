@@ -259,15 +259,15 @@ The fortune is a full year of income for about 311 million people at the world m
 </div>
 </div><script>
 (function(){
- var F=1.05e12, FAM=5448884, W=1500, TILE=1800, BAND=10000000, BUF=1;
+ var F=1.05e12, W=1500, TILE=1800, BAND=10000000, BUF=1;
  var R=[
-  {l:'the Americas',v:5244,c:[230,159,0]},
-  {l:'Africa',v:1406,c:[213,94,0]},
-  {l:'Asia',v:3846,c:[204,121,167]},
-  {l:'Europe',v:13949,c:[0,158,115]},
-  {l:'Oceania',v:2574,c:[240,228,66]}
+  {l:'the Americas',n:'The Americas',v:5244,c:[230,159,0],p:1050000000,pl:'about 1.05 billion'},
+  {l:'Africa',n:'Africa',v:1406,c:[213,94,0],p:1520000000,pl:'about 1.5 billion'},
+  {l:'Asia',n:'Asia',v:3846,c:[204,121,167],p:4800000000,pl:'about 4.8 billion'},
+  {l:'Europe',n:'Europe',v:13949,c:[0,158,115],p:744000000,pl:'about 744 million'},
+  {l:'Oceania',n:'Oceania',v:2574,c:[240,228,66],p:46000000,pl:'about 46 million'}
  ];
- R.forEach(function(r){ r.T=Math.round(F/r.v); r.rows=Math.ceil(r.T/W); r.mult=r.T/FAM; });
+ R.forEach(function(r){ r.T=Math.round(F/r.v); r.rows=Math.ceil(r.T/W); });
  var sc=document.getElementById('rgscroll'), inner=document.getElementById('rginner'), odo=document.getElementById('rgodo'), space=document.getElementById('rgspace'), sel=document.getElementById('rgsel'), cap=document.getElementById('rgcap');
  if(!sc||!document.createElement('canvas').getContext) return;
  var cur=0, scale=1, Hd=1, tileH=1, tiles={}, pend=false;
@@ -306,7 +306,7 @@ The fortune is a full year of income for about 311 million people at the world m
  }
  function metrics(){ scale=(sc.clientWidth||W)/W; Hd=R[cur].rows*scale; tileH=TILE*scale; inner.style.height=Hd+'px'; space.style.height=Math.max(0,(sc.clientHeight||0)-(odo.offsetHeight||0))+'px'; }
  function tick(){ var f=Math.min(1,Math.max(0,sc.scrollTop/Hd)); var ppl=Math.min(R[cur].T,Math.round(f*R[cur].T)); odo.innerHTML=fmt(ppl)+' People | $'+fmt(ppl*R[cur].v); }
- function setCap(){ var r=R[cur]; cap.innerHTML='Each pixel is one person at the median income of '+r.l+', about $'+fmt(r.v)+' a year. Scroll all the way down and the count reaches '+fmt(r.T)+' people, the entire 1.05 trillion dollar fortune at that income. This wall runs about '+Math.round(r.mult)+' times the height of the households block above.'; }
+ function setCap(){ var r=R[cur]; var rat=r.T/r.p; var comp=rat>=1?('the fortune could pay every one of them a full year at this income about '+Math.round(rat)+' times over.'):('even the whole fortune reaches only about one in '+Math.round(1/rat)+' of them.'); cap.innerHTML='Each pixel is one person at the median income of '+r.l+', about $'+fmt(r.v)+' a year. Scroll all the way down and the count reaches '+fmt(r.T)+' people, the entire 1.05 trillion dollar fortune at that income. '+r.n+' is home to '+r.pl+' people, so '+comp; }
  function rebuild(){ clearTiles(); metrics(); bands(); virtualize(); tick(); }
  sel.addEventListener('change',function(){ cur=parseInt(sel.value,10)||0; sc.scrollTop=0; setCap(); rebuild(); });
  sc.addEventListener('scroll',function(){ if(pend) return; pend=true; requestAnimationFrame(function(){ pend=false; virtualize(); tick(); }); });
@@ -434,7 +434,7 @@ Median and mean U.S. family net worth, about 192,700 dollars and about 1.06 mill
 
 Median income figures are median income or consumption per person per day, in 2021 PPP international dollars, from the World Bank Poverty and Inequality Platform, via Our World in Data [5] (latest year per country: Nigeria 2022, Mexico 2024, Indonesia 2024, Poland 2023, Fiji 2019, United States 2024, world median 2024). Daily figures are multiplied by 365. The series mixes income and consumption surveys, a known comparability limit the source documents. Regions follow the United Nations M49 geoscheme [8].
 
-National and regional GDP figures are nominal output, 2025 estimate, from the IMF World Economic Outlook (April 2026) [6]. National values used: Switzerland about 1,044 billion, Poland about 1,036, Taiwan about 920, Argentina about 681, Sweden about 669, Singapore about 604, Spain about 1,904, Greece about 280, South Africa about 427. The income chart uses the five continental M49 regions; the output charts use the finer M49 subregions. Subregional totals are the sum of IMF nominal GDP over the countries the standard files under each: Northern Africa about 975 billion, Western Africa about 717, Eastern Africa about 607, the Caribbean about 595, Central Asia about 566, Middle Africa about 370, and the Pacific islands (Melanesia, Micronesia, and Polynesia, all of Oceania except Australia and New Zealand) about 71. The stacked figure adds Eastern Africa, Middle Africa, and the Pacific islands to about 1,048 billion across twenty-eight countries and roughly 700 million people. Regional populations are implied by the same source, dividing each country's GDP by its GDP per capita and summing. The interactive region block divides the fortune by each UN region's median income per person, where that regional figure is the median of the latest national medians of all countries the M49 standard files under the region, drawn from the same World Bank Poverty and Inequality Platform data via Our World in Data [5], to count the people a full year of that income would equal; the interactive region block uses the same one-pixel-per-person rendering as the households figure and scrolls through the region's entire count, from about 75 million people for Europe to about 747 million for Africa, drawn in tiles loaded as you scroll so the taller regions render without exceeding browser canvas limits. The deep-time placement uses the 4.54-billion-year age of the Earth and the 78-year compression from the companion essay in this room.
+National and regional GDP figures are nominal output, 2025 estimate, from the IMF World Economic Outlook (April 2026) [6]. National values used: Switzerland about 1,044 billion, Poland about 1,036, Taiwan about 920, Argentina about 681, Sweden about 669, Singapore about 604, Spain about 1,904, Greece about 280, South Africa about 427. The income chart uses the five continental M49 regions; the output charts use the finer M49 subregions. Subregional totals are the sum of IMF nominal GDP over the countries the standard files under each: Northern Africa about 975 billion, Western Africa about 717, Eastern Africa about 607, the Caribbean about 595, Central Asia about 566, Middle Africa about 370, and the Pacific islands (Melanesia, Micronesia, and Polynesia, all of Oceania except Australia and New Zealand) about 71. The stacked figure adds Eastern Africa, Middle Africa, and the Pacific islands to about 1,048 billion across twenty-eight countries and roughly 700 million people. Regional populations are implied by the same source, dividing each country's GDP by its GDP per capita and summing. The interactive region block divides the fortune by each UN region's median income per person, where that regional figure is the median of the latest national medians of all countries the M49 standard files under the region, drawn from the same World Bank Poverty and Inequality Platform data via Our World in Data [5], to count the people a full year of that income would equal; the interactive region block uses the same one-pixel-per-person rendering as the households figure and scrolls through the region's entire count, from about 75 million people for Europe to about 747 million for Africa, drawn in tiles loaded as you scroll so the taller regions render without exceeding browser canvas limits. Each region's count is then set against its own mid-2024 population from the UN World Population Prospects 2024 [9], which is how the readout reports the figure as a multiple of, or a fraction of, everyone who lives there. The deep-time placement uses the 4.54-billion-year age of the Earth and the 78-year compression from the companion essay in this room.
 
 ## References
 
@@ -446,3 +446,4 @@ National and regional GDP figures are nominal output, 2025 estimate, from the IM
 6. "World Economic Outlook Database," International Monetary Fund, April 2026. https://www.imf.org/en/Publications/WEO
 7. "Households and Families: 2020," U.S. Census Bureau, report C2020BR-10. https://www.census.gov/library/publications/2024/dec/c2020br-10.html
 8. "Standard Country or Area Codes for Statistical Use (M49)," United Nations Statistics Division. https://unstats.un.org/unsd/methodology/m49/
+9. "World Population Prospects 2024," United Nations Department of Economic and Social Affairs, Population Division, mid-2024 estimates. https://population.un.org/wpp/
