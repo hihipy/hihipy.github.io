@@ -238,6 +238,83 @@ Pointed the other way, divide by the world median income of about 3,376 dollars 
 
 The fortune is a full year of income for about 311 million people at the world median, roughly the population of the United States. Not their savings. Everything they earn. These spans run off the edge of human history, so the companion essay in this room, which compresses Earth's 4.54 billion years into one 78-year life, is the right ruler: the Nigerian saver would have had to start about fifteen years into that life, deep in the Neoproterozoic, before animals existed.
 
+<div id="rgwrap" style="position:relative;left:50%;transform:translateX(-50%);width:94vw;max-width:1320px;margin:1.85rem 0;display:block;">
+<div style="font-weight:700;font-size:1.05rem;margin-bottom:.3rem;">One Person, One Pixel, by Region</div>
+<div style="font-size:.92rem;line-height:1.55;margin-bottom:.7rem;">Built like the households block above, one pixel per person, the same density. But here each pixel is one person earning the chosen region's median income for a year, and the wall holds every person the fortune could pay for a full year, tens to hundreds of millions of them. Pick a region and scroll: the count climbs to the region's full total, the entire 1.05 trillion dollar fortune. The poorer the region, the further the wall runs, Africa falls far past the rest.</div>
+<div style="margin-bottom:.7rem;">
+<label for="rgsel" style="font-size:.92rem;font-weight:600;margin-right:.45rem;">Region:</label>
+<select id="rgsel" style="font:inherit;font-size:.95rem;padding:5px 9px;border:1px solid currentColor;border-radius:6px;background:transparent;color:inherit;">
+<option value="0">Americas</option>
+<option value="1">Africa</option>
+<option value="2">Asia</option>
+<option value="3">Europe</option>
+<option value="4">Oceania</option>
+</select>
+</div>
+<div id="rgcap" style="font-size:.92rem;line-height:1.5;margin-bottom:.7rem;"></div>
+<div id="rgscroll" style="position:relative;width:100%;height:78vh;max-height:760px;overflow-y:auto;overflow-x:hidden;background:#0b0e12;border:1px solid rgba(128,128,128,.45);border-radius:8px;">
+<div id="rgodo" style="position:sticky;top:0;z-index:4;background:rgba(8,10,14,.96);color:#fff;font:600 15px/1.35 system-ui,-apple-system,sans-serif;padding:9px 13px;border-bottom:1px solid rgba(255,255,255,.3);">0 People | $0</div>
+<div id="rginner" style="position:relative;width:100%;"></div>
+<div id="rgspace" style="width:100%;height:0;"></div>
+</div>
+</div><script>
+(function(){
+ var F=1.05e12, FAM=5448884, W=1500, TILE=1800, BAND=10000000, BUF=1;
+ var R=[
+  {l:'the Americas',v:5244,c:[230,159,0]},
+  {l:'Africa',v:1406,c:[213,94,0]},
+  {l:'Asia',v:3846,c:[204,121,167]},
+  {l:'Europe',v:13949,c:[0,158,115]},
+  {l:'Oceania',v:2574,c:[240,228,66]}
+ ];
+ R.forEach(function(r){ r.T=Math.round(F/r.v); r.rows=Math.ceil(r.T/W); r.mult=r.T/FAM; });
+ var sc=document.getElementById('rgscroll'), inner=document.getElementById('rginner'), odo=document.getElementById('rgodo'), space=document.getElementById('rgspace'), sel=document.getElementById('rgsel'), cap=document.getElementById('rgcap');
+ if(!sc||!document.createElement('canvas').getContext) return;
+ var cur=0, scale=1, Hd=1, tileH=1, tiles={}, pend=false;
+ function clamp(v){return v<0?0:(v>255?255:v);}
+ function fmt(n){return Math.round(n).toLocaleString('en-US');}
+ function nTiles(){ return Math.ceil(R[cur].rows/TILE); }
+ function drawTile(idx){
+  var startRow=idx*TILE; var h=Math.min(TILE,R[cur].rows-startRow); if(h<=0) return null;
+  var can=document.createElement('canvas'); can.className='rgtile'; can.width=W; can.height=h;
+  can.style.cssText='position:absolute;left:0;width:100%;top:'+(startRow*scale)+'px;height:'+(h*scale)+'px;display:block;';
+  var ctx=can.getContext('2d'); var img=ctx.createImageData(W,h); var d=img.data;
+  var c=R[cur].c, r0=c[0], g0=c[1], b0=c[2];
+  var ppl=Math.min(W*h, R[cur].T-startRow*W);
+  for(var i=0;i<ppl;i++){ var o=i*4; var n=(Math.random()*64-32)|0; d[o]=clamp(r0+n); d[o+1]=clamp(g0+n); d[o+2]=clamp(b0+n); d[o+3]=255; }
+  ctx.putImageData(img,0,0); return can;
+ }
+ function clearTiles(){ for(var k in tiles){ if(tiles[k].parentNode) inner.removeChild(tiles[k]); delete tiles[k]; } }
+ function virtualize(){
+  var base=inner.offsetTop||0; var top=sc.scrollTop-base; var bot=top+(sc.clientHeight||0); var nt=nTiles();
+  var first=Math.max(0,Math.floor(top/tileH)-BUF); var last=Math.min(nt-1,Math.floor(bot/tileH)+BUF);
+  for(var k in tiles){ var ki=+k; if(ki<first||ki>last){ if(tiles[k].parentNode) inner.removeChild(tiles[k]); delete tiles[k]; } }
+  for(var idx=first; idx<=last; idx++){ if(!tiles[idx]){ var c=drawTile(idx); if(c){ inner.appendChild(c); tiles[idx]=c; } } }
+ }
+ function addBand(val,fin){
+  var y=fin?(Hd-3):((val/R[cur].T)*Hd);
+  var b=document.createElement('div'); b.className='rgband';
+  b.style.cssText='position:absolute;left:0;right:0;top:'+y+'px;height:0;border-top:'+(fin?'3px':'2px')+' solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.55);pointer-events:none;z-index:3;';
+  var lab=document.createElement('span'); lab.textContent=fin?(fmt(val)+' People, the Whole Fortune'):(fmt(val)+' People');
+  lab.style.cssText='position:absolute;left:8px;'+(fin?'bottom:3px;':'top:3px;')+'background:rgba(8,10,14,.92);color:'+(fin?'#F0E442':'#fff')+';font:'+(fin?'700':'600')+' 12px/1.2 system-ui,sans-serif;padding:2px 7px;border-radius:3px;white-space:nowrap;';
+  b.appendChild(lab); inner.appendChild(b);
+ }
+ function bands(){
+  var olds=inner.querySelectorAll('.rgband'); for(var j=0;j<olds.length;j++) olds[j].parentNode.removeChild(olds[j]);
+  for(var v=BAND; v<R[cur].T; v+=BAND){ addBand(v,false); }
+  addBand(R[cur].T,true);
+ }
+ function metrics(){ scale=(sc.clientWidth||W)/W; Hd=R[cur].rows*scale; tileH=TILE*scale; inner.style.height=Hd+'px'; space.style.height=Math.max(0,(sc.clientHeight||0)-(odo.offsetHeight||0))+'px'; }
+ function tick(){ var f=Math.min(1,Math.max(0,sc.scrollTop/Hd)); var ppl=Math.min(R[cur].T,Math.round(f*R[cur].T)); odo.innerHTML=fmt(ppl)+' People | $'+fmt(ppl*R[cur].v); }
+ function setCap(){ var r=R[cur]; cap.innerHTML='Each pixel is one person at the median income of '+r.l+', about $'+fmt(r.v)+' a year. Scroll all the way down and the count reaches '+fmt(r.T)+' people, the entire 1.05 trillion dollar fortune at that income. This wall runs about '+Math.round(r.mult)+' times the height of the households block above.'; }
+ function rebuild(){ clearTiles(); metrics(); bands(); virtualize(); tick(); }
+ sel.addEventListener('change',function(){ cur=parseInt(sel.value,10)||0; sc.scrollTop=0; setCap(); rebuild(); });
+ sc.addEventListener('scroll',function(){ if(pend) return; pend=true; requestAnimationFrame(function(){ pend=false; virtualize(); tick(); }); });
+ window.addEventListener('resize',function(){ requestAnimationFrame(rebuild); });
+ setCap(); requestAnimationFrame(rebuild);
+})();
+</script>
+
 ## Bigger Than Nations
 
 A person is the small unit. A country is the large one, and the fortune clears almost all of them. Only about nineteen national economies produce more in a year than one man holds on paper [2][6]. The twentieth, Switzerland, he matches outright, and the rest he tops:
@@ -329,7 +406,7 @@ options: {
 
 In billions, that is the sum laid bare:
 
-\\[ (607 + 370 + 71)\ \text{USD billion} \quad \approx \quad 1{,}048\ \text{USD billion} \quad \approx \quad \text{Elon Musk} \\]
+\\[ (607 + 370 + 71)\ \text{USD billion} \quad \approx \quad 1{,}048\ \text{USD billion} \quad \approx \quad \text{him} \\]
 
 That is the whole essay in one image. Three regions of the world, twenty-eight countries, more than 700 million lives, stacked end to end, come out even with one person.
 
@@ -357,7 +434,7 @@ Median and mean U.S. family net worth, about 192,700 dollars and about 1.06 mill
 
 Median income figures are median income or consumption per person per day, in 2021 PPP international dollars, from the World Bank Poverty and Inequality Platform, via Our World in Data [5] (latest year per country: Nigeria 2022, Mexico 2024, Indonesia 2024, Poland 2023, Fiji 2019, United States 2024, world median 2024). Daily figures are multiplied by 365. The series mixes income and consumption surveys, a known comparability limit the source documents. Regions follow the United Nations M49 geoscheme [8].
 
-National and regional GDP figures are nominal output, 2025 estimate, from the IMF World Economic Outlook (April 2026) [6]. National values used: Switzerland about 1,044 billion, Poland about 1,036, Taiwan about 920, Argentina about 681, Sweden about 669, Singapore about 604, Spain about 1,904, Greece about 280, South Africa about 427. The income chart uses the five continental M49 regions; the output charts use the finer M49 subregions. Subregional totals are the sum of IMF nominal GDP over the countries the standard files under each: Northern Africa about 975 billion, Western Africa about 717, Eastern Africa about 607, the Caribbean about 595, Central Asia about 566, Middle Africa about 370, and the Pacific islands (Melanesia, Micronesia, and Polynesia, all of Oceania except Australia and New Zealand) about 71. The stacked figure adds Eastern Africa, Middle Africa, and the Pacific islands to about 1,048 billion across twenty-eight countries and roughly 700 million people. Regional populations are implied by the same source, dividing each country's GDP by its GDP per capita and summing. The deep-time placement uses the 4.54-billion-year age of the Earth and the 78-year compression from the companion essay in this room.
+National and regional GDP figures are nominal output, 2025 estimate, from the IMF World Economic Outlook (April 2026) [6]. National values used: Switzerland about 1,044 billion, Poland about 1,036, Taiwan about 920, Argentina about 681, Sweden about 669, Singapore about 604, Spain about 1,904, Greece about 280, South Africa about 427. The income chart uses the five continental M49 regions; the output charts use the finer M49 subregions. Subregional totals are the sum of IMF nominal GDP over the countries the standard files under each: Northern Africa about 975 billion, Western Africa about 717, Eastern Africa about 607, the Caribbean about 595, Central Asia about 566, Middle Africa about 370, and the Pacific islands (Melanesia, Micronesia, and Polynesia, all of Oceania except Australia and New Zealand) about 71. The stacked figure adds Eastern Africa, Middle Africa, and the Pacific islands to about 1,048 billion across twenty-eight countries and roughly 700 million people. Regional populations are implied by the same source, dividing each country's GDP by its GDP per capita and summing. The interactive region block divides the fortune by each UN region's median income per person, where that regional figure is the median of the latest national medians of all countries the M49 standard files under the region, drawn from the same World Bank Poverty and Inequality Platform data via Our World in Data [5], to count the people a full year of that income would equal; the interactive region block uses the same one-pixel-per-person rendering as the households figure and scrolls through the region's entire count, from about 75 million people for Europe to about 747 million for Africa, drawn in tiles loaded as you scroll so the taller regions render without exceeding browser canvas limits. The deep-time placement uses the 4.54-billion-year age of the Earth and the 78-year compression from the companion essay in this room.
 
 ## References
 
