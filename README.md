@@ -716,11 +716,13 @@ H1 page titles (the terminal-prompt strings like `Σ ~/sala  # About Me`) and th
 
 ### BUG-017: Inline KaTeX requires `\\(...\\)` (double-backslash) in markdown source
 
+**[SUPERSEDED by BUG-039, June 2026.]** The double-backslash workaround below is obsolete. Goldmark passthrough is now enabled, so inline math uses SINGLE-backslash `\(...\)`. The history below is retained to explain why the old workaround existed; do not apply it.
+
 **Symptom:** Writing inline math as `\(M\)` in markdown source renders as the literal text `(M)` in the browser. KaTeX never processes it.
 
 **Cause:** Hugo's Goldmark Markdown renderer interprets `\(` and `\)` as Markdown escape sequences for literal parentheses *before* the HTML reaches KaTeX. Goldmark eats the backslashes, leaving plain `(M)` in the rendered HTML. KaTeX's auto-render then has nothing to recognize.
 
-**Fix:** Use `\\(...\\)` (double-backslash) in markdown source. Goldmark interprets `\\` as an escape for a literal backslash, leaving `\(` in the rendered HTML, which is the inline-math delimiter KaTeX recognizes.
+**Fix (current, BUG-039):** Use SINGLE-backslash `\(...\)` in markdown source. With Goldmark passthrough enabled, the delimiters pass through verbatim and KaTeX's default render matches them. Before passthrough, the workaround was double-backslash; that is now obsolete and would break matching.
 
 **Working examples on the site (verified):**
 
@@ -738,10 +740,10 @@ All of these render correctly. The pattern is consistent across the codebase.
 
 **Diagnostic recipe.** If inline math is rendering as literal text on a new page, check three things in order:
 1. Is the page calling `{{< katex >}}` *before* `{{< lead >}}`? See BUG-003.
-2. Is the inline math written as `\\(...\\)` (double-backslash) in markdown source? Single-backslash will not work.
+2. Is the inline math written as SINGLE-backslash `\(...\)` in markdown source, and is Goldmark passthrough enabled in markup.toml (BUG-039)? Double-backslash is obsolete and now breaks matching.
 3. Does the expression contain an apostrophe (`'`)? Replace it with `\\prime` or restructure to avoid.
 
-**Why this matters.** Inline KaTeX works fine on this site with the right syntax. The pitfall is that the natural syntax (`\(M\)` borrowed from LaTeX, Pandoc, and most static site generators) does not work here because of Goldmark's escape handling. The double-backslash workaround is non-obvious and easy to lose during refactors. Documenting the working syntax with verified examples saves future debugging cycles.
+**Why this matters.** With Goldmark passthrough enabled (BUG-039), the natural single-backslash syntax now works correctly, because passthrough stops Goldmark from touching the delimiters. This replaces the older, fragile double-backslash workaround. The lesson retained: math rendering problems on this site are almost always Goldmark processing the source before KaTeX sees it; passthrough is the structural fix, not delimiter escaping.
 
 ### BUG-018: Blowfish `{{< chart >}}` shortcode body must be the inside of an object literal, not a complete object
 
@@ -1070,6 +1072,8 @@ First encountered: college-scorecard-fl case study phase 03 (exploration), May 2
 
 ### BUG-029: KaTeX display math `\\[...\\]` containing `}_{...}` is corrupted by markdown italic parser
 
+**[SUPERSEDED by BUG-039, June 2026.]** This corruption no longer occurs: Goldmark passthrough now leaves display math untouched, so `}_{...}` and all underscores are safe. Display math uses SINGLE-backslash `\[...\]`. The analysis below correctly diagnoses the cause but its workaround is obsolete.
+
 Hugo's goldmark markdown parser processes display math blocks (`\\[...\\]`) BEFORE KaTeX sees the source. When the LaTeX inside contains the pattern `}_{...}` (a closing brace immediately followed by underscore-brace), goldmark interprets the underscore as the start of an italic emphasis span and corrupts the source. KaTeX then receives malformed LaTeX and the formula renders as raw markdown text on the page instead of as typeset math.
 
 **Symptom:** A display formula renders as literal text on the page, e.g., `\[\overline{f}_{t} = \dfrac{1}{5}\sum_{i=t-2}^{t+2} f_i\]` shown verbatim. Inline math `\\(...\\)` on the same page using the same expressions renders correctly.
@@ -1313,6 +1317,32 @@ The despacho "2026 Job Application Paradox" essay carries the same rule in its p
 **Detection:** in devtools, a header cell computes `text-align: center` (cell text is fine) but the `<table>` computed width equals the container width while its visible content is narrower, the tell that the block is full-width and needs `fit-content`. Confirmed via console: `getComputedStyle(table).width` vs `table.parentElement.clientWidth`.
 
 First encountered: despacho "2026 Job Application Paradox" essay, May 2026.
+
+### BUG-039: KaTeX math fixed permanently by Goldmark passthrough; single-backslash delimiters are now correct (supersedes the double-backslash workaround in BUG-017 and BUG-029)
+
+**This is the root-cause resolution of BUG-017 and BUG-029. Read this before applying either of those older entries; their double-backslash workaround is now obsolete and will PREVENT rendering.**
+
+**Root cause (the thing both older bugs were symptoms of):** Hugo's Goldmark renderer applies normal Markdown processing (emphasis, escape sequences, smartypants) to math source BEFORE KaTeX's client-side auto-render runs. Two distinct corruptions result. Inline `\(...\)` has its backslashes eaten as Markdown escapes, leaving bare `(...)` that KaTeX ignores (this was BUG-017). Display `\[...\]` containing `}_{...}` or any `_x ... _y` pattern has the underscores parsed as emphasis and rewritten to `<em>` tags inside the formula, so KaTeX receives malformed LaTeX and renders raw source (this was BUG-029). The double-backslash workaround papered over the symptom by surviving Goldmark in SOME contexts, but it was fragile: whether the delimiter collapsed or stayed literal depended on the surrounding Markdown context, which is why some formulas rendered and visually identical ones did not.
+
+**Permanent fix:** enable the Goldmark passthrough extension in `config/_default/markup.toml`. Passthrough tells Goldmark to leave the delimited regions completely untouched (no emphasis, no escape handling, no smartypants), so math reaches the HTML verbatim and KaTeX renders it. The exact block:
+
+```toml
+[goldmark.extensions.passthrough]
+  enable = true
+  [goldmark.extensions.passthrough.delimiters]
+    block = [['\[', '\]'], ['$$', '$$']]
+    inline = [['\(', '\)']]
+```
+
+**Current correct convention (use this from now on):** write math with SINGLE-backslash delimiters. Display: `\[ ... \]`. Inline: `\( ... \)`. This is internally consistent across the whole pipeline: the passthrough config matches single-backslash, KaTeX's default `renderMathInElement` matches single-backslash, and the source files are single-backslash. Underscores, `}_{` patterns, and primes inside math are all safe because passthrough stops Goldmark from touching them. The `{{< katex >}}`-before-`{{< lead >}}` ordering rule (BUG-003) still applies and is unaffected.
+
+**Do NOT use double-backslash anymore.** With passthrough configured for single-backslash, a double-backslash delimiter no longer matches the passthrough pair, so Goldmark would process it normally again and the underscore/escape corruption returns. The double-backslash workaround and passthrough are mutually exclusive; the project is now standardized on passthrough plus single-backslash.
+
+**Requires:** Hugo 0.122.0 or newer (passthrough landed Feb 2024). Verified on Hugo 0.163.2 extended.
+
+**Detection that passthrough is working:** after a clean rebuild, view the built HTML for a math-heavy page. A correctly-passed formula appears with its underscores intact (`\hat{Y}_{\text{TX},t}`), no `<em>` tags inside the delimiters. If you see `<em>` inside a formula, passthrough is not matching that delimiter; check that the delimiter in the source matches the configured pair exactly.
+
+First resolved: texas-synthetic-control case study, June 2026, after the case study's heavily-subscripted display formulas exposed the fragility of the double-backslash workaround across all four phase files.
 
 ### Eon Color Palette: Colorblind-Safe and Theme-Aware (despacho deep-time essay)
 
