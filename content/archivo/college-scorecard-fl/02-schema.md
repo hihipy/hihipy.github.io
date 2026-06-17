@@ -55,9 +55,9 @@ Result:
 
 | Table | Grain | Rows |
 |---|---|---:|
-| `institutions` | one row per UNITID | 112 |
-| `annual_metrics` | one row per (UNITID, cohort_year) | 920 |
-| `field_of_study` | one row per (UNITID, cohort_year, CIPCODE, CREDLEV) | 36,610 |
+| `institutions` | One Row per UNITID | 112 |
+| `annual_metrics` | One Row per (UNITID, cohort_year) | 920 |
+| `field_of_study` | One Row per (UNITID, cohort_year, CIPCODE, CREDLEV) | 36,610 |
 
 The `institutions` table holds stable metadata: institution name, location, accreditation agency, Carnegie classifications, minority-serving institution flags, the derived `sector` column (one of `public`, `private_nonprofit`, `for_profit`) and two derived columns (`first_year_in_data`, `last_year_in_data`) that mark when each UNITID first appeared and last appeared in the window. The lowercase-underscore form keeps joins and filters clean; queries throughout this case study translate to display names ("Public", "Private Nonprofit", "For-Profit") at presentation time using a `CASE WHEN` clause. Those last two are essential for the closure-wave analysis in phase 04 and would be expensive to compute at runtime.
 
@@ -232,10 +232,10 @@ Result:
 
 | Metric | Total Rows | Non-Null | % Filled |
 |---|---:|---:|---:|
-| cdr3 (default rate) | 920 | 858 | 93.3 |
-| ugds (enrollment) | 920 | 846 | 92.0 |
+| cdr3 (Default Rate) | 920 | 858 | 93.3 |
+| ugds (Enrollment) | 920 | 846 | 92.0 |
 | tuitionfee_in | 920 | 798 | 86.7 |
-| c150_4 (completion) | 920 | 730 | 79.3 |
+| c150_4 (Completion) | 920 | 730 | 79.3 |
 | grad_debt_mdn | 920 | 523 | 56.8 |
 | md_earn_wne_p10 | 920 | 147 | 16.0 |
 
@@ -288,16 +288,16 @@ Result:
 | 2015 | For-Profit | 27 | 0 | 0.0 |
 | 2015 | Private Nonprofit | 57 | 0 | 0.0 |
 | 2015 | Public | 14 | 0 | 0.0 |
-| 2016 | (all sectors) | 97 | 0 | 0.0 |
-| 2017 | (all sectors) | 96 | 0 | 0.0 |
-| 2018 | (all sectors) | 90 | 0 | 0.0 |
-| 2019 | (all sectors) | 89 | 0 | 0.0 |
+| 2016 | (All Sectors) | 97 | 0 | 0.0 |
+| 2017 | (All Sectors) | 96 | 0 | 0.0 |
+| 2018 | (All Sectors) | 90 | 0 | 0.0 |
+| 2019 | (All Sectors) | 89 | 0 | 0.0 |
 | 2020 | For-Profit | 23 | 15 | 65.2 |
 | 2020 | Private Nonprofit | 52 | 44 | 84.6 |
 | 2020 | Public | 13 | 12 | 92.3 |
-| 2021 | (all sectors) | 87 | 0 | 0.0 |
-| 2022 | (all sectors) | 89 | 0 | 0.0 |
-| 2023 | (all sectors) | 88 | 0 | 0.0 |
+| 2021 | (All Sectors) | 87 | 0 | 0.0 |
+| 2022 | (All Sectors) | 89 | 0 | 0.0 |
+| 2023 | (All Sectors) | 88 | 0 | 0.0 |
 
 Two cohort years account for all the filled values: 2014 and 2020. Every other year reports zero filled rows for ten-year earnings, regardless of sector.
 

@@ -67,11 +67,11 @@ Every column goes through a short cascade of heuristic checks. The first one tha
 | Order | Type | Detection |
 |-------|------|-----------|
 | 1 | currency | At least 80% of sampled values match a currency regex AND at least one currency symbol is present in the sample |
-| 2 | datetime | At least 70% of sampled values parse via `pd.to_datetime` |
+| 2 | datetime | At Least 70% of Sampled Values Parse via `pd.to_datetime` |
 | 3 | boolean | All non-null values fall into a small set of known true/false tokens |
-| 4 | numeric | Values cleanly cast to float |
-| 5 | categorical | Distinct value count is small relative to total values |
-| 6 | text | Default fallback |
+| 4 | numeric | Values Cleanly Cast to Float |
+| 5 | categorical | Distinct Value Count Is Small Relative to Total Values |
+| 6 | text | Default Fallback |
 
 The cascade is deliberately strict at each step. A column with three non-currency-looking values out of ten will not be classified as currency, because the 80% threshold fails. A column with two distinct text values across 10,000 rows ends up as categorical, not text. The intent is that a wrong classification should be rare even at the cost of occasionally falling back to a more general type.
 

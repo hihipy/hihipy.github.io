@@ -37,15 +37,15 @@ Nine metrics, each with the same structure of value plus best-practice criteria.
 
 | Metric | Best Practice |
 |---|---|
-| Page title | 50-60 characters |
-| Meta description | 50-160 characters |
-| Word count | 600+ words for main pages, 300+ minimum |
-| Total links | 50-150 for main pages |
-| Alt tags | All images have descriptive alt text |
-| H1 tags | Exactly one H1 per page |
-| Mobile-friendly | Viewport meta tag present |
-| Canonical tag | Implemented and pointing to the master URL |
-| Load time | Under 2 seconds |
+| Page Title | 50-60 Characters |
+| Meta Description | 50-160 Characters |
+| Word Count | 600+ Words for Main Pages, 300+ Minimum |
+| Total Links | 50-150 for Main Pages |
+| Alt Tags | All Images Have Descriptive Alt Text |
+| H1 Tags | Exactly One H1 per Page |
+| Mobile-Friendly | Viewport Meta Tag Present |
+| Canonical Tag | Implemented and Pointing to the Master URL |
+| Load Time | Under 2 Seconds |
 
 The thresholds are not novel — these are well-established SEO conventions. What the script adds is the pairing of measurement with explanation in a single artifact, so the user does not have to research the conventions separately.
 

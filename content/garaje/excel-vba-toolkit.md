@@ -49,16 +49,16 @@ A complete reference, with a one-line description of each:
 
 | Macro | Category | What It Does |
 |---|---|---|
-| `DeleteHiddenRows` | Cleaning | Removes hidden rows using bottom-up scanning and Union batching |
-| `FillBlanksDown` | Cleaning | Fills blank cells with the value above, preserving merged cells |
-| `WhitespaceTools` | Cleaning | Single-pass workbook-wide whitespace detection, highlighting, and cleanup |
-| `DocumentFormulas` | Export | Exports all worksheet formulas to structured JSON for AI review |
-| `DocumentTableFormulas` | Export | Documents Excel Table column formulas to Markdown |
+| `DeleteHiddenRows` | Cleaning | Removes Hidden Rows Using Bottom-Up Scanning and Union Batching |
+| `FillBlanksDown` | Cleaning | Fills Blank Cells with the Value Above, Preserving Merged Cells |
+| `WhitespaceTools` | Cleaning | Single-Pass Workbook-Wide Whitespace Detection, Highlighting, and Cleanup |
+| `DocumentFormulas` | Export | Exports All Worksheet Formulas to Structured JSON for AI Review |
+| `DocumentTableFormulas` | Export | Documents Excel Table Column Formulas to Markdown |
 | `ExportPivotToMarkdown` | Export | Converts a PivotTable to GitHub-flavored Markdown |
-| `ExportRangeToCSV` | Export | High-performance CSV export with type detection and quoting |
-| `GenerateAdvancedPivotReport` | Export | Documents all PivotTables (regular and OLAP) in a workbook |
-| `GenerateTableDoc` | Export | Generates AI-ready Markdown documentation of all Excel Tables |
-| `GetHyperlinkURL` | Utility | Custom function that extracts URLs from hyperlinked cells |
+| `ExportRangeToCSV` | Export | High-Performance CSV Export with Type Detection and Quoting |
+| `GenerateAdvancedPivotReport` | Export | Documents All PivotTables (Regular and OLAP) in a Workbook |
+| `GenerateTableDoc` | Export | Generates AI-ready Markdown Documentation of All Excel Tables |
+| `GetHyperlinkURL` | Utility | Custom Function That Extracts URLs from Hyperlinked Cells |
 
 ## Why The Documentation Macros Output for AI
 

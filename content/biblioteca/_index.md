@@ -94,10 +94,10 @@ The notebook stage and the polished-output stage are different jobs. Notebooks a
 
 | Language | Strengths | Notebook | When to Reach for It |
 |---|---|---|---|
-| **Python** | Pipelines, ETL, glue code, ML, web work | [marimo](https://marimo.io/) (or [Jupyter](https://jupyter.org/)) | Default for most analytical work |
-| **R** | Statistics, static figures, regression-heavy analysis | Jupyter with R kernel, or [RStudio](https://posit.co/products/open-source/rstudio/) | When the output is a statistical claim or a publication-quality static figure |
-| **Julia** | Numerical computing, simulations, performance-bound work | [Pluto](https://plutojl.org/) | When Python runs out of steam. Not yet part of my stack; watching it. |
-| **SQL** | Data extraction, joins, aggregations | (queries inside any of the above) | When the data lives in a relational store and the work is shape, not statistics |
+| **Python** | Pipelines, ETL, Glue Code, ML, Web Work | [marimo](https://marimo.io/) (or [Jupyter](https://jupyter.org/)) | Default for Most Analytical Work |
+| **R** | Statistics, Static Figures, Regression-Heavy Analysis | Jupyter with R Kernel, or [RStudio](https://posit.co/products/open-source/rstudio/) | When the output is a statistical claim or a publication-quality static figure |
+| **Julia** | Numerical Computing, Simulations, Performance-Bound Work | [Pluto](https://plutojl.org/) | When Python runs out of steam. Not yet part of my stack; watching it. |
+| **SQL** | Data Extraction, Joins, Aggregations | (Queries Inside Any of the Above) | When the data lives in a relational store and the work is shape, not statistics |
 
 [Quarto](https://quarto.org/) is the unifier across all four. It executes Python, R, Julia, and SQL chunks in the same document, and it renders to HTML, PDF, Word, Typst, or several presentation formats from a single source. The polished-output decision is not language-by-language; it is Quarto, with whatever language each chunk needs.
 
@@ -365,13 +365,13 @@ Comment density is one half of audit-readability. Layout consistency is the othe
 
 | Language | Style Guide | Covers |
 |---|---|---|
-| Python (code) | [PEP 8](https://peps.python.org/pep-0008/) | Indentation, naming, line length, imports, the official Python style |
-| Python (docstrings) | [PEP 257](https://peps.python.org/pep-0257/) | Docstring conventions, pairs with PEP 8 |
-| R | [Tidyverse Style Guide](https://style.tidyverse.org/) | Naming, syntax, pipes, packages, the `<-` vs `=` rule |
-| Julia | [Julia Style Guide](https://docs.julialang.org/en/v1/manual/style-guide/) | Naming, performance idioms, design patterns |
-| SQL | [SQL Style Guide (Holywell)](https://www.sqlstyle.guide/) | Capitalization, indentation, aliasing, the widely-cited unofficial reference |
-| JavaScript | [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript) | ES6+, naming, modules, the most-adopted JS style |
-| Bash | [Google Shell Style Guide](https://google.github.io/styleguide/shellguide.html) | Indentation, naming, quoting, error handling |
+| Python (Code) | [PEP 8](https://peps.python.org/pep-0008/) | Indentation, Naming, Line Length, Imports, the Official Python Style |
+| Python (Docstrings) | [PEP 257](https://peps.python.org/pep-0257/) | Docstring Conventions, Pairs with PEP 8 |
+| R | [Tidyverse Style Guide](https://style.tidyverse.org/) | Naming, Syntax, Pipes, Packages, the `<-` vs `=` Rule |
+| Julia | [Julia Style Guide](https://docs.julialang.org/en/v1/manual/style-guide/) | Naming, Performance Idioms, Design Patterns |
+| SQL | [SQL Style Guide (Holywell)](https://www.sqlstyle.guide/) | Capitalization, Indentation, Aliasing, the Widely-Cited Unofficial Reference |
+| JavaScript | [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript) | ES6+, Naming, Modules, the Most-Adopted JS Style |
+| Bash | [Google Shell Style Guide](https://google.github.io/styleguide/shellguide.html) | Indentation, Naming, Quoting, Error Handling |
 
 What these guides share is more important than what differentiates them. Each one names the choices that consistent style takes off the table: where to put a brace, how to break a long line, when to capitalize a keyword, whether the function name uses snake_case or camelCase. The choices themselves are mostly arbitrary. The consistency is the point. A code review on a pull request that violates twelve PEP 8 rules is a code review where eleven of the twelve comments are about style instead of about the work; that is a worse review than one where the style is uniform and the comments are about the substance. The style guide is the contract that makes the review possible at the right level.
 

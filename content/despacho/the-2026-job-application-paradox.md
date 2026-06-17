@@ -63,26 +63,26 @@ Each row shows the odds, a "1 in X" reading, and the kind of number it is (this 
 
 |  Goal  |  Odds  |  Roughly  |  What It Measures  |  Source  |
 | :---: | :---: | :---: | :---: | :---: |
-|  Get into an average US college  |  73%  |  3 in 4  |  per applicant  |  [1]  |
-|  Finish Navy SEAL training (BUD/S)  |  \~25%  |  1 in 4  |  completion rate  |  [2] [3]  |
-|  Get into Juilliard  |  9%  |  1 in 11  |  per applicant  |  [4] [5]  |
-|  Get into Yale Law  |  \~5%  |  1 in 20  |  per applicant  |  [6] [7]  |
-|  Become an FBI Special Agent  |  \~5%  |  1 in 20  |  per applicant  |  [8]  |
-|  Get into MIT  |  4.6%  |  1 in 22  |  per applicant  |  [9]  |
-|  Get into Harvard  |  4.2%  |  1 in 24  |  per applicant  |  [10] [11]  |
-|  Get into Stanford  |  \~3.6%  |  1 in 28  |  per applicant  |  [12]  |
-|  Get a startup into Y Combinator  |  \~1%  |  1 in 100  |  per application  |  [13]  |
-|  Get a McKinsey job offer  |  \~1%  |  1 in 100  |  per applicant  |  [14] [15]  |
-|  Get hired at SpaceX  |  \~1%  |  1 in 100  |  per application  |  [16]  |
-|  Get the Supreme Court to hear your case  |  \~1%  |  1 in 100  |  per petition  |  [17] [18]  |
-|  Win a Rhodes Scholarship  |  \~0.7%  |  1 in 143  |  per applicant  |  [19]  |
-|  Land a Goldman Sachs internship  |  \~0.7%  |  1 in 143  |  per applicant  |  [20] [21]  |
-|  Become a Jeopardy contestant  |  \~0.5%  |  1 in 200  |  per applicant  |  [22] [23]  |
-|  **LAND ONE OFFICE JOB APPLICATION**  |  **\~0.4%**  |  **1 in 242**  |  **per application**  |  [24]  |
-|  Win a US green card lottery  |  \~0.3%  |  1 in 360  |  pure chance  |  [25]  |
-|  Get hired at Google  |  \~0.2%  |  1 in 500  |  per application  |  [26]  |
-|  Get picked as a NASA astronaut  |  0.125%  |  1 in 800  |  per applicant  |  [27] [28]  |
-|  Go from high school to pro athlete  |  \~0.03%  |  1 in 3,300  |  lifetime odds  |  [29]  |
+|  Get into an Average US College  |  73%  |  3 in 4  |  Per Applicant  |  [1]  |
+|  Finish Navy SEAL Training (BUD/S)  |  \~25%  |  1 in 4  |  Completion Rate  |  [2] [3]  |
+|  Get into Juilliard  |  9%  |  1 in 11  |  Per Applicant  |  [4] [5]  |
+|  Get into Yale Law  |  \~5%  |  1 in 20  |  Per Applicant  |  [6] [7]  |
+|  Become an FBI Special Agent  |  \~5%  |  1 in 20  |  Per Applicant  |  [8]  |
+|  Get into MIT  |  4.6%  |  1 in 22  |  Per Applicant  |  [9]  |
+|  Get into Harvard  |  4.2%  |  1 in 24  |  Per Applicant  |  [10] [11]  |
+|  Get into Stanford  |  \~3.6%  |  1 in 28  |  Per Applicant  |  [12]  |
+|  Get a Startup into Y Combinator  |  \~1%  |  1 in 100  |  Per Application  |  [13]  |
+|  Get a McKinsey Job Offer  |  \~1%  |  1 in 100  |  Per Applicant  |  [14] [15]  |
+|  Get Hired at SpaceX  |  \~1%  |  1 in 100  |  Per Application  |  [16]  |
+|  Get the Supreme Court to Hear Your Case  |  \~1%  |  1 in 100  |  Per Petition  |  [17] [18]  |
+|  Win a Rhodes Scholarship  |  \~0.7%  |  1 in 143  |  Per Applicant  |  [19]  |
+|  Land a Goldman Sachs Internship  |  \~0.7%  |  1 in 143  |  Per Applicant  |  [20] [21]  |
+|  Become a Jeopardy Contestant  |  \~0.5%  |  1 in 200  |  Per Applicant  |  [22] [23]  |
+|  **LAND ONE OFFICE JOB APPLICATION**  |  **\~0.4%**  |  **1 in 242**  |  **Per Application**  |  [24]  |
+|  Win a US Green Card Lottery  |  \~0.3%  |  1 in 360  |  Pure Chance  |  [25]  |
+|  Get Hired at Google  |  \~0.2%  |  1 in 500  |  Per Application  |  [26]  |
+|  Get Picked as a NASA Astronaut  |  0.125%  |  1 in 800  |  Per Applicant  |  [27] [28]  |
+|  Go from High School to Pro Athlete  |  \~0.03%  |  1 in 3,300  |  Lifetime Odds  |  [29]  |
 
 The office job line sits below elite admissions and a tier of legendary jobs. The rest of this note is about whether that ranking means what it appears to mean. It does not, and the reason is more interesting than the headline.
 
@@ -268,10 +268,10 @@ Put your own rate in and the picture matches lived experience. If you are applyi
 
 | Your True Rate | Applications per Offer | Offer from 100 Apps | Apps for 90% Confidence |
 | :---: | :---: | :---: | :---: |
-| 1 in 25 (well matched, referred) | 25 | 98.3% | 57 |
-| 1 in 242 (pile average) | 242 | 33.9% | 557 |
+| 1 in 25 (Well Matched, Referred) | 25 | 98.3% | 57 |
+| 1 in 242 (Pile Average) | 242 | 33.9% | 557 |
 | 1 in 500 | 500 | 18.1% | 1,151 |
-| 1 in 1,000 (cold, competitive) | 1,000 | 9.5% | 2,302 |
+| 1 in 1,000 (Cold, Competitive) | 1,000 | 9.5% | 2,302 |
 | 1 in 2,000 | 2,000 | 4.9% | 4,605 |
 
 <div class="pgbd-chart-wrap">
@@ -466,8 +466,8 @@ but Harvard's 4.2% is **per applicant** and the office 0.413% is **per applicati
 
 |  Goal  |  Rate  |  \\(\\log\_{10}(\\text{rate})\\)  |  Ratio vs Office  |
 | :---: | :---: | :---: | :---: |
-|  Average US college  |  73%  |  -0.14  |  177x  |
-|  Navy SEAL (finish)  |  25%  |  -0.60  |  60x  |
+|  Average US College  |  73%  |  -0.14  |  177x  |
+|  Navy SEAL (Finish)  |  25%  |  -0.60  |  60x  |
 |  Juilliard  |  9%  |  -1.05  |  22x  |
 |  Yale Law / FBI  |  5%  |  -1.30  |  12x  |
 |  MIT  |  4.6%  |  -1.34  |  11x  |
@@ -476,11 +476,11 @@ but Harvard's 4.2% is **per applicant** and the office 0.413% is **per applicati
 |  YC / McKinsey / SpaceX / SCOTUS  |  1%  |  -2.00  |  2.4x  |
 |  Rhodes / Goldman  |  0.7%  |  -2.15  |  1.7x  |
 |  Jeopardy  |  0.5%  |  -2.30  |  1.2x  |
-|  **Office job application**  |  **0.413%**  |  **-2.38**  |  **1.0x**  |
-|  Green card lottery  |  0.28%  |  -2.56  |  0.67x  |
+|  **Office Job Application**  |  **0.413%**  |  **-2.38**  |  **1.0x**  |
+|  Green Card Lottery  |  0.28%  |  -2.56  |  0.67x  |
 |  Google  |  0.2%  |  -2.70  |  0.48x  |
-|  NASA astronaut  |  0.125%  |  -2.90  |  0.30x  |
-|  HS to pro athlete  |  0.03%  |  -3.52  |  0.07x  |
+|  NASA Astronaut  |  0.125%  |  -2.90  |  0.30x  |
+|  HS to Pro Athlete  |  0.03%  |  -3.52  |  0.07x  |
 
 The whole ladder spans
 
@@ -560,9 +560,9 @@ Not all of these figures are equal, and an honest analysis says so. They fall in
 
 |  Tier  |  Meaning  |  Figures in This Tier  |
 | :---: | :---: | :---: |
-|  Primary / audited  |  Official institutional disclosures or government statistics  |  Harvard, MIT, Stanford, Yale Law (ABA 509), NASA, NCAA, BLS JOLTS, US State Dept (green card), SCOTUS (US Courts), Capterra (named survey), Greenhouse (benchmark report)  |
-|  Company-stated  |  A figure the organization itself published, sometimes self-serving  |  SpaceX (legal filing), Goldman Sachs (reported via Fortune), Google (company-derived estimate)  |
-|  Industry estimate  |  Widely cited but without a single audited source  |  McKinsey (\~1%), Rhodes (\~0.7%), the 242 applications figure (Business Insider via Novorésumé), Jeopardy (\~0.5%)  |
+|  Primary / Audited  |  Official Institutional Disclosures or Government Statistics  |  Harvard, MIT, Stanford, Yale Law (ABA 509), NASA, NCAA, BLS JOLTS, US State Dept (green card), SCOTUS (US Courts), Capterra (named survey), Greenhouse (benchmark report)  |
+|  Company-Stated  |  A Figure the Organization Itself Published, Sometimes Self-Serving  |  SpaceX (legal filing), Goldman Sachs (reported via Fortune), Google (company-derived estimate)  |
+|  Industry Estimate  |  Widely Cited but Without a Single Audited Source  |  McKinsey (\~1%), Rhodes (\~0.7%), the 242 applications figure (Business Insider via Novorésumé), Jeopardy (\~0.5%)  |
 
 A few specific notes on the trickier numbers:
 
@@ -632,14 +632,14 @@ All links were live as of May 2026. Verify before citing.
 
 |  Symbol  |  Meaning  |
 | :---: | :---: |
-|  \\(p\_{\\text{app}}\\)  |  probability one application converts, \\(= 1/N \\approx 0.413\%\\)  |
-|  \\(N\\)  |  total applications per opening, \\(\\approx 242\\)  |
-|  \\(q\\)  |  qualified, serious applicants per opening, \\(\\approx 25\\)  |
-|  \\(f\\)  |  signal fraction, \\(= q/N\\)  |
-|  \\(p\_{\\text{qualified}}\\)  |  a qualified applicant's odds, \\(= p\_{\\text{app}}/f \\approx 1/q\\)  |
-|  \\(n\\)  |  number of applications a person sends  |
-|  \\(1 - (1-p)^{n}\\)  |  probability of at least one offer from \\(n\\) tries  |
-|  \\(1/p\\)  |  expected applications to first offer (geometric mean)  |
+|  \\(p\_{\\text{app}}\\)  |  Probability One Application Converts, \\(= 1/N \\approx 0.413\%\\)  |
+|  \\(N\\)  |  Total Applications per Opening, \\(\\approx 242\\)  |
+|  \\(q\\)  |  Qualified, Serious Applicants per Opening, \\(\\approx 25\\)  |
+|  \\(f\\)  |  Signal Fraction, \\(= q/N\\)  |
+|  \\(p\_{\\text{qualified}}\\)  |  A Qualified Applicant's Odds, \\(= p\_{\\text{app}}/f \\approx 1/q\\)  |
+|  \\(n\\)  |  Number of Applications a Person Sends  |
+|  \\(1 - (1-p)^{n}\\)  |  Probability of at Least One Offer from \\(n\\) Tries  |
+|  \\(1/p\\)  |  Expected Applications to First Offer (Geometric Mean)  |
 
 <!-- chart-theme-adapter -->
 <script>

@@ -38,7 +38,7 @@ On June 12, 2026, the public market debut of SpaceX pushed Elon Musk's combined 
 | Billion-Dollar Fortunes It Contains | About 1,050 |
 | Years at the U.S. Median Income to Match It | About 40 Million |
 | Years at the World Median Income | About 311 Million |
-| National Economies Larger Than It | Only About Nineteen |
+| National Economies Larger than It | Only About Nineteen |
 
 ## One Family, and Then Him
 

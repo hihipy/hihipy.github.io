@@ -35,14 +35,14 @@ A single Excel Table (`Table1`) with eight columns:
 
 | Column | Contents | Source |
 |---|---|---|
-| A | Action Item Phase | User enters |
-| B | Start Date | User enters |
-| C | End Date | User enters |
-| D | Period | Auto: pretty-printed date range |
+| A | Action Item Phase | User Enters |
+| B | Start Date | User Enters |
+| C | End Date | User Enters |
+| D | Period | Auto: Pretty-Printed Date Range |
 | E | Business Days Needed to Complete Action Item | Auto: `NETWORKDAYS(B, C)` |
 | F | Business Days Between Previous Phase End and This Phase Start | Auto: `NETWORKDAYS(C of previous row, B)` |
 | G | Business Days Since Initiation | Auto: `NETWORKDAYS(C$2, C)` |
-| H | Further Details | User enters (optional) |
+| H | Further Details | User Enters (Optional) |
 
 The user fills in three columns (A, B, C) and gets four computed columns (D, E, F, G). H is a free-form notes field.
 

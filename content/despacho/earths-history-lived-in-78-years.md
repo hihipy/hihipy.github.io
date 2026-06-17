@@ -30,13 +30,13 @@ Every year you live equals about **58.2 million years** of Earth history. Everyt
 
 | One Unit of Your Life | Equals This Much Earth History |
 | --- | --- |
-| **1 year** | about 58.2 million years |
-| **1 month** | about 4.85 million years |
-| **1 week** | about 1.12 million years |
-| **1 day** | about 159,000 years |
-| **1 hour** | about 6,640 years |
-| **1 minute** | about 111 years |
-| **1 second** | about 1.84 years |
+| **1 Year** | About 58.2 Million Years |
+| **1 Month** | About 4.85 Million Years |
+| **1 Week** | About 1.12 Million Years |
+| **1 Day** | About 159,000 Years |
+| **1 Hour** | About 6,640 Years |
+| **1 Minute** | About 111 Years |
+| **1 Second** | About 1.84 Years |
 
 > *One second of your life is almost two full years of the planet's story. Snap your fingers and two years go by. Blink and you miss a century.*
 
@@ -492,11 +492,11 @@ Zoom in on age 77 to 78, the last single year. It holds the entire Age of Mammal
 
 | Month | Age | Date | What's Happening |
 | --- | --- | --- | --- |
-| **Month 1** | 77.04 | 56 mya | Mammals spread into every niche the dinosaurs left empty. The first primates scamper through the trees during a brief, intense global warming spike. |
-| **Month 2** | 77.14 | 50 mya | Some hoofed mammals walk back into the sea and begin the slow change into whales. What crawled out of the ocean sends a branch right back in. |
-| **Month 5** | 77.42 | 34 mya | Grasslands spread as the world cools and dries. Grazing animals multiply. The open landscapes that will shape walking apes take form. |
-| **Month 7** | 77.62 | 22 mya | Apes split from the other primates in Africa. Still no humans, still no tools or fire, but the branch that leads to you is now its own thing. |
-| **Month 11** | 77.88 | 7 mya | The human and chimpanzee lines split. For millions of years our ancestors are upright apes with small brains, living in African woodland. |
+| **Month 1** | 77.04 | 56 Mya | Mammals spread into every niche the dinosaurs left empty. The first primates scamper through the trees during a brief, intense global warming spike. |
+| **Month 2** | 77.14 | 50 Mya | Some hoofed mammals walk back into the sea and begin the slow change into whales. What crawled out of the ocean sends a branch right back in. |
+| **Month 5** | 77.42 | 34 Mya | Grasslands spread as the world cools and dries. Grazing animals multiply. The open landscapes that will shape walking apes take form. |
+| **Month 7** | 77.62 | 22 Mya | Apes split from the other primates in Africa. Still no humans, still no tools or fire, but the branch that leads to you is now its own thing. |
+| **Month 11** | 77.88 | 7 Mya | The human and chimpanzee lines split. For millions of years our ancestors are upright apes with small brains, living in African woodland. |
 
 > *Eleven months of the final year, and not one human. The whole species, all of us, is a long weekend at the very end of the year, at the very end of the life.*
 

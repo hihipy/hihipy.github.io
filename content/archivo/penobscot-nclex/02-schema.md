@@ -49,9 +49,9 @@ Result:
 
 | Table | Grain | Rows |
 |---|---|---:|
-| `attempts` | one row per (student_id, attempt_number) | 7,635 |
-| `students` | one row per student_id | 6,819 |
-| `term_order` | one row per cohort string | 52 |
+| `attempts` | One Row per (student_id, attempt_number) | 7,635 |
+| `students` | One Row per student_id | 6,819 |
+| `term_order` | One Row per Cohort String | 52 |
 
 ## The Three-Table Schema
 

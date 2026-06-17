@@ -47,13 +47,13 @@ The seven quirks at a glance, with the impact each one has on a naive load and t
 
 | Quirk | Impact | Resolution |
 |---|---|---|
-| UTF-8 byte-order mark at file start | First column name corrupted by `EF BB BF` prefix | `encoding="utf-8-sig"` strips the BOM during read |
-| Six-line preamble before header row | Header is on line 7, not line 1 | `skiprows=6` |
-| 54 named columns + phantom 55th from trailing comma | Strict parsers refuse; permissive parsers invent a column | Drop the phantom column after load |
-| Quoted fields containing commas, semicolons, quotes | Splitting blindly on commas produces wrong field counts | Use a real CSV parser (pandas, csv module) that respects quoting |
-| Blank strings AND single-space strings used as null | Field equality and `IS NULL` checks fail on different rows | Coerce both `""` and `" "` to proper SQL `NULL` |
-| Dates in `MM/DD/YYYY` format | Default parsers refuse non-ISO 8601 | Explicit `format="%m/%d/%Y"` parsing |
-| 14,181 rows describe 13,876 distinct projects | Row-level aggregations double-count co-funded grants | Documented in phase 02; resolved by three-table normalized schema |
+| UTF-8 Byte-Order Mark at File Start | First Column Name Corrupted by `EF BB BF` Prefix | `encoding="utf-8-sig"` Strips the BOM During Read |
+| Six-Line Preamble Before Header Row | Header Is on Line 7, Not Line 1 | `skiprows=6` |
+| 54 Named Columns + Phantom 55th from Trailing Comma | Strict Parsers Refuse; Permissive Parsers Invent a Column | Drop the Phantom Column After Load |
+| Quoted Fields Containing Commas, Semicolons, Quotes | Splitting Blindly on Commas Produces Wrong Field Counts | Use a real CSV parser (pandas, csv module) that respects quoting |
+| Blank Strings AND Single-Space Strings Used as Null | Field Equality and `IS NULL` Checks Fail on Different Rows | Coerce Both `""` and `" "` to Proper SQL `NULL` |
+| Dates in `MM/DD/YYYY` Format | Default Parsers Refuse non-ISO 8601 | Explicit `format="%m/%d/%Y"` Parsing |
+| 14,181 Rows Describe 13,876 Distinct Projects | Row-Level Aggregations Double-Count Co-Funded Grants | Documented in Phase 02; Resolved by Three-Table Normalized Schema |
 
 The detail on each quirk follows.
 

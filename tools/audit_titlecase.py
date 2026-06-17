@@ -48,6 +48,17 @@ PRESERVE = {
     "Hugo", "Goldmark", "Chart.js", "Mermaid", "Stata", "R", "tidysynth",
     "synth", "synth_runner", "causaldata", "pgbd", "pgbd.casa", "Okabe-Ito",
     "MonoLisa", "SPQ", "SUQ", "FAQ", "WIQ", "US", "U.S.", "BA", "MA", "MS",
+    # Dataset field codes: identifiers wherever they appear (incl. inside a
+    # phrase like "ugds (enrollment)"), so they stay at the token level.
+    "ugds", "aanapii", "annhi", "hbcu", "hsi", "pbi", "tribal",
+}
+
+# Whole-cell identifiers: table names, SQL types, and type labels. Preserved
+# ONLY when they are the entire cell (a type/name column), so the same word in
+# prose ("descriptive alt text") still title-cases. Matched case-insensitively.
+CELL_PRESERVE = {
+    "institutions", "attempts", "students", "int", "text",
+    "currency", "datetime", "boolean", "numeric", "categorical",
 }
 
 # ---------------------------------------------------------------------------
@@ -58,8 +69,11 @@ PUNCT = string.punctuation
 
 # KaTeX inline \\(...\\) and display \\[...\\] spans. Their casing is
 # semantically meaningful (n != N), so they are masked out before casing
-# and restored afterward, untouched.
+# and restored afterward, untouched. Inline code `...` spans are masked too:
+# code is never prose, so it must not be recased.
 MATH_RE = re.compile(r"\\\\\(.*?\\\\\)|\\\\\[.*?\\\\\]")
+CODE_RE = re.compile(r"`[^`]*`")
+PROTECT_RE = re.compile(MATH_RE.pattern + r"|" + CODE_RE.pattern)
 
 
 def _bare(token):
@@ -78,6 +92,8 @@ def is_fixed(token):
         return True                       # Q4, 2024, SPQ=1
     if "_" in core:
         return True                       # snake_case identifier: total_attempts
+    if "/" in core:
+        return True                       # n/a, km/h, and/or: don't mangle
     if core.upper() == core and len(core) >= 2:
         return True                       # ALLCAPS acronym
     if any(ch.isupper() for ch in core[1:]):
@@ -107,29 +123,34 @@ def _cap_word(word):
 
 
 def to_title_case(title):
-    """Return the Title Case form of a short title string."""
-    # Protect KaTeX math spans so their casing is never altered.
+    """Return the Title Case form of a title, preserving internal whitespace.
+
+    Math and inline-code spans are masked out so their contents are never
+    recased. Whitespace between words is preserved exactly, so the result is
+    a pure case-only transform (same character width).
+    """
     spans = []
 
     def _mask(m):
         spans.append(m.group(0))
         return f"\x00M{len(spans) - 1}\x00"
 
-    masked = MATH_RE.sub(_mask, title)
-    words = masked.split()
-    n = len(words)
-    out = []
-    for i, w in enumerate(words):
+    masked = PROTECT_RE.sub(_mask, title)
+    # Split keeping whitespace runs so spacing is preserved on rejoin.
+    parts = re.split(r"(\s+)", masked)
+    word_pos = [i for i, p in enumerate(parts) if p and not p.isspace()]
+    n = len(word_pos)
+    for k, i in enumerate(word_pos):
+        w = parts[i]
         if is_fixed(w):
-            out.append(w)
             continue
-        first = i == 0
-        last = i == n - 1
+        first = k == 0
+        last = k == n - 1
         if not first and not last and _bare(w).lower() in SMALL_WORDS:
-            out.append(_lower_word(w))
+            parts[i] = _lower_word(w)
         else:
-            out.append(_cap_word(w))
-    result = " ".join(out)
+            parts[i] = _cap_word(w)
+    result = "".join(parts)
     for idx, span in enumerate(spans):
         result = result.replace(f"\x00M{idx}\x00", span)
     return result
@@ -210,8 +231,75 @@ def looks_like_title(text):
 # Scanners
 # ---------------------------------------------------------------------------
 
+def always(_cell):
+    return True
+
+
+def table_rows(lines, sep_idx):
+    """Given a separator-line index, return (header_idx, [body_idx, ...]).
+
+    Body rows run from just after the separator until the first blank line,
+    code fence, or line without a pipe (GFM table termination).
+    """
+    header_idx = sep_idx - 1
+    body = []
+    j = sep_idx + 1
+    while j < len(lines):
+        line = lines[j]
+        if FENCE_RE.match(line) or line.strip() == "" or "|" not in line:
+            break
+        body.append(j)
+        j += 1
+    return header_idx, body
+
+
+def scan_row(line, gate):
+    """Return [(cell, fix), ...] for cells that fail Title Case and pass gate."""
+    cells = [c.strip() for c in line.strip().strip("|").split("|")]
+    out = []
+    for cell in cells:
+        if not cell or not gate(cell):
+            continue
+        if cell.lower() in CELL_PRESERVE:
+            continue
+        fix = violates(cell)
+        if fix:
+            out.append((cell, fix))
+    return out
+
+
+def recase_row(line, gate):
+    """Return (new_line, [(old, new), ...]). Each cell recased in isolation
+    so neighbors can't be clobbered; every change is guarded to keep the row
+    byte-for-byte the same width, so column alignment is preserved."""
+    parts = line.split("|")
+    new_parts = []
+    changes = []
+    for part in parts:
+        stripped = part.strip()
+        if not stripped or not gate(stripped) or stripped.lower() in CELL_PRESERVE:
+            new_parts.append(part)
+            continue
+        fixed = to_title_case(stripped)
+        if fixed != stripped and len(fixed) == len(stripped):
+            lead = part[:len(part) - len(part.lstrip())]
+            trail = part[len(part.rstrip()):]
+            new_parts.append(lead + fixed + trail)
+            changes.append((stripped, fixed))
+        else:
+            new_parts.append(part)
+    new_line = "|".join(new_parts)
+    if changes and len(new_line) == len(line):
+        return new_line, changes
+    return line, []
+
+
 def scan_tables(lines):
-    """Yield (lineno, 'table-header', cell, fix)."""
+    """Yield (lineno, kind, cell, fix) for header cells and body cells.
+
+    Header cells are checked unconditionally. Body cells are gated by
+    looks_like_title so prose cells (sentences, long text) stay sentence case.
+    """
     start = split_front_matter(lines)
     in_code = False
     for i in range(len(lines)):
@@ -222,29 +310,23 @@ def scan_tables(lines):
             continue
         if in_code:
             continue
-        if not SEP_RE.match(lines[i]):
+        if not SEP_RE.match(lines[i]) or i == 0:
             continue
-        if i == 0:
+        header_idx, body = table_rows(lines, i)
+        if "|" not in lines[header_idx]:
             continue
-        header = lines[i - 1]
-        if "|" not in header:
-            continue
-        cells = [c.strip() for c in header.strip().strip("|").split("|")]
-        for cell in cells:
-            if not cell:
-                continue
-            fix = violates(cell)
-            if fix:
-                yield (i, "table-header", cell, fix)
+        for cell, fix in scan_row(lines[header_idx], always):
+            yield (header_idx + 1, "table-header", cell, fix)
+        for j in body:
+            for cell, fix in scan_row(lines[j], looks_like_title):
+                yield (j + 1, "table-cell", cell, fix)
 
 
 def fix_tables(lines):
-    """Recase table-header cells in place. Returns (lines, changes).
+    """Recase table header and body cells in place. Returns (lines, changes).
 
-    Each header line is split into cells, each cell recased in isolation
-    (so an adjacent column can't be clobbered), then rejoined. Every change
-    is case-only and guarded to be byte-for-byte the same width, so column
-    alignment is preserved.
+    Headers recase unconditionally; body cells are gated by looks_like_title
+    so prose stays sentence case. All changes are case-only and width-guarded.
     """
     start = split_front_matter(lines)
     in_code = False
@@ -257,35 +339,20 @@ def fix_tables(lines):
             continue
         if in_code:
             continue
-        if not SEP_RE.match(lines[i]):
+        if not SEP_RE.match(lines[i]) or i == 0:
             continue
-        if i == 0:
+        header_idx, body = table_rows(lines, i)
+        if "|" not in lines[header_idx]:
             continue
-        h = i - 1
-        header = lines[h]
-        if "|" not in header:
-            continue
-        parts = header.split("|")
-        new_parts = []
-        cell_changes = []
-        for part in parts:
-            stripped = part.strip()
-            if not stripped:
-                new_parts.append(part)
-                continue
-            fixed = to_title_case(stripped)
-            if fixed != stripped and len(fixed) == len(stripped):
-                lead = part[:len(part) - len(part.lstrip())]
-                trail = part[len(part.rstrip()):]
-                new_parts.append(lead + fixed + trail)
-                cell_changes.append((stripped, fixed))
-            else:
-                new_parts.append(part)
-        if cell_changes:
-            new_header = "|".join(new_parts)
-            if len(new_header) == len(header):
-                lines[h] = new_header
-                changes.append((i, cell_changes))
+        new_h, ch = recase_row(lines[header_idx], always)
+        if ch:
+            lines[header_idx] = new_h
+            changes.append((header_idx + 1, ch))
+        for j in body:
+            new_b, cb = recase_row(lines[j], looks_like_title)
+            if cb:
+                lines[j] = new_b
+                changes.append((j + 1, cb))
     return lines, changes
 
 
@@ -403,20 +470,11 @@ def run_fix(md_files, do_figs, use_color):
             print(f"skip {path}: {e}", file=sys.stderr)
             continue
 
-        had_nl = text.endswith("\n")
         lines = text.split("\n")
-        before = list(lines)
         lines, changes = fix_tables(lines)
 
         if changes:
-            new_text = "\n".join(lines) + ("\n" if had_nl else "")
-            # Self-check: no table-header issues should remain.
-            remaining = list(scan_tables(new_text.splitlines()))
-            if remaining:
-                print(color(f"ABORT {os.path.relpath(path)}: "
-                            f"{len(remaining)} issue(s) survived, not written.",
-                            "red", use_color), file=sys.stderr)
-                continue
+            new_text = "\n".join(lines)  # split/join round-trips newlines exactly
             with open(path, "w", encoding="utf-8") as fh:
                 fh.write(new_text)
             fixed_files += 1
@@ -428,6 +486,12 @@ def run_fix(md_files, do_figs, use_color):
                     loc = color(f"  L{ln:<4}", "dim", use_color)
                     print(f'{loc} {color(old, "red", use_color)}'
                           f'  ->  {color(new, "green", use_color)}')
+            # Any cell that still violates couldn't be fixed without changing
+            # width (e.g. a Unicode case-mapping length change). Report it.
+            remaining = list(scan_tables(new_text.splitlines()))
+            for ln, kind, actual, fix in remaining:
+                print(color(f"  L{ln:<4} (manual) {actual}  ->  {fix}",
+                            "yellow", use_color))
             print()
 
         if do_figs:

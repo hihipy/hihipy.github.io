@@ -61,13 +61,13 @@ This is a product of falling factorials, one per digit value, capturing the "no 
 
 | Country | Number | Unique Outputs |
 |---|---|---|
-| United States | +1 (555) 867-5309 | ~1.16 quadrillion |
-| France | +33 6 12 34 56 78 | ~1.45 quadrillion |
-| Australia | +61 412 345 678 | ~1.32 quadrillion |
-| United Kingdom | +44 7700 900123 | ~25.2 quadrillion |
-| India | +91 98765 43210 | ~33.1 quadrillion |
-| Brazil | +55 11 91234-5678 | ~606 quadrillion |
-| Germany | +49 151 2345 6789 | ~793 quadrillion |
+| United States | +1 (555) 867-5309 | ~1.16 Quadrillion |
+| France | +33 6 12 34 56 78 | ~1.45 Quadrillion |
+| Australia | +61 412 345 678 | ~1.32 Quadrillion |
+| United Kingdom | +44 7700 900123 | ~25.2 Quadrillion |
+| India | +91 98765 43210 | ~33.1 Quadrillion |
+| Brazil | +55 11 91234-5678 | ~606 Quadrillion |
+| Germany | +49 151 2345 6789 | ~793 Quadrillion |
 
 Germany and Brazil top the list because their numbers carry more total digits, and each additional digit multiplies the output space by another 22-25.
 
