@@ -36,6 +36,8 @@ The choice to split by race is the analytical center of the piece, and it is wor
 
 So the question the outcome is built to answer is not simply "did incarceration rise" but "did it rise evenly." That is a question a single combined count cannot answer and two race-specific counts can.
 
+One caveat travels with these categories: "Black" and "white" are the classifications as recorded in the source prisoner data, not distinctions this analysis drew. The inference phase returns to what they do and do not capture.
+
 ## The Framing the Data Supported
 
 The case study began with a sharper hypothesis than the data ended up supporting, and the gap between the two is worth recording rather than hiding.

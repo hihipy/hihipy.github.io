@@ -3510,6 +3510,8 @@ Every analytical claim has limits worth naming, and synthetic control has specif
 
 **The mechanism behind the unequal burden is outside the data.** The estimates establish that the increase fell more heavily on Black men. They do not explain why a race-neutral capacity increase produced a race-uneven result. That question, how supply interacts with the charging, sentencing, and parole decisions that actually fill cells, is real and important and lives beyond what these counts can answer. Naming it is part of the result; resolving it is not something this design can do.
 
+**The racial categories are the source data's, with its limitations.** "Black" and "white" here are the classifications as recorded in the underlying Bureau of Justice Statistics prisoner data, not categories this analysis defined. They carry that data's limitations. The counts do not resolve Hispanic ethnicity, which BJS tracked separately and inconsistently across this period, so a prisoner counted as Black or white may also be Hispanic; and "male" reflects the sex recorded in the administrative data. The analysis can only measure the categories the source actually recorded, and the unequal-burden finding is a statement about those recorded categories, not about race as a fuller social reality.
+
 The full fit, including the predictor set, the donor pool, and the figure generation, is reproducible: every number in this case study comes from fitting the documented specification against the `texas` panel, and anyone fitting the same specification gets the same estimates, or the case study fails its own reproducibility standard.
 
 
