@@ -25,3 +25,4 @@ public/
 resources/
 *.backup-*
 .DS_Store
+tools/texas_emit_charts.R

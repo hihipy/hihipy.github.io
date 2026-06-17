@@ -5,6 +5,15 @@
   [goldmark.renderer]
     unsafe = true   # allows raw HTML in markdown (needed for some shortcodes)
 
+  # Pass math through verbatim so underscores inside formulas are not
+  # parsed as emphasis (retires BUG-029). Math uses SINGLE-backslash
+  # delimiters: \[ ... \] and \( ... \), which KaTeX matches by default.
+  [goldmark.extensions.passthrough]
+    enable = true
+    [goldmark.extensions.passthrough.delimiters]
+      block = [['\[', '\]'], ['$$', '$$']]
+      inline = [['\(', '\)']]
+
 [highlight]
   noClasses = false
   codeFences = true
