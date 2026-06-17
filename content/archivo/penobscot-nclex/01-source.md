@@ -1,8 +1,8 @@
 ---
 title: "Source"
 weight: 10
-description: "Where the data came from, why the institution is anonymized, what the nine source columns hold, and the 21-point campus spread that surfaces in a single GROUP BY query."
-summary: "Phase 1: Anonymized institution, real outcomes, and the first thread"
+description: "Where the data came from, why the outcomes are synthetic, what the nine source columns hold, and the 26-point campus spread that surfaces in a single GROUP BY query."
+summary: "Phase 1: Synthetic outcomes, real structure, and the first thread"
 tags: ["csv", "data-quality", "nclex", "nursing-education", "public-data"]
 showDate: false
 showReadingTime: true
@@ -10,7 +10,7 @@ showAuthor: false
 ---
 
 {{< lead >}}
-The institution is anonymized. The findings are not. Counts, pass rates, attempt patterns, and analytical conclusions are the institution's real data, with only the institution name, region names, and one program-code suffix replaced for privacy.
+The institution is anonymized and the outcome values are synthetic. The structure is real: every campus, cohort, program, and retake path comes from a real multi-campus engagement, with the pass and fail outcomes perturbed so that no published rate matches a real reported figure. The analytical patterns survive the perturbation, and every number in this case study is computed from and verifiable against the published database.
 {{< /lead >}}
 
 
@@ -23,7 +23,7 @@ The institution is anonymized. The findings are not. Counts, pass rates, attempt
 
 ## At a Glance
 
-This case study takes a 7,635-attempt slice of NCLEX-RN data covering two academic years (eight quarters from 2024SPQ through 2025WIQ) at a multi-campus nursing college. The slice represents 6,819 unique students across 19 campuses in five regions. Source columns: student identifier, region, campus, program code, starting cohort, graduating cohort, testing cohort, attempt number, and a binary pass/fail result. Nothing else: no demographics, no academic readiness scores, no test-section breakdowns. The full nine-column schema is what was available in the source engagement, and what is published here is the anonymized version of it: the institution name (Penobscot College of Nursing), region names, and one program-code suffix are replaced; every count, every pass rate, every retake outcome, every analytical finding is the institution's real data.
+This case study takes a 7,635-attempt slice of NCLEX-RN data covering two academic years (eight quarters from 2024SPQ through 2025WIQ) at a multi-campus nursing college. The slice represents 6,819 unique students across 19 campuses in five regions. Source columns: student identifier, region, campus, program code, starting cohort, graduating cohort, testing cohort, attempt number, and a binary pass/fail result. Nothing else: no demographics, no academic readiness scores, no test-section breakdowns. The full nine-column schema is what was available in the source engagement. What is published here is a privacy-preserving version of it: the institution name (Penobscot College of Nursing), region names, and one program-code suffix are replaced, and the pass and fail outcomes are synthetic, perturbed so that no published campus rate matches a real reported figure. The structure is intact: every campus, cohort, program, attempt count, and retake path is real, the analytical patterns are preserved, and every number in the prose is computed from and verifiable against the published database.
 
 ```sql
 -- Three-table row count summary used in the At a Glance section.
@@ -60,11 +60,11 @@ Result:
 
 The deliverable is a 1.7 MB SQLite file at [pgbd.casa/data/penobscot-nclex.sqlite](https://pgbd.casa/data/penobscot-nclex.sqlite), queryable directly in the browser via [Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/penobscot-nclex.sqlite). Every query in this case study runs against that file. Every claim in the prose ties to a query the reader can re-run. The same reproducibility floor the other case studies set applies here: a reader who lands on a number in the prose and wants to verify it can click through to the query and watch the database produce it.
 
-## Why The Institution Is Anonymized
+## Why The Outcomes Are Synthetic
 
-NCLEX-RN performance data at the institution level is sensitive. State boards of nursing publish school-level pass rates annually, but the row-level data behind those rates is the kind of detail that institutions hold internally and do not release. This case study uses the institution's real row-level data with three privacy modifications: the institution name has been replaced with "Penobscot College of Nursing"; the five region names have been replaced with regional placeholders that preserve their geographic plausibility but not their identity; and one program-code suffix (`.VA` for the institution's state-specific bridge program) has been replaced with a neutral `.NE` suffix. Every other field is the institution's real data. Every count, every pass rate, every retake outcome, every analytical finding holds.
+NCLEX-RN performance data at the institution level is sensitive. State boards of nursing publish school-level pass rates annually, and an institution's real per-campus rates are matchable against those public figures, so publishing the real outcome values would re-identify the institution even with its name removed. This case study keeps the real structure and synthesizes the outcomes. Four things are changed: the institution name is replaced with "Penobscot College of Nursing"; the five region names are replaced with regional placeholders that preserve geographic plausibility but not identity; one program-code suffix (`.VA` for the institution's state-specific bridge program) is replaced with a neutral `.NE` suffix; and the binary pass and fail outcomes are perturbed at the campus level so that no published rate matches a real reported figure. Every other field, every count, every sample size, and the full retake structure are real and unchanged.
 
-This is the standard academic disclosure pattern: anonymize the institution, publish the findings. The alternative pattern, fully synthesizing the data, was considered and rejected. Synthesis preserves marginal distributions but degrades joint distributions; the analytical signal in this dataset (campus-level variation, the post-NGN cohort decline, the retake conversion above national benchmarks) lives in the joint structure that synthesis would damage. A reader auditing the case study's findings can compare against the institution's publicly reported state-board NCLEX figures and recover the real patterns. The case study's value is in the methodology, not in concealing the underlying numbers.
+The perturbation is deliberately minimal and structure-preserving. Only individual pass and fail values move, and only enough to shift each campus rate off its real figure; sample sizes, group memberships, cohort sequence, and the entire retake architecture are untouched. The analytical signal this case study develops (campus-level variation, the post-NGN cohort decline, the retake conversion above national benchmarks) lives in that preserved structure, so the findings hold on the published data exactly as they held on the source. The case study's value is in the methodology and the reasoning, both of which are fully reproducible against the published database.
 
 ## What's In The File
 
@@ -111,15 +111,15 @@ The window is two academic years of testing (eight quarters from `2024SPQ` throu
 The institution-level scope (multi-campus, five regions, 19 campuses) lets a campus-spread thread emerge that a single-campus scope could not. Campus is the highest-resolution categorical variable in the data, and as the next section shows, it is also where the most interesting variation lives.
 
 <div class="pgbd-case-chart-wrap">
-<p class="pgbd-case-chart-headline">Nineteen campuses, a 21-point spread in first-time pass rates.</p>
+<p class="pgbd-case-chart-headline">Nineteen campuses, a 26-point spread in first-time pass rates.</p>
 <p class="pgbd-case-chart-sub">First-time NCLEX-RN pass rate by campus, eight quarters from 2024SPQ through 2025WIQ. Sorted descending. Sample sizes on the y-axis labels.</p>
 {{< chart >}}
 type: 'bar',
 data: {
-  labels: ['BTH (n=194)','SCH (n=387)','REA (n=246)','KIN (n=291)','ALB (n=708)','POR (n=36)','WOR (n=456)','WTB (n=68)','ALL (n=848)','SCR (n=341)','BRI (n=76)','NHV (n=271)','BOS (n=1,514)','HAR (n=376)','MAN (n=11)','LOW (n=267)','SPR (n=335)','POU (n=235)','NEW (n=45)'],
+  labels: ['BTH (n=194)','SCH (n=387)','ALB (n=708)','POR (n=36)','KIN (n=291)','WOR (n=456)','REA (n=246)','WTB (n=68)','HAR (n=376)','BRI (n=76)','NHV (n=271)','BOS (n=1,514)','SCR (n=341)','ALL (n=848)','MAN (n=11)','LOW (n=267)','SPR (n=335)','NEW (n=45)','POU (n=235)'],
   datasets: [{
     label: 'First-time pass rate (%)',
-    data: [94.33, 92.51, 91.46, 90.03, 89.83, 88.89, 87.72, 86.76, 85.85, 85.63, 85.53, 85.24, 85.07, 84.57, 81.82, 81.27, 75.52, 73.62, 73.33],
+    data: [96.39, 93.54, 91.81, 91.67, 91.07, 89.69, 89.43, 88.24, 87.50, 86.84, 86.35, 84.08, 83.58, 82.90, 81.82, 79.40, 74.63, 71.11, 70.64],
     backgroundColor: '#0969DA',
     borderColor: '#0969DA',
     pointBackgroundColor: '#0969DA',
@@ -146,7 +146,7 @@ options: {
 
 The chart is interactive. Hover over any bar or point to see the exact value; the chart re-themes automatically when the page toggles light or dark mode.
 
-## The 21-Point Campus Spread
+## The 26-Point Campus Spread
 
 The first analytical thread surfaces from a single `GROUP BY campus` query. First-time pass rate by campus, sorted ascending:
 
@@ -156,7 +156,7 @@ The first analytical thread surfaces from a single `GROUP BY campus` query. Firs
 -- performance specifically; retakes are a separate question phase 04
 -- develops. Pass rate is AVG(result) since result is 0/1. Ordering
 -- ascending puts the lowest-performing campuses at the top so the
--- 21-point spread between highest and lowest is the first thing visible.
+-- 26-point spread between highest and lowest is the first thing visible.
 SELECT
     campus                          AS "Campus",
     printf('%,d', COUNT(*))         AS "First Attempts",
@@ -173,31 +173,31 @@ Result:
 
 | Campus | First Attempts | Pass Rate % |
 |---|---:|---:|
-| NEW | 45 | 73.33 |
-| POU | 235 | 73.62 |
-| SPR | 335 | 75.52 |
-| LOW | 267 | 81.27 |
+| POU | 235 | 70.64 |
+| NEW | 45 | 71.11 |
+| SPR | 335 | 74.63 |
+| LOW | 267 | 79.40 |
 | MAN | 11 | 81.82 |
-| HAR | 376 | 84.57 |
-| BOS | 1,514 | 85.07 |
-| NHV | 271 | 85.24 |
-| BRI | 76 | 85.53 |
-| SCR | 341 | 85.63 |
-| ALL | 848 | 85.85 |
-| WTB | 68 | 86.76 |
-| WOR | 456 | 87.72 |
-| POR | 36 | 88.89 |
-| ALB | 708 | 89.83 |
-| KIN | 291 | 90.03 |
-| REA | 246 | 91.46 |
-| SCH | 387 | 92.51 |
-| BTH | 194 | 94.33 |
+| ALL | 848 | 82.90 |
+| SCR | 341 | 83.58 |
+| BOS | 1,514 | 84.08 |
+| NHV | 271 | 86.35 |
+| BRI | 76 | 86.84 |
+| HAR | 376 | 87.50 |
+| WTB | 68 | 88.24 |
+| REA | 246 | 89.43 |
+| WOR | 456 | 89.69 |
+| KIN | 291 | 91.07 |
+| POR | 36 | 91.67 |
+| ALB | 708 | 91.81 |
+| SCH | 387 | 93.54 |
+| BTH | 194 | 96.39 |
 
-A 21-point spread from `NEW` at 73.33 percent to `BTH` at 94.33 percent. For comparison, the spread between the highest and lowest U.S. states in published NCLEX-RN pass rates over this same period was roughly 10 to 15 percentage points. The within-institution spread is larger than the cross-state spread.
+A 26-point spread from `POU` at 70.64 percent to `BTH` at 96.39 percent. For comparison, the spread between the highest and lowest U.S. states in published NCLEX-RN pass rates over this same period was roughly 10 to 15 percentage points. The within-institution spread is larger than the cross-state spread.
 
 That ratio is the thread phase 04 develops most thoroughly. It also frames how the case study reasons about the data. Cohort effects, program-pathway effects, and regional effects all exist in this dataset and all matter, but none of them comes close to the campus-level variation. Whatever explains the gap between `NEW` and `BTH` is the lever the analysis is trying to surface.
 
-The two lowest campuses, `NEW` (45 attempts) and `POU` (235 attempts), are small relative to `BTH` (194) but `POU` is comparable in size to the top performers and still bottom-ranked. The campus spread is not a small-sample artifact.
+The two lowest campuses, `POU` (235 attempts) and `NEW` (45 attempts), sit at nearly the same rate, but `POU` is the more telling case: at 235 first attempts it is comparable in size to the top performers and still near the bottom, so the campus spread is not a small-sample artifact.
 
 This is how an analytical thread emerges from data. Not from a research question imposed on the data, but from a `GROUP BY` whose ordered output asks a question the reader did not already have.
 
@@ -207,6 +207,6 @@ This is how an analytical thread emerges from data. Not from a research question
 
 [Phase 03 (Exploration)](/archivo/penobscot-nclex/03-exploration/) covers the orientation queries: campus first-time pass rates with confidence intervals computed inline in SQL, program-level breakdowns by pathway, cohort-level trends across the two-year window, and the time-from-graduation-to-test distribution that surfaces the concentrated pattern the source phase flagged.
 
-[Phase 04 (Findings)](/archivo/penobscot-nclex/04-findings/) develops the three threads worth following: the 21-point campus spread and what it implies for intervention targeting; the post-NGN cohort decline that tracks the national rate at a similar pace while sitting two to three points below national throughout; and the retake conversion rate that runs more than twenty percentage points above the [NCSBN](https://www.ncsbn.org/) national benchmark for repeat NCLEX-RN takers, reframing the retake problem as one of engagement rather than conversion. The predictive-modeling discussion at the end of phase 04 names the data gaps that would lift any model's discriminative power and switches briefly to R for the logistic regression and AUC discussion where SQL hits its analytical ceiling.
+[Phase 04 (Findings)](/archivo/penobscot-nclex/04-findings/) develops the three threads worth following: the 26-point campus spread and what it implies for intervention targeting; the post-NGN cohort decline that tracks the national rate at a similar pace while sitting roughly three points below national throughout; and the retake conversion rate that runs more than twenty percentage points above the [NCSBN](https://www.ncsbn.org/) national benchmark for repeat NCLEX-RN takers, reframing the retake problem as one of engagement rather than conversion. The predictive-modeling discussion at the end of phase 04 names the data gaps that would lift any model's discriminative power and switches briefly to R for the logistic regression and AUC discussion where SQL hits its analytical ceiling.
 
 The case study philosophy lives at the [biblioteca](/biblioteca/). The reproducibility-is-the-floor commitment holds: anyone can re-run any query in this case study, change the parameters, and ask their own questions against the same database the prose cites.

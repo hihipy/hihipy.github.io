@@ -29,7 +29,7 @@ The schema phase produced a queryable database with three tables and known relat
 
 Every SQL block in this phase has a Datasette Lite link below it so the reader can run the query directly in the browser against the same database, no setup required. Every claim in the prose ties to a query the reader can re-run.
 
-The dimension that matters most is already known from the source phase: campus, with a 21-point spread between the lowest and highest first-time pass rate. This phase confirms that spread, adds confidence intervals so the reader can see which campus differences are real and which are sample noise, and develops five other dimensions that the case study will not lead with in phase 04 but that shape the analysis along the way.
+The dimension that matters most is already known from the source phase: campus, with a 26-point spread between the lowest and highest first-time pass rate. This phase confirms that spread, adds confidence intervals so the reader can see which campus differences are real and which are sample noise, and develops five other dimensions that the case study will not lead with in phase 04 but that shape the analysis along the way.
 
 ## How To Read These Numbers
 
@@ -37,9 +37,9 @@ Every pass rate in this phase comes with a 95 percent confidence interval comput
 
 $$\hat{p} \pm 1.96 \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$$
 
-The interval widens as the sample size shrinks. At $n=2{,}572$ (Greater Boston Region, the largest in the data), the margin is roughly $\pm 1.4$ percentage points. At $n=47$ (Northern New England, the smallest region), it widens to roughly $\pm 9.5$ points. Reading these widths is the difference between treating two campuses as meaningfully different and reading them as statistically indistinguishable.
+The interval widens as the sample size shrinks. At $n=2{,}572$ (Greater Boston Region, the largest in the data), the margin is roughly $\pm 1.4$ percentage points. At $n=47$ (Northern New England, the smallest region), it widens to roughly $\pm 8.80$ points. Reading these widths is the difference between treating two campuses as meaningfully different and reading them as statistically indistinguishable.
 
-The Wald formula has one known weakness worth flagging before phase 03 starts using it: at very small $n$ combined with extreme $\hat{p}$, the upper bound can exceed 100 percent. One campus in the dataset (`MAN`, $n=11$) hits this case, producing a nominal upper bound around 105 percent. The right reading is that the interval is too wide to be informative at that sample size, not that pass rates above 100 percent exist. Phase 04's predictive-modeling section uses Wilson or Agresti-Coull intervals where this matters; phase 03 uses Wald throughout for transparency about the formula and accepts the occasional out-of-bound upper as a flag that $n$ is too small to draw inferences from. At the $n \geq 100$ threshold the phase uses for between-group comparisons, Wald and Wilson agree to two decimals on this data, so the methodological choice is a presentation preference rather than a numerical one.
+The Wald formula has one known weakness worth flagging before phase 03 starts using it: at very small $n$ combined with extreme $\hat{p}$, the upper bound can exceed 100 percent. Two small campuses (`MAN` at $n=11$ and `POR` at $n=36$) hit this case, producing nominal upper bounds above 100 percent. The right reading is that the interval is too wide to be informative at that sample size, not that pass rates above 100 percent exist. Phase 04's predictive-modeling section uses Wilson or Agresti-Coull intervals where this matters; phase 03 uses Wald throughout for transparency about the formula and accepts the occasional out-of-bound upper as a flag that $n$ is too small to draw inferences from. At the $n \geq 100$ threshold the phase uses for between-group comparisons, Wald and Wilson agree to two decimals on this data, so the methodological choice is a presentation preference rather than a numerical one.
 
 ## Pass Rate By Region
 
@@ -76,17 +76,17 @@ Result:
 
 | Region | First Attempts | Pass Rate % | CI Lower % | CI Upper % |
 |---|---:|---:|---:|---:|
-| Hudson Valley Region | 1,666 | 87.76 | 86.18 | 89.33 |
-| Lehigh Valley Region | 1,629 | 87.66 | 86.06 | 89.26 |
-| Northern New England Region | 47 | 87.23 | 77.69 | 96.77 |
-| Connecticut Valley Region | 791 | 85.08 | 82.60 | 87.56 |
-| Greater Boston Region | 2,572 | 83.90 | 82.48 | 85.32 |
+| Northern New England Region | 47 | 89.36 | 80.55 | 98.18 |
+| Hudson Valley Region | 1,666 | 88.54 | 87.01 | 90.07 |
+| Connecticut Valley Region | 791 | 87.10 | 84.77 | 89.44 |
+| Lehigh Valley Region | 1,629 | 85.64 | 83.93 | 87.34 |
+| Greater Boston Region | 2,572 | 83.36 | 81.92 | 84.80 |
 
 Two readings of this table.
 
-First, the regional spread is small. The top region (Hudson Valley at 87.76 percent) is roughly four points above the bottom region (Greater Boston at 83.90 percent). For comparison, the campus spread that phase 01 surfaced is 21 points. The dimension on which this institution varies most is not its regions but the campuses within those regions: Hudson Valley's `POU` campus at 73.62 percent and `SCH` campus at 92.51 percent are 19 points apart, almost five times the regional spread. Region is not the lever; campus is.
+First, the regional spread is small. Setting aside Northern New England, whose 47 first attempts make its rate unstable, the substantial regions run from Hudson Valley at 88.54 percent down to Greater Boston at 83.36 percent, a spread of about five points. For comparison, the campus spread that phase 01 surfaced is 26 points. The dimension on which this institution varies most is not its regions but the campuses within those regions: Hudson Valley's `POU` campus at 70.64 percent and `SCH` campus at 93.54 percent are nearly 23 points apart, more than four times the regional spread. Region is not the lever; campus is.
 
-Second, three regions overlap with each other in their confidence intervals (Hudson Valley, Lehigh Valley, and Northern New England all have overlapping bands), so it would be a stretch to claim a meaningful order among them. Greater Boston's confidence interval does not overlap with Hudson Valley's, so that gap is statistically real even before considering effect size. Connecticut Valley sits between them, overlapping with Greater Boston on the low side and not quite reaching Hudson Valley on the high side.
+Second, the four substantial regions have largely overlapping confidence intervals, so it would be a stretch to claim a meaningful order among them. The one gap worth naming is at the bottom: Greater Boston's interval (81.92 to 84.80) sits below Hudson Valley's (87.01 to 90.07) without overlapping, so that difference is statistically real even before considering effect size. Connecticut Valley and Lehigh Valley sit between the two and overlap both. Northern New England's interval is too wide at $n=47$ to place.
 
 ## Pass Rate By Campus
 
@@ -124,31 +124,31 @@ Result (19 rows, sorted by pass rate ascending):
 
 | Campus | Region | First Attempts | Pass Rate % | CI Lower % | CI Upper % |
 |---|---|---:|---:|---:|---:|
-| NEW | Hudson Valley | 45 | 73.33 | 60.41 | 86.25 |
-| POU | Hudson Valley | 235 | 73.62 | 67.98 | 79.25 |
-| SPR | Greater Boston | 335 | 75.52 | 70.92 | 80.13 |
-| LOW | Greater Boston | 267 | 81.27 | 76.59 | 85.95 |
+| POU | Hudson Valley | 235 | 70.64 | 64.82 | 76.46 |
+| NEW | Hudson Valley | 45 | 71.11 | 57.87 | 84.35 |
+| SPR | Greater Boston | 335 | 74.63 | 69.97 | 79.29 |
+| LOW | Greater Boston | 267 | 79.40 | 74.55 | 84.25 |
 | MAN | Northern New England | 11 | 81.82 | 59.03 | 104.61 |
-| HAR | Connecticut Valley | 376 | 84.57 | 80.92 | 88.23 |
-| BOS | Greater Boston | 1,514 | 85.07 | 83.28 | 86.87 |
-| NHV | Connecticut Valley | 271 | 85.24 | 81.02 | 89.46 |
-| BRI | Connecticut Valley | 76 | 85.53 | 77.62 | 93.44 |
-| SCR | Lehigh Valley | 341 | 85.63 | 81.91 | 89.35 |
-| ALL | Lehigh Valley | 848 | 85.85 | 83.50 | 88.20 |
-| WTB | Connecticut Valley | 68 | 86.76 | 78.71 | 94.82 |
-| WOR | Greater Boston | 456 | 87.72 | 84.71 | 90.73 |
-| POR | Northern New England | 36 | 88.89 | 78.62 | 99.16 |
-| ALB | Hudson Valley | 708 | 89.83 | 87.60 | 92.06 |
-| KIN | Hudson Valley | 291 | 90.03 | 86.59 | 93.48 |
-| REA | Lehigh Valley | 246 | 91.46 | 87.97 | 94.96 |
-| SCH | Hudson Valley | 387 | 92.51 | 89.88 | 95.13 |
-| BTH | Lehigh Valley | 194 | 94.33 | 91.08 | 97.58 |
+| ALL | Lehigh Valley | 848 | 82.90 | 80.37 | 85.44 |
+| SCR | Lehigh Valley | 341 | 83.58 | 79.65 | 87.51 |
+| BOS | Greater Boston | 1,514 | 84.08 | 82.24 | 85.92 |
+| NHV | Connecticut Valley | 271 | 86.35 | 82.26 | 90.43 |
+| BRI | Connecticut Valley | 76 | 86.84 | 79.24 | 94.44 |
+| HAR | Connecticut Valley | 376 | 87.50 | 84.16 | 90.84 |
+| WTB | Connecticut Valley | 68 | 88.24 | 80.58 | 95.89 |
+| REA | Lehigh Valley | 246 | 89.43 | 85.59 | 93.27 |
+| WOR | Greater Boston | 456 | 89.69 | 86.90 | 92.48 |
+| KIN | Hudson Valley | 291 | 91.07 | 87.79 | 94.34 |
+| POR | Northern New England | 36 | 91.67 | 82.64 | 100.70 |
+| ALB | Hudson Valley | 708 | 91.81 | 89.79 | 93.83 |
+| SCH | Hudson Valley | 387 | 93.54 | 91.09 | 95.99 |
+| BTH | Lehigh Valley | 194 | 96.39 | 93.77 | 99.02 |
 
-The headline finding from phase 01 holds at deeper inspection. The three lowest campuses (`NEW`, `POU`, `SPR`) have confidence intervals that do not overlap with the three highest (`REA`, `SCH`, `BTH`). The 21-point spread is not a sampling artifact; it is structural.
+The headline finding from phase 01 holds at deeper inspection. The three lowest campuses (`POU`, `NEW`, `SPR`) have confidence intervals that do not overlap with the three highest (`ALB`, `SCH`, `BTH`). The 26-point spread is not a sampling artifact; it is structural.
 
-Two side observations worth naming. `NEW` ($n=45$, pass rate 73.33 percent) and `POU` ($n=235$, pass rate 73.62 percent) sit at virtually the same point estimate. Their confidence intervals tell different stories: `POU`'s narrow interval (67.98 to 79.25) makes it a campus with a real performance problem at substantial sample size, while `NEW`'s wide interval (60.41 to 86.25) means the apparent low rate could shrink considerably with more data. The two campuses look the same in a point-estimate table and are quite different signals.
+Two side observations worth naming. `POU` ($n=235$, pass rate 70.64 percent) and `NEW` ($n=45$, pass rate 71.11 percent) sit at virtually the same point estimate. Their confidence intervals tell different stories: `POU`'s narrow interval (64.82 to 76.46) makes it a campus with a real performance problem at substantial sample size, while `NEW`'s wide interval (57.87 to 84.35) means the apparent low rate could shrink considerably with more data. The two campuses look the same in a point-estimate table and are quite different signals.
 
-`MAN`'s upper bound at 104.61 percent is the small-sample Wald artifact the formula-introduction section warned about. With $n=11$, the interval is too wide to be informative. Phase 04 uses a better-behaved interval method for the predictive-modeling work; phase 03 keeps the Wald formula visible so the limitation is documented rather than hidden.
+`MAN`'s upper bound at 104.61 percent and `POR`'s at 100.70 percent are the small-sample Wald artifact the formula-introduction section warned about. With $n=11$ and $n=36$ respectively, the intervals are too wide to be informative. Phase 04 uses a better-behaved interval method for the predictive-modeling work; phase 03 keeps the Wald formula visible so the limitation is documented rather than hidden.
 
 ## Pass Rate By Program
 
@@ -193,20 +193,20 @@ Result:
 
 | Pathway | Program | First Attempts | Pass Rate % | CI Lower % | CI Upper % |
 |---|---|---:|---:|---:|---:|
-| ADN, Advanced Standing | ADN.ADV.AAS | 62 | 93.55 | 87.43 | 99.66 |
-| ADN, Bridge (LPN-to-RN) | ADN.BRDG.AAS | 1,883 | 83.27 | 81.59 | 84.96 |
+| ADN, Advanced Standing | ADN.ADV.AAS | 62 | 95.16 | 89.82 | 100.50 |
+| ADN, Bridge (LPN-to-RN) | ADN.BRDG.AAS | 1,883 | 83.06 | 81.36 | 84.75 |
 | ADN, Bridge (LPN-to-RN) | ADN.BRDG.AS | 880 | 91.02 | 89.13 | 92.91 |
-| ADN, Bridge (LPN-to-RN) | ADN.BRDG.NE.AS | 194 | 85.57 | 80.62 | 90.51 |
-| ADN, Traditional 2-Year | ADN.2YR.AAS | 157 | 89.81 | 85.08 | 94.54 |
-| ADN, Traditional 2-Year | ADN.2YR.AAS.2 | 251 | 83.67 | 79.09 | 88.24 |
-| ADN, Traditional 2-Year | ADN.2YR.AS | 1,890 | 85.40 | 83.80 | 86.99 |
-| BSN, Prelicensure | BSN.PRE.BSN | 1,388 | 86.74 | 84.96 | 88.53 |
+| ADN, Bridge (LPN-to-RN) | ADN.BRDG.NE.AS | 194 | 87.63 | 83.00 | 92.26 |
+| ADN, Traditional 2-Year | ADN.2YR.AAS | 157 | 91.08 | 86.62 | 95.54 |
+| ADN, Traditional 2-Year | ADN.2YR.AAS.2 | 251 | 86.45 | 82.22 | 90.69 |
+| ADN, Traditional 2-Year | ADN.2YR.AS | 1,890 | 84.60 | 82.98 | 86.23 |
+| BSN, Prelicensure | BSN.PRE.BSN | 1,388 | 85.88 | 84.05 | 87.71 |
 
-The bridge pathway is where the largest within-pathway variation lives. `ADN.BRDG.AAS` (83.27 percent, $n=1{,}883$) and `ADN.BRDG.AS` (91.02 percent, $n=880$) are nearly eight points apart with non-overlapping confidence intervals, despite both being labeled as bridge programs. The same pattern shows up in the traditional pathway: `ADN.2YR.AAS.2` (83.67 percent) sits roughly six points below `ADN.2YR.AAS` (89.81 percent). The pathway label is not the full explanation; the AAS-vs-AS credential split within each pathway is doing work the pathway label hides.
+The bridge pathway is where the largest within-pathway variation lives. `ADN.BRDG.AAS` (83.06 percent, $n=1{,}883$) and `ADN.BRDG.AS` (91.02 percent, $n=880$) are nearly eight points apart with non-overlapping confidence intervals, despite both being labeled as bridge programs. The same pattern shows up in the traditional pathway: `ADN.2YR.AAS.2` (86.45 percent) sits roughly five points below `ADN.2YR.AAS` (91.08 percent). The pathway label is not the full explanation; the AAS-vs-AS credential split within each pathway is doing work the pathway label hides.
 
-The Advanced Standing program (`ADN.ADV.AAS`) is the top performer at 93.55 percent, but at $n=62$ the confidence interval (87.43 to 99.66) overlaps with the top of `ADN.BRDG.AS`. The two are statistically indistinguishable; the point estimate ranking is real but the sample size is too small to claim a meaningful gap between them.
+The Advanced Standing program (`ADN.ADV.AAS`) is the top performer at 95.16 percent, but at $n=62$ the confidence interval (89.82 to 100.50, the upper bound crossing 100 as the small-sample Wald artifact) overlaps with the top of `ADN.BRDG.AS`. The two are statistically indistinguishable; the point estimate ranking is real but the sample size is too small to claim a meaningful gap between them.
 
-The Prelicensure BSN program performs in the middle of the pack (86.74 percent), which is itself worth naming. A common assumption is that BSN students outperform ADN students on NCLEX, since the BSN curriculum is longer and more theoretically grounded. This dataset shows the opposite: the BSN cohort performs below the strongest ADN bridge track and below the Advanced Standing track. Phase 04 develops what this implies for program-level interventions.
+The Prelicensure BSN program performs in the middle of the pack (85.88 percent), which is itself worth naming. A common assumption is that BSN students outperform ADN students on NCLEX, since the BSN curriculum is longer and more theoretically grounded. This dataset shows the opposite: the BSN cohort performs below the strongest ADN bridge track and below the Advanced Standing track. Phase 04 develops what this implies for program-level interventions.
 
 ## Cohort Trend
 
@@ -244,20 +244,20 @@ Result:
 
 | Testing Cohort | First Attempts | Pass Rate % | CI Lower % | CI Upper % |
 |---|---:|---:|---:|---:|
-| 2024WIQ | 739 | 87.42 | 85.02 | 89.81 |
-| 2024SPQ | 693 | 88.74 | 86.39 | 91.10 |
-| 2024SUQ | 584 | 91.78 | 89.55 | 94.01 |
-| 2024FAQ | 731 | 87.28 | 84.86 | 89.69 |
-| 2025WIQ | 1,067 | 83.32 | 81.08 | 85.55 |
-| 2025SPQ | 986 | 85.50 | 83.30 | 87.69 |
-| 2025SUQ | 970 | 83.51 | 81.17 | 85.84 |
+| 2024SPQ | 693 | 88.46 | 86.08 | 90.84 |
+| 2024SUQ | 584 | 91.27 | 88.98 | 93.56 |
+| 2024FAQ | 731 | 87.41 | 85.01 | 89.82 |
+| 2024WIQ | 739 | 86.20 | 83.71 | 88.68 |
+| 2025SPQ | 986 | 84.48 | 82.22 | 86.74 |
+| 2025SUQ | 970 | 83.71 | 81.39 | 86.04 |
 | 2025FAQ | 935 | 83.96 | 81.60 | 86.31 |
+| 2025WIQ | 1,067 | 83.69 | 81.48 | 85.91 |
 
-The shape across the eight cohorts has two phases. The 2024 cohorts (spring, summer, fall, winter) hold a pass rate in the 87 to 92 percent range, with summer 2024 the peak at 91.78 percent. The 2025 cohorts drop to the 83 to 86 percent range, with winter 2025 (the final quarter of the testing window) the lowest at 83.32 percent.
+The shape across the eight cohorts has two phases. The 2024 cohorts hold a pass rate in the 86 to 91 percent range, with summer 2024 the peak at 91.27 percent. The 2025 cohorts drop to the 83 to 85 percent range, with winter 2025 (the final quarter of the testing window) the lowest at 83.69 percent.
 
-The drop from 2024SUQ (91.78 percent) to 2025WIQ (83.32 percent) is 8.46 percentage points across the six quarters between them. The 2024SUQ and 2025WIQ confidence intervals do not come close to overlapping, so the gap is real even before considering effect size. The decline is not stepwise; it appears across the 2024 cohorts as a slow drift, then settles into the lower band starting in 2025SPQ.
+The drop from 2024SUQ (91.27 percent) to 2025WIQ (83.69 percent) is 7.58 percentage points across the six quarters between them. The 2024SUQ and 2025WIQ confidence intervals do not come close to overlapping, so the gap is real even before considering effect size. The decline is not stepwise; it appears across the 2024 cohorts as a slow drift, then settles into the lower band starting in 2025SPQ.
 
-Phase 04 reads this as the post-NGN decline pattern. The NCSBN published national NCLEX-RN pass rates for the same window show roughly a 3.7-point decline; the institution's 4.58-point annual decline is slightly steeper, at about 1.24 times the national magnitude. The 2024-2025 boundary is roughly the point at which the Next Generation NCLEX format completed its first-year transition cycle, with cohorts who were trained pre-NGN and tested post-NGN largely flushed through by mid-2024. The 2025 cohorts are the first who were both trained and tested under NGN, and their pass rates settle into a band slightly below national.
+Phase 04 reads this as the post-NGN decline pattern. The NCSBN published national NCLEX-RN pass rates for the same window show roughly a 3.7-point decline; the institution's 4.21-point annual decline is slightly steeper, at about 1.14 times the national magnitude. The 2024-2025 boundary is roughly the point at which the Next Generation NCLEX format completed its first-year transition cycle, with cohorts who were trained pre-NGN and tested post-NGN largely flushed through by mid-2024. The 2025 cohorts are the first who were both trained and tested under NGN, and their pass rates settle into a band slightly below national.
 
 The case study does not claim the NGN transition is the *cause* of the drop. It is one plausible explanation and the most prominent industry-level event in the window. Phase 04 develops the rest.
 
@@ -270,7 +270,7 @@ data: {
   labels: ['2024SPQ','2024SUQ','2024FAQ','2024WIQ','2025SPQ','2025SUQ','2025FAQ','2025WIQ'],
   datasets: [{
     label: 'First-time pass rate (%)',
-    data: [88.74, 91.78, 87.28, 87.42, 85.50, 83.51, 83.96, 83.32],
+    data: [88.46, 91.27, 87.41, 86.20, 84.48, 83.71, 83.96, 83.69],
     borderColor: '#0969DA',
     backgroundColor: '#0969DA',
     pointBackgroundColor: '#0969DA',
@@ -382,7 +382,7 @@ Result:
 
 | Total Attempts | Students | Eventually Passed | Never Passed | Eventually Passed % |
 |---:|---:|---:|---:|---:|
-| 1 | 6,190 | 5,809 | 381 | 93.84 |
+| 1 | 6,190 | 5,792 | 398 | 93.57 |
 | 2 | 496 | 415 | 81 | 83.67 |
 | 3 | 97 | 72 | 25 | 74.23 |
 | 4 | 23 | 17 | 6 | 73.91 |
@@ -390,7 +390,7 @@ Result:
 | 6 | 1 | 1 | 0 | 100.00 |
 | 9 | 1 | 0 | 1 | 0.00 |
 
-A few details to read carefully. The "1 attempt" row at 93.84 percent is not the first-time pass rate; it is the pass rate among students whose only visible attempt is their first one. This combines students who passed on their first try with students who failed their first try and did not retake within the window. The first-time pass rate from the campus table above (overall 85.94 percent across attempts where `attempt_number = 1`) is the right number for first-time pass rate; the 93.84 percent in this row is a different quantity that mixes first-try passers with first-try failers who did not retake.
+A few details to read carefully. The "1 attempt" row at 93.57 percent is not the first-time pass rate; it is the pass rate among students whose only visible attempt is their first one. This combines students who passed on their first try with students who failed their first try and did not retake within the window. The first-time pass rate from the campus table above (overall 85.68 percent across attempts where `attempt_number = 1`) is the right number for first-time pass rate; the 93.57 percent in this row is a different quantity that mixes first-try passers with first-try failers who did not retake.
 
 Among students who do retake (rows 2 through 9), the eventually-passed rate stays meaningfully above 50 percent through five attempts. The institution's retake support is doing real work for students who engage with it. Phase 04 develops the funnel: the institution's retake conversion rate runs well above the [NCSBN](https://www.ncsbn.org/) national benchmark for repeat NCLEX-RN takers, with the precise magnitude depending on whether retakes are counted attempt-by-attempt or as a strict-later-term student-level conversion. The opportunity is not improving retake conversion; it is getting more first-time failers to engage with the retake program in the first place.
 
@@ -398,6 +398,6 @@ The two outlier rows (one student at six attempts who passed, one student at nin
 
 ## Looking Ahead
 
-[Phase 04 (Findings)](/archivo/penobscot-nclex/04-findings/) develops the three analytical threads that the orientation queries above point to. The 21-point campus spread becomes a structured argument for campus-level intervention targeting, with the within-region campus variance the actual lever rather than the regional or programmatic aggregates. The 2024-to-2025 cohort decline becomes a comparison against the NCSBN national trend, with the institution declining at about 1.24 times the national magnitude while sitting two to three points below national throughout. And the retake-attempt distribution becomes the entry point to the retake-engagement framing: the case study's strongest counterintuitive finding, that the conversion rate among retakers is already well above national and the lever is engagement, not conversion.
+[Phase 04 (Findings)](/archivo/penobscot-nclex/04-findings/) develops the three analytical threads that the orientation queries above point to. The 26-point campus spread becomes a structured argument for campus-level intervention targeting, with the within-region campus variance the actual lever rather than the regional or programmatic aggregates. The 2024-to-2025 cohort decline becomes a comparison against the NCSBN national trend, with the institution declining at about 1.14 times the national magnitude while sitting roughly three points below national throughout. And the retake-attempt distribution becomes the entry point to the retake-engagement framing: the case study's strongest counterintuitive finding, that the conversion rate among retakers is already well above national and the lever is engagement, not conversion.
 
 Phase 04's predictive-modeling subsection switches briefly to R for the logistic regression and AUC discussion, where SQL hits its analytical ceiling. The structural data limits identified in phase 01 (binary outcome, no demographics, no academic-readiness scores) shape what any model could and could not do with this dataset.

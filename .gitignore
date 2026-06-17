@@ -26,3 +26,6 @@ resources/
 *.backup-*
 .DS_Store
 tools/texas_emit_charts.R
+
+# Penobscot real-data backups (never publish)
+static/data/*.bak

@@ -1,7 +1,7 @@
 ---
 title: "Findings"
 weight: 40
-description: "Three structured findings: the 21-point campus spread and a counterfactual for intervention targeting, the 2024-to-2025 cohort decline compared against NCSBN national rates, and the retake conversion data reframed as an engagement story. Closing R-based ceiling analysis on what any predictive model could do with this dataset."
+description: "Three structured findings: the 26-point campus spread and a counterfactual for intervention targeting, the 2024-to-2025 cohort decline compared against NCSBN national rates, and the retake conversion data reframed as an engagement story. Closing R-based ceiling analysis on what any predictive model could do with this dataset."
 summary: "Three findings, one R supplement, an honest accounting of what the data can and cannot say"
 tags: ["logistic-regression", "nclex", "nursing-education", "predictive-modeling", "r", "sql"]
 showDate: false
@@ -29,9 +29,9 @@ Phase 03 ran six orientation queries that named the obvious dimensions and the s
 
 Each finding has the same shape: the SQL that produced the numbers, the numbers themselves, a comparison or counterfactual that puts the magnitude in context, and a one-paragraph implication.
 
-## Finding 1: The 21-Point Campus Spread
+## Finding 1: The 26-Point Campus Spread
 
-The headline finding from phase 01 was a 21-point spread in first-time NCLEX-RN pass rate between the lowest-performing campus (`NEW` at 73.33 percent, $n=45$) and the highest (`BTH` at 94.33 percent, $n=194$). Phase 03 confirmed this spread is not a sampling artifact: the three lowest campuses have confidence intervals that do not overlap with the three highest. The structural variation is real.
+The headline finding from phase 01 was a 26-point spread in first-time NCLEX-RN pass rate between the lowest-performing campus (`POU` at 70.64 percent, $n=235$) and the highest (`BTH` at 96.39 percent, $n=194$). Phase 03 confirmed this spread is not a sampling artifact: the three lowest campuses have confidence intervals that do not overlap with the three highest. The structural variation is real.
 
 The next question is what the spread implies for intervention. The naive reading is "fix the bottom three campuses." The more useful reading is to compute what within-region variance does to the analysis. Region is the institution's natural administrative grouping; campuses report to regional leadership. So the question is whether the spread is between regions (a regional-leadership problem) or within them (a campus-level problem that crosses regional lines).
 
@@ -39,7 +39,7 @@ The next question is what the spread implies for intervention. The naive reading
 -- Within-region campus spread. For each region, compute the
 -- minimum and maximum campus first-time pass rate and the
 -- spread between them. Compare the within-region spreads to
--- the 21-point overall spread to identify which regions are
+-- the 26-point overall spread to identify which regions are
 -- internally heterogeneous and which are internally consistent.
 WITH campus AS (
   SELECT
@@ -68,23 +68,23 @@ Result:
 
 | Region | Campuses | First Attempts | Min Campus % | Max Campus % | Within-Region Spread % |
 |---|---:|---:|---:|---:|---:|
-| Hudson Valley Region | 5 | 1,666 | 73.33 | 92.51 | 19.17 |
-| Greater Boston Region | 4 | 2,572 | 75.52 | 87.72 | 12.20 |
-| Lehigh Valley Region | 4 | 1,629 | 85.63 | 94.33 | 8.70 |
-| Northern New England Region | 2 | 47 | 81.82 | 88.89 | 7.07 |
-| Connecticut Valley Region | 4 | 791 | 84.57 | 86.76 | 2.19 |
+| Hudson Valley Region | 5 | 1,666 | 70.64 | 93.54 | 22.90 |
+| Greater Boston Region | 4 | 2,572 | 74.63 | 89.69 | 15.06 |
+| Lehigh Valley Region | 4 | 1,629 | 82.90 | 96.39 | 13.49 |
+| Northern New England Region | 2 | 47 | 81.82 | 91.67 | 9.85 |
+| Connecticut Valley Region | 4 | 791 | 86.35 | 88.24 | 1.89 |
 
-The Hudson Valley Region has a within-region campus spread of 19.17 percentage points, which is almost the entire 21-point institution-wide spread compressed into a single region. The same region contains `POU` (73.62 percent first-time pass) and `SCH` (92.51 percent), two campuses managed by the same regional leadership with vastly different student outcomes. The Greater Boston Region has a 12-point spread. The Connecticut Valley Region's spread is only 2.19 points across four campuses, despite covering a comparable testing volume.
+The Hudson Valley Region has a within-region campus spread of 22.90 percentage points, which is almost the entire 26-point institution-wide spread compressed into a single region. The same region contains `POU` (70.64 percent first-time pass) and `SCH` (93.54 percent), two campuses managed by the same regional leadership with vastly different student outcomes. The Greater Boston Region has a 15-point spread. The Connecticut Valley Region's spread is only 1.89 points across four campuses, despite covering a comparable testing volume.
 
 The reading: most of the institution's variance is within regions, not between them. A regional leadership intervention that addresses Hudson Valley's regional average would do nothing for the `POU`-versus-`SCH` gap, since those campuses sit on opposite ends of the regional distribution. The lever is at the campus level, not the regional level.
 
-How much would campus-level intervention lift the institution's overall rate? The cleanest framing is per-campus lift in absolute passes: for each underperforming campus, the number of additional first-time passes a lift to the institution-wide rate would produce. Filtering to campuses with at least 100 first-time attempts (the threshold below which Wald CIs become uninformative), the two clearest targets are `POU` (n=235, 73.62 percent first-time pass) and `SPR` (n=335, 75.52 percent). Lifting each to the institution-wide 85.94 percent would produce 29 additional passes at `POU` and 35 at `SPR`: 64 additional first-time passes across the two-year testing window, or roughly 32 per year. That is the magnitude an institution can act on at the campus-by-campus level. It is not a transformation; it is a recoverable gap.
+How much would campus-level intervention lift the institution's overall rate? The cleanest framing is per-campus lift in absolute passes: for each underperforming campus, the number of additional first-time passes a lift to the institution-wide rate would produce. Filtering to campuses with at least 100 first-time attempts (the threshold below which Wald CIs become uninformative), the two clearest targets are `POU` (n=235, 70.64 percent first-time pass) and `SPR` (n=335, 74.63 percent). Lifting each to the institution-wide 85.68 percent would produce 35 additional passes at `POU` and 37 at `SPR`: 72 additional first-time passes across the two-year testing window, or roughly 36 per year. That is the magnitude an institution can act on at the campus-by-campus level. It is not a transformation; it is a recoverable gap.
 
 The intervention design that follows from this finding is bottom-up campus-by-campus diagnosis, not top-down regional benchmarking. The case study cannot say what specifically explains the `POU`-versus-`SCH` gap; the dataset has no faculty-quality, curriculum-fidelity, or student-support metrics. But the analytical case for prioritizing campus-level inquiry over regional aggregates is direct.
 
 ## Finding 2: The 2024-to-2025 Cohort Decline
 
-Phase 03's cohort breakdown showed first-time pass rates dropping from a 2024 average of 88.64 percent to a 2025 average of 84.06 percent, a 4.58 percentage point decline across the two calendar years. The natural comparison is against the national NCLEX-RN trend for the same period.
+Phase 03's cohort breakdown showed first-time pass rates dropping from a 2024 average of 88.17 percent to a 2025 average of 83.96 percent, a 4.21 percentage point decline across the two calendar years. The natural comparison is against the national NCLEX-RN trend for the same period.
 
 ```sql
 -- Annual first-time pass rate. The CTE aggregates by calendar
@@ -115,24 +115,24 @@ Result:
 
 | Year | First Attempts | Pass Rate % | CI Lower % | CI Upper % |
 |---:|---:|---:|---:|---:|
-| 2024 | 2,747 | 88.64 | 87.45 | 89.83 |
-| 2025 | 3,958 | 84.06 | 82.92 | 85.20 |
+| 2024 | 2,747 | 88.17 | 86.96 | 89.38 |
+| 2025 | 3,958 | 83.96 | 82.81 | 85.10 |
 
-The 2024 and 2025 confidence intervals do not overlap, so the decline is statistically real. The drop is 4.58 percentage points, with the 2025 rate's confidence interval ending more than two percentage points below where the 2024 rate's confidence interval begins.
+The 2024 and 2025 confidence intervals do not overlap, so the decline is statistically real. The drop is 4.21 percentage points, with the 2025 rate's confidence interval ending nearly two percentage points below where the 2024 rate's confidence interval begins.
 
-For comparison, the [NCSBN](https://www.ncsbn.org/exams/exam-statistics-and-publications/nclex-pass-rates.page) reports first-time, U.S.-educated NCLEX-RN pass rates of 91.2 percent for the full year 2024, declining to roughly 87.5 percent through most of 2025. The national year-over-year drop is approximately 3.7 percentage points. The institution's drop is 4.58 percentage points: roughly 1.24 times the national magnitude.
+For comparison, the [NCSBN](https://www.ncsbn.org/exams/exam-statistics-and-publications/nclex-pass-rates.page) reports first-time, U.S.-educated NCLEX-RN pass rates of 91.2 percent for the full year 2024, declining to roughly 87.5 percent through most of 2025. The national year-over-year drop is approximately 3.7 percentage points. The institution's drop is 4.21 percentage points: roughly 1.14 times the national magnitude.
 
 This is a meaningfully steeper decline than the national trend, but it is not the "twice the national rate" framing that initial readings of the data sometimes suggest. The honest statement is: the institution declined alongside the national trend, slightly faster than the national rate. The most prominent industry-level event in the window is the [Next Generation NCLEX (NGN)](https://www.ncsbn.org/exams/next-generation-nclex.page) format launching in April 2023, with 2024 cohorts largely composed of students trained before NGN took effect and 2025 cohorts largely composed of students trained after. The case study does not claim the NGN transition caused the institution-level decline; the national decline is consistent with that explanation, and the institution's slight extra magnitude is consistent with institution-specific factors compounding the national pattern.
 
 <div class="pgbd-case-chart-wrap">
-<p class="pgbd-case-chart-headline">The institution tracks the national decline at a similar pace, sitting 2 to 4 points below national in both years.</p>
+<p class="pgbd-case-chart-headline">The institution tracks the national decline at a similar pace, sitting 3 to 4 points below national in both years.</p>
 <p class="pgbd-case-chart-sub">First-time NCLEX-RN pass rate, institution vs NCSBN U.S.-educated national benchmark. NCSBN 2024 = 91.20%, 2025 estimate ~ 87.50%.</p>
 {{< chart >}}
 type: 'bar',
 data: {
   labels: ['2024','2025'],
   datasets: [
-    { label: 'Institution (Penobscot)', data: [88.64, 84.06], backgroundColor: '#0969DA', borderColor: '#0969DA', pointBackgroundColor: '#0969DA', pointBorderColor: '#0969DA', borderWidth: 0 },
+    { label: 'Institution (Penobscot)', data: [88.17, 83.96], backgroundColor: '#0969DA', borderColor: '#0969DA', pointBackgroundColor: '#0969DA', pointBorderColor: '#0969DA', borderWidth: 0 },
     { label: 'NCSBN National (U.S.-educated)', data: [91.20, 87.50], backgroundColor: '#BF8700', borderColor: '#BF8700', pointBackgroundColor: '#BF8700', pointBorderColor: '#BF8700', borderWidth: 0 }
   ]
 },
@@ -154,7 +154,7 @@ options: {
 
 The chart is interactive. Hover over any bar or point to see the exact value; the chart re-themes automatically when the page toggles light or dark mode.
 
-What this finding does *not* support is the framing that the institution is in a uniquely bad position. The institution is on the wrong side of the national trend by about a point and a quarter. That is a problem worth addressing, but it is not the dominant story. The campus spread is a larger and more institution-specific concern, both in absolute magnitude (21 points across campuses versus 4.58 points across years) and in actionability (campus-level intervention is more concrete than "respond to NGN").
+What this finding does *not* support is the framing that the institution is in a uniquely bad position. The institution is on the wrong side of the national trend, declining about 1.14 times as fast as the national rate. That is a problem worth addressing, but it is not the dominant story. The campus spread is a larger and more institution-specific concern, both in absolute magnitude (26 points across campuses versus 4.21 points across years) and in actionability (campus-level intervention is more concrete than "respond to NGN").
 
 ## Finding 3: Retake Conversion as Engagement Story
 
@@ -209,28 +209,28 @@ Result:
 
 | First-Time Failures | Retook | Did Not Retake | % Retook | Eventually Passed | Conversion % |
 |---:|---:|---:|---:|---:|---:|
-| 943 | 391 | 552 | 41.46 | 301 | 76.98 |
+| 960 | 391 | 569 | 40.73 | 301 | 76.98 |
 
 The conversion number is striking: 76.98 percent of strict-later-term retakers eventually pass. The NCSBN national benchmark for repeat U.S.-educated NCLEX-RN takers sits around 53 percent. The institution's retakers convert at about 24 percentage points above national, a gap large enough that it is unlikely to be explained by sampling, cohort timing, or methodological choice.
 
 The naive reading is "the retake support is working." That reading is correct as far as it goes, but it leads to the wrong next step. If retake support is already converting at 77 percent against a national baseline of 53 percent, the lever for further improvement is not making the retake program better. The lever is getting more first-time failers to engage with the retake program in the first place.
 
-Two caveats on the funnel before the per-cohort breakdown. First, 552 first-time failers did not retake in a later testing cohort within the window. Some unknown share of these students retook after the window closed (right-censoring) and the funnel cannot see those returns. The 41.46 percent retook rate is a within-window observation, not a lifetime estimate. Second, the strict-later-term definition excludes students who retook within the same testing cohort as their first failure. The NCLEX 45-day waiting period allows this, and 196 first-time failers fall into this category. Including them as retakers raises the within-window engagement rate but does not change the conversion direction.
+Two caveats on the funnel before the per-cohort breakdown. First, 569 first-time failers did not retake in a later testing cohort within the window. Some unknown share of these students retook after the window closed (right-censoring) and the funnel cannot see those returns. The 40.73 percent retook rate is a within-window observation, not a lifetime estimate. Second, the strict-later-term definition excludes students who retook within the same testing cohort as their first failure. The NCLEX 45-day waiting period allows this, and 196 first-time failers fall into this category. Including them as retakers raises the within-window engagement rate but does not change the conversion direction.
 
-The counterfactual question is what would happen if the 552 first-time failers who did not retake within the window had returned at the observed conversion rate. 552 students multiplied by 76.98 percent conversion equals roughly 425 additional eventual passes. Adding those 425 to the 6,320 students who already eventually passed lifts the eventually-passed rate from 92.68 percent to 98.91 percent: a 6.23 percentage-point gain. That is meaningfully larger than the campus-spread lift from finding one (32 additional first-time passes per year), and it operates at a different leverage point: campus-level intervention is about teaching and curriculum, engagement-level intervention is about outreach and support for students who already failed once.
+The counterfactual question is what would happen if the 569 first-time failers who did not retake within the window had returned at the observed conversion rate. 569 students multiplied by 76.98 percent conversion equals roughly 438 additional eventual passes. Adding those 438 to the 6,303 students who already eventually passed lifts the eventually-passed rate from 92.43 percent to 98.86 percent: a 6.43 percentage-point gain. That is meaningfully larger than the campus-spread lift from finding one (36 additional first-time passes per year), and it operates at a different leverage point: campus-level intervention is about teaching and curriculum, engagement-level intervention is about outreach and support for students who already failed once.
 
-The counterfactual is bounded above by 100 percent realistic engagement, which no institution achieves. A more realistic target is engagement parity with the higher-engagement cohorts: lifting the 552 non-retakers to a 70 percent retake rate (which the higher-engaging cohorts in the per-cohort breakdown below approximate) would produce roughly 297 additional passes and lift the eventually-passed rate to about 97.04 percent. Either framing makes the same point. The retake program is doing real work; the unfilled space is engagement.
+The counterfactual is bounded above by 100 percent realistic engagement, which no institution achieves. A more realistic target is engagement parity with the higher-engagement cohorts: lifting the 569 non-retakers to a 70 percent retake rate (which the higher-engaging cohorts in the per-cohort breakdown below approximate) would produce roughly 307 additional passes and lift the eventually-passed rate to about 96.94 percent. Either framing makes the same point. The retake program is doing real work; the unfilled space is engagement.
 
 <div class="pgbd-case-chart-wrap">
 <p class="pgbd-case-chart-headline">The retake funnel: most first-time failers do not return within the window.</p>
-<p class="pgbd-case-chart-sub">Of 943 first-time failers, 552 did not retake in a later quarter within the testing window, 391 did, and 301 of those retakers eventually passed (76.98% conversion).</p>
+<p class="pgbd-case-chart-sub">Of 960 first-time failers, 569 did not retake in a later quarter within the testing window, 391 did, and 301 of those retakers eventually passed (76.98% conversion).</p>
 {{< chart >}}
 type: 'bar',
 data: {
   labels: ['First-Time Failures','Did Not Retake','Retook (Later Quarter)','Eventually Passed'],
   datasets: [{
     label: 'Students',
-    data: [943, 552, 391, 301],
+    data: [960, 569, 391, 301],
     backgroundColor: ['#0969DA','#BF8700','#0969DA','#0969DA'],
     borderColor: ['#0969DA','#BF8700','#0969DA','#0969DA'],
     pointBackgroundColor: ['#0969DA','#BF8700','#0969DA','#0969DA'],
@@ -297,18 +297,18 @@ Result:
 
 | Testing Cohort | First-Time Failures | Did Not Retake | % Did Not Retake |
 |---|---:|---:|---:|
-| 2024SPQ | 78 | 47 | 60.26 |
-| 2024SUQ | 48 | 33 | 68.75 |
-| 2024FAQ | 93 | 47 | 50.54 |
-| 2024WIQ | 93 | 39 | 41.94 |
-| 2025SPQ | 143 | 53 | 37.06 |
-| 2025SUQ | 160 | 86 | 53.75 |
+| 2024SPQ | 80 | 49 | 61.25 |
+| 2024SUQ | 51 | 36 | 70.59 |
+| 2024FAQ | 92 | 46 | 50.00 |
+| 2024WIQ | 102 | 48 | 47.06 |
+| 2025SPQ | 153 | 63 | 41.18 |
+| 2025SUQ | 158 | 84 | 53.16 |
 | 2025FAQ | 150 | 69 | 46.00 |
-| 2025WIQ | 178 | 178 | 100.00 |
+| 2025WIQ | 174 | 174 | 100.00 |
 
 The final row, 2025WIQ at 100 percent no-retake, is right-censoring rather than substance: 2025WIQ is the last cohort in the testing window, so no strictly-later-quarter retakes are visible. Those students may well have retaken in 2026, but the data does not reach forward into 2026 to find them. The same right-censoring affects every cohort to a lesser degree (later cohorts have fewer subsequent quarters in which their retakes could be observed), and the rates above are within-window observations rather than lifetime estimates.
 
-The cohort-to-cohort variation among the seven non-final cohorts is what the case study can actually read. Non-retake rates range from 37 percent (2025SPQ) to 69 percent (2024SUQ), a 32-point spread that does not pattern cleanly by year, season, or testing volume. 2024SUQ at 69 percent and 2024WIQ at 42 percent are two cohorts six months apart in the same calendar year with substantially different return behavior. The variation is real, but its source is not legible from the available data.
+The cohort-to-cohort variation among the seven non-final cohorts is what the case study can actually read. Non-retake rates range from 41 percent (2025SPQ) to 71 percent (2024SUQ), a 29-point spread that does not pattern cleanly by year, season, or testing volume. 2024SUQ at 71 percent and 2025SPQ at 41 percent show substantially different return behavior with no legible operational explanation in the available data. The variation is real, but its source is not legible from the available data.
 
 The institution-level implication is the same regardless: the engagement gap is the lever, not the conversion rate. Two analytical follow-ups would clarify the cohort-to-cohort pattern. First, an extension of the testing window to 2026 cohorts would reduce the right-censoring distortion. Second, an institutional-record investigation of operational differences across the seven cohorts (regional policy changes, financial-aid timing, communication cadence with first-time failers) would surface the operational factors that the funnel arithmetic cannot.
 
@@ -383,9 +383,9 @@ auc_obj   <- roc(test$result, test$prob, levels = c(0, 1), direction = "<")
 cat("AUC on held-out set:", round(auc(auc_obj), 4), "\n")
 ```
 
-Running this against the database produces an AUC in the range of 0.55 to 0.62, depending on the random split, with a mean of approximately 0.60. That is meaningfully above chance (0.50) but far below the 0.80-plus AUC that would justify per-student intervention decisions. The model is informative at the cohort and campus level (which the descriptive analysis above already covered), but it cannot reliably distinguish between two students at the same campus in the same program who differ only in their graduation timing.
+Running this against the database produces an AUC in the range of 0.59 to 0.67, depending on the random split, with a mean of approximately 0.63. That is meaningfully above chance (0.50) but far below the 0.80-plus AUC that would justify per-student intervention decisions. The model is informative at the cohort and campus level (which the descriptive analysis above already covered), but it cannot reliably distinguish between two students at the same campus in the same program who differ only in their graduation timing.
 
-What an AUC of 0.60 means in practical terms: if the model ranks students from highest to lowest predicted pass probability, students in the top half of the ranking pass about 90 percent of the time and students in the bottom half pass about 82 percent. The students most at risk are spread across the ranking rather than concentrated at the bottom. Even the lowest-predicted decile passes around 74 percent of the time. That is real discrimination, but it is too compressed to support targeted student-level intervention: the model is recapitulating the campus-level signal the descriptive analysis already surfaced, not adding new individual-level information on top of it.
+What an AUC of 0.63 means in practical terms: if the model ranks students from highest to lowest predicted pass probability, students in the top half of the ranking pass about 90 percent of the time and students in the bottom half pass about 83 percent. The students most at risk are spread across the ranking rather than concentrated at the bottom. Even the lowest-predicted decile passes around 74 percent of the time. That is real discrimination, but it is too compressed to support targeted student-level intervention: the model is recapitulating the campus-level signal the descriptive analysis already surfaced, not adding new individual-level information on top of it.
 
 The ceiling on this AUC is the data, not the model. The features available are mostly proxies for "which campus and program did this student attend," and the within-campus and within-program variance in outcomes (the part that depends on individual-student factors) is invisible to the model because the features that would explain it are not in the dataset. A more sophisticated model (random forest, gradient boosting) would produce a similar AUC, because the limit is information content not model class.
 
