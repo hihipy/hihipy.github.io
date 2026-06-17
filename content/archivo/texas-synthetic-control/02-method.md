@@ -42,6 +42,32 @@ Three choices were not free parameters but consequences of what the data contain
 
 **The specification was selected by what solves.** Synthetic control fits by solving a constrained optimization, and that optimization can fail when the predictors are too collinear: several pre-period covariates and closely spaced outcome lags carry nearly the same information, and the solver cannot invert the resulting near-singular system. Rather than guess at a specification and hope, the analysis defines a ladder of specifications from richest to leanest and accepts the first rung that the optimizer can actually solve for both outcomes. With the window trimmed and the two donors dropped, the richest specification, all seven covariates plus three outcome lags, solves cleanly. The leaner rungs exist as a documented fallback that the final fit did not need.
 
+## The Fit, in Code
+
+The estimator above is implemented with [`tidysynth`](https://cran.r-project.org/package=tidysynth), whose pipeline mirrors the steps almost exactly: declare the treated unit and treatment year, supply the predictors, solve for the weights on the pre-period, then generate the synthetic control and its placebo distribution. The core of the fit, for the Black-male outcome, reads:
+
+```r
+library(tidysynth)
+
+sc_black <- texas_panel |>
+  synthetic_control(
+    outcome    = bmprison,
+    unit       = state,
+    time       = year,
+    i_unit     = "Texas",
+    i_time     = 1993,
+    generate_placebos = TRUE
+  ) |>
+  # one generate_predictor() call per covariate, averaged over the pre-window
+  generate_predictor(time_window = 1986:1993, income = mean(income, na.rm = TRUE)) |>
+  generate_predictor(time_window = 1986:1993, ur     = mean(ur, na.rm = TRUE)) |>
+  # ... remaining covariates and the three outcome lags ...
+  generate_weights(optimization_window = 1986:1993) |>
+  generate_control()
+```
+
+`generate_weights()` is where the nested optimization runs: it solves for the donor weights and the predictor-importance matrix together. `generate_control()` then carries the weighted donor blend across the full window, and `generate_placebos = TRUE` reruns the whole fit with each donor state cast as the treated unit, which is what the [inference phase](/archivo/texas-synthetic-control/04-inference/) uses for the permutation test. The white-male fit is identical with `wmprison` in place of `bmprison`.
+
 ## The Estimator, in Full
 
 For the technical reader, here is the estimator stated precisely. Index the treated unit as \(j = 1\) (Texas) and the donor states as \(j = 2, \dots, J+1\). Let \(X_1\) be the \(k \times 1\) vector of pre-treatment predictors for Texas, and \(X_0\) the \(k \times J\) matrix stacking the same predictors for the donors. The synthetic control is a weight vector \(W = (w_2, \dots, w_{J+1})'\) chosen to make the donor blend match Texas on those predictors.

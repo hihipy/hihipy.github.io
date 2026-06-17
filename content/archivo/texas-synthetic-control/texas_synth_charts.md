@@ -1,36 +1,849 @@
----
-title: "Inference"
-weight: 40
-description: "Whether the estimated effects are distinguishable from chance. The placebo permutation that reassigns the 1993 treatment to every donor state, the MSPE-ratio test that ranks Texas against that placebo distribution, and an honest accounting of what the design can and cannot establish."
-summary: "The placebo test, and what it can and cannot prove"
-tags: ["causal-inference", "data-visualization", "econometrics", "r", "synthetic-control"]
-showDate: false
-showReadingTime: true
-showAuthor: false
----
+<div class="pgbd-case-chart-wrap">
+<p class="pgbd-case-chart-headline">Both Groups Rise, Black Men Bear the Larger Share</p>
+<p class="pgbd-case-chart-sub">Gap between observed Texas and its synthetic control, as a share of the counterfactual. Both groups jump after 1993, averaging about 66% above synthetic for Black men and 55% for white men through 1999. The Black male gap runs about 1.2 times the white gap, and that ratio holds steady across the post-period.</p>
 
-{{< katex >}}
-{{< lead >}}
-A gap is only evidence if it would be unusual to find one this large by chance. The placebo test asks exactly that.
-{{< /lead >}}
+{{< chart >}}
 
-## At a Glance
+  "type": "line",
+  "data": {
+    "datasets": [
+      {
+        "label": "Black male gap (% of synthetic)",
+        "data": [
+          {
+            "x": 1986,
+            "y": 0.8
+          },
+          {
+            "x": 1987,
+            "y": 0.6
+          },
+          {
+            "x": 1988,
+            "y": -0.6
+          },
+          {
+            "x": 1989,
+            "y": -3.8
+          },
+          {
+            "x": 1990,
+            "y": -1.8
+          },
+          {
+            "x": 1991,
+            "y": -6.2
+          },
+          {
+            "x": 1992,
+            "y": 6
+          },
+          {
+            "x": 1993,
+            "y": 2.8
+          },
+          {
+            "x": 1994,
+            "y": 33.2
+          },
+          {
+            "x": 1995,
+            "y": 67.6
+          },
+          {
+            "x": 1996,
+            "y": 71
+          },
+          {
+            "x": 1997,
+            "y": 76.7
+          },
+          {
+            "x": 1998,
+            "y": 73.6
+          },
+          {
+            "x": 1999,
+            "y": 73.2
+          }
+        ],
+        "borderColor": "#D55E00",
+        "backgroundColor": "#D55E00",
+        "borderWidth": 2.5,
+        "pointRadius": 0,
+        "tension": 0.15,
+        "fill": false
+      },
+      {
+        "label": "White male gap (% of synthetic)",
+        "data": [
+          {
+            "x": 1986,
+            "y": 1.9
+          },
+          {
+            "x": 1987,
+            "y": 8.3
+          },
+          {
+            "x": 1988,
+            "y": 3.1
+          },
+          {
+            "x": 1989,
+            "y": -3.6
+          },
+          {
+            "x": 1990,
+            "y": -4.5
+          },
+          {
+            "x": 1991,
+            "y": -6.3
+          },
+          {
+            "x": 1992,
+            "y": 5.6
+          },
+          {
+            "x": 1993,
+            "y": -1
+          },
+          {
+            "x": 1994,
+            "y": 39.9
+          },
+          {
+            "x": 1995,
+            "y": 51.8
+          },
+          {
+            "x": 1996,
+            "y": 51.2
+          },
+          {
+            "x": 1997,
+            "y": 56.8
+          },
+          {
+            "x": 1998,
+            "y": 60.3
+          },
+          {
+            "x": 1999,
+            "y": 68.1
+          }
+        ],
+        "borderColor": "#0072B2",
+        "backgroundColor": "#0072B2",
+        "borderWidth": 2.5,
+        "pointRadius": 0,
+        "tension": 0.15,
+        "fill": false
+      },
+      {
+        "label": "1993: prison expansion begins",
+        "data": [
+          {
+            "x": 1993,
+            "y": -20
+          },
+          {
+            "x": 1993,
+            "y": 90
+          }
+        ],
+        "borderColor": "#888888",
+        "borderWidth": 1.5,
+        "borderDash": [6, 4],
+        "pointRadius": 0,
+        "pointHitRadius": 0,
+        "fill": false,
+        "order": 99
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "interaction": {
+      "mode": "index",
+      "intersect": false
+    },
+    "scales": {
+      "x": {
+        "type": "linear",
+        "min": 1986,
+        "max": 1999,
+        "ticks": {
+          "stepSize": 3,
+          "precision": 0,
+          "format": {
+            "useGrouping": false
+          }
+        },
+        "title": {
+          "display": true,
+          "text": "Year"
+        }
+      },
+      "y": {
+        "min": -20,
+        "max": 90,
+        "title": {
+          "display": true,
+          "text": "Gap vs Synthetic (%)"
+        }
+      }
+    },
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      },
+      "tooltip": {
+        "enabled": true
+      }
+    }
+  }
+{{< /chart >}}
 
-The results phase produced two estimated effects: a large post-1993 gap for Black men and a smaller but real one for white men. An estimate is not yet a result. The question this phase answers is whether gaps of those sizes are unusual, or whether the method would manufacture a gap that large for any state if you asked it to.
+</div>
+<div class="pgbd-case-chart-wrap">
+<p class="pgbd-case-chart-headline">Measured in People, the Gap Is Wider</p>
+<p class="pgbd-case-chart-sub">The same gap measured in prisoners. By 1999 the expansion is associated with roughly 25,700 additional Black male prisoners against 16,900 white, an absolute gap of about 1.5 times. It is wider than the proportional gap because Black incarceration started from a higher base.</p>
 
-Synthetic control answers this with a placebo permutation. The procedure refits the entire method pretending each donor state in turn is the treated unit, reassigning the 1993 treatment to a state that was never expanded. Each placebo state gets its own synthetic control and its own post-1993 gap. The collection of placebo gaps is the distribution of effects the method produces under no real treatment, and the real Texas estimate is meaningful only if it sits at the extreme of that distribution.
+{{< chart >}}
 
-<style>
-  .pgbd-case-chart-wrap { margin: 1.5rem 0 2rem; }
-  .pgbd-case-chart-wrap > .chart { height: 360px; }
-  .pgbd-case-chart-headline { font-size: 1.1rem; font-weight: 700; margin: 0 0 0.25rem; line-height: 1.3; }
-  .pgbd-case-chart-sub { font-size: 0.85rem; opacity: 0.7; margin: 0 0 1rem; }
-</style>
+  "type": "line",
+  "data": {
+    "datasets": [
+      {
+        "label": "Black male gap (prisoners)",
+        "data": [
+          {
+            "x": 1986,
+            "y": 122
+          },
+          {
+            "x": 1987,
+            "y": 96
+          },
+          {
+            "x": 1988,
+            "y": -107
+          },
+          {
+            "x": 1989,
+            "y": -757
+          },
+          {
+            "x": 1990,
+            "y": -409
+          },
+          {
+            "x": 1991,
+            "y": -1543
+          },
+          {
+            "x": 1992,
+            "y": 1564
+          },
+          {
+            "x": 1993,
+            "y": 796
+          },
+          {
+            "x": 1994,
+            "y": 10093
+          },
+          {
+            "x": 1995,
+            "y": 22417
+          },
+          {
+            "x": 1996,
+            "y": 23168
+          },
+          {
+            "x": 1997,
+            "y": 25350
+          },
+          {
+            "x": 1998,
+            "y": 25305
+          },
+          {
+            "x": 1999,
+            "y": 25692
+          }
+        ],
+        "borderColor": "#D55E00",
+        "backgroundColor": "#D55E00",
+        "borderWidth": 2.5,
+        "pointRadius": 0,
+        "tension": 0.15,
+        "fill": false
+      },
+      {
+        "label": "White male gap (prisoners)",
+        "data": [
+          {
+            "x": 1986,
+            "y": 251
+          },
+          {
+            "x": 1987,
+            "y": 999
+          },
+          {
+            "x": 1988,
+            "y": 394
+          },
+          {
+            "x": 1989,
+            "y": -498
+          },
+          {
+            "x": 1990,
+            "y": -667
+          },
+          {
+            "x": 1991,
+            "y": -947
+          },
+          {
+            "x": 1992,
+            "y": 873
+          },
+          {
+            "x": 1993,
+            "y": -176
+          },
+          {
+            "x": 1994,
+            "y": 7477
+          },
+          {
+            "x": 1995,
+            "y": 11124
+          },
+          {
+            "x": 1996,
+            "y": 11411
+          },
+          {
+            "x": 1997,
+            "y": 12862
+          },
+          {
+            "x": 1998,
+            "y": 14289
+          },
+          {
+            "x": 1999,
+            "y": 16877
+          }
+        ],
+        "borderColor": "#0072B2",
+        "backgroundColor": "#0072B2",
+        "borderWidth": 2.5,
+        "pointRadius": 0,
+        "tension": 0.15,
+        "fill": false
+      },
+      {
+        "label": "1993: prison expansion begins",
+        "data": [
+          {
+            "x": 1993,
+            "y": -5000
+          },
+          {
+            "x": 1993,
+            "y": 30000
+          }
+        ],
+        "borderColor": "#888888",
+        "borderWidth": 1.5,
+        "borderDash": [6, 4],
+        "pointRadius": 0,
+        "pointHitRadius": 0,
+        "fill": false,
+        "order": 99
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "interaction": {
+      "mode": "index",
+      "intersect": false
+    },
+    "scales": {
+      "x": {
+        "type": "linear",
+        "min": 1986,
+        "max": 1999,
+        "ticks": {
+          "stepSize": 3,
+          "precision": 0,
+          "format": {
+            "useGrouping": false
+          }
+        },
+        "title": {
+          "display": true,
+          "text": "Year"
+        }
+      },
+      "y": {
+        "min": -5000,
+        "max": 30000,
+        "title": {
+          "display": true,
+          "text": "Prisoners (Gap vs Synthetic)"
+        }
+      }
+    },
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      },
+      "tooltip": {
+        "enabled": true
+      }
+    }
+  }
+{{< /chart >}}
 
-## The Placebo Permutation
+</div>
+<div class="pgbd-case-chart-wrap">
+<p class="pgbd-case-chart-headline">Black Male Incarceration: Texas vs Synthetic Texas</p>
+<p class="pgbd-case-chart-sub">Pre-1993 fit and post-1993 divergence for the Black male series.</p>
 
-The figure below shows the Black-male prisoner gap for Texas in heavy color against the same gap computed for every donor state in grey, each treated as a placebo. If the Texas line is buried in the grey, the estimated effect is indistinguishable from the gaps the method produces by chance. If it stands clear of the grey, the effect is unusual.
+{{< chart >}}
 
+  "type": "line",
+  "data": {
+    "datasets": [
+      {
+        "label": "Texas (observed)",
+        "data": [
+          {
+            "x": 1986,
+            "y": 15207
+          },
+          {
+            "x": 1987,
+            "y": 15780
+          },
+          {
+            "x": 1988,
+            "y": 16956
+          },
+          {
+            "x": 1989,
+            "y": 19366
+          },
+          {
+            "x": 1990,
+            "y": 22634
+          },
+          {
+            "x": 1991,
+            "y": 23249
+          },
+          {
+            "x": 1992,
+            "y": 27568
+          },
+          {
+            "x": 1993,
+            "y": 29260
+          },
+          {
+            "x": 1994,
+            "y": 40451
+          },
+          {
+            "x": 1995,
+            "y": 55602
+          },
+          {
+            "x": 1996,
+            "y": 55810
+          },
+          {
+            "x": 1997,
+            "y": 58393
+          },
+          {
+            "x": 1998,
+            "y": 59709
+          },
+          {
+            "x": 1999,
+            "y": 60785
+          }
+        ],
+        "borderColor": "#D55E00",
+        "backgroundColor": "#D55E00",
+        "borderWidth": 2.5,
+        "pointRadius": 0,
+        "tension": 0.15,
+        "fill": false
+      },
+      {
+        "label": "Synthetic Texas",
+        "data": [
+          {
+            "x": 1986,
+            "y": 15085
+          },
+          {
+            "x": 1987,
+            "y": 15684
+          },
+          {
+            "x": 1988,
+            "y": 17063
+          },
+          {
+            "x": 1989,
+            "y": 20123
+          },
+          {
+            "x": 1990,
+            "y": 23043
+          },
+          {
+            "x": 1991,
+            "y": 24792
+          },
+          {
+            "x": 1992,
+            "y": 26004
+          },
+          {
+            "x": 1993,
+            "y": 28464
+          },
+          {
+            "x": 1994,
+            "y": 30358
+          },
+          {
+            "x": 1995,
+            "y": 33185
+          },
+          {
+            "x": 1996,
+            "y": 32642
+          },
+          {
+            "x": 1997,
+            "y": 33043
+          },
+          {
+            "x": 1998,
+            "y": 34404
+          },
+          {
+            "x": 1999,
+            "y": 35093
+          }
+        ],
+        "borderColor": "#CC79A7",
+        "backgroundColor": "#CC79A7",
+        "borderWidth": 2,
+        "pointRadius": 0,
+        "tension": 0.15,
+        "fill": false,
+        "borderDash": [7, 4]
+      },
+      {
+        "label": "1993: prison expansion begins",
+        "data": [
+          {
+            "x": 1993,
+            "y": 10000
+          },
+          {
+            "x": 1993,
+            "y": 65000
+          }
+        ],
+        "borderColor": "#888888",
+        "borderWidth": 1.5,
+        "borderDash": [6, 4],
+        "pointRadius": 0,
+        "pointHitRadius": 0,
+        "fill": false,
+        "order": 99
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "interaction": {
+      "mode": "index",
+      "intersect": false
+    },
+    "scales": {
+      "x": {
+        "type": "linear",
+        "min": 1986,
+        "max": 1999,
+        "ticks": {
+          "stepSize": 3,
+          "precision": 0,
+          "format": {
+            "useGrouping": false
+          }
+        },
+        "title": {
+          "display": true,
+          "text": "Year"
+        }
+      },
+      "y": {
+        "min": 10000,
+        "max": 65000,
+        "title": {
+          "display": true,
+          "text": "Black Male Prisoners"
+        }
+      }
+    },
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      },
+      "tooltip": {
+        "enabled": true
+      }
+    }
+  }
+{{< /chart >}}
+
+</div>
+<div class="pgbd-case-chart-wrap">
+<p class="pgbd-case-chart-headline">White Male Incarceration: Texas vs Synthetic Texas</p>
+<p class="pgbd-case-chart-sub">The same construction for white men. The effect is large here too, not absent, which is the point: the expansion raised incarceration for both groups.</p>
+
+{{< chart >}}
+
+  "type": "line",
+  "data": {
+    "datasets": [
+      {
+        "label": "Texas (observed)",
+        "data": [
+          {
+            "x": 1986,
+            "y": 13423
+          },
+          {
+            "x": 1987,
+            "y": 13108
+          },
+          {
+            "x": 1988,
+            "y": 13192
+          },
+          {
+            "x": 1989,
+            "y": 13383
+          },
+          {
+            "x": 1990,
+            "y": 14253
+          },
+          {
+            "x": 1991,
+            "y": 14168
+          },
+          {
+            "x": 1992,
+            "y": 16594
+          },
+          {
+            "x": 1993,
+            "y": 17184
+          },
+          {
+            "x": 1994,
+            "y": 26201
+          },
+          {
+            "x": 1995,
+            "y": 32594
+          },
+          {
+            "x": 1996,
+            "y": 33676
+          },
+          {
+            "x": 1997,
+            "y": 35504
+          },
+          {
+            "x": 1998,
+            "y": 37973
+          },
+          {
+            "x": 1999,
+            "y": 41668
+          }
+        ],
+        "borderColor": "#0072B2",
+        "backgroundColor": "#0072B2",
+        "borderWidth": 2.5,
+        "pointRadius": 0,
+        "tension": 0.15,
+        "fill": false
+      },
+      {
+        "label": "Synthetic Texas",
+        "data": [
+          {
+            "x": 1986,
+            "y": 13172
+          },
+          {
+            "x": 1987,
+            "y": 12109
+          },
+          {
+            "x": 1988,
+            "y": 12798
+          },
+          {
+            "x": 1989,
+            "y": 13881
+          },
+          {
+            "x": 1990,
+            "y": 14920
+          },
+          {
+            "x": 1991,
+            "y": 15115
+          },
+          {
+            "x": 1992,
+            "y": 15721
+          },
+          {
+            "x": 1993,
+            "y": 17360
+          },
+          {
+            "x": 1994,
+            "y": 18724
+          },
+          {
+            "x": 1995,
+            "y": 21470
+          },
+          {
+            "x": 1996,
+            "y": 22265
+          },
+          {
+            "x": 1997,
+            "y": 22642
+          },
+          {
+            "x": 1998,
+            "y": 23684
+          },
+          {
+            "x": 1999,
+            "y": 24791
+          }
+        ],
+        "borderColor": "#CC79A7",
+        "backgroundColor": "#CC79A7",
+        "borderWidth": 2,
+        "pointRadius": 0,
+        "tension": 0.15,
+        "fill": false,
+        "borderDash": [7, 4]
+      },
+      {
+        "label": "1993: prison expansion begins",
+        "data": [
+          {
+            "x": 1993,
+            "y": 10000
+          },
+          {
+            "x": 1993,
+            "y": 45000
+          }
+        ],
+        "borderColor": "#888888",
+        "borderWidth": 1.5,
+        "borderDash": [6, 4],
+        "pointRadius": 0,
+        "pointHitRadius": 0,
+        "fill": false,
+        "order": 99
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "interaction": {
+      "mode": "index",
+      "intersect": false
+    },
+    "scales": {
+      "x": {
+        "type": "linear",
+        "min": 1986,
+        "max": 1999,
+        "ticks": {
+          "stepSize": 3,
+          "precision": 0,
+          "format": {
+            "useGrouping": false
+          }
+        },
+        "title": {
+          "display": true,
+          "text": "Year"
+        }
+      },
+      "y": {
+        "min": 10000,
+        "max": 45000,
+        "title": {
+          "display": true,
+          "text": "White Male Prisoners"
+        }
+      }
+    },
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      },
+      "tooltip": {
+        "enabled": true
+      }
+    }
+  }
+{{< /chart >}}
+
+</div>
 <div class="pgbd-case-chart-wrap">
 <p class="pgbd-case-chart-headline">Placebo Inference: Texas Against Every Donor State</p>
 <p class="pgbd-case-chart-sub">Each grey line reassigns the 1993 treatment to a donor state, on the raw prisoner gap used for the permutation test. Texas posts the largest post-to-pre MSPE ratio of all 49 units (rank 1).</p>
@@ -3441,62 +4254,3 @@ The figure below shows the Black-male prisoner gap for Texas in heavy color agai
 
 </div>
 
-The Texas line sits at the edge of the placebo distribution after 1993, which is the visual form of the test. The numeric form is the mean squared prediction error ratio. For any unit, define the pre- and post-treatment mean squared prediction error as the average squared gap in each window:
-
-\[ \text{MSPE}_{\text{pre}} = \frac{1}{T_{\text{pre}}} \sum_{t \le 1993} \big( Y_t - \hat{Y}_t \big)^2, \qquad \text{MSPE}_{\text{post}} = \frac{1}{T_{\text{post}}} \sum_{t > 1993} \big( Y_t - \hat{Y}_t \big)^2 \]
-
-The test statistic is the ratio of the two:
-
-\[ r = \dfrac{\text{MSPE}_{\text{post}}}{\text{MSPE}_{\text{pre}}} \]
-
-A large \(r\) means a unit that fit well before treatment and badly after, which is the signature of a treatment effect rather than a poor synthetic. Dividing by the pre-period error is what makes the statistic fair across units: a state whose synthetic never fit well has a large denominator and cannot post a high ratio just by being noisy. Ranking every unit by \(r\) places the real treated state in the placebo distribution.
-
-## What the Ranking Says
-
-Texas posts the largest MSPE ratio of all forty-nine units for both outcomes. Its Black-male ratio ranks first of forty-nine, and so does its white-male ratio.
-
-The permutation p-value formalizes what "rank first" buys. With \(J+1\) units in the pool (the treated unit plus \(J\) donors), the p-value is the share of units whose MSPE ratio is at least as large as the treated unit's:
-
-\[ p = \dfrac{1}{J+1} \sum_{j=1}^{J+1} \mathbb{1}\big( r_j \ge r_{\text{TX}} \big) \]
-
-where \(\mathbb{1}(\cdot)\) is the indicator function and \(r_{\text{TX}}\) is Texas's ratio. When Texas has the single largest ratio, the sum equals one (only Texas satisfies the inequality), so \(p = 1/(J+1) = 1/49 \approx 0.02\). That is the smallest p-value the placebo distribution can produce at this pool size: with forty-nine units, no result can be more extreme than rank one, and both outcomes reach it.
-
-This is the result the framing has to respect. On the question of whether an effect exists, there is no asymmetry: both the Black-male and the white-male effects are at the extreme of their placebo distributions, both as unlikely to be chance as the test can register. The asymmetry is entirely in magnitude, where the Black-male effect runs about a fifth larger proportionally and about half again larger in people. The data supports "both effects are real, and the Black-male effect is larger," and it does not support "the effect is real for Black men and absent for white men."
-
-## How Much the Specification Matters
-
-A fair objection to the specification ladder is that choosing "the richest spec that solves" could, in principle, be a way to land on a preferred answer. The defense is to show the answer barely moves as the specification changes. Refitting the post-1993 proportional gap on every rung of the ladder, from the full seven-covariate fit down to a bare specification matching only on outcome lags, gives this:
-
-| Rung | Specification | Black Gap | White Gap |
-|------|---------------|-----------|-----------|
-| 1 | 7 Covariates, 3 Lags (Chosen) | 66% | 55% |
-| 2 | 7 Covariates, 1 Lag | 67% | 56% |
-| 3 | 4 Covariates, 2 Lags | 66% | 55% |
-| 4 | 3 Covariates, 1 Lag | 67% | 55% |
-| 5 | Lags Only, 3 Lags | 66% | 59% |
-| 6 | Lags Only, 2 Lags | 65% | 51% |
-
-The Black-male gap holds between 65 and 67 percent across every rung. The white-male gap is slightly more sensitive, ranging from 51 to 59 percent, but it never collapses toward zero and never approaches the Black-male figure. The chosen specification is not a lucky draw; it sits in the middle of a tight band. The unequal-burden finding survives the choice of predictors.
-
-## What This Design Can and Cannot Establish
-
-Every analytical claim has limits worth naming, and synthetic control has specific ones.
-
-**The pre-period is short, but the pre-fit is tight.** The weights are fit on eight years, 1986 to 1993. A skeptic might worry that Texas ranks first only because its post-period error is large, not because its pre-fit is good, since a unit that was always a poor match would post a high ratio for the wrong reason. The pre-period MSPE rules that out. Texas's pre-treatment fit error sits at the 4th percentile of the donor pool for Black men and the 19th for white men, meaning the synthetic tracks Texas more tightly before 1993 than almost every placebo does for its own state. The rank-1 result is driven by a genuinely close pre-fit followed by a real post-1993 departure, not by a loose match inflating the ratio. Eight years is still a short pre-period, and a longer one would sharpen the counterfactual further, but the fit it produces is among the tightest in the pool.
-
-**This is an association with a credible counterfactual, not a randomized experiment.** Synthetic control constructs the most defensible available comparison and tests it against placebos, which is far stronger than a raw before-and-after. It is not assignment by lottery. The honest verb throughout is that the expansion is "associated with" the estimated increase, and the placebo ranking is the evidence that the association is unlikely to be noise, not proof of the mechanism that produced it.
-
-**The estimate captures the expansion together with anything else that hit Texas in 1993 and nothing else.** Synthetic control attributes the post-1993 gap to the treatment, but it cannot separate the capacity expansion from any other Texas-specific shock that arrived in the same window. The expansion is the largest and best-documented candidate, which is why it carries the attribution, but the design measures the net departure from the counterfactual, not the expansion in isolation.
-
-**The mechanism behind the unequal burden is outside the data.** The estimates establish that the increase fell more heavily on Black men. They do not explain why a race-neutral capacity increase produced a race-uneven result. That question, how supply interacts with the charging, sentencing, and parole decisions that actually fill cells, is real and important and lives beyond what these counts can answer. Naming it is part of the result; resolving it is not something this design can do.
-
-The full fit, including the predictor set, the donor pool, and the figure generation, is reproducible: every number in this case study comes from fitting the documented specification against the `texas` panel, and anyone fitting the same specification gets the same estimates, or the case study fails its own reproducibility standard.
-
-
-## Sources
-
-The method originates with Abadie, Diamond, and Hainmueller (2010), "Synthetic Control Methods for Comparative Case Studies: Estimating the Effect of California's Tobacco Control Program," *Journal of the American Statistical Association* 105 (490): 493 to 505. The estimator and its placebo-permutation inference both follow that paper.
-
-The Texas prison-capacity data is the `texas` panel from Scott Cunningham's *Causal Inference: The Mixtape* (Yale University Press, 2021), available online at [mixtape.scunning.com](https://mixtape.scunning.com/). The dataset is distributed in R through the [`causaldata`](https://cran.r-project.org/package=causaldata) package, which is how this analysis loads it.
-
-The fit uses the [`tidysynth`](https://cran.r-project.org/package=tidysynth) package (Dunford), a tidyverse-style interface to the synthetic control estimator.
