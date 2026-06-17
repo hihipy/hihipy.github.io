@@ -54,7 +54,7 @@ Against the roughly 127 million households the Census counts [7], those 5.45 mil
 
 In the block below, every pixel is one household. The counter at the top of the frame tracks how many you have scrolled past, and what they are worth together.
 
-<div id="nwwrap" style="position:relative;left:50%;transform:translateX(-50%);width:94vw;max-width:1320px;margin:1.75rem 0;display:block;">
+<div id="nwwrap" style="position:relative;width:100%;margin:1.75rem 0;display:block;">
 <div style="font-weight:700;font-size:1.05rem;margin-bottom:.3rem;">One Household, One Pixel</div>
 <div style="font-size:.92rem;line-height:1.55;margin-bottom:.7rem;">Every pixel is one median U.S. household, 192,700 dollars. The whole block is the 1.05 trillion dollar fortune: 5,448,884 of them. One pixel is barely visible. The white lines mark each additional million households, and the readout counts the line just beneath it. Scroll all the way down and the count reaches the full 5,448,884, the entire fortune, each pixel a family's whole net worth.</div>
 <div id="nwscroll" style="position:relative;width:100%;height:78vh;max-height:760px;overflow-y:auto;overflow-x:hidden;background:#06121c;border:1px solid rgba(128,128,128,.45);border-radius:8px;">
@@ -238,7 +238,7 @@ Pointed the other way, divide by the world median income of about 3,376 dollars 
 
 The fortune is a full year of income for about 311 million people at the world median, roughly the population of the United States. Not their savings. Everything they earn. These spans run off the edge of human history, so the companion essay in this room, which compresses Earth's 4.54 billion years into one 78-year life, is the right ruler: the Nigerian saver would have had to start about fifteen years into that life, deep in the Neoproterozoic, before animals existed.
 
-<div id="rgwrap" style="position:relative;left:50%;transform:translateX(-50%);width:94vw;max-width:1320px;margin:1.85rem 0;display:block;">
+<div id="rgwrap" style="position:relative;width:100%;margin:1.85rem 0;display:block;">
 <div style="font-weight:700;font-size:1.05rem;margin-bottom:.3rem;">One Person, One Pixel, by Region</div>
 <div style="font-size:.92rem;line-height:1.55;margin-bottom:.7rem;">Built like the households block above, one pixel per person, the same density. But here each pixel is one person earning the chosen region's median income for a year, and the wall holds every person the fortune could pay for a full year, tens to hundreds of millions of them. Pick a region and scroll: the count climbs to the region's full total, the entire 1.05 trillion dollar fortune. The poorer the region, the further the wall runs, Africa falls far past the rest.</div>
 <div style="margin-bottom:.7rem;">
