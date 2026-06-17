@@ -76,18 +76,48 @@ The weights are restricted to the unit simplex, which is the constraint that giv
 
 \[ w_j \geq 0 \quad \text{for all } j, \qquad \sum_{j=2}^{J+1} w_j = 1 \]
 
+where:
+- \(w_j\) is the weight given to donor state \(j\) in the synthetic blend
+- The first condition forces every weight to be zero or positive, so no state is subtracted
+- The second condition forces the weights to sum to one, so the blend is a genuine weighted average and cannot extrapolate beyond the real states
+- \(J\) is the number of donor states (Texas is unit 1; donors are units 2 through \(J+1\))
+
+
 Within that constraint, the weights minimize a weighted distance between Texas and the donor blend on the predictors:
 
 \[ W^{*}(V) = \arg\min_{W} \; (X_1 - X_0 W)' \, V \, (X_1 - X_0 W) \]
 
+where:
+- \(W\) is the full set of donor weights the method solves for; \(W^{*}(V)\) is the best set given an importance matrix \(V\)
+- \(X_1\) is the column of Texas's pre-1993 predictor values (income, poverty, the outcome lags, and the rest)
+- \(X_0\) is the same predictors for every donor state, stacked into a matrix
+- \(V\) is a diagonal matrix of importances, one per predictor, saying how much each predictor counts toward the match
+- \(\arg\min_{W}\) means "the choice of \(W\) that makes the bracketed distance as small as possible"
+
+
 The matrix \(V\) is diagonal and assigns an importance to each predictor. It is not chosen by hand. It is selected by an outer optimization that picks the \(V\) whose resulting weights produce the smallest prediction error on the pre-treatment outcome path. Writing \(Z_1\) for Texas's pre-period outcome vector and \(Z_0\) for the donors':
 
 \[ V^{*} = \arg\min_{V} \; \big( Z_1 - Z_0 \, W^{*}(V) \big)' \big( Z_1 - Z_0 \, W^{*}(V) \big) \]
+
+where:
+- \(V^{*}\) is the importance matrix the outer optimization settles on
+- \(Z_1\) is Texas's actual pre-1993 incarceration path (the outcome itself, year by year)
+- \(Z_0\) is the same pre-1993 paths for the donor states
+- \(W^{*}(V)\) is the weight solution from the inner problem above, which depends on \(V\)
+- In words: pick the predictor importances whose resulting weights track Texas's real pre-1993 path most closely
+
 
 This is the nested structure that makes the fit both data-driven and prone to the singular-matrix failures the specification ladder was built to handle: the inner problem solves the constrained quadratic program for \(W\) given \(V\), and the outer problem searches over \(V\). When predictors are near-collinear, the inner program's matrix is near-singular and the solver fails, which is exactly the symptom the ladder steps around.
 
 With \(W^{*}\) fixed, the synthetic control's outcome in any year is the weighted donor average, and the estimated effect is the gap between observed Texas and that synthetic value:
 
 \[ \hat{Y}_{\text{TX},t}(0) = \sum_{j=2}^{J+1} w_j^{*} \, Y_{jt}, \qquad \hat{\tau}_t = Y_{\text{TX},t} - \hat{Y}_{\text{TX},t}(0) \]
+
+where:
+- \(\hat{Y}_{\text{TX},t}(0)\) is the synthetic counterfactual: the weighted blend of donor states, the estimate of where Texas would have gone without the expansion
+- \(w_j^{*}\) is the final solved weight for donor state \(j\), and \(Y_{jt}\) is that state's incarceration in year \(t\)
+- \(Y_{\text{TX},t}\) is Texas's actual incarceration in year \(t\)
+- \(\hat{\tau}_t\) is the estimated effect: the gap between real Texas and its synthetic, year by year
+
 
 The build is in R using tidysynth, with a hard guard that refuses to run if any predictor cell in the window is missing, so the completeness guarantees above are enforced in code rather than assumed.

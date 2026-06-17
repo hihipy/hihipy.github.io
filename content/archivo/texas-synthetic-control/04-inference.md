@@ -3445,9 +3445,22 @@ The Texas line sits at the edge of the placebo distribution after 1993, which is
 
 \[ \text{MSPE}_{\text{pre}} = \frac{1}{T_{\text{pre}}} \sum_{t \le 1993} \big( Y_t - \hat{Y}_t \big)^2, \qquad \text{MSPE}_{\text{post}} = \frac{1}{T_{\text{post}}} \sum_{t > 1993} \big( Y_t - \hat{Y}_t \big)^2 \]
 
+where:
+- MSPE is mean squared prediction error: the average squared gap between a unit and its synthetic
+- \(\text{MSPE}_{\text{pre}}\) measures fit before 1993; \(\text{MSPE}_{\text{post}}\) measures it after
+- \(Y_t\) is the observed count in year \(t\) and \(\hat{Y}_t\) is the synthetic count
+- \(T_{\text{pre}}\) and \(T_{\text{post}}\) are the number of years in each window, so each term is an average
+
+
 The test statistic is the ratio of the two:
 
 \[ r = \dfrac{\text{MSPE}_{\text{post}}}{\text{MSPE}_{\text{pre}}} \]
+
+where:
+- \(r\) is the test statistic: how much worse a unit fits after 1993 than before
+- A large \(r\) means a tight pre-period fit followed by a big post-period departure, the signature of a real effect
+- Dividing by the pre-period error is what keeps the statistic fair: a unit that never fit well cannot post a high ratio just by being noisy
+
 
 A large \(r\) means a unit that fit well before treatment and badly after, which is the signature of a treatment effect rather than a poor synthetic. Dividing by the pre-period error is what makes the statistic fair across units: a state whose synthetic never fit well has a large denominator and cannot post a high ratio just by being noisy. Ranking every unit by \(r\) places the real treated state in the placebo distribution.
 
@@ -3458,6 +3471,13 @@ Texas posts the largest MSPE ratio of all forty-nine units for both outcomes. It
 The permutation p-value formalizes what "rank first" buys. With \(J+1\) units in the pool (the treated unit plus \(J\) donors), the p-value is the share of units whose MSPE ratio is at least as large as the treated unit's:
 
 \[ p = \dfrac{1}{J+1} \sum_{j=1}^{J+1} \mathbb{1}\big( r_j \ge r_{\text{TX}} \big) \]
+
+where:
+- \(p\) is the permutation p-value: the share of all units whose MSPE ratio is at least as large as Texas's
+- \(J+1\) is the total number of units (Texas plus \(J\) donors), here 49
+- \(r_j\) is unit \(j\)'s MSPE ratio and \(r_{\text{TX}}\) is Texas's
+- \(\mathbb{1}(\cdot)\) counts 1 when the condition holds and 0 otherwise; when Texas ranks first the sum is 1, giving \(p = 1/49\)
+
 
 where \(\mathbb{1}(\cdot)\) is the indicator function and \(r_{\text{TX}}\) is Texas's ratio. When Texas has the single largest ratio, the sum equals one (only Texas satisfies the inequality), so \(p = 1/(J+1) = 1/49 \approx 0.02\). That is the smallest p-value the placebo distribution can produce at this pool size: with forty-nine units, no result can be more extreme than rank one, and both outcomes reach it.
 

@@ -50,10 +50,23 @@ For a reader who wants the target defined precisely, the question is an estimand
 
 \[ \tau_{t} = Y_{\text{TX},t}(1) - Y_{\text{TX},t}(0), \quad t > 1993 \]
 
+where:
+- \(\tau_{t}\) is the treatment effect in year \(t\): how much higher Texas incarceration was because of the expansion
+- \(Y_{\text{TX},t}(1)\) is the incarceration count Texas actually recorded, with the expansion
+- \(Y_{\text{TX},t}(0)\) is the count Texas would have recorded without the expansion, which is never observed
+- \(t > 1993\) restricts attention to the years after the buildout began
+
+
 The first term is observed: it is what Texas actually recorded. The second term is the counterfactual and is never observed, because Texas did expand. Every other state supplies \(Y_{it}(0)\) only, since none of them received the treatment. The entire methodological problem is the estimation of the single missing term \(Y_{\text{TX},t}(0)\), and synthetic control is one disciplined way to estimate it.
 
 The race split runs the same estimand twice, once for each outcome:
 
 \[ \tau_{t}^{\,b} = Y_{\text{TX},t}^{\,b}(1) - Y_{\text{TX},t}^{\,b}(0), \qquad \tau_{t}^{\,w} = Y_{\text{TX},t}^{\,w}(1) - Y_{\text{TX},t}^{\,w}(0) \]
+
+where:
+- The superscript \(b\) marks the Black-male prisoner count and \(w\) the white-male count
+- \(\tau_{t}^{\,b}\) and \(\tau_{t}^{\,w}\) are the same treatment effect computed separately for each group
+- Everything else matches the single-outcome version above, just run twice
+
 
 where \(b\) and \(w\) index the Black-male and white-male prisoner counts. The "unequal burden" finding is a statement about the relationship between \(\tau_{t}^{\,b}\) and \(\tau_{t}^{\,w}\): both are large and positive after 1993, and \(\tau_{t}^{\,b}\) exceeds \(\tau_{t}^{\,w}\) both in proportion to its baseline and in absolute count.

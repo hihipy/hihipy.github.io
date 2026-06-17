@@ -906,18 +906,42 @@ The figures above are all built from a single quantity: the gap between observed
 
 \[ \hat{\tau}_t = Y_{\text{TX},t} - \sum_{j=2}^{J+1} w_j^{*} \, Y_{jt} \]
 
+where:
+- \(\hat{\tau}_t\) is the absolute gap in year \(t\), measured in prisoners
+- \(Y_{\text{TX},t}\) is Texas's observed count and the sum is the synthetic counterfactual
+- \(w_j^{*}\) is the solved weight for donor \(j\); \(Y_{jt}\) is that donor's count in year \(t\)
+
+
 where \(Y_{\text{TX},t}\) is the observed Texas count and the sum is the synthetic value. This is the absolute gap, the quantity plotted in prisoners.
 
 The proportional gap divides that difference by the synthetic counterfactual, which is what makes the Black-male and white-male series comparable across their very different baselines:
 
 \[ \hat{\pi}_t = \dfrac{\hat{\tau}_t}{\sum_{j=2}^{J+1} w_j^{*} \, Y_{jt}} = \dfrac{Y_{\text{TX},t} - \hat{Y}_{\text{TX},t}(0)}{\hat{Y}_{\text{TX},t}(0)} \]
 
+where:
+- \(\hat{\pi}_t\) is the proportional gap: the absolute gap divided by the synthetic counterfactual, so it reads as a percentage
+- The denominator \(\hat{Y}_{\text{TX},t}(0)\) is the synthetic count, the same weighted blend as above
+- Dividing by the counterfactual is what makes the Black and white gaps comparable despite very different baselines
+
+
 The two summary ratios the case study reports are functions of these quantities, averaged over the post-period \(t \in \{1994, \dots, 1999\}\). The proportional ratio compares the mean proportional gaps of the two outcomes:
 
 \[ R_{\pi} = \dfrac{\overline{\hat{\pi}}^{\,b}}{\overline{\hat{\pi}}^{\,w}} \approx \dfrac{0.66}{0.55} \approx 1.2 \]
 
+where:
+- \(R_{\pi}\) is the ratio of the two groups' proportional gaps
+- \(\overline{\hat{\pi}}^{\,b}\) and \(\overline{\hat{\pi}}^{\,w}\) are the average proportional gaps for Black and white men across 1994 to 1999
+- The result, about 1.2, means the Black-male gap runs roughly a fifth larger in proportional terms
+
+
 while the absolute ratio compares the end-of-window gaps in people:
 
 \[ R_{\tau} = \dfrac{\hat{\tau}_{1999}^{\,b}}{\hat{\tau}_{1999}^{\,w}} \approx \dfrac{25{,}692}{16{,}877} \approx 1.5 \]
+
+where:
+- \(R_{\tau}\) is the ratio of the two groups' absolute gaps, in people
+- \(\hat{\tau}_{1999}^{\,b}\) and \(\hat{\tau}_{1999}^{\,w}\) are the end-of-window prisoner gaps for Black and white men
+- The result, about 1.5, is larger than the proportional ratio because Black incarceration starts from a higher base
+
 
 The gap between \(R_{\pi} \approx 1.2\) and \(R_{\tau} \approx 1.5\) is the base-rate effect stated exactly: the same effect is a fifth larger proportionally but half again larger in people, because the denominator \(\hat{Y}^{\,b}(0)\) for Black men is itself far larger than \(\hat{Y}^{\,w}(0)\) for white men.
