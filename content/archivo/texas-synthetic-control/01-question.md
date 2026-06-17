@@ -20,6 +20,8 @@ In 1993 Texas began building prisons faster than almost any state ever had. With
 
 That makes it a useful thing to study. When one state makes a large, sudden change and the rest of the country does not, you can ask what would have happened to that state without the change, and compare. If incarceration in Texas jumped after 1993 while similar states held steady, the expansion is the most believable reason for the jump. This phase explains why the expansion counts as a clean test, what to measure against it, and how the conclusion shifted once the numbers came in.
 
+The single-outcome version of this analysis, the 1993 Texas expansion estimated for one prisoner series, is the canonical synthetic-control teaching example from Cunningham's Mixtape. What this case study adds is the race split: running Black-male and white-male incarceration as two parallel outcomes and treating the comparison between them as the finding. The method is borrowed and well-trodden; the contribution is what the comparison reveals.
+
 ## Why This Is a Natural Experiment
 
 A clean natural experiment needs three things: a treatment that arrives at a known time, a treated unit that can be compared against untreated ones, and a reason to believe the treatment was not itself caused by the outcome it is supposed to affect. The Texas expansion has all three.
@@ -71,4 +73,4 @@ where:
 - Everything else matches the single-outcome version above, just run twice
 
 
-where \(b\) and \(w\) index the Black-male and white-male prisoner counts. The "unequal burden" finding is a statement about the relationship between \(\tau_{t}^{\,b}\) and \(\tau_{t}^{\,w}\): both are large and positive after 1993, and \(\tau_{t}^{\,b}\) exceeds \(\tau_{t}^{\,w}\) both in proportion to its baseline and in absolute count.
+The "unequal burden" finding is a statement about the relationship between \(\tau_{t}^{\,b}\) and \(\tau_{t}^{\,w}\): both are large and positive after 1993, and \(\tau_{t}^{\,b}\) exceeds \(\tau_{t}^{\,w}\) both in proportion to its baseline and in absolute count.
