@@ -28,7 +28,7 @@ Earth is 4.54 billion years old. Shrink that to one 78-year life and see where y
 
 Every year you live equals about **58.2 million years** of Earth history. Everything below follows from that.
 
-| One unit of your life | equals this much Earth history |
+| One Unit of Your Life | Equals This Much Earth History |
 | --- | --- |
 | **1 year** | about 58.2 million years |
 | **1 month** | about 4.85 million years |
@@ -490,7 +490,7 @@ Anatomically modern humans appear in Africa about 300,000 years ago. Every human
 
 Zoom in on age 77 to 78, the last single year. It holds the entire Age of Mammals, from the empty world after the asteroid to you reading this. One month here is about 4.85 million years.
 
-| Month | Age | Date | What's happening |
+| Month | Age | Date | What's Happening |
 | --- | --- | --- | --- |
 | **Month 1** | 77.04 | 56 mya | Mammals spread into every niche the dinosaurs left empty. The first primates scamper through the trees during a brief, intense global warming spike. |
 | **Month 2** | 77.14 | 50 mya | Some hoofed mammals walk back into the sea and begin the slow change into whales. What crawled out of the ocean sends a branch right back in. |
@@ -529,3 +529,4 @@ Earth's age, the eon boundaries, and the Cambrian, Permian, and K-Pg dates are m
 **How the live dates work.** The present date, and the handful of recent milestones near the end of the timeline, are read from your device's clock each time the page loads, so the countdown always runs to today rather than to whenever this was written. Everything in deep time is fixed: moving the present forward by a year shifts those figures by about one part in 4.5 billion, far below anything you could see.
 
 <script>document.addEventListener("DOMContentLoaded",function(){var YPS=58.2e6/31557600;function ord(n){if(n>3&&n<21)return "th";switch(n%10){case 1:return "st";case 2:return "nd";case 3:return "rd";default:return "th";}}function fmtDate(d){var wd=d.toLocaleDateString("en-US",{weekday:"long"});var mo=d.toLocaleDateString("en-US",{month:"long"});var da=d.getDate();return wd+" "+mo+" "+da+ord(da)+" "+d.getFullYear();}function nice(y){y=Math.round(y);if(y<100)return String(y);var m=Math.pow(10,Math.floor(Math.log10(y))-1);return (Math.round(y/m)*m).toLocaleString("en-US");}function be(y){var s=y/YPS;if(s>=21600)return (s/3600).toFixed(2)+" hr";if(s>=120)return (s/60).toFixed(2)+" min";return s.toFixed(2)+" sec";}var now=new Date();var ny=now.getFullYear()+now.getMonth()/12;document.querySelectorAll(".now-date").forEach(function(e){e.textContent=fmtDate(now);});document.querySelectorAll("tr[data-ref-year]").forEach(function(tr){var ref=parseFloat(tr.getAttribute("data-ref-year"));var ya=ny-ref;var a=tr.querySelector(".years-ago");var b=tr.querySelector(".before-end");if(a)a.textContent="~"+nice(ya)+" yr ago";if(b)b.textContent=be(ya);});});</script>
+

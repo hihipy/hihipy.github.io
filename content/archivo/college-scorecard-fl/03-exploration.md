@@ -383,7 +383,7 @@ ORDER BY AVG(am.c150_4) DESC;
 
 Result:
 
-| Sector | Avg Completion % | Min % | Max % | Rows With Data |
+| Sector | Avg Completion % | Min % | Max % | Rows with Data |
 |---|---:|---:|---:|---:|
 | Public | 62.8 | 31.8 | 91.5 | 125 |
 | Private Nonprofit | 47.6 | 0.0 | 100.0 | 439 |
@@ -566,3 +566,4 @@ What did the for-profit closure wave look like as a structural shift in Florida'
 How do Florida's HBCUs compare to the broader Florida four-year picture? FAMU is the only public HBCU in the State University System, and Bethune-Cookman, Edward Waters, and Florida Memorial are private nonprofit HBCUs. Their cost, completion, and outcomes profiles are interesting both individually and as a peer group. Phase 04 develops this thread.
 
 These are the questions phase 04 reaches for, with window functions and common table expressions doing the work that group-bys alone cannot.
+

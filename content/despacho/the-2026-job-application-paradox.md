@@ -61,7 +61,7 @@ A single office application now converts more rarely than a Harvard acceptance. 
 
 Each row shows the odds, a "1 in X" reading, and the kind of number it is (this last column is the key to reading the table honestly). Source numbers map to the references at the end.
 
-|  Goal  |  Odds  |  Roughly  |  What it measures  |  Source  |
+|  Goal  |  Odds  |  Roughly  |  What It Measures  |  Source  |
 | :---: | :---: | :---: | :---: | :---: |
 |  Get into an average US college  |  73%  |  3 in 4  |  per applicant  |  [1]  |
 |  Finish Navy SEAL training (BUD/S)  |  \~25%  |  1 in 4  |  completion rate  |  [2] [3]  |
@@ -178,7 +178,7 @@ $$
 
 Evaluated across a realistic range of \\(n\\), *assuming a single applicant's personal rate equalled the pile average* \\(p = 1/242\\):
 
-|  Applications sent, \\(n\\)  |  \\(P(\\text{at least one offer})\\)  |  Roughly  |
+|  Applications Sent, \\(n\\)  |  \\(P(\\text{at least one offer})\\)  |  Roughly  |
 | :---: | :---: | :---: |
 |  1  |  0.41%  |  1 in 242  |
 |  10  |  4.06%  |  1 in 25  |
@@ -266,7 +266,7 @@ Second, the trials are not independent. Your 100 applications share one resume, 
 
 Put your own rate in and the picture matches lived experience. If you are applying cold to competitive roles and your true rate is nearer \\(1/1000\\), then 100 applications give about a 9.5% chance of an offer, and reaching 90% confidence takes roughly 2,300 applications, not 557. Searches that run into the hundreds or thousands of applications per offer are not anomalies; they are what the curve looks like below the mean, which is where most people applying cold actually live.
 
-| Your true rate | Applications per offer | Offer from 100 apps | Apps for 90% confidence |
+| Your True Rate | Applications per Offer | Offer from 100 Apps | Apps for 90% Confidence |
 | :---: | :---: | :---: | :---: |
 | 1 in 25 (well matched, referred) | 25 | 98.3% | 57 |
 | 1 in 242 (pile average) | 242 | 33.9% | 557 |
@@ -411,7 +411,7 @@ p_{\text{qualified}} = \frac{1}{fN} = \frac{p_{\text{app}}}{f},
 \frac{p_{\text{qualified}}}{p_{\text{app}}} = \frac{1}{f}.
 $$
 
-|  Signal fraction \\(f\\)  |  Qualified pool \\(q = fN\\)  |  Qualified odds \\(1/q\\)  |  Boost over headline \\(1/f\\)  |
+|  Signal Fraction \\(f\\)  |  Qualified Pool \\(q = fN\\)  |  Qualified Odds \\(1/q\\)  |  Boost Over Headline \\(1/f\\)  |
 | :---: | :---: | :---: | :---: |
 |  10%  |  24  |  4.13%  |  10.0x  |
 |  12.5%  |  30  |  3.31%  |  8.0x  |
@@ -464,7 +464,7 @@ $$
 
 but Harvard's 4.2% is **per applicant** and the office 0.413% is **per application**. The comparison is dramatic precisely because it crosses metric types. Here is the full ladder as a ratio to the office line and on a base-10 log scale, which is the honest way to see the spread.
 
-|  Goal  |  Rate  |  \\(\\log\_{10}(\\text{rate})\\)  |  Ratio vs office  |
+|  Goal  |  Rate  |  \\(\\log\_{10}(\\text{rate})\\)  |  Ratio vs Office  |
 | :---: | :---: | :---: | :---: |
 |  Average US college  |  73%  |  -0.14  |  177x  |
 |  Navy SEAL (finish)  |  25%  |  -0.60  |  60x  |
@@ -522,7 +522,7 @@ Each recruiter now faces roughly **11 times** the applications in the same hours
 
 The 242 figure is the softest, most load-bearing input in this note, so it is worth asking how much the conclusions move if it is off. Because the per-application odds are exactly \\(1/N\\), the headline scales inversely with the denominator, and the confidence targets scale with it. Varying only \\(N\\):
 
-| Applications per opening, \\(N\\) | Headline odds \\(1/N\\) | For 50% confidence | For 90% confidence |
+| Applications per Opening, \\(N\\) | Headline Odds \\(1/N\\) | For 50% Confidence | For 90% Confidence |
 | :---: | :---: | :---: | :---: |
 | 100 | 1.00% | 69 | 230 |
 | 150 | 0.67% | 104 | 345 |
@@ -558,7 +558,7 @@ The volume game is rigged against volume. The way out is signal.
 
 Not all of these figures are equal, and an honest analysis says so. They fall into three tiers.
 
-|  Tier  |  Meaning  |  Figures in this tier  |
+|  Tier  |  Meaning  |  Figures in This Tier  |
 | :---: | :---: | :---: |
 |  Primary / audited  |  Official institutional disclosures or government statistics  |  Harvard, MIT, Stanford, Yale Law (ABA 509), NASA, NCAA, BLS JOLTS, US State Dept (green card), SCOTUS (US Courts), Capterra (named survey), Greenhouse (benchmark report)  |
 |  Company-stated  |  A figure the organization itself published, sometimes self-serving  |  SpaceX (legal filing), Goldman Sachs (reported via Fortune), Google (company-derived estimate)  |
@@ -732,4 +732,5 @@ All links were live as of May 2026. Verify before citing.
   else window.addEventListener('load', function () { setTimeout(init, 100); });
 })();
 </script>
+
 

@@ -47,7 +47,7 @@ A single small macro for a recurring problem: **GetHyperlinkURL** is a custom Ex
 
 A complete reference, with a one-line description of each:
 
-| Macro | Category | What it does |
+| Macro | Category | What It Does |
 |---|---|---|
 | `DeleteHiddenRows` | Cleaning | Removes hidden rows using bottom-up scanning and Union batching |
 | `FillBlanksDown` | Cleaning | Fills blank cells with the value above, preserving merged cells |
@@ -198,3 +198,4 @@ The result is a document that an LLM can ingest and immediately use to answer qu
 ## Repo
 
 [github.com/hihipy/excel-vba-toolkit](https://github.com/hihipy/excel-vba-toolkit)
+

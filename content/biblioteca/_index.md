@@ -92,7 +92,7 @@ The rest of this section walks through what happens at each stage and which tool
 
 The notebook stage and the polished-output stage are different jobs. Notebooks are for the iterative work where you run cells out of order, change your mind, and rebuild the dataframe three times before you trust it. The polished output is for the deliverable where the document itself is the artifact. Mixing the two produces notebooks that pretend to be reports and reports that pretend to be notebooks. Both are worse than the unmixed versions.
 
-| Language | Strengths | Notebook | When to reach for it |
+| Language | Strengths | Notebook | When to Reach for It |
 |---|---|---|---|
 | **Python** | Pipelines, ETL, glue code, ML, web work | [marimo](https://marimo.io/) (or [Jupyter](https://jupyter.org/)) | Default for most analytical work |
 | **R** | Statistics, static figures, regression-heavy analysis | Jupyter with R kernel, or [RStudio](https://posit.co/products/open-source/rstudio/) | When the output is a statistical claim or a publication-quality static figure |
@@ -495,3 +495,4 @@ The data storytelling tradition rests on [John Tukey](https://en.wikipedia.org/w
 Beyond software and books, the [Jupyter community](https://jupyter.org/community), the [Posit community](https://forum.posit.co/), the [Julia Discourse](https://discourse.julialang.org/), and [Stack Overflow](https://stackoverflow.com/) are the ambient infrastructure that makes case study work tractable. Most of the time, the question I am about to ask has been asked and answered already. The asking and the answering are themselves contributions.
 
 The composition of any case study is mine. The methods, the tools, and the field's accumulated knowledge that the case study draws on are not.
+

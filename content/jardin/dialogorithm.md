@@ -59,7 +59,7 @@ $$\prod_{d=0}^{9} \frac{N_d!}{(N_d - m_d)!}$$
 
 This is a product of falling factorials, one per digit value, capturing the "no repeats within a number" constraint. The numbers grow alarmingly fast as phone numbers get longer.
 
-| Country | Number | Unique outputs |
+| Country | Number | Unique Outputs |
 |---|---|---|
 | United States | +1 (555) 867-5309 | ~1.16 quadrillion |
 | France | +33 6 12 34 56 78 | ~1.45 quadrillion |
@@ -260,3 +260,4 @@ The error-handling philosophy here is that the user should never see a cryptic L
 ## Repo
 
 [github.com/hihipy/dialogorithm](https://github.com/hihipy/dialogorithm)
+

@@ -132,7 +132,7 @@ SELECT
 
 Result:
 
-| Sum of total_attempts | Count of attempts rows | Difference |
+| Sum of total_attempts | Count of Attempts Rows | Difference |
 |---:|---:|---:|
 | 7,635 | 7,635 | 0 |
 
@@ -189,7 +189,7 @@ LIMIT 10;
 
 Both queries return:
 
-| Terms (grad to test) | Students |
+| Terms (Grad to Test) | Students |
 |---:|---:|
 | −3 | 1 |
 | −1 | 2 |
@@ -239,3 +239,4 @@ Result:
 [Phase 03 (Exploration)](/archivo/penobscot-nclex/03-exploration/) takes the schema as given and runs the orientation queries: first-time pass rates by region, campus, program, and cohort, with confidence intervals computed inline in SQL using the standard `1.96 * SQRT(p * (1 - p) / n)` formula. The campus spread phase 01 surfaced gets its first full breakdown with sample-size context. The cohort trend across the two-year window gets its first visualization. The retake-attempt distribution and the time-from-graduation-to-test concentration at one quarter get their first development.
 
 [Phase 04 (Findings)](/archivo/penobscot-nclex/04-findings/) develops the three threads worth following at depth: the 21-point campus spread and what its size implies about where intervention should focus, the post-NGN cohort decline that tracks the national rate at a similar pace while sitting two to three points below national throughout, and the retake conversion rate that runs more than twenty percentage points above the [NCSBN](https://www.ncsbn.org/) national benchmark for repeat NCLEX-RN takers. The predictive-modeling discussion at the end of phase 04 switches briefly to R for the logistic regression and AUC discussion, where SQL hits its analytical ceiling.
+
