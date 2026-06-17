@@ -155,3 +155,10 @@ figure,
   margin-right: auto;
   max-width: min(100%, 48rem);
 }
+
+/* pgbd: center markdown tables in article content */
+.prose table {
+  width: fit-content;   /* shrink table to its content so it can be centered */
+  max-width: 100%;      /* but never overflow the prose column */
+  margin-inline: auto;  /* equal left/right margins = centered block */
+}
