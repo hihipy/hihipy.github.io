@@ -240,7 +240,7 @@ The fortune is a full year of income for about 311 million people at the world m
 
 <div id="rgwrap" style="position:relative;width:100%;margin:1.85rem 0;display:block;">
 <div style="font-weight:700;font-size:1.05rem;margin-bottom:.3rem;">One Person, One Pixel, by Region</div>
-<div style="font-size:.92rem;line-height:1.55;margin-bottom:.7rem;">Built like the households block above, one pixel per person, the same density. But here each pixel is one person earning the chosen region's median income for a year, and the wall holds every person the fortune could pay for a full year, tens to hundreds of millions of them. Pick a region and scroll: the count climbs to the region's full total, the entire 1.05 trillion dollar fortune. The poorer the region, the further the wall runs, Africa falls far past the rest.</div>
+<div style="font-size:.92rem;line-height:1.55;margin-bottom:.7rem;">Built like the households block above, one pixel per person, the same density. But here each pixel is one person earning the chosen region's median income for a year, and the wall holds every person the fortune could pay for a full year, tens to hundreds of millions of them. Pick a region and scroll: the count climbs to the region's full total, the entire 1.05 trillion dollar fortune. The menu opens on your own part of the world, set from your device time zone, and you can switch it to compare. The poorer the region, the further the wall runs, Africa falls far past the rest.</div>
 <div style="margin-bottom:.7rem;">
 <label for="rgsel" style="font-size:.92rem;font-weight:600;margin-right:.45rem;">Region:</label>
 <select id="rgsel" style="font:inherit;font-size:.95rem;padding:5px 9px;border:1px solid currentColor;border-radius:6px;background:transparent;color:inherit;">
@@ -270,7 +270,21 @@ The fortune is a full year of income for about 311 million people at the world m
  R.forEach(function(r){ r.T=Math.round(F/r.v); r.rows=Math.ceil(r.T/W); });
  var sc=document.getElementById('rgscroll'), inner=document.getElementById('rginner'), odo=document.getElementById('rgodo'), space=document.getElementById('rgspace'), sel=document.getElementById('rgsel'), cap=document.getElementById('rgcap');
  if(!sc||!document.createElement('canvas').getContext) return;
- var cur=0, scale=1, Hd=1, tileH=1, tiles={}, pend=false;
+ function detectRegion(){
+  try{
+   var tz=(Intl.DateTimeFormat().resolvedOptions().timeZone||'').toLowerCase();
+   var area=tz.split('/')[0];
+   var m={america:0,us:0,canada:0,brazil:0,mexico:0,chile:0,cuba:0,jamaica:0,
+    africa:1,egypt:1,libya:1,indian:1,
+    asia:2,hongkong:2,singapore:2,japan:2,prc:2,roc:2,israel:2,iran:2,
+    europe:3,gb:3,eire:3,iceland:3,portugal:3,poland:3,atlantic:3,arctic:3,
+    australia:4,pacific:4,nz:4,
+    antarctica:0};
+   if(Object.prototype.hasOwnProperty.call(m,area)) return m[area];
+  }catch(e){}
+  return 0;
+ }
+ var cur=detectRegion(), scale=1, Hd=1, tileH=1, tiles={}, pend=false;
  function clamp(v){return v<0?0:(v>255?255:v);}
  function fmt(n){return Math.round(n).toLocaleString('en-US');}
  function nTiles(){ return Math.ceil(R[cur].rows/TILE); }
@@ -311,7 +325,7 @@ The fortune is a full year of income for about 311 million people at the world m
  sel.addEventListener('change',function(){ cur=parseInt(sel.value,10)||0; sc.scrollTop=0; setCap(); rebuild(); });
  sc.addEventListener('scroll',function(){ if(pend) return; pend=true; requestAnimationFrame(function(){ pend=false; virtualize(); tick(); }); });
  window.addEventListener('resize',function(){ requestAnimationFrame(rebuild); });
- setCap(); requestAnimationFrame(rebuild);
+ sel.value=String(cur); setCap(); requestAnimationFrame(rebuild);
 })();
 </script>
 
@@ -434,7 +448,7 @@ Median and mean U.S. family net worth, about 192,700 dollars and about 1.06 mill
 
 Median income figures are median income or consumption per person per day, in 2021 PPP international dollars, from the World Bank Poverty and Inequality Platform, via Our World in Data [5] (latest year per country: Nigeria 2022, Mexico 2024, Indonesia 2024, Poland 2023, Fiji 2019, United States 2024, world median 2024). Daily figures are multiplied by 365. The series mixes income and consumption surveys, a known comparability limit the source documents. Regions follow the United Nations M49 geoscheme [8].
 
-National and regional GDP figures are nominal output, 2025 estimate, from the IMF World Economic Outlook (April 2026) [6]. National values used: Switzerland about 1,044 billion, Poland about 1,036, Taiwan about 920, Argentina about 681, Sweden about 669, Singapore about 604, Spain about 1,904, Greece about 280, South Africa about 427. The income chart uses the five continental M49 regions; the output charts use the finer M49 subregions. Subregional totals are the sum of IMF nominal GDP over the countries the standard files under each: Northern Africa about 975 billion, Western Africa about 717, Eastern Africa about 607, the Caribbean about 595, Central Asia about 566, Middle Africa about 370, and the Pacific islands (Melanesia, Micronesia, and Polynesia, all of Oceania except Australia and New Zealand) about 71. The stacked figure adds Eastern Africa, Middle Africa, and the Pacific islands to about 1,048 billion across twenty-eight countries and roughly 700 million people. Regional populations are implied by the same source, dividing each country's GDP by its GDP per capita and summing. The interactive region block divides the fortune by each UN region's median income per person, where that regional figure is the median of the latest national medians of all countries the M49 standard files under the region, drawn from the same World Bank Poverty and Inequality Platform data via Our World in Data [5], to count the people a full year of that income would equal; the interactive region block uses the same one-pixel-per-person rendering as the households figure and scrolls through the region's entire count, from about 75 million people for Europe to about 747 million for Africa, drawn in tiles loaded as you scroll so the taller regions render without exceeding browser canvas limits. Each region's count is then set against its own mid-2024 population from the UN World Population Prospects 2024 [9], which is how the readout reports the figure as a multiple of, or a fraction of, everyone who lives there. The deep-time placement uses the 4.54-billion-year age of the Earth and the 78-year compression from the companion essay in this room.
+National and regional GDP figures are nominal output, 2025 estimate, from the IMF World Economic Outlook (April 2026) [6]. National values used: Switzerland about 1,044 billion, Poland about 1,036, Taiwan about 920, Argentina about 681, Sweden about 669, Singapore about 604, Spain about 1,904, Greece about 280, South Africa about 427. The income chart uses the five continental M49 regions; the output charts use the finer M49 subregions. Subregional totals are the sum of IMF nominal GDP over the countries the standard files under each: Northern Africa about 975 billion, Western Africa about 717, Eastern Africa about 607, the Caribbean about 595, Central Asia about 566, Middle Africa about 370, and the Pacific islands (Melanesia, Micronesia, and Polynesia, all of Oceania except Australia and New Zealand) about 71. The stacked figure adds Eastern Africa, Middle Africa, and the Pacific islands to about 1,048 billion across twenty-eight countries and roughly 700 million people. Regional populations are implied by the same source, dividing each country's GDP by its GDP per capita and summing. The interactive region block divides the fortune by each UN region's median income per person, where that regional figure is the median of the latest national medians of all countries the M49 standard files under the region, drawn from the same World Bank Poverty and Inequality Platform data via Our World in Data [5], to count the people a full year of that income would equal; the interactive region block uses the same one-pixel-per-person rendering as the households figure and scrolls through the region's entire count, from about 75 million people for Europe to about 747 million for Africa, drawn in tiles loaded as you scroll so the taller regions render without exceeding browser canvas limits. Each region's count is then set against its own mid-2024 population from the UN World Population Prospects 2024 [9], which is how the readout reports the figure as a multiple of, or a fraction of, everyone who lives there. The menu opens on the visitor's own region, inferred from the browser time zone with the Americas as the fallback, and no network request or address lookup is involved. The deep-time placement uses the 4.54-billion-year age of the Earth and the 78-year compression from the companion essay in this room.
 
 ## References
 
