@@ -1896,7 +1896,7 @@ Second, fabricating partial option objects crashes Chart.js. An earlier version 
 
 **first-trillion keeps its own helpers, by design.** Unlike taller and the paradox essay, whose inline adapters were self-contained and were removed, first-trillion's chart configs call `window.__tc()` and `window.__gc()` inline at construction time in dozens of places (`borderColor: window.__tc()`, `grid: { color: window.__gc() }`, and so on). Those helpers are load-bearing dependencies of the configs, not just a duplicate adapter. Deleting the helper block would throw `window.__tc is not a function` at construction and the charts would not render at all. The helpers and the global adapter do not conflict (both read the computed color and set the same fixed grid), and the global adapter still handles first-trillion's series swaps on top. So first-trillion is the one page that keeps inline theming code, and that is correct.
 
-**Canonical light-to-dark series map (19 pairs).** Light values are the existing saturated series colors, all of which already clear the 3:1 chart-mark floor on white. Each dark partner is the brightest tint that still reads as the hue and stays CVD-distinct, sourced from GitHub's own dark accent palette for the github-scheme colors and from the existing taller pairs for the Okabe-Ito and Tol colors. The light side was not changed; only dark partners were added.
+**Canonical light-to-dark series map (20 pairs).** Light values are the existing saturated series colors, all of which already clear the 3:1 chart-mark floor on white. Each dark partner is the brightest tint that still reads as the hue and stays CVD-distinct, sourced from GitHub's own dark accent palette for the github-scheme colors and from the existing taller pairs for the Okabe-Ito and Tol colors. The light side was not changed; only dark partners were added.
 
 | Light | Dark | Notes |
 | --- | --- | --- |
@@ -1918,7 +1918,8 @@ Second, fabricating partial option objects crashes Chart.js. An earlier version 
 | `#8250DF` | `#D2A8FF` | purple (GitHub) |
 | `#F0E442` | `#EAE234` | yellow |
 | `#000000` | `#FFFFFF` | Alberta slope series |
-| `#8B949E` | `#C9D1D9` | neutral |
+| `#8B949E` | `#C9D1D9` | neutral (moving-average line) |
+| `#838B94` | `#768089` | muted gray (recessive bars, distinct from Alberta white) |
 
 **The `#E69F00` dual role is why the map is per-value-directional, not a naive two-way swap.** `#E69F00` is a light-mode SERIES in first-trillion but the dark-mode TARGET of `#9A6700` in taller. A single naive bidirectional map cannot represent the same hex meaning two different things. The adapter resolves this by only ever applying the light-to-dark direction when dark and the dark-to-light direction when light, keyed on the dataset's current value, so in taller dark mode `#9A6700` becomes `#E69F00` and in first-trillion dark mode `#E69F00` becomes `#F2CC60`, both correct.
 
@@ -1934,7 +1935,7 @@ A single pass brought every chart on the site to WCAG-compliant contrast in both
 
 The first contrast audit (the new `tools/audit_figures.py`) found the dark-mode failures the eye had been missing: series colors graded against the wrong canvas, hardcoded text colors invisible in one theme, and no per-theme series swap at all. The skyblue lift (`#56B4E9` to `#369CCF`) and the Queen's-line nudge (`#AA3377` to `#AE377B`) were applied to clear 3:1 on the dark canvas while staying CVD-distinct. The warm Okabe-Ito bars in first-trillion were given theme-aware borders rather than recoloring, because darkening them would have collapsed their colorblind separation.
 
-The work then expanded from one-off fixes to a universal per-theme model: every series color gets a light value and a dark partner, maximum contrast in each theme, CVD-safe, the brightest tint that still reads as the hue. The 19-pair canonical map (documented in BUG-040) was computed and verified per chart for colorblind separation under deuteranopia, protanopia, and tritanopia.
+The work then expanded from one-off fixes to a universal per-theme model: every series color gets a light value and a dark partner, maximum contrast in each theme, CVD-safe, the brightest tint that still reads as the hue. The 20-pair canonical map (documented in BUG-040) was computed and verified per chart for colorblind separation under deuteranopia, protanopia, and tritanopia.
 
 The delivery mechanism went through several wrong turns (a taller-derived per-page adapter that fought Chart.js internals and the Blowfish theme-state desync) before settling on one global adapter in `extend-footer.html`, superseding the BUG-035 defaults-only script. The per-page adapters on taller and the paradox essay were then removed so the global adapter is the single mechanism; first-trillion keeps its `__tc`/`__gc` helpers because its chart configs depend on them inline.
 
