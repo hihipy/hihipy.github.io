@@ -162,3 +162,19 @@ figure,
   max-width: 100%;      /* but never overflow the prose column */
   margin-inline: auto;  /* equal left/right margins = centered block */
 }
+
+/* ============================================================
+   Mobile fix: wide math overflow on narrow viewports.
+   KaTeX renders an expression as a single non-wrapping unit, so a
+   long equation can exceed a phone viewport. With no scroll
+   container the whole page gains a horizontal scrollbar, the same
+   failure mode code blocks avoid by scrolling in place. Display
+   math is wrapped in `.katex-display`, so let that box scroll.
+   Inline math has no such wrapper, so a very wide inline
+   expression should be authored as display math instead.
+   ============================================================ */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 0.25rem; /* keep the scrollbar clear of descenders */
+}

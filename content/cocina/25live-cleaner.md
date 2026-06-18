@@ -102,7 +102,11 @@ Now duration math works: 5 hours, and not "two events of unclear length."
 
 ### Removing Duplicates
 
-Each row is treated as a tuple of its identifying fields: \\((\text{date}, \text{start}, \text{end}, \text{location}, \text{organization}, \text{event})\\). A row is kept only if that tuple has not already been seen. A configuration flag controls whether the head-count column participates in this comparison; by default it does not, because the same event re-exported on different days sometimes carries a slightly different head-count value, and treating those as different rows would defeat the purpose.
+Each row is treated as a tuple of its identifying fields:
+
+\[ (\text{date}, \text{start}, \text{end}, \text{location}, \text{organization}, \text{event}) \]
+
+A row is kept only if that tuple has not already been seen. A configuration flag controls whether the head-count column participates in this comparison; by default it does not, because the same event re-exported on different days sometimes carries a slightly different head-count value, and treating those as different rows would defeat the purpose.
 
 ### Standardizing Text
 
