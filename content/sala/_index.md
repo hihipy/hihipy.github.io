@@ -30,7 +30,7 @@ Senior-level data analyst with seven-plus years across academic medical centers 
 
 {{< timeline >}}
 
-{{< timelineItem icon="chart-line" header="Data Analyst" badge="Mar 2025 - Present" subheader="University of Miami, Miller School of Medicine Office of the Dean" >}}
+{{< timelineItem icon="chart-line" header="Data Analyst II" badge="Mar 2025 - Present" subheader="University of Miami, Miller School of Medicine Office of the Dean" >}}
 Lead institutional analytics for the Office of the Dean. Built the Research Dollar Density Power BI dashboard analyzing $540.6M in research funding across 358K assignable square feet, with a 94-DAX-measure data model integrating 315,040 records from NIH grant files, facilities space inventory, and Workday HR data. Designed an institutional KPI tracking system in Smartsheet covering 48 metrics across teaching, research, and operations with automated owner assignment workflows. Deployed a 105-question Qualtrics survey for the U.S. News Best Medical Schools submission across seven senior administrators. Built end-to-end faculty recruitment tracking in SharePoint and Power Automate. Engineered Selenium automation reducing BRIMR data acquisition from 8-10 hours to 13 minutes. Performed multi-building badge swipe utilization analysis using Python and R/Quarto.
 {{< /timelineItem >}}
 
