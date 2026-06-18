@@ -60,6 +60,8 @@ from datetime import datetime
 
 def _parse_color(s):
     s = s.strip().strip("'\"").strip()
+    if s.lower() == 'transparent':
+        return (0, 0, 0, 0.0)  # no-fill sentinel: alpha 0 means do not contrast-grade
     m = re.fullmatch(r'#([0-9a-fA-F]{3,8})', s)
     if m:
         h = m.group(1)
@@ -338,7 +340,7 @@ def _series_finding(text, path, ci, key, literal, parsed, start, end, mark, acce
     return Finding(
         file=path, line=_line_of(text, start), chart_idx=ci,
         role=('series-fill' if parsed[3] < 0.999 else 'series'),
-        literal=literal, hexnorm=_to_hex(parsed), is_fill=parsed[3] < 0.999,
+        literal=literal, hexnorm=(None if parsed[3] == 0.0 else _to_hex(parsed)), is_fill=parsed[3] < 0.999,
         mark=mark, start=start, end=end, strip_repl=None,
         theme_aware=False, accepted=accepted, has_adapter=None)
 
@@ -356,6 +358,12 @@ def evaluate(findings, theme, global_map):
     rows = []
     for f in findings:
         if f.role.startswith('series'):
+            parsed = _parse_color(f.literal)
+            if parsed is not None and parsed[3] == 0.0:
+                # transparent (no fill) -> intentional, not contrast-graded
+                rows.append({'f': f, 'kind': 'series-transparent', 'hex': 'transparent',
+                             'dark_hex': 'transparent', 'lr': None, 'dr': None, 'fail': False})
+                continue
             hexv = f.hexnorm
             lr, dr, dhex = series_ratios(hexv, theme, global_map)
             rows.append({'f': f, 'kind': 'series', 'hex': hexv, 'dark_hex': dhex,
@@ -520,7 +528,7 @@ def coverage_report(all_rows, global_map):
     otherwise it does not swap in dark mode. Returns (lines, uncovered_set)."""
     used = {}
     for r in all_rows:
-        if r['kind'] == 'series' and r.get('hex'):
+        if r['kind'] == 'series' and r.get('hex') and r['hex'] != 'transparent':
             h = r['hex'].upper()
             # a hex that is itself a DARK target (a value in the map) is fine as-is
             used.setdefault(h, []).append(r['f'])
