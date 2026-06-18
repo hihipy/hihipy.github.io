@@ -209,7 +209,7 @@ data: {
     { label: 'Mcmaster University', data: [691343, 1221076, 4268949, 1226064], borderColor: '#CC79A7', backgroundColor: '#CC79A7', pointBackgroundColor: '#CC79A7', pointBorderColor: '#CC79A7', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
     { label: 'Hospital for Sick Chldrn (toronto)', data: [682800, 1462830, 2192796, 2887402], borderColor: '#9A6700', backgroundColor: '#9A6700', pointBackgroundColor: '#9A6700', pointBorderColor: '#9A6700', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
     { label: 'Centre for Addiction and Mental Health', data: [159877, 596505, 2809084, 3618453], borderColor: '#1F6FEB', backgroundColor: '#1F6FEB', pointBackgroundColor: '#1F6FEB', pointBorderColor: '#1F6FEB', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
-    { label: 'Queen\'s University at Kingston', data: [182350, 895696, 2080066, 3187402], borderColor: '#AA3377', backgroundColor: '#AA3377', pointBackgroundColor: '#AA3377', pointBorderColor: '#AA3377', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
+    { label: 'Queen\'s University at Kingston', data: [182350, 895696, 2080066, 3187402], borderColor: '#AE377B', backgroundColor: '#AE377B', pointBackgroundColor: '#AE377B', pointBorderColor: '#AE377B', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
     { label: 'University of Manitoba', data: [617210, 616564, 2570319, 1362083], borderColor: '#4477AA', backgroundColor: '#4477AA', pointBackgroundColor: '#4477AA', pointBorderColor: '#4477AA', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 },
     { label: 'University of Alberta', data: [209019, 1167148, 1959685, 985510], borderColor: '#000000', backgroundColor: '#000000', pointBackgroundColor: '#000000', pointBorderColor: '#000000', borderWidth: 1.5, pointRadius: 4, pointHoverRadius: 6, tension: 0 }
   ]
@@ -667,7 +667,7 @@ options: {
     '#CC79A7': '#FFADCC',  // McMaster: hopbush -> light pink
     '#9A6700': '#E69F00',  // Sick Children: chelsea gem -> orange peel
     '#1F6FEB': '#56B4E9',  // CAMH: github blue -> picton blue
-    '#AA3377': '#D2A8FF',  // Queens: royal heath -> mauve
+    '#AE377B': '#D2A8FF',  // Queens: royal heath -> mauve
     '#4477AA': '#A5D6FF',  // Manitoba: san marino -> light blue
     '#000000': '#FFFFFF'   // Alberta: black -> white
   };

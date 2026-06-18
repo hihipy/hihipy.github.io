@@ -113,8 +113,8 @@ data: {
   datasets: [{
     label: 'Net Worth, US Dollars',
     data: [192700, 1059470, 100000000, 1000000000, 1050000000000],
-    backgroundColor: ['#0072B2', '#56B4E9', '#E69F00', '#CC79A7', '#D55E00'],
-    borderWidth: 0
+    backgroundColor: ['#0072B2', '#369CCF', '#E69F00', '#CC79A7', '#D55E00'], // audit-ok: Okabe-Ito fills kept for CVD identity; bars bordered via borderColor for white-bg legibility
+    borderColor: window.__tc(), borderWidth: 1
   }]
 },
 options: {
@@ -214,8 +214,8 @@ data: {
   datasets: [{
     label: 'Millions of Years of Median Income to Equal the Fortune',
     data: [74, 201, 311, 402, 454, 849],
-    backgroundColor: ['#E69F00', '#0072B2', '#CC79A7', '#56B4E9', '#009E73', '#D55E00'],
-    borderWidth: 0
+    backgroundColor: ['#E69F00', '#0072B2', '#CC79A7', '#369CCF', '#009E73', '#D55E00'], // audit-ok: Okabe-Ito fills kept for CVD identity; bars bordered via borderColor for white-bg legibility
+    borderColor: window.__tc(), borderWidth: 1
   }]
 },
 options: {
@@ -326,7 +326,7 @@ data: {
   datasets: [{
     label: 'Net Worth or Annual GDP, USD Billions',
     data: [1050, 1044, 1036, 920, 681, 669, 604],
-    backgroundColor: ['#D55E00', '#56B4E9', '#56B4E9', '#56B4E9', '#56B4E9', '#56B4E9', '#56B4E9'],
+    backgroundColor: ['#D55E00', '#369CCF', '#369CCF', '#369CCF', '#369CCF', '#369CCF', '#369CCF'],
     borderWidth: 0
   }]
 },
@@ -384,10 +384,10 @@ type: 'bar',
 data: {
   labels: ['Elon Musk', 'Three UN Subregions, Stacked'],
   datasets: [
-    { label: 'Eastern Africa (475M People)', data: [0, 607], backgroundColor: '#009E73', borderWidth: 0 },
-    { label: 'Middle Africa (211M People)', data: [0, 370], backgroundColor: '#56B4E9', borderWidth: 0 },
-    { label: 'Pacific Islands (16M People)', data: [0, 71], backgroundColor: '#F0E442', borderWidth: 0 },
-    { label: 'Elon Musk (1 Person)', data: [1050, 0], backgroundColor: '#D55E00', borderWidth: 0 }
+    { label: 'Eastern Africa (475M People)', data: [0, 607], backgroundColor: '#009E73', borderColor: window.__tc(), borderWidth: 1 },
+    { label: 'Middle Africa (211M People)', data: [0, 370], backgroundColor: '#369CCF', borderColor: window.__tc(), borderWidth: 1 },
+    { label: 'Pacific Islands (16M People)', data: [0, 71], backgroundColor: '#F0E442', borderColor: window.__tc(), borderWidth: 1 }, // audit-ok: Pacific Islands segment; Okabe-Ito yellow kept for CVD identity, bordered for legibility
+    { label: 'Elon Musk (1 Person)', data: [1050, 0], backgroundColor: '#D55E00', borderColor: window.__tc(), borderWidth: 1 }
   ]
 },
 options: {

@@ -657,7 +657,6 @@ All links were live as of May 2026. Verify before citing.
     '#CC79A7': '#FFADCC',
     '#9A6700': '#E69F00',
     '#1F6FEB': '#56B4E9',
-    '#AA3377': '#D2A8FF',
     '#4477AA': '#A5D6FF',
     '#000000': '#FFFFFF'
   };
