@@ -30,7 +30,8 @@ Mechanism-aware (this is what makes the verdicts honest):
 
 Theme model: github scheme. Blowfish defines the neutral scale in :root and
 reverses it under .dark (50<->900, 200<->700, ...). Light canvas = neutral
-DEFAULT (#FFFFFF, the card surface). Dark canvas = reversed DEFAULT (#0F172A).
+DEFAULT (#FFFFFF, the card surface). Dark canvas = the rendered dark body bg,
+neutral-800 (#14191F), confirmed by computed style in-browser.
 Override with --light-canvas/--dark-canvas or re-derive with --scheme-css.
 
 Pure stdlib, Python 3.8+.
@@ -138,7 +139,7 @@ GH_NEUTRAL_LIGHT = {
     600: (71, 85, 105), 700: (51, 57, 65), 800: (20, 25, 31), 900: (15, 23, 42),
 }
 REVERSE = {50: 900, 100: 800, 200: 700, 300: 600, 400: 500,
-           500: 400, 600: 300, 700: 200, 800: 100, 900: 50, 'DEFAULT': 900}
+           500: 400, 600: 300, 700: 200, 800: 100, 900: 50, 'DEFAULT': 800}
 
 
 class Theme:
@@ -169,34 +170,52 @@ def load_scheme_css(path):
     return out
 
 
-DARK_SWAP = {'#0969DA': '#79C0FF', '#000000': '#FFFFFF'}
 APPROVED = ['#0969DA', '#BF8700', '#CF222E', '#BF3989', '#1A7F37', '#8250DF']
 MARK_FLOOR = 3.0
 THEME_AWARE_RE = re.compile(r'window\.__\w+\(\)|--color-|getComputedStyle|getPropertyValue')
-ADAPTER_SIGNATURE = re.compile(r'Chart\.getChart')
 ACCEPT_RE = re.compile(r'audit-(?:ok|accept)')
 
+# Global theme adapter is the single source of truth for light->dark series swaps.
+# Read its lightToDark map at runtime from layouts/partials/extend-footer.html so the
+# tool always grades against exactly what ships (no second copy to drift).
+GLOBAL_ADAPTER_PATH = os.path.join('layouts', 'partials', 'extend-footer.html')
 
-def rendered_in_dark(hexv, has_adapter):
-    return DARK_SWAP.get(hexv.upper(), hexv) if has_adapter else hexv
+def load_global_map(adapter_path=GLOBAL_ADAPTER_PATH):
+    """Parse the lightToDark { '#xxxxxx': '#yyyyyy', ... } object from the adapter.
+    Returns {LIGHTHEX: DARKHEX} upper-cased. Empty dict if the file is absent."""
+    try:
+        txt = open(adapter_path, encoding='utf-8').read()
+    except OSError:
+        return {}
+    m = re.search(r'var\s+lightToDark\s*=\s*\{(.*?)\};', txt, re.DOTALL)
+    if not m:
+        return {}
+    pairs = re.findall(r"'(#[0-9A-Fa-f]{6})'\s*:\s*'(#[0-9A-Fa-f]{6})'", m.group(1))
+    return {k.upper(): v.upper() for k, v in pairs}
 
 
-def series_ratios(hexv, theme, has_adapter):
+def rendered_in_dark(hexv, global_map):
+    # Every page is covered by the global adapter; a hex renders in dark as its
+    # mapped partner if present, else unchanged (and would then be graded raw).
+    return global_map.get(hexv.upper(), hexv)
+
+
+def series_ratios(hexv, theme, global_map):
     rgb = _parse_color(hexv)[:3]
     lr = contrast(rgb, theme.light_canvas)
-    dhex = rendered_in_dark(hexv, has_adapter)
+    dhex = rendered_in_dark(hexv, global_map)
     dr = contrast(_parse_color(dhex)[:3], theme.dark_canvas)
     return lr, dr, dhex
 
 
-def best_replacement(orig_hex, theme, used, has_adapter):
+def best_replacement(orig_hex, theme, used, global_map):
     orig_rgb = _parse_color(orig_hex)[:3]
     used_up = {u.upper() for u in used}
     cands = []
     for c in APPROVED:
         if c.upper() in used_up:
             continue
-        lr, dr, _ = series_ratios(c, theme, has_adapter)
+        lr, dr, _ = series_ratios(c, theme, global_map)
         if lr >= MARK_FLOOR and dr >= MARK_FLOOR:
             cands.append((de76(orig_rgb, _parse_color(c)[:3]), c))
     if not cands:
@@ -268,7 +287,6 @@ class Finding:
 
 def scan_text(text, path):
     findings = []
-    has_adapter = bool(ADAPTER_SIGNATURE.search(text))
     for ci, bm in enumerate(CHART_BLOCK.finditer(text), start=1):
         block = bm.group(1)
         base = bm.start(1)
@@ -286,7 +304,7 @@ def scan_text(text, path):
                 hexnorm=(_to_hex(_parse_color(val)) if not theme_aware else None),
                 is_fill=False, mark='text', start=base + m.start(), end=base + m.end(),
                 strip_repl=repl, theme_aware=theme_aware,
-                accepted=_accepted_near(block, m.start()), has_adapter=has_adapter))
+                accepted=_accepted_near(block, m.start()), has_adapter=None))
 
         array_spans = []
         for m in RE_SERIES_ARRAY.finditer(block):
@@ -300,7 +318,7 @@ def scan_text(text, path):
                     text, path, ci, m.group('key'), lm.group(0), c,
                     arr_base + lm.start(), arr_base + lm.end(),
                     _nearest_type(block, m.start(), chart_type),
-                    _accepted_near(block, m.start()), has_adapter))
+                    _accepted_near(block, m.start()), None))
 
         for m in RE_SERIES_SINGLE.finditer(block):
             if any(a <= m.start() < b for a, b in array_spans):
@@ -312,37 +330,34 @@ def scan_text(text, path):
                 text, path, ci, m.group('key'), m.group('val'), c,
                 base + m.start('val'), base + m.end('val'),
                 _nearest_type(block, m.start(), chart_type),
-                _accepted_near(block, m.start()), has_adapter))
+                _accepted_near(block, m.start()), None))
     return findings
 
 
-def _series_finding(text, path, ci, key, literal, parsed, start, end, mark, accepted, has_adapter):
+def _series_finding(text, path, ci, key, literal, parsed, start, end, mark, accepted, _unused):
     return Finding(
         file=path, line=_line_of(text, start), chart_idx=ci,
         role=('series-fill' if parsed[3] < 0.999 else 'series'),
         literal=literal, hexnorm=_to_hex(parsed), is_fill=parsed[3] < 0.999,
         mark=mark, start=start, end=end, strip_repl=None,
-        theme_aware=False, accepted=accepted, has_adapter=has_adapter)
+        theme_aware=False, accepted=accepted, has_adapter=None)
 
 
 # ----------------------------------------------------------------------------
 # Evaluation + reporting
 # ----------------------------------------------------------------------------
 
-def rendered_dark_text(rgb, has_adapter):
-    if has_adapter:
-        sw = DARK_SWAP.get(_to_hex(rgb).upper())
-        if sw:
-            return _parse_color(sw)[:3]
-    return rgb[:3]
+def rendered_dark_text(rgb, global_map):
+    sw = global_map.get(_to_hex(rgb).upper())
+    return _parse_color(sw)[:3] if sw else rgb[:3]
 
 
-def evaluate(findings, theme):
+def evaluate(findings, theme, global_map):
     rows = []
     for f in findings:
         if f.role.startswith('series'):
             hexv = f.hexnorm
-            lr, dr, dhex = series_ratios(hexv, theme, f.has_adapter)
+            lr, dr, dhex = series_ratios(hexv, theme, global_map)
             rows.append({'f': f, 'kind': 'series', 'hex': hexv, 'dark_hex': dhex,
                          'lr': lr, 'dr': dr, 'fail': lr < MARK_FLOOR or dr < MARK_FLOOR})
         elif f.theme_aware:
@@ -353,7 +368,7 @@ def evaluate(findings, theme):
             rgb = _parse_color(f.literal)
             rows.append({'f': f, 'kind': 'text-hardcoded', 'hex': _to_hex(rgb),
                          'lr': contrast(rgb[:3], theme.light_canvas),
-                         'dr': contrast(rendered_dark_text(rgb, f.has_adapter), theme.dark_canvas),
+                         'dr': contrast(rendered_dark_text(rgb, global_map), theme.dark_canvas),
                          'fail': True})
     return rows
 
@@ -433,7 +448,7 @@ def plan_fixes(rows, theme, fix_all):
         if r['kind'] != 'series' or not r['fail'] or f.accepted:
             continue
         invisible = r['hex'] in ('#000000', '#FFFFFF') and not (
-            f.has_adapter and r['hex'].upper() in DARK_SWAP)
+            r['hex'].upper() in global_map)
         if not invisible and not fix_all:
             unresolved += 1
             continue
@@ -443,7 +458,7 @@ def plan_fixes(rows, theme, fix_all):
         ck = (f.file, f.chart_idx, r['hex'])
         repl = remap_cache.get(ck)
         if repl is None:
-            repl = best_replacement(r['hex'], theme, used.get((f.file, f.chart_idx), set()), f.has_adapter)
+            repl = best_replacement(r['hex'], theme, used.get((f.file, f.chart_idx), set()), global_map)
             if repl is None:
                 unresolved += 1
                 notes.append('NO SAFE REPLACEMENT for {} at {}:{} (decide manually per BUG-022)'.format(
@@ -493,10 +508,36 @@ def self_test(theme):
     print('APPROVED PALETTE two-mode check (adapter swap applied where relevant):')
     print('  {:<9} {:<9} {:<9} {:<20} {}'.format('LIGHT', 'DARK', 'STATUS', 'COLOR', 'PASSES BOTH?'))
     for c in APPROVED:
-        lr, dr, dhex = series_ratios(c, theme, has_adapter=True)
+        lr, dr, dhex = series_ratios(c, theme, load_global_map())
         disp = c if c == dhex else '{} -> {}'.format(c, dhex)
         ok = 'yes' if (lr >= MARK_FLOOR and dr >= MARK_FLOOR) else 'NO'
         print('  {:<9} {:<9} {:<9} {:<20} {}'.format(fmt(lr), fmt(dr), grade(min(lr, dr)), disp.lower(), ok))
+
+
+
+def coverage_report(all_rows, global_map):
+    """Every distinct series hex used in content must be a key in the global map,
+    otherwise it does not swap in dark mode. Returns (lines, uncovered_set)."""
+    used = {}
+    for r in all_rows:
+        if r['kind'] == 'series' and r.get('hex'):
+            h = r['hex'].upper()
+            # a hex that is itself a DARK target (a value in the map) is fine as-is
+            used.setdefault(h, []).append(r['f'])
+    dark_values = {v.upper() for v in global_map.values()}
+    uncovered = {h: fs for h, fs in used.items()
+                 if h not in global_map and h not in dark_values}
+    lines = ['GLOBAL MAP COVERAGE  ({} pairs in {})'.format(len(global_map), GLOBAL_ADAPTER_PATH)]
+    if not global_map:
+        lines.append('  WARNING: global adapter map not found; series swaps cannot be verified')
+    elif not uncovered:
+        lines.append('  all {} distinct series hex(es) in content are covered (swap or dark-target)'.format(len(used)))
+    else:
+        lines.append('  UNCOVERED series hex(es) (will NOT swap in dark, render light-on-dark):')
+        for h, fs in sorted(uncovered.items()):
+            where = ', '.join(sorted({'{}:{}'.format(os.path.relpath(f.file), f.line) for f in fs})[:4])
+            lines.append('    {}  used at {}'.format(h.lower(), where))
+    return lines, uncovered
 
 
 def main(argv=None):
@@ -515,6 +556,7 @@ def main(argv=None):
     lc = _parse_color(args.light_canvas)[:3] if args.light_canvas else None
     dc = _parse_color(args.dark_canvas)[:3] if args.dark_canvas else None
     theme = Theme(neutral_light=neutral, light_canvas=lc, dark_canvas=dc)
+    global_map = load_global_map()
 
     if args.self_test:
         self_test(theme)
@@ -532,7 +574,7 @@ def main(argv=None):
         fs = scan_text(text, path)
         if fs:
             file_findings[path] = (text, fs)
-            all_rows.extend(evaluate(fs, theme))
+            all_rows.extend(evaluate(fs, theme, global_map))
 
     if args.json:
         payload = [{'file': os.path.relpath(r['f'].file), 'line': r['f'].line, 'chart': r['f'].chart_idx,
@@ -543,19 +585,23 @@ def main(argv=None):
         print(json.dumps(payload, indent=2))
         return 1 if any(p['fail'] and not p['accepted'] for p in payload) else 0
 
+    cov_lines, uncovered = coverage_report(all_rows, global_map)
+
     if not args.fix and not args.fix_all:
         print(report(all_rows, theme))
+        print('\n'.join(cov_lines))
+        print('')
         problems = [r for r in all_rows if r.get('fail') and not r['f'].accepted]
-        print('{} color slot(s) across {} file(s); {} issue(s) flagged ({} accepted and excluded).'.format(
+        print('{} color slot(s) across {} file(s); {} issue(s) flagged ({} accepted and excluded); {} uncovered hex(es).'.format(
             len(all_rows), len(file_findings), len(problems),
-            sum(1 for r in all_rows if r['f'].accepted)))
+            sum(1 for r in all_rows if r['f'].accepted), len(uncovered)))
         if problems:
             print('Run with --fix for safe fixes, --fix-all to also remap FAIL series.')
-        return 1 if problems else 0
+        return 1 if (problems or uncovered) else 0
 
     total_unresolved, changed = 0, []
     for path, (text, fs) in file_findings.items():
-        rows = evaluate(fs, theme)
+        rows = evaluate(fs, theme, global_map)
         edits, notes, unresolved = plan_fixes(rows, theme, args.fix_all)
         total_unresolved += unresolved
         if not edits:
@@ -574,7 +620,7 @@ def main(argv=None):
 
     post = []
     for path in [c[0] for c in changed] or targets:
-        post.extend(evaluate(scan_text(open(path, encoding='utf-8').read(), path), theme))
+        post.extend(evaluate(scan_text(open(path, encoding='utf-8').read(), path), theme, global_map))
     remaining = [r for r in post if r.get('fail') and not r['f'].accepted]
     print('\nRe-audit: {} issue(s) remaining.'.format(len(remaining)))
     for r in remaining:

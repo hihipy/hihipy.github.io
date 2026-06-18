@@ -1,39 +1,135 @@
 {{/*
-  Chart.js theme-aware defaults override.
-
-  Blowfish's themes/blowfish/assets/js/chart.js sets Chart.defaults for
-  primary-colored elements (bar/line/point/arc), but NOT for tick text,
-  legend text, or grid lines. The result is that on dark mode, axis labels
-  and gridlines fall back to Chart.js's hardcoded gray (#666 /
-  rgba(0,0,0,0.1)) which is illegible.
-
-  This script runs AFTER Chart.js loads (via the vendor.html bundle) and
-  sets the three missing defaults to theme-aware CSS variables that swap
-  automatically when the user toggles light/dark mode.
-
-  --color-neutral-700 is dark gray in light theme, light gray in dark theme.
-  --color-neutral-200 is subtle gridlines in either theme.
-
-  Note: Chart.defaults are evaluated once at script load, so the live theme
-  toggle does not update chart text colors until the page is reloaded. This
-  matches the behavior of every other Chart.defaults call Blowfish makes
-  and is therefore not a regression.
-
-  The typeof guard makes this safe on pages without charts; the script
-  does nothing if Chart.js is not loaded.
-
-  See README BUG-035 for full context.
+  Site-wide Chart.js theme adapter (supersedes the BUG-035 defaults-only script).
+  Themes every chart on every page in both modes, live on toggle.
+  Theme is read from the live computed text color luminance, not the html.dark
+  class (which can desync). Only color properties on objects that already exist
+  are written, never fabricated, avoiding the Chart.js scriptable crash. Series
+  hexes swap via the canonical light/dark map, idempotent and directional.
+  Tooltip box is themed to match the page. Hexes not in the map (eon ramps,
+  Tol palette, CSS-var-driven colors) are left untouched. See README BUG-035.
 */}}
 <script>
-  (function() {
-    if (typeof Chart === 'undefined') return;
-    function css(name) {
-      return "rgb(" + getComputedStyle(document.documentElement).getPropertyValue(name) + ")";
-    }
-    Chart.defaults.color = css("--color-neutral-700");
-    Chart.defaults.borderColor = css("--color-neutral-300");
+(function () {
+  var TAG = '[chart-theme]';
+
+  var lightToDark = {
+    '#0969DA': '#79C0FF', '#0072B2': '#79C0FF', '#1F6FEB': '#56B4E9',
+    '#D55E00': '#FFA657', '#9A6700': '#E69F00', '#E69F00': '#F2CC60',
+    '#009E73': '#7EE787', '#1A7F37': '#3FB950',
+    '#CC79A7': '#FFADCC', '#AE377B': '#D2A8FF', '#BF3989': '#F778BA',
+    '#4477AA': '#A5D6FF', '#369CCF': '#56D4FF',
+    '#BF8700': '#E3B341', '#CF222E': '#FF7B72', '#8250DF': '#D2A8FF',
+    '#F0E442': '#EAE234', '#000000': '#FFFFFF', '#8B949E': '#C9D1D9'
+  };
+  var darkToLight = {};
+  Object.keys(lightToDark).forEach(function (k) {
+    if (darkToLight[lightToDark[k]] === undefined) darkToLight[lightToDark[k]] = k;
+  });
+  var fillMap = {
+    'rgba(9, 105, 218, 0.10)': 'rgba(121, 192, 255, 0.10)',
+    'rgba(9, 105, 218, 0.1)':  'rgba(121, 192, 255, 0.1)'
+  };
+  var fillReverse = {};
+  Object.keys(fillMap).forEach(function (k) { fillReverse[fillMap[k]] = k; });
+
+  function textColor() {
+    try {
+      var e = document.querySelector('.prose') || document.querySelector('article')
+            || document.querySelector('main') || document.body;
+      return getComputedStyle(e).color || 'rgb(31,35,40)';
+    } catch (_) { return 'rgb(31,35,40)'; }
+  }
+  function isDark() {
+    var m = textColor().match(/\d+/g);
+    if (!m) return false;
+    return (0.2126*+m[0] + 0.7152*+m[1] + 0.0722*+m[2]) > 140;
+  }
+
+  var KEYS = ['borderColor', 'backgroundColor', 'pointBorderColor', 'pointBackgroundColor',
+              'hoverBackgroundColor', 'hoverBorderColor'];
+
+  function swapVal(v, dark) {
+    if (typeof v !== 'string') return v;
+    if (dark) return lightToDark[v] || fillMap[v] || v;
+    return darkToLight[v] || fillReverse[v] || v;
+  }
+
+  function setDefaults() {
+    Chart.defaults.color = textColor();
+    Chart.defaults.borderColor = 'rgba(128,128,128,0.22)';
     if (Chart.defaults.scale && Chart.defaults.scale.grid) {
-      Chart.defaults.scale.grid.color = css("--color-neutral-200");
+      Chart.defaults.scale.grid.color = 'rgba(128,128,128,0.22)';
     }
-  })();
+  }
+
+  function getCharts() {
+    var out = [];
+    if (typeof Chart.getChart === 'function') {
+      document.querySelectorAll('canvas').forEach(function (cv) {
+        var i = Chart.getChart(cv); if (i) out.push(i);
+      });
+    }
+    if (out.length === 0 && Chart.instances) {
+      Object.keys(Chart.instances).forEach(function (k) { out.push(Chart.instances[k]); });
+    }
+    return out;
+  }
+
+  function retheme() {
+    try {
+      var dark = isDark();
+      var tc = textColor();                 // live computed article color: white in dark, dark in light
+      var gc = 'rgba(128,128,128,0.22)';    // fixed low-alpha grid, reads on either background
+      var charts = getCharts();
+      charts.forEach(function (c) {
+        if (!c || !c.options) return;
+        c.data.datasets.forEach(function (ds) {
+          KEYS.forEach(function (k) {
+            if (ds[k] === undefined) return;
+            if (Array.isArray(ds[k])) ds[k] = ds[k].map(function (v) { return swapVal(v, dark); });
+            else ds[k] = swapVal(ds[k], dark);
+          });
+        });
+        var pl = c.options.plugins || {};
+        if (pl.title) pl.title.color = tc;
+        if (pl.legend && pl.legend.labels) pl.legend.labels.color = tc;
+        // tooltip: theme the box so it matches the page, not the Chart.js default dark box
+        if (!pl.tooltip) pl.tooltip = {};
+        pl.tooltip.backgroundColor = dark ? 'rgba(22,27,34,0.95)' : 'rgba(255,255,255,0.97)';
+        pl.tooltip.titleColor = tc;
+        pl.tooltip.bodyColor = tc;
+        pl.tooltip.borderColor = 'rgba(128,128,128,0.35)';
+        pl.tooltip.borderWidth = 1;
+        if (c.options.scales) {
+          Object.keys(c.options.scales).forEach(function (a) {
+            var s = c.options.scales[a]; if (!s) return;
+            if (s.ticks) s.ticks.color = tc;
+            if (s.title) s.title.color = tc;
+            if (s.grid) s.grid.color = gc;
+          });
+        }
+        c.update();
+      });
+    } catch (e) {
+      console.warn(TAG, 'retheme error', e);
+    }
+  }
+
+  var observerAttached = false;
+  function init() {
+    if (typeof Chart === 'undefined') { setTimeout(init, 300); return; }
+    setDefaults();
+    if (getCharts().length === 0) { setTimeout(init, 300); return; }
+    retheme();
+    if (!observerAttached) {
+      try {
+        new MutationObserver(function () { setDefaults(); retheme(); })
+          .observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+        observerAttached = true;
+      } catch (_) {}
+    }
+  }
+  if (document.readyState === 'complete') setTimeout(init, 150);
+  else window.addEventListener('load', function () { setTimeout(init, 150); });
+})();
 </script>

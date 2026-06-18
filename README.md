@@ -1869,3 +1869,97 @@ This README is the canonical reference for the codebase. When making non-trivial
 - §17 when AI-assisted analytical work surfaces a new failure mode worth documenting, or when the verify-before-prose workflow gains new techniques
 
 The README is intentionally dense. It is not meant to be read sequentially; it is meant to be searched and referenced by section.
+
+### BUG-040: Site-wide dark-mode chart theming via one global adapter; per-theme series swap, computed-color theme detection, and the real dark canvas (supersedes the defaults-only script in BUG-035 and retires the per-page adapters of BUG-019)
+
+**This is the consolidation of all per-page chart theming into a single mechanism. Read this before applying BUG-019 (per-page adapter) or BUG-035 (defaults-only override); both are now superseded by the global adapter in `layouts/partials/extend-footer.html`.**
+
+**What changed and why.** Charts had three different theming mechanisms across the site: BUG-035's defaults-only script (set `Chart.defaults` once at load, no live toggle, did not repaint already-constructed charts), the per-page `Chart.getChart` adapters on taller and the paradox essay (BUG-019), and first-trillion's `window.__tc()`/`__gc()`/`__retheme` helpers. Three mechanisms meant three places to fix and inconsistent behavior: some charts themed text but not series colors, none swapped series colors for maximum per-theme contrast, and the live toggle worked on some pages and not others. The global adapter replaces all of this with one script that themes every chart on every page, in both modes, live on toggle.
+
+**The mechanism.** `extend-footer.html` is injected as the last item in the footer on every page (Blowfish includes `layouts/partials/extend-footer.html` automatically via `partialCached` in the theme footer). After Chart.js loads, the adapter:
+
+1. Reads the live theme from the computed text color's luminance, not the `html.dark` class. The class is reliable here, but the computed color cannot lie and survives any class/appearance desync. Luminance above 140 means light text, which means dark mode.
+2. Swaps every series color via a canonical light-to-dark map (below), idempotent and directional: light-to-dark only when dark, dark-to-light only when light, so a value that is already a dark partner is never re-mapped as if it were a light key.
+3. Repaints tick, axis-title, legend, and chart-title colors from the computed text color, and gridlines from a fixed low-alpha gray (`rgba(128,128,128,0.22)`) that reads on either background.
+4. Themes the tooltip box to match the page rather than leaving the Chart.js default dark box.
+5. Re-runs all of this on a `MutationObserver` watching `<html>` class changes, so the toggle is live without a reload.
+
+**Two failures cost most of the debugging time; both are documented here so they are not repeated.**
+
+First, an inherited top-level guard. The script began with `if (typeof Chart === 'undefined') return;`, carried over from BUG-035's defaults-only script, which only needed Chart at the instant it ran. The global adapter must instead WAIT for Chart, because on some pages the adapter executes before the Chart.js bundle finishes loading. The early return killed the entire adapter before its retry loop could run, so the script was present in the page but did nothing. The fix is to remove the top-level guard and let `init` retry (`setTimeout(init, 300)`) until both `Chart` and the constructed charts exist.
+
+Second, fabricating partial option objects crashes Chart.js. An earlier version set `s.grid = s.grid || {}` then assigned a color, creating a bare grid object with only a color field. Chart.js then resolved the object's other scriptable properties and called `.startsWith` on a non-string, throwing inside `chart.update()` and aborting the repaint partway. The rule: only write color onto `ticks`, `title`, and `grid` objects that the chart config already defined; never fabricate them. For axes that define no such object, the color comes from `Chart.defaults`, which the adapter sets.
+
+**The real dark canvas is `#14191F`, not `#0F172A`.** The `github` scheme reverses its neutral scale under `.dark`, and the rendered body background in dark mode is neutral-800 (`#14191F`, confirmed by reading `getComputedStyle(document.body).backgroundColor` in the browser, which returns `rgb(20,25,31)`), not neutral-900 (`#0F172A`) as the audit tool previously assumed. The contrast difference between the two is below any grade boundary, so it changed zero verdicts, but the tool now grades against the measured value. The fix in `audit_figures.py` was to repoint the DEFAULT entry of the neutral reversal table to step 800.
+
+**Theme detection: computed color, not the class.** Copied from first-trillion's working `__tc` helper. The adapter reads `getComputedStyle(.prose || article || main || body).color` and decides dark from its luminance. This is the single most important correctness choice in the adapter; every earlier version that read `html.dark` directly hit edge cases where the class and the rendered appearance disagreed.
+
+**first-trillion keeps its own helpers, by design.** Unlike taller and the paradox essay, whose inline adapters were self-contained and were removed, first-trillion's chart configs call `window.__tc()` and `window.__gc()` inline at construction time in dozens of places (`borderColor: window.__tc()`, `grid: { color: window.__gc() }`, and so on). Those helpers are load-bearing dependencies of the configs, not just a duplicate adapter. Deleting the helper block would throw `window.__tc is not a function` at construction and the charts would not render at all. The helpers and the global adapter do not conflict (both read the computed color and set the same fixed grid), and the global adapter still handles first-trillion's series swaps on top. So first-trillion is the one page that keeps inline theming code, and that is correct.
+
+**Canonical light-to-dark series map (19 pairs).** Light values are the existing saturated series colors, all of which already clear the 3:1 chart-mark floor on white. Each dark partner is the brightest tint that still reads as the hue and stays CVD-distinct, sourced from GitHub's own dark accent palette for the github-scheme colors and from the existing taller pairs for the Okabe-Ito and Tol colors. The light side was not changed; only dark partners were added.
+
+| Light | Dark | Notes |
+| --- | --- | --- |
+| `#0969DA` | `#79C0FF` | blue (GitHub) |
+| `#0072B2` | `#79C0FF` | Okabe-Ito blue, shares dark partner |
+| `#1F6FEB` | `#56B4E9` | |
+| `#D55E00` | `#FFA657` | vermillion |
+| `#9A6700` | `#E69F00` | taller slope gold |
+| `#E69F00` | `#F2CC60` | orange (dual role, see below) |
+| `#009E73` | `#7EE787` | bluish green |
+| `#1A7F37` | `#3FB950` | green (GitHub) |
+| `#CC79A7` | `#FFADCC` | reddish purple |
+| `#AE377B` | `#D2A8FF` | |
+| `#BF3989` | `#F778BA` | pink (GitHub) |
+| `#4477AA` | `#A5D6FF` | Tol blue |
+| `#369CCF` | `#56D4FF` | lifted skyblue |
+| `#BF8700` | `#E3B341` | gold (GitHub) |
+| `#CF222E` | `#FF7B72` | red (GitHub) |
+| `#8250DF` | `#D2A8FF` | purple (GitHub) |
+| `#F0E442` | `#EAE234` | yellow |
+| `#000000` | `#FFFFFF` | Alberta slope series |
+| `#8B949E` | `#C9D1D9` | neutral |
+
+**The `#E69F00` dual role is why the map is per-value-directional, not a naive two-way swap.** `#E69F00` is a light-mode SERIES in first-trillion but the dark-mode TARGET of `#9A6700` in taller. A single naive bidirectional map cannot represent the same hex meaning two different things. The adapter resolves this by only ever applying the light-to-dark direction when dark and the dark-to-light direction when light, keyed on the dataset's current value, so in taller dark mode `#9A6700` becomes `#E69F00` and in first-trillion dark mode `#E69F00` becomes `#F2CC60`, both correct.
+
+**Warm Okabe-Ito bars keep their fills and get theme-aware borders, not contrast-driven recoloring.** `#E69F00` and `#F0E442` cannot be darkened to clear 3:1 on white without collapsing their CVD separation from the other warm colors (they are separated by lightness; darkening merges them). The accepted resolution is to keep the audited Okabe-Ito fills and add a `borderColor: window.__tc()` hairline so they stay legible on both backgrounds. These datasets carry an inline `// audit-ok` marker and appear in the audit's ACCEPTED section rather than as failures. This extends the BUG-022 principle: when a color cannot clear the floor without breaking a more important property, document the choice inline and border for legibility.
+
+**Verified.** `python3 tools/audit_figures.py` reports 233 color slots across 11 files, 0 issues flagged, 13 accepted (the warm bars), 0 uncovered hexes, exit 0. Every series color clears the 3:1 mark floor in both themes graded against `#14191F`, with the global swap applied. Tightest dark ratios are the GitHub reds and pinks at about 7:1; most land between 9:1 and 17:1. The full rollout (taller and paradox inline adapters removed, first-trillion helpers retained, college-scorecard reverted to no per-page code) was confirmed by rendering every chart on taller, the paradox essay, first-trillion, and the college-scorecard case study in both modes.
+
+First resolved: June 2026, during the site-wide figure contrast pass.
+
+### Changelog: Figure Contrast and Dark-Mode Theming Pass (June 2026)
+
+A single pass brought every chart on the site to WCAG-compliant contrast in both themes and consolidated all chart theming into one mechanism. In order:
+
+The first contrast audit (the new `tools/audit_figures.py`) found the dark-mode failures the eye had been missing: series colors graded against the wrong canvas, hardcoded text colors invisible in one theme, and no per-theme series swap at all. The skyblue lift (`#56B4E9` to `#369CCF`) and the Queen's-line nudge (`#AA3377` to `#AE377B`) were applied to clear 3:1 on the dark canvas while staying CVD-distinct. The warm Okabe-Ito bars in first-trillion were given theme-aware borders rather than recoloring, because darkening them would have collapsed their colorblind separation.
+
+The work then expanded from one-off fixes to a universal per-theme model: every series color gets a light value and a dark partner, maximum contrast in each theme, CVD-safe, the brightest tint that still reads as the hue. The 19-pair canonical map (documented in BUG-040) was computed and verified per chart for colorblind separation under deuteranopia, protanopia, and tritanopia.
+
+The delivery mechanism went through several wrong turns (a taller-derived per-page adapter that fought Chart.js internals and the Blowfish theme-state desync) before settling on one global adapter in `extend-footer.html`, superseding the BUG-035 defaults-only script. The per-page adapters on taller and the paradox essay were then removed so the global adapter is the single mechanism; first-trillion keeps its `__tc`/`__gc` helpers because its chart configs depend on them inline.
+
+The audit tool was rewritten to match the shipped model: it reads the canonical map from `extend-footer.html` at runtime (single source of truth), grades the dark side against the real `#14191F` canvas, and adds a coverage pass that flags any series hex not covered by the global map. Final state: 233 slots, 0 issues, 0 uncovered, exit 0.
+
+### Tool: tools/audit_figures.py (figure contrast auditor)
+
+`audit_figures.py` walks every Chart.js figure in `content/**/*.md`, measures WCAG contrast for each series color and each text element against the actual canvas in both light and dark themes, and reports per chart. It is pure standard library, Python 3.8 or newer.
+
+**Model (current, BUG-040).** The tool reads the canonical light-to-dark swap map from `layouts/partials/extend-footer.html` at runtime, so there is exactly one source of truth and no second copy to drift. Every series hex is graded in dark mode at its mapped partner's value (or unchanged if not in the map, which the coverage pass then flags). The dark canvas is `#14191F` (neutral-800 reversed), the measured rendered background. The light canvas is `#FFFFFF` (the card surface). Series colors must clear 3:1 in both themes.
+
+**Coverage pass.** Every distinct series hex used anywhere in content must be a key in the global map (or itself be a dark-target value). A hex that is neither will not swap in dark mode and would render its light value on the dark canvas; the tool lists any such hex with its locations and exits nonzero. This automates the by-hand coverage check used during the rollout.
+
+**Text and grid.** A text or grid color set to `window.__tc()`/`window.__gc()` or driven by theme-aware `Chart.defaults` is recognized as theme-aware and passes. Only a hardcoded hex in a title, tick, legend, or grid slot is a BUG-034 violation, reported with its real two-mode contrast.
+
+**Accept markers.** A dataset carrying an inline `// audit-ok` or `// audit-accept` comment is moved to a separate ACCEPTED section rather than counted as a failure (the BUG-022 "document the choice inline" rule, made machine-checkable). The first-trillion warm bars use this.
+
+Usage:
+
+```bash
+python3 tools/audit_figures.py                 # audit content/, report only
+python3 tools/audit_figures.py --self-test     # theme and palette tables
+python3 tools/audit_figures.py --fix           # strip hardcoded text colors; remap invisible series
+python3 tools/audit_figures.py --fix-all       # also remap FAIL series to nearest approved
+python3 tools/audit_figures.py --json          # machine-readable findings
+```
+
+Exit code is nonzero while any unresolved failure, hardcoded text color, or uncovered series hex remains.
