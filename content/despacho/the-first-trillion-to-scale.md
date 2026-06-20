@@ -420,7 +420,7 @@ options: {
 
 In billions, that is the sum laid bare:
 
-\\[ (607 + 370 + 71)\ \text{USD billion} \quad \approx \quad 1{,}048\ \text{USD billion} \quad \approx \quad \text{him} \\]
+\\[ (607 + 370 + 71)\ \text{USD billion} \quad \approx \quad 1{,}048\ \text{USD billion} \quad \approx \quad \text{Him} \\]
 
 That is the whole essay in one image. Three regions of the world, twenty-eight countries, more than 700 million lives, stacked end to end, come out even with one person.
 
