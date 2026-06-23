@@ -237,6 +237,19 @@ def content(lg, struct, S, rings, focus=None):
         out.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="3.2" fill="var(--map-bg)" stroke="currentColor" stroke-width="0.6" vector-effect="non-scaling-stroke" opacity="0.85"/>')
         out.append(f'<text x="{cx:.1f}" y="{cy+2.2:.1f}" font-size="6" text-anchor="middle" fill="currentColor" style="font-family:ui-monospace,monospace">{k}</text></g>')
     out.append('</g>')
+    # League geographic center: the average position of the teams in THIS panel
+    # (so NBA's 30-team panels and its 32-team projection each get their own).
+    # Drawn last so it sits on top, and outside any .div group so focus never dims it.
+    clo=sum(teams[t]["lon"] for t in pt)/len(pt); cla=sum(teams[t]["lat"] for t in pt)/len(pt)
+    mx,my=S(alb(clo,cla))
+    out.append(
+        f'<g class="lgcenter" pointer-events="none" opacity="0.72">'
+        f'<title>League geographic center</title>'
+        f'<line x1="{mx-13:.1f}" y1="{my:.1f}" x2="{mx+13:.1f}" y2="{my:.1f}" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke"/>'
+        f'<line x1="{mx:.1f}" y1="{my-13:.1f}" x2="{mx:.1f}" y2="{my+13:.1f}" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke"/>'
+        f'<circle cx="{mx:.1f}" cy="{my:.1f}" r="8" fill="none" stroke="currentColor" stroke-width="1.4" vector-effect="non-scaling-stroke"/>'
+        f'<circle cx="{mx:.1f}" cy="{my:.1f}" r="1.4" fill="currentColor"/>'
+        f'</g>')
     return "\n".join(out)
 
 PANELTITLE={"A":"Current Divisions","B":"Conferences Kept, Divisions Optimized","C":"Full Geographic Optimization"}
@@ -285,7 +298,8 @@ document.querySelectorAll('svg.realign').forEach(s=>wire(s.id));
 LEAGUE_NAME={"nfl":"NFL","mlb":"MLB","nba":"NBA","nhl":"NHL","mls":"MLS"}
 PANELS={"nfl":["A","B","C"],"mlb":["A","B","C"],"nba":["A","B","C"],"nhl":["A","B","C"],"mls":["A","C"]}
 INSTR=("Scroll to zoom, drag to pan, double-click to reset. Click a division in the key to lock focus. "
-       "Teams sharing a venue show as one split marker; zoom in or click it to fan them out. Every other team sits at its true location.")
+       "Teams sharing a venue show as one split marker; zoom in or click it to fan them out. Every other team sits at its true location. "
+       "The open crosshair marks the league's geographic center, the average position of all its teams.")
 
 # Theme block: each map follows the embedding page's light/dark mode (Blowfish toggles .dark on
 # <html>), falling back to the OS preference when viewed standalone. Background and text come from

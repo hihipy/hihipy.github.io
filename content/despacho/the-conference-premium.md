@@ -49,9 +49,9 @@ The conference premium is the travel a league spends honoring a conference line 
 <p class="cp-kpi-sub">Only the two that kept the old line still pay</p>
 </div>
 <div class="cp-kpi">
-<p class="cp-kpi-value">0.00%</p>
-<p class="cp-kpi-label">The NBA after expansion</p>
-<p class="cp-kpi-sub">32 teams, still a clean East and West</p>
+<p class="cp-kpi-value">1 team</p>
+<p class="cp-kpi-label">Moved by the NBA expansion</p>
+<p class="cp-kpi-sub">Minnesota crosses east on geography alone, matching the league's own instinct</p>
 </div>
 </div>
 
@@ -503,6 +503,22 @@ Major League Soccer was built from scratch in the 1990s rather than from a merge
 Laid end to end, the five leagues do not fall on a tidy gradient. They fall into two groups, and the split tracks one piece of history: what each league did with a rival it absorbed. Baseball and football kept the old boundary as a brand and pay for it, 28.87 and 19.66%. The NBA and the NHL absorbed rivals too, then re-sorted them by geography, so at their real rosters they pay nothing. Soccer never merged and never drew a division layer, so its zero is structural. The premium is a single subtraction, but it sorts the leagues by whether a merged league kept its old line or dissolved it into the map.
 
 The NBA is the league that prompted all this, and it is the cleanest case of the rule. Its conferences already are the map, so it pays zero; and its projected expansion, two western teams and a square-up to four divisions of four, leaves the optimal split a clean East and West, so it still pays zero. Geography that was already honest does not turn dishonest just because the league grows.
+
+## The Groupings That Look Wrong
+
+The free optimum minimizes total within-division distance at fixed division sizes, which is not the same as putting every team with its single nearest neighbor. That gap is where the odd-looking placements come from, and each one has the same root: a team near a corner or a seam gets sorted by what makes the whole map cheapest, not by what looks right for that team alone.
+
+Behind all of it is where each league's weight actually sits. The open crosshair on every map marks the league's geographic center, the average position of its teams, and not one of the five lands in the middle of the country. Measured against the geographic center of the contiguous United States, near Lebanon, Kansas at about 98.6 degrees west, every league leans east. Football leans hardest, its center about 8 degrees of longitude east; baseball and hockey sit about 6 degrees east; the NBA's real thirty teams about 5; soccer about 4 and a half. The eastern half of the map holds more teams, so the optimizer packs its tightest divisions there and the far western and far southeastern clubs, Seattle and Miami, are the ones left over to absorb. The center is why the corners look odd.
+
+The NBA is the one league whose center moves on the page. Its real thirty teams center near 93 degrees west, but the projected panel adds Seattle and Las Vegas, both far west, and that pulls the center about a degree and a half back toward the middle, to near 95 degrees west. The expansion does not bend the conference line. It nudges an east-leaning league toward the balance the line already assumed, which is the same reason the projected split stays clean and the premium stays at zero.
+
+Seattle is the clearest case. Its nearest neighbors are the California teams, yet the baseball optimum drops the Mariners in a mountain group with Arizona, Colorado, Kansas City, and Minnesota, and the football optimum does the same with the Seahawks. The California teams already fill a division on their own, tightly, and divisions have to come out at the set size. Seattle is the leftover corner, so it attaches to the next cluster inland rather than forcing a California team out to make room. The marginal team in a corner pays for the geometry of everyone else.
+
+Minnesota goes the other way, and goes both ways. The Vikings land in the western mountain group in football, the Timberwolves cross into an eastern division in the projected NBA, and the Twins sit in the interior group in baseball. Minneapolis sits near the seam between the eastern and western blocs of teams, so it is among the cheapest teams to move whenever one side needs a body. Whichever half is short, Minnesota tends to be the one that slides over, which is why the same city reads as West in one league and East in another.
+
+Miami is the southeastern version of Seattle. The Marlins share a baseball division with the two Texas teams, anchored at a centroid on the Gulf coast of Alabama, because Florida has too few nearby teams to make a compact group. Once Tampa and Atlanta are spoken for, the division has to reach west to Texas to hit five, so Miami ends up in a group that stretches most of the way across the South.
+
+The last kind of oddity is not the optimizer at all, it is the label. The free optimum sorts its finished divisions into two halves by longitude only so the map reads like the others, and that cut can put an eastern-feeling city on the western side. In the football optimum the Great Lakes division, the Bears, Browns, Lions, and Packers, falls just west of the median and is labeled West, which puts the Cleveland Browns in the western half. Nothing in the solve treats Cleveland as western. The grouping is real; the conference label sitting on top of it is only a longitude line.
 
 ## What This Does Not Mean
 
