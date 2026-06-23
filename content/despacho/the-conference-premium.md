@@ -142,7 +142,7 @@ def partition(members, sizes, distances):
 
 For a conference of fifteen or sixteen teams the candidate list is small enough to enumerate in full, so the result is exact. For the whole league at once the count is too large, so the same program runs over a candidate set restricted to each team's nearest neighbors, which keeps the partition optimal against a strong field.
 
-**Step three: three versions of each league.** Score each league three ways. \( A \) is the league as it stands today. \( B \) keeps the real conferences but redraws the divisions inside them for minimum travel, at the real sizes. \( C \) throws out the conference line, redraws every division across the whole league, then splits the result back into two halves by longitude. The conference premium is how much worse the conference-bound best is than the free best, against what the league spends now:
+**Step three: three versions of each league.** Score each league three ways. \( A \) is the league as it stands today. \( B \) keeps the real conferences but redraws the divisions inside them for minimum travel, at the real sizes. \( C \) throws out the conference line, redraws every division across the whole league, then splits the result back into two halves by longitude. The longitude re-split only sorts the finished divisions into two conferences so the \( C \) map reads like the others; it places no constraint on the solve, so \( C \)'s mileage is the free optimum either way. The conference premium is how much worse the conference-bound best is than the free best, against what the league spends now:
 
 \[ \mathrm{premium} = \frac{B - C}{A}, \qquad \mathrm{recover}_B = \frac{A - B}{A}, \qquad \mathrm{recover}_C = \frac{A - C}{A} \]
 
