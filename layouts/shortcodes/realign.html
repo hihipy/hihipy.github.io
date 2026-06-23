@@ -1,0 +1,29 @@
+{{- /* realign.html: embed a league's realignment map(s) from
+       static/figs/fig_<league>_<panel>.html (output of gen.py).
+       Single panel:  {{< realign league="nba" panel="A" >}}  -> one framed map
+       All panels:    {{< realign league="nba" >}}            -> every panel stacked
+       height optional, default 600. */ -}}
+{{- $league := .Get "league" -}}
+{{- $height := .Get "height" | default "600" -}}
+{{- $panel := .Get "panel" -}}
+{{- if $panel -}}
+{{- $src := printf "/figs/fig_%s_%s.html" $league $panel | relURL -}}
+<div class="realign-set" style="margin: 1.5rem 0;">
+  <iframe src="{{ $src }}"
+          title="{{ upper $league }} realignment map, panel {{ $panel }}"
+          loading="lazy"
+          style="width: 100%; height: {{ $height }}px; border: 0; border-radius: 8px; background: #14191F;"></iframe>
+</div>
+{{- else -}}
+{{- $panels := slice "A" "B" "C" -}}
+{{- if eq $league "mls" }}{{ $panels = slice "A" "C" }}{{ end -}}
+<div class="realign-set" style="margin: 1.75rem 0; display: flex; flex-direction: column; gap: 1.25rem;">
+  {{- range $i, $k := $panels }}
+  {{- $src := printf "/figs/fig_%s_%s.html" $league $k | relURL -}}
+  <iframe src="{{ $src }}"
+          title="{{ upper $league }} realignment panel {{ add $i 1 }} of {{ len $panels }}"
+          loading="lazy"
+          style="width: 100%; height: {{ $height }}px; border: 0; border-radius: 8px; background: #14191F;"></iframe>
+  {{- end }}
+</div>
+{{- end -}}

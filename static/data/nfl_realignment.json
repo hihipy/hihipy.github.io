@@ -1,0 +1,370 @@
+{
+  "league": "NFL",
+  "generated_at": "2026-06-20T19:38:09.632046+00:00",
+  "ortools_version": "9.15.6755",
+  "teams": 32,
+  "division_size": 4,
+  "metric": "total within-division great-circle miles",
+  "alignments": {
+    "actual": {
+      "travel_mi": 27324.6
+    },
+    "conference_fixed": {
+      "travel_mi": 22798.1,
+      "recovered_pct": 16.6,
+      "well_defined": true
+    },
+    "east_west": {
+      "travel_mi": 17424.8,
+      "recovered_pct": 36.2
+    }
+  },
+  "conference_premium_mi": 5373.2,
+  "conference_premium_pct": 19.7,
+  "schedule": {
+    "season_games": 17,
+    "tier_ratio_per_opponent": {
+      "division": 2.0,
+      "conference": 0.5,
+      "cross": 0.3125
+    },
+    "model": "frozen-cross",
+    "weighted_metric": "expected season trip-miles = sum over team pairs of games*distance",
+    "invariance_note": "for a fixed conference split the minimum-weighted-travel partition equals the minimum within-division-distance partition for any weights; weights only affect the cross-count comparison"
+  },
+  "division_sweep": [
+    {
+      "divisions_per_conference": 8,
+      "division_size": 2,
+      "unweighted_within_division_mi": 3916.3,
+      "expected_trip_mi": 244869.3,
+      "avg_trip_mi_per_game": 900.25,
+      "games_per_opponent": {
+        "division": 2.67,
+        "conference": 0.67,
+        "cross": 0.31
+      },
+      "most_efficient": false
+    },
+    {
+      "divisions_per_conference": 4,
+      "division_size": 4,
+      "unweighted_within_division_mi": 17424.8,
+      "expected_trip_mi": 230694.5,
+      "avg_trip_mi_per_game": 848.14,
+      "games_per_opponent": {
+        "division": 2.0,
+        "conference": 0.5,
+        "cross": 0.31
+      },
+      "most_efficient": false
+    },
+    {
+      "divisions_per_conference": 2,
+      "division_size": 8,
+      "unweighted_within_division_mi": 57636.9,
+      "expected_trip_mi": 229714.7,
+      "avg_trip_mi_per_game": 844.54,
+      "games_per_opponent": {
+        "division": 1.33,
+        "conference": 0.33,
+        "cross": 0.31
+      },
+      "most_efficient": true
+    },
+    {
+      "divisions_per_conference": 1,
+      "division_size": 16,
+      "unweighted_within_division_mi": 194876.6,
+      "expected_trip_mi": 263020.2,
+      "avg_trip_mi_per_game": 966.99,
+      "games_per_opponent": {
+        "division": 0.8,
+        "conference": 0.0,
+        "cross": 0.31
+      },
+      "most_efficient": false
+    }
+  ],
+  "division_sweep_spread_pct": 14.5,
+  "steepness_robustness": [
+    {
+      "ratio": 1.0,
+      "optimal_divisions_per_conference": 4,
+      "optimal_division_size": 4,
+      "spread_pct": 0.0,
+      "indifferent": true,
+      "is_real_ratio": false
+    },
+    {
+      "ratio": 1.5,
+      "optimal_divisions_per_conference": 2,
+      "optimal_division_size": 8,
+      "spread_pct": 4.28,
+      "indifferent": false,
+      "is_real_ratio": false
+    },
+    {
+      "ratio": 2.0,
+      "optimal_divisions_per_conference": 2,
+      "optimal_division_size": 8,
+      "spread_pct": 7.42,
+      "indifferent": false,
+      "is_real_ratio": false
+    },
+    {
+      "ratio": 2.5,
+      "optimal_divisions_per_conference": 2,
+      "optimal_division_size": 8,
+      "spread_pct": 9.82,
+      "indifferent": false,
+      "is_real_ratio": false
+    },
+    {
+      "ratio": 3.0,
+      "optimal_divisions_per_conference": 2,
+      "optimal_division_size": 8,
+      "spread_pct": 11.71,
+      "indifferent": false,
+      "is_real_ratio": false
+    },
+    {
+      "ratio": 4.0,
+      "optimal_divisions_per_conference": 2,
+      "optimal_division_size": 8,
+      "spread_pct": 14.5,
+      "indifferent": false,
+      "is_real_ratio": true
+    },
+    {
+      "ratio": 5.0,
+      "optimal_divisions_per_conference": 4,
+      "optimal_division_size": 4,
+      "spread_pct": 17.05,
+      "indifferent": false,
+      "is_real_ratio": false
+    },
+    {
+      "ratio": 6.0,
+      "optimal_divisions_per_conference": 4,
+      "optimal_division_size": 4,
+      "spread_pct": 19.6,
+      "indifferent": false,
+      "is_real_ratio": false
+    }
+  ],
+  "minmax_equity_sweep": [
+    {
+      "divisions_per_conference": 8,
+      "division_size": 2,
+      "worst_team_trip_mi": 27167.4,
+      "most_equitable": false
+    },
+    {
+      "divisions_per_conference": 4,
+      "division_size": 4,
+      "worst_team_trip_mi": 25988.5,
+      "most_equitable": false
+    },
+    {
+      "divisions_per_conference": 2,
+      "division_size": 8,
+      "worst_team_trip_mi": 25608.2,
+      "most_equitable": true
+    },
+    {
+      "divisions_per_conference": 1,
+      "division_size": 16,
+      "worst_team_trip_mi": 28628.0,
+      "most_equitable": false
+    }
+  ],
+  "conclusions": {
+    "min_sum_optimal_divisions_per_conference": 2,
+    "min_max_optimal_divisions_per_conference": 2,
+    "weighted_spread_pct": 14.5,
+    "verdict": "division count materially affects travel"
+  },
+  "optimal_east_west": {
+    "west": [
+      [
+        {
+          "name": "Chargers",
+          "lat": 33.953,
+          "lon": -118.339
+        },
+        {
+          "name": "Raiders",
+          "lat": 36.091,
+          "lon": -115.184
+        },
+        {
+          "name": "49ers",
+          "lat": 37.403,
+          "lon": -121.97
+        },
+        {
+          "name": "Rams",
+          "lat": 33.953,
+          "lon": -118.339
+        }
+      ],
+      [
+        {
+          "name": "Broncos",
+          "lat": 39.744,
+          "lon": -105.02
+        },
+        {
+          "name": "Vikings",
+          "lat": 44.974,
+          "lon": -93.258
+        },
+        {
+          "name": "Cardinals",
+          "lat": 33.528,
+          "lon": -112.263
+        },
+        {
+          "name": "Seahawks",
+          "lat": 47.595,
+          "lon": -122.332
+        }
+      ],
+      [
+        {
+          "name": "Texans",
+          "lat": 29.685,
+          "lon": -95.411
+        },
+        {
+          "name": "Chiefs",
+          "lat": 39.049,
+          "lon": -94.484
+        },
+        {
+          "name": "Cowboys",
+          "lat": 32.748,
+          "lon": -97.093
+        },
+        {
+          "name": "Saints",
+          "lat": 29.951,
+          "lon": -90.081
+        }
+      ],
+      [
+        {
+          "name": "Browns",
+          "lat": 41.506,
+          "lon": -81.7
+        },
+        {
+          "name": "Bears",
+          "lat": 41.862,
+          "lon": -87.617
+        },
+        {
+          "name": "Lions",
+          "lat": 42.34,
+          "lon": -83.046
+        },
+        {
+          "name": "Packers",
+          "lat": 44.501,
+          "lon": -88.062
+        }
+      ]
+    ],
+    "east": [
+      [
+        {
+          "name": "Bengals",
+          "lat": 39.095,
+          "lon": -84.516
+        },
+        {
+          "name": "Colts",
+          "lat": 39.76,
+          "lon": -86.164
+        },
+        {
+          "name": "Titans",
+          "lat": 36.166,
+          "lon": -86.771
+        },
+        {
+          "name": "Panthers",
+          "lat": 35.226,
+          "lon": -80.853
+        }
+      ],
+      [
+        {
+          "name": "Dolphins",
+          "lat": 25.958,
+          "lon": -80.239
+        },
+        {
+          "name": "Jaguars",
+          "lat": 30.324,
+          "lon": -81.637
+        },
+        {
+          "name": "Buccaneers",
+          "lat": 27.976,
+          "lon": -82.503
+        },
+        {
+          "name": "Falcons",
+          "lat": 33.755,
+          "lon": -84.401
+        }
+      ],
+      [
+        {
+          "name": "Bills",
+          "lat": 42.774,
+          "lon": -78.787
+        },
+        {
+          "name": "Ravens",
+          "lat": 39.278,
+          "lon": -76.623
+        },
+        {
+          "name": "Steelers",
+          "lat": 40.447,
+          "lon": -80.016
+        },
+        {
+          "name": "Commanders",
+          "lat": 38.908,
+          "lon": -76.864
+        }
+      ],
+      [
+        {
+          "name": "Jets",
+          "lat": 40.814,
+          "lon": -74.074
+        },
+        {
+          "name": "Patriots",
+          "lat": 42.091,
+          "lon": -71.264
+        },
+        {
+          "name": "Eagles",
+          "lat": 39.901,
+          "lon": -75.168
+        },
+        {
+          "name": "Giants",
+          "lat": 40.814,
+          "lon": -74.074
+        }
+      ]
+    ]
+  }
+}

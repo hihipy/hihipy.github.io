@@ -1964,3 +1964,81 @@ python3 tools/audit_figures.py --json          # machine-readable findings
 ```
 
 Exit code is nonzero while any unresolved failure, hardcoded text color, or uncovered series hex remains.
+
+### BUG-041: `tools/gen.py` silently crashes without `us-states.json` and `canada.json`, leaving stale maps deployed
+
+**Symptom.** The realignment maps in the despacho "Conference Premium" essay kept showing an old render no matter how many times the fix was applied. Every regeneration looked successful from the chat side, but the live maps never changed. The real cause was that `python3 gen.py` was aborting on its second line before producing a single figure.
+
+**Root cause.** `gen.py` opens four files by bare relative name at import time: `teams.json`, `all_alignments.json`, `us-states.json`, and `canada.json`. The first two live in `tools/`, but the two boundary GeoJSON files were never on the drive at all (a `find` across the whole ProtonDrive folder returned nothing). With them missing, `gen.py` raised `FileNotFoundError` immediately, wrote zero `fig_*.html` files, and the follow-up `mv fig_*_*.html` matched nothing, so `static/figs/` kept serving the previous maps. The crash was easy to miss because the next commands in the deploy block produced their own "no such file" noise and Hugo still rebuilt fine.
+
+**The fix.** The two boundary files are standard GeoJSON and were sourced from GitHub, then confirmed to match exactly what `gen.py` consumes:
+
+- `us-states.json`: the classic Leaflet file from `raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json`. A FeatureCollection where each feature has `properties.name` set to the full state name and a `Polygon` or `MultiPolygon` geometry in `[lon, lat]` order. `gen.py` keeps every state except Alaska, Hawaii, and Puerto Rico, which it drops by name.
+- `canada.json`: `raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/canada.geojson`. Same shape, with `properties.name` carrying province names. `gen.py` keeps only British Columbia, Alberta, Manitoba, Ontario, Quebec, and Saskatchewan by exact name and clips each ring to latitude 58 and below.
+
+Both files go in `tools/` alongside `teams.json` and `all_alignments.json`. `gen.py` must run from that directory because it reads by relative name, and it writes `fig_<league>_<panel>.html` to the current directory.
+
+**Lesson for the next instance.** When a regenerated artifact "will not update," confirm the generator actually ran to completion before assuming a logic bug. A generator that reads inputs by bare relative name fails loudly only if you are watching its first lines; downstream `mv` and build steps will happily mask the crash.
+
+First resolved: June 2026, Conference Premium map pipeline.
+
+### BUG-042: `gen.py` fanned close teams in alphabetical order, inverting their geography
+
+**Symptom.** On the NFL maps, Washington rendered north of Baltimore, which is backwards (Baltimore is about 40 miles north of DC). The team coordinates in `teams.json` were correct (Ravens latitude 39.278 is north of Commanders 38.908); the inversion was purely in rendering.
+
+**Root cause.** `content()` clustered any teams whose projected positions fell within a pixel threshold (originally 9px, about 28 miles at the continental scale) and fanned the cluster members around a circle in `sorted()`, alphabetical, order starting from the top. For Washington and Baltimore, "Commanders" sorts before "Ravens," so Washington landed at the top of the fan regardless of actual latitude. The threshold also swept up genuinely distinct teams 28 miles apart and mislabeled them "Shared venue."
+
+**The fix, final form.** Only teams that genuinely share a venue (near-identical coordinates, `THRESH=1.0`px) are clustered and split; every other team renders at its true projected coordinate. Same-city distinct teams (Yankees/Mets, Nets/Knicks, the two Los Angeles pairs) therefore sit close enough to overlap slightly at their real spots, which is geographically faithful and was the explicit design choice. Only the two true shared-stadium pairs stay split: Giants/Jets at MetLife and Rams/Chargers at SoFi, which must be separated or one hides the other. An intermediate version (fan by true compass bearing instead of alphabetically) was geometrically correct but still displaced teams more than wanted; true coordinates won.
+
+**Verification mechanism.** Because the rendered SVG places each marker at a known `cx`/`cy`, correctness is checkable without a browser: read the marker `cy` for two teams and confirm the northern one has the smaller value. Ravens `cy` 237.2 sits above Commanders `cy` 245.0 in every regenerated NFL panel.
+
+First resolved: June 2026, Conference Premium maps.
+
+### BUG-043: map labels stacked on nearby teams; fixed with directional placement, a collision pass, and a halo
+
+**Symptom.** With teams at true coordinates (BUG-042), the abbreviation labels collided. "BAL" and "WAS" printed on the same spot, and even isolated labels sat partly behind their own markers, because every label was hard-coded 9px directly above its marker.
+
+**The fix, three parts.**
+
+1. Directional placement. Each label is placed in the open direction, away from the average position of teams within 36px. Two close neighbors throw their labels opposite ways (Baltimore's up and left, Washington's down).
+2. Collision pass. After placement, a short iterative loop nudges any still-overlapping label boxes apart vertically until none collide. This is what separates same-point pairs (Yankees/Mets, Nets/Knicks) that directional placement alone cannot, because both members of a co-located pair inside a larger cluster get pushed the same way.
+3. Halo. Each label is drawn with `stroke="var(--map-bg)" stroke-width="2.5" paint-order="stroke" stroke-linejoin="round"`, a background-colored outline behind the fill, so it stays legible where it crosses a marker or a division line.
+
+Labels stay inside their team `<g>` so the click-to-focus dimming still applies to them.
+
+**Verified.** A bounding-box overlap scan across all 14 generated maps reports zero overlapping label pairs, with the markers still at true coordinates.
+
+First resolved: June 2026, Conference Premium maps.
+
+### BUG-044: embedded iframe maps are cached independently of the parent page; hard-refresh does not evict them
+
+**Symptom.** After deploying corrected maps, the essay page still showed the old map through several hard-refreshes, producing repeated "it is still broken" reports when the file on disk was already correct.
+
+**Root cause.** The maps are embedded with `<iframe src="/figs/fig_<league>_<panel>.html">` via the `realign` shortcode. A browser caches an iframe's source document as its own resource, so a hard-refresh (Cmd+Shift+R) of the parent page reloads the page but often serves the iframe body from cache.
+
+**Diagnosis and fix.**
+
+- Verify the deploy off disk, not through the browser. Each `gen.py` version carries a unique magic string in its help text (currently "Every other team sits at its true location"). `grep -c "<magic string>" static/figs/fig_nfl_B.html` returning 1 proves the new file is in place; reading the marker `cy` values off the file (BUG-042) proves the geometry.
+- To view the new map, load it directly at `http://localhost:1313/figs/fig_<league>_<panel>.html` and hard-refresh that tab, or open the essay in a private window, or use "Empty Cache and Hard Reload" from DevTools. A plain parent-page refresh is not enough.
+- Permanent option, not yet applied: add a version query to the iframe `src` in `realign.html` (for example `/figs/fig_nfl_B.html?v=2`) so each regenerate is a new URL the browser cannot serve from cache.
+
+**Lesson.** When a deployed file "will not show," distinguish three layers before re-editing code: the file on disk, the server output, and the browser cache. Confirm the first two by reading bytes; only then chase the third.
+
+First resolved: June 2026, Conference Premium maps.
+
+### Tool: tools/gen.py (realignment map generator) and the `realign` shortcode
+
+`gen.py` builds the interactive league-realignment maps for the despacho "Conference Premium" essay. It reads four files from its working directory, `teams.json` (per-league team coordinates, colors, and abbreviations), `all_alignments.json` (the A/B/C division partitions from the optimizer), and the two boundary files `us-states.json` and `canada.json` (BUG-041), and writes one theme-aware HTML file per panel, `fig_<league>_<panel>.html`, to the current directory. Panels are A (actual divisions), B (conferences kept, divisions redrawn), and C (free optimum); MLS has only A and C. Each output is self-contained SVG plus a small zoom, pan, and focus script, themed through CSS variables so one file renders in both light and dark mode.
+
+Internals a future instance will need: markers sit at true projected coordinates except genuine shared-venue pairs, which are split (BUG-042); labels are placed directionally with a collision pass and a halo (BUG-043); Canada rings are drawn only for the NHL and MLS maps, the leagues with Canadian teams, and clipped at latitude 58. The premium values shown in the essay come from the separate optimizer that produced `all_alignments.json`, not from `gen.py`; `gen.py` only draws.
+
+The maps are embedded in markdown through the `realign` shortcode (`layouts/shortcodes/realign.html`). It supports a single-panel mode, `{{< realign league="nfl" panel="B" >}}`, which renders one iframe so prose and tables can sit between maps; with no `panel` argument it stacks all of a league's panels. After regenerating, move the figures into `static/figs/`, and remember the iframe cache (BUG-044).
+
+### Changelog: The Conference Premium essay (despacho, June 2026)
+
+A long build of `content/despacho/the-conference-premium.md`, a data essay measuring how much travel each of five leagues spends honoring conference boundaries that geography alone would not draw. Conventions established here that a future instance editing this essay should preserve:
+
+- The metric is the conference premium, defined in plain words in the lead, the first line of the TL;DR, and the intro before any math: the share of in-division travel that exists only because of where a league drew its conference line. Formally `premium = (B - C) / A`, where A is the actual divisions' total within-division great-circle miles, B keeps the conferences and redraws divisions, and C is the free geographic redraw. Partitions are solved as an exact set-partition integer program (CBC via PuLP or OR-Tools).
+- The NBA is modeled at its real thirty teams, where the premium is 0.00 percent, since its East and West already are the optimal split. The two presumptive expansion clubs (a returning Seattle and a Las Vegas team, both Western) appear only as an explicit what-if that introduces a 9.07 percent premium, and the maps depict that thirty-two-team scenario. The thesis is merger-and-resort: of the four leagues that absorbed a rival, two kept the old line as a brand and still pay (MLB, NFL) and two re-sorted by geography and pay nothing (NBA, NHL); MLS never merged and has no division layer, so its zero is structural.
+- Every KaTeX display formula is followed by a bulleted key defining its variables (single-backslash delimiters per BUG-039). League history paragraphs carry real cited footnotes (Wikipedia merger articles, SABR). The town-centroid "division hearts" are markdown tables placed directly under the map they describe (actual under A, conferences-kept under B, free-optimum under C), not stacked at the section end. Table header rows and category cells are Title Case; only the fun-fact note column is sentence case. Percentages are written `28.87%`, not "28.87 percent."
+- The 2020 Census populations for the centroid towns are owner-supplied and verified by hand; do not substitute GeoNames figures or estimates.

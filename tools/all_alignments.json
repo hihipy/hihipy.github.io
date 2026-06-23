@@ -1,0 +1,1113 @@
+{
+ "nfl": {
+  "n": 32,
+  "gs": 4,
+  "confs": [
+   "NFC",
+   "AFC"
+  ],
+  "A": [
+   [
+    "NFC",
+    [
+     [
+      "East",
+      [
+       "Cowboys",
+       "Giants",
+       "Eagles",
+       "Commanders"
+      ]
+     ],
+     [
+      "North",
+      [
+       "Bears",
+       "Lions",
+       "Packers",
+       "Vikings"
+      ]
+     ],
+     [
+      "South",
+      [
+       "Falcons",
+       "Panthers",
+       "Saints",
+       "Buccaneers"
+      ]
+     ],
+     [
+      "West",
+      [
+       "Cardinals",
+       "Rams",
+       "49ers",
+       "Seahawks"
+      ]
+     ]
+    ]
+   ],
+   [
+    "AFC",
+    [
+     [
+      "East",
+      [
+       "Bills",
+       "Dolphins",
+       "Patriots",
+       "Jets"
+      ]
+     ],
+     [
+      "North",
+      [
+       "Ravens",
+       "Bengals",
+       "Browns",
+       "Steelers"
+      ]
+     ],
+     [
+      "South",
+      [
+       "Texans",
+       "Colts",
+       "Jaguars",
+       "Titans"
+      ]
+     ],
+     [
+      "West",
+      [
+       "Broncos",
+       "Chiefs",
+       "Raiders",
+       "Chargers"
+      ]
+     ]
+    ]
+   ]
+  ],
+  "B": [
+   [
+    "NFC",
+    [
+     [
+      "d0",
+      [
+       "Cardinals",
+       "Rams",
+       "49ers",
+       "Seahawks"
+      ]
+     ],
+     [
+      "d1",
+      [
+       "Cowboys",
+       "Falcons",
+       "Saints",
+       "Buccaneers"
+      ]
+     ],
+     [
+      "d2",
+      [
+       "Bears",
+       "Lions",
+       "Packers",
+       "Vikings"
+      ]
+     ],
+     [
+      "d3",
+      [
+       "Giants",
+       "Eagles",
+       "Commanders",
+       "Panthers"
+      ]
+     ]
+    ]
+   ],
+   [
+    "AFC",
+    [
+     [
+      "d0",
+      [
+       "Broncos",
+       "Chiefs",
+       "Raiders",
+       "Chargers"
+      ]
+     ],
+     [
+      "d1",
+      [
+       "Dolphins",
+       "Texans",
+       "Jaguars",
+       "Titans"
+      ]
+     ],
+     [
+      "d2",
+      [
+       "Bengals",
+       "Browns",
+       "Steelers",
+       "Colts"
+      ]
+     ],
+     [
+      "d3",
+      [
+       "Bills",
+       "Patriots",
+       "Jets",
+       "Ravens"
+      ]
+     ]
+    ]
+   ]
+  ],
+  "C": [
+   [
+    "West",
+    [
+     [
+      "d0",
+      [
+       "Raiders",
+       "Chargers",
+       "Rams",
+       "49ers"
+      ]
+     ],
+     [
+      "d1",
+      [
+       "Broncos",
+       "Vikings",
+       "Cardinals",
+       "Seahawks"
+      ]
+     ],
+     [
+      "d2",
+      [
+       "Texans",
+       "Chiefs",
+       "Cowboys",
+       "Saints"
+      ]
+     ],
+     [
+      "d3",
+      [
+       "Browns",
+       "Bears",
+       "Lions",
+       "Packers"
+      ]
+     ]
+    ]
+   ],
+   [
+    "East",
+    [
+     [
+      "d0",
+      [
+       "Bengals",
+       "Colts",
+       "Titans",
+       "Panthers"
+      ]
+     ],
+     [
+      "d1",
+      [
+       "Dolphins",
+       "Jaguars",
+       "Falcons",
+       "Buccaneers"
+      ]
+     ],
+     [
+      "d2",
+      [
+       "Bills",
+       "Ravens",
+       "Steelers",
+       "Commanders"
+      ]
+     ],
+     [
+      "d3",
+      [
+       "Patriots",
+       "Jets",
+       "Giants",
+       "Eagles"
+      ]
+     ]
+    ]
+   ]
+  ],
+  "premium_pct": 19.7,
+  "recover_B": 16.6,
+  "recover_C": 36.2
+ },
+ "nhl": {
+  "n": 32,
+  "gs": 8,
+  "confs": [
+   "West",
+   "East"
+  ],
+  "A": [
+   [
+    "West",
+    [
+     [
+      "Central",
+      [
+       "Blackhawks",
+       "Avalanche",
+       "Stars",
+       "Wild",
+       "Predators",
+       "Blues",
+       "Mammoth",
+       "Jets"
+      ]
+     ],
+     [
+      "Pacific",
+      [
+       "Ducks",
+       "Flames",
+       "Oilers",
+       "Kings",
+       "Sharks",
+       "Kraken",
+       "Canucks",
+       "Golden Knights"
+      ]
+     ]
+    ]
+   ],
+   [
+    "East",
+    [
+     [
+      "Atlantic",
+      [
+       "Bruins",
+       "Sabres",
+       "Red Wings",
+       "Panthers",
+       "Canadiens",
+       "Senators",
+       "Lightning",
+       "Maple Leafs"
+      ]
+     ],
+     [
+      "Metropolitan",
+      [
+       "Hurricanes",
+       "Blue Jackets",
+       "Devils",
+       "Islanders",
+       "Rangers",
+       "Flyers",
+       "Penguins",
+       "Capitals"
+      ]
+     ]
+    ]
+   ]
+  ],
+  "B": [
+   [
+    "West",
+    [
+     [
+      "d0",
+      [
+       "Ducks",
+       "Flames",
+       "Oilers",
+       "Kings",
+       "Sharks",
+       "Kraken",
+       "Canucks",
+       "Golden Knights"
+      ]
+     ],
+     [
+      "d1",
+      [
+       "Blackhawks",
+       "Avalanche",
+       "Stars",
+       "Wild",
+       "Predators",
+       "Blues",
+       "Mammoth",
+       "Jets"
+      ]
+     ]
+    ]
+   ],
+   [
+    "East",
+    [
+     [
+      "d0",
+      [
+       "Sabres",
+       "Red Wings",
+       "Panthers",
+       "Lightning",
+       "Hurricanes",
+       "Blue Jackets",
+       "Penguins",
+       "Capitals"
+      ]
+     ],
+     [
+      "d1",
+      [
+       "Bruins",
+       "Canadiens",
+       "Senators",
+       "Maple Leafs",
+       "Devils",
+       "Islanders",
+       "Rangers",
+       "Flyers"
+      ]
+     ]
+    ]
+   ]
+  ],
+  "C": [
+   [
+    "West",
+    [
+     [
+      "d0",
+      [
+       "Ducks",
+       "Flames",
+       "Oilers",
+       "Kings",
+       "Sharks",
+       "Kraken",
+       "Canucks",
+       "Golden Knights"
+      ]
+     ],
+     [
+      "d1",
+      [
+       "Blackhawks",
+       "Avalanche",
+       "Stars",
+       "Wild",
+       "Predators",
+       "Blues",
+       "Mammoth",
+       "Jets"
+      ]
+     ]
+    ]
+   ],
+   [
+    "East",
+    [
+     [
+      "d0",
+      [
+       "Sabres",
+       "Red Wings",
+       "Panthers",
+       "Lightning",
+       "Hurricanes",
+       "Blue Jackets",
+       "Penguins",
+       "Capitals"
+      ]
+     ],
+     [
+      "d1",
+      [
+       "Bruins",
+       "Canadiens",
+       "Senators",
+       "Maple Leafs",
+       "Devils",
+       "Islanders",
+       "Rangers",
+       "Flyers"
+      ]
+     ]
+    ]
+   ]
+  ],
+  "premium_pct": 0.0,
+  "recover_B": 5.9,
+  "recover_C": 5.9
+ },
+ "mlb": {
+  "n": 30,
+  "gs": 5,
+  "confs": [
+   "NL",
+   "AL"
+  ],
+  "A": [
+   [
+    "NL",
+    [
+     [
+      "Central",
+      [
+       "Cubs",
+       "Reds",
+       "Brewers",
+       "Pirates",
+       "Cardinals"
+      ]
+     ],
+     [
+      "East",
+      [
+       "Braves",
+       "Marlins",
+       "Mets",
+       "Phillies",
+       "Nationals"
+      ]
+     ],
+     [
+      "West",
+      [
+       "Diamondbacks",
+       "Rockies",
+       "Dodgers",
+       "Padres",
+       "Giants"
+      ]
+     ]
+    ]
+   ],
+   [
+    "AL",
+    [
+     [
+      "Central",
+      [
+       "White Sox",
+       "Guardians",
+       "Tigers",
+       "Royals",
+       "Twins"
+      ]
+     ],
+     [
+      "East",
+      [
+       "Orioles",
+       "Red Sox",
+       "Yankees",
+       "Rays",
+       "Blue Jays"
+      ]
+     ],
+     [
+      "West",
+      [
+       "Astros",
+       "Angels",
+       "Athletics",
+       "Mariners",
+       "Rangers"
+      ]
+     ]
+    ]
+   ]
+  ],
+  "B": [
+   [
+    "NL",
+    [
+     [
+      "d0",
+      [
+       "Diamondbacks",
+       "Rockies",
+       "Dodgers",
+       "Padres",
+       "Giants"
+      ]
+     ],
+     [
+      "d1",
+      [
+       "Braves",
+       "Cubs",
+       "Reds",
+       "Brewers",
+       "Cardinals"
+      ]
+     ],
+     [
+      "d2",
+      [
+       "Marlins",
+       "Mets",
+       "Phillies",
+       "Nationals",
+       "Pirates"
+      ]
+     ]
+    ]
+   ],
+   [
+    "AL",
+    [
+     [
+      "d0",
+      [
+       "Astros",
+       "Angels",
+       "Athletics",
+       "Mariners",
+       "Rangers"
+      ]
+     ],
+     [
+      "d1",
+      [
+       "Rays",
+       "White Sox",
+       "Tigers",
+       "Royals",
+       "Twins"
+      ]
+     ],
+     [
+      "d2",
+      [
+       "Orioles",
+       "Red Sox",
+       "Yankees",
+       "Blue Jays",
+       "Guardians"
+      ]
+     ]
+    ]
+   ]
+  ],
+  "C": [
+   [
+    "West",
+    [
+     [
+      "d0",
+      [
+       "Angels",
+       "Athletics",
+       "Dodgers",
+       "Padres",
+       "Giants"
+      ]
+     ],
+     [
+      "d1",
+      [
+       "Royals",
+       "Twins",
+       "Mariners",
+       "Diamondbacks",
+       "Rockies"
+      ]
+     ],
+     [
+      "d2",
+      [
+       "Rays",
+       "Astros",
+       "Rangers",
+       "Braves",
+       "Marlins"
+      ]
+     ]
+    ]
+   ],
+   [
+    "East",
+    [
+     [
+      "d0",
+      [
+       "White Sox",
+       "Cubs",
+       "Reds",
+       "Brewers",
+       "Cardinals"
+      ]
+     ],
+     [
+      "d1",
+      [
+       "Blue Jays",
+       "Guardians",
+       "Tigers",
+       "Nationals",
+       "Pirates"
+      ]
+     ],
+     [
+      "d2",
+      [
+       "Orioles",
+       "Red Sox",
+       "Yankees",
+       "Mets",
+       "Phillies"
+      ]
+     ]
+    ]
+   ]
+  ],
+  "premium_pct": 28.9,
+  "recover_B": 1.4,
+  "recover_C": 30.3
+ },
+ "nba": {
+  "n": 32,
+  "gs": 4,
+  "confs": [
+   "West",
+   "East"
+  ],
+  "A": [
+   [
+    "West",
+    [
+     [
+      "Northwest",
+      [
+       "Nuggets",
+       "Timberwolves",
+       "Thunder",
+       "Trail Blazers",
+       "Jazz",
+       "SuperSonics"
+      ]
+     ],
+     [
+      "Pacific",
+      [
+       "Warriors",
+       "Clippers",
+       "Lakers",
+       "Suns",
+       "Kings",
+       "Las Vegas"
+      ]
+     ],
+     [
+      "Southwest",
+      [
+       "Mavericks",
+       "Rockets",
+       "Grizzlies",
+       "Pelicans",
+       "Spurs"
+      ]
+     ]
+    ]
+   ],
+   [
+    "East",
+    [
+     [
+      "Atlantic",
+      [
+       "Celtics",
+       "Nets",
+       "Knicks",
+       "76ers",
+       "Raptors"
+      ]
+     ],
+     [
+      "Central",
+      [
+       "Bulls",
+       "Cavaliers",
+       "Pistons",
+       "Pacers",
+       "Bucks"
+      ]
+     ],
+     [
+      "Southeast",
+      [
+       "Hawks",
+       "Hornets",
+       "Heat",
+       "Magic",
+       "Wizards"
+      ]
+     ]
+    ]
+   ]
+  ],
+  "B": [
+   [
+    "West",
+    [
+     [
+      "d0",
+      [
+       "Trail Blazers",
+       "Warriors",
+       "Kings",
+       "SuperSonics"
+      ]
+     ],
+     [
+      "d1",
+      [
+       "Clippers",
+       "Lakers",
+       "Suns",
+       "Las Vegas"
+      ]
+     ],
+     [
+      "d2",
+      [
+       "Nuggets",
+       "Thunder",
+       "Jazz",
+       "Mavericks"
+      ]
+     ],
+     [
+      "d3",
+      [
+       "Rockets",
+       "Grizzlies",
+       "Pelicans",
+       "Spurs"
+      ]
+     ]
+    ]
+   ],
+   [
+    "East",
+    [
+     [
+      "d0",
+      [
+       "Bulls",
+       "Pacers",
+       "Bucks",
+       "Timberwolves"
+      ]
+     ],
+     [
+      "d1",
+      [
+       "Hawks",
+       "Hornets",
+       "Heat",
+       "Magic"
+      ]
+     ],
+     [
+      "d2",
+      [
+       "Raptors",
+       "Cavaliers",
+       "Pistons",
+       "Wizards"
+      ]
+     ],
+     [
+      "d3",
+      [
+       "Celtics",
+       "Nets",
+       "Knicks",
+       "76ers"
+      ]
+     ]
+    ]
+   ]
+  ],
+  "C": [
+   [
+    "West",
+    [
+     [
+      "d0",
+      [
+       "Trail Blazers",
+       "Warriors",
+       "Kings",
+       "SuperSonics"
+      ]
+     ],
+     [
+      "d1",
+      [
+       "Clippers",
+       "Lakers",
+       "Suns",
+       "Las Vegas"
+      ]
+     ],
+     [
+      "d2",
+      [
+       "Nuggets",
+       "Thunder",
+       "Jazz",
+       "Mavericks"
+      ]
+     ],
+     [
+      "d3",
+      [
+       "Rockets",
+       "Grizzlies",
+       "Pelicans",
+       "Spurs"
+      ]
+     ]
+    ]
+   ],
+   [
+    "East",
+    [
+     [
+      "d0",
+      [
+       "Bulls",
+       "Pacers",
+       "Bucks",
+       "Timberwolves"
+      ]
+     ],
+     [
+      "d1",
+      [
+       "Hawks",
+       "Hornets",
+       "Heat",
+       "Magic"
+      ]
+     ],
+     [
+      "d2",
+      [
+       "Raptors",
+       "Cavaliers",
+       "Pistons",
+       "Wizards"
+      ]
+     ],
+     [
+      "d3",
+      [
+       "Celtics",
+       "Nets",
+       "Knicks",
+       "76ers"
+      ]
+     ]
+    ]
+   ]
+  ],
+  "premium_pct": 0.0
+ },
+ "mls": {
+  "n": 30,
+  "gs": 15,
+  "confs": [
+   "West",
+   "East"
+  ],
+  "A": [
+   [
+    "West",
+    [
+     [
+      "West",
+      [
+       "Austin FC",
+       "Colorado Rapids",
+       "FC Dallas",
+       "Houston Dynamo",
+       "LA Galaxy",
+       "LAFC",
+       "Minnesota United",
+       "Portland Timbers",
+       "Real Salt Lake",
+       "San Diego FC",
+       "San Jose",
+       "Seattle Sounders",
+       "Sporting KC",
+       "St. Louis City",
+       "Vancouver"
+      ]
+     ]
+    ]
+   ],
+   [
+    "East",
+    [
+     [
+      "East",
+      [
+       "Atlanta United",
+       "Charlotte FC",
+       "Chicago Fire",
+       "FC Cincinnati",
+       "Columbus Crew",
+       "DC United",
+       "Inter Miami",
+       "CF Montreal",
+       "Nashville SC",
+       "New England",
+       "NYCFC",
+       "NY Red Bulls",
+       "Orlando City",
+       "Philadelphia Union",
+       "Toronto FC"
+      ]
+     ]
+    ]
+   ]
+  ],
+  "B": [
+   [
+    "West",
+    [
+     [
+      "d0",
+      [
+       "Austin FC",
+       "Colorado Rapids",
+       "FC Dallas",
+       "Houston Dynamo",
+       "LA Galaxy",
+       "LAFC",
+       "Minnesota United",
+       "Portland Timbers",
+       "Real Salt Lake",
+       "San Diego FC",
+       "San Jose",
+       "Seattle Sounders",
+       "Sporting KC",
+       "St. Louis City",
+       "Vancouver"
+      ]
+     ]
+    ]
+   ],
+   [
+    "East",
+    [
+     [
+      "d0",
+      [
+       "Atlanta United",
+       "Charlotte FC",
+       "Chicago Fire",
+       "FC Cincinnati",
+       "Columbus Crew",
+       "DC United",
+       "Inter Miami",
+       "CF Montreal",
+       "Nashville SC",
+       "New England",
+       "NYCFC",
+       "NY Red Bulls",
+       "Orlando City",
+       "Philadelphia Union",
+       "Toronto FC"
+      ]
+     ]
+    ]
+   ]
+  ],
+  "C": [
+   [
+    "West",
+    [
+     [
+      "West",
+      [
+       "Austin FC",
+       "Colorado Rapids",
+       "FC Dallas",
+       "Houston Dynamo",
+       "LA Galaxy",
+       "LAFC",
+       "Minnesota United",
+       "Portland Timbers",
+       "Real Salt Lake",
+       "San Diego FC",
+       "San Jose",
+       "Seattle Sounders",
+       "Sporting KC",
+       "St. Louis City",
+       "Vancouver"
+      ]
+     ]
+    ]
+   ],
+   [
+    "East",
+    [
+     [
+      "East",
+      [
+       "Atlanta United",
+       "Charlotte FC",
+       "Chicago Fire",
+       "FC Cincinnati",
+       "Columbus Crew",
+       "DC United",
+       "Inter Miami",
+       "CF Montreal",
+       "Nashville SC",
+       "New England",
+       "NYCFC",
+       "NY Red Bulls",
+       "Orlando City",
+       "Philadelphia Union",
+       "Toronto FC"
+      ]
+     ]
+    ]
+   ]
+  ],
+  "premium_pct": 0.0,
+  "recover_B": 0.0,
+  "recover_C": 0.0
+ }
+}

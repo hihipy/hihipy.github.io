@@ -1,0 +1,1416 @@
+{
+ "nfl": {
+  "Bills": {
+   "lat": 42.774,
+   "lon": -78.787,
+   "conf": "AFC",
+   "div": "East",
+   "abbr": "BUF",
+   "fill": "#00338D",
+   "ring": "#C60C30"
+  },
+  "Dolphins": {
+   "lat": 25.958,
+   "lon": -80.239,
+   "conf": "AFC",
+   "div": "East",
+   "abbr": "MIA",
+   "fill": "#008E97",
+   "ring": "#FC4C02"
+  },
+  "Patriots": {
+   "lat": 42.091,
+   "lon": -71.264,
+   "conf": "AFC",
+   "div": "East",
+   "abbr": "NE",
+   "fill": "#002244",
+   "ring": "#C60C30"
+  },
+  "Jets": {
+   "lat": 40.814,
+   "lon": -74.074,
+   "conf": "AFC",
+   "div": "East",
+   "abbr": "NYJ",
+   "fill": "#125740",
+   "ring": "#FFFFFF"
+  },
+  "Ravens": {
+   "lat": 39.278,
+   "lon": -76.623,
+   "conf": "AFC",
+   "div": "North",
+   "abbr": "BAL",
+   "fill": "#241773",
+   "ring": "#000000"
+  },
+  "Bengals": {
+   "lat": 39.095,
+   "lon": -84.516,
+   "conf": "AFC",
+   "div": "North",
+   "abbr": "CIN",
+   "fill": "#FB4F14",
+   "ring": "#000000"
+  },
+  "Browns": {
+   "lat": 41.506,
+   "lon": -81.7,
+   "conf": "AFC",
+   "div": "North",
+   "abbr": "CLE",
+   "fill": "#311D00",
+   "ring": "#FF3C00"
+  },
+  "Steelers": {
+   "lat": 40.447,
+   "lon": -80.016,
+   "conf": "AFC",
+   "div": "North",
+   "abbr": "PIT",
+   "fill": "#101820",
+   "ring": "#FFB612"
+  },
+  "Texans": {
+   "lat": 29.685,
+   "lon": -95.411,
+   "conf": "AFC",
+   "div": "South",
+   "abbr": "HOU",
+   "fill": "#03202F",
+   "ring": "#A71930"
+  },
+  "Colts": {
+   "lat": 39.76,
+   "lon": -86.164,
+   "conf": "AFC",
+   "div": "South",
+   "abbr": "IND",
+   "fill": "#002C5F",
+   "ring": "#A2AAAD"
+  },
+  "Jaguars": {
+   "lat": 30.324,
+   "lon": -81.637,
+   "conf": "AFC",
+   "div": "South",
+   "abbr": "JAX",
+   "fill": "#006778",
+   "ring": "#D7A22A"
+  },
+  "Titans": {
+   "lat": 36.166,
+   "lon": -86.771,
+   "conf": "AFC",
+   "div": "South",
+   "abbr": "TEN",
+   "fill": "#0C2340",
+   "ring": "#4B92DB"
+  },
+  "Broncos": {
+   "lat": 39.744,
+   "lon": -105.02,
+   "conf": "AFC",
+   "div": "West",
+   "abbr": "DEN",
+   "fill": "#FB4F14",
+   "ring": "#002244"
+  },
+  "Chiefs": {
+   "lat": 39.049,
+   "lon": -94.484,
+   "conf": "AFC",
+   "div": "West",
+   "abbr": "KC",
+   "fill": "#E31837",
+   "ring": "#FFB81C"
+  },
+  "Raiders": {
+   "lat": 36.091,
+   "lon": -115.184,
+   "conf": "AFC",
+   "div": "West",
+   "abbr": "LV",
+   "fill": "#000000",
+   "ring": "#A5ACAF"
+  },
+  "Chargers": {
+   "lat": 33.953,
+   "lon": -118.339,
+   "conf": "AFC",
+   "div": "West",
+   "abbr": "LAC",
+   "fill": "#0080C6",
+   "ring": "#FFC20E"
+  },
+  "Cowboys": {
+   "lat": 32.748,
+   "lon": -97.093,
+   "conf": "NFC",
+   "div": "East",
+   "abbr": "DAL",
+   "fill": "#003594",
+   "ring": "#869397"
+  },
+  "Giants": {
+   "lat": 40.814,
+   "lon": -74.074,
+   "conf": "NFC",
+   "div": "East",
+   "abbr": "NYG",
+   "fill": "#0B2265",
+   "ring": "#A71930"
+  },
+  "Eagles": {
+   "lat": 39.901,
+   "lon": -75.168,
+   "conf": "NFC",
+   "div": "East",
+   "abbr": "PHI",
+   "fill": "#004C54",
+   "ring": "#A5ACAF"
+  },
+  "Commanders": {
+   "lat": 38.908,
+   "lon": -76.864,
+   "conf": "NFC",
+   "div": "East",
+   "abbr": "WAS",
+   "fill": "#5A1414",
+   "ring": "#FFB612"
+  },
+  "Bears": {
+   "lat": 41.862,
+   "lon": -87.617,
+   "conf": "NFC",
+   "div": "North",
+   "abbr": "CHI",
+   "fill": "#0B162A",
+   "ring": "#C83803"
+  },
+  "Lions": {
+   "lat": 42.34,
+   "lon": -83.046,
+   "conf": "NFC",
+   "div": "North",
+   "abbr": "DET",
+   "fill": "#0076B6",
+   "ring": "#B0B7BC"
+  },
+  "Packers": {
+   "lat": 44.501,
+   "lon": -88.062,
+   "conf": "NFC",
+   "div": "North",
+   "abbr": "GB",
+   "fill": "#203731",
+   "ring": "#FFB612"
+  },
+  "Vikings": {
+   "lat": 44.974,
+   "lon": -93.258,
+   "conf": "NFC",
+   "div": "North",
+   "abbr": "MIN",
+   "fill": "#4F2683",
+   "ring": "#FFC62F"
+  },
+  "Falcons": {
+   "lat": 33.755,
+   "lon": -84.401,
+   "conf": "NFC",
+   "div": "South",
+   "abbr": "ATL",
+   "fill": "#A71930",
+   "ring": "#000000"
+  },
+  "Panthers": {
+   "lat": 35.226,
+   "lon": -80.853,
+   "conf": "NFC",
+   "div": "South",
+   "abbr": "CAR",
+   "fill": "#0085CA",
+   "ring": "#101820"
+  },
+  "Saints": {
+   "lat": 29.951,
+   "lon": -90.081,
+   "conf": "NFC",
+   "div": "South",
+   "abbr": "NO",
+   "fill": "#101820",
+   "ring": "#D3BC8D"
+  },
+  "Buccaneers": {
+   "lat": 27.976,
+   "lon": -82.503,
+   "conf": "NFC",
+   "div": "South",
+   "abbr": "TB",
+   "fill": "#D50A0A",
+   "ring": "#34302B"
+  },
+  "Cardinals": {
+   "lat": 33.528,
+   "lon": -112.263,
+   "conf": "NFC",
+   "div": "West",
+   "abbr": "ARI",
+   "fill": "#97233F",
+   "ring": "#000000"
+  },
+  "Rams": {
+   "lat": 33.953,
+   "lon": -118.339,
+   "conf": "NFC",
+   "div": "West",
+   "abbr": "LAR",
+   "fill": "#003594",
+   "ring": "#FFA300"
+  },
+  "49ers": {
+   "lat": 37.403,
+   "lon": -121.97,
+   "conf": "NFC",
+   "div": "West",
+   "abbr": "SF",
+   "fill": "#AA0000",
+   "ring": "#B3995D"
+  },
+  "Seahawks": {
+   "lat": 47.595,
+   "lon": -122.332,
+   "conf": "NFC",
+   "div": "West",
+   "abbr": "SEA",
+   "fill": "#002244",
+   "ring": "#69BE28"
+  }
+ },
+ "nhl": {
+  "Bruins": {
+   "lat": 42.366,
+   "lon": -71.062,
+   "conf": "East",
+   "div": "Atlantic",
+   "abbr": "BOS",
+   "fill": "#000000",
+   "ring": "#FFB81C"
+  },
+  "Sabres": {
+   "lat": 42.875,
+   "lon": -78.876,
+   "conf": "East",
+   "div": "Atlantic",
+   "abbr": "BUF",
+   "fill": "#003087",
+   "ring": "#FFB81C"
+  },
+  "Red Wings": {
+   "lat": 42.341,
+   "lon": -83.055,
+   "conf": "East",
+   "div": "Atlantic",
+   "abbr": "DET",
+   "fill": "#CE1126",
+   "ring": "#FFFFFF"
+  },
+  "Panthers": {
+   "lat": 26.158,
+   "lon": -80.326,
+   "conf": "East",
+   "div": "Atlantic",
+   "abbr": "FLA",
+   "fill": "#C8102E",
+   "ring": "#041E42"
+  },
+  "Canadiens": {
+   "lat": 45.496,
+   "lon": -73.569,
+   "conf": "East",
+   "div": "Atlantic",
+   "abbr": "MTL",
+   "fill": "#AF1E2D",
+   "ring": "#192168"
+  },
+  "Senators": {
+   "lat": 45.297,
+   "lon": -75.927,
+   "conf": "East",
+   "div": "Atlantic",
+   "abbr": "OTT",
+   "fill": "#C8102E",
+   "ring": "#C2912C"
+  },
+  "Lightning": {
+   "lat": 27.943,
+   "lon": -82.452,
+   "conf": "East",
+   "div": "Atlantic",
+   "abbr": "TBL",
+   "fill": "#002868",
+   "ring": "#FFFFFF"
+  },
+  "Maple Leafs": {
+   "lat": 43.643,
+   "lon": -79.379,
+   "conf": "East",
+   "div": "Atlantic",
+   "abbr": "TOR",
+   "fill": "#00205B",
+   "ring": "#FFFFFF"
+  },
+  "Hurricanes": {
+   "lat": 35.803,
+   "lon": -78.722,
+   "conf": "East",
+   "div": "Metropolitan",
+   "abbr": "CAR",
+   "fill": "#CC0000",
+   "ring": "#000000"
+  },
+  "Blue Jackets": {
+   "lat": 39.969,
+   "lon": -83.006,
+   "conf": "East",
+   "div": "Metropolitan",
+   "abbr": "CBJ",
+   "fill": "#002654",
+   "ring": "#CE1126"
+  },
+  "Devils": {
+   "lat": 40.734,
+   "lon": -74.171,
+   "conf": "East",
+   "div": "Metropolitan",
+   "abbr": "NJD",
+   "fill": "#CE1126",
+   "ring": "#000000"
+  },
+  "Islanders": {
+   "lat": 40.711,
+   "lon": -73.723,
+   "conf": "East",
+   "div": "Metropolitan",
+   "abbr": "NYI",
+   "fill": "#00539B",
+   "ring": "#F47D30"
+  },
+  "Rangers": {
+   "lat": 40.75,
+   "lon": -73.993,
+   "conf": "East",
+   "div": "Metropolitan",
+   "abbr": "NYR",
+   "fill": "#0038A8",
+   "ring": "#CE1126"
+  },
+  "Flyers": {
+   "lat": 39.901,
+   "lon": -75.172,
+   "conf": "East",
+   "div": "Metropolitan",
+   "abbr": "PHI",
+   "fill": "#F74902",
+   "ring": "#000000"
+  },
+  "Penguins": {
+   "lat": 40.439,
+   "lon": -79.989,
+   "conf": "East",
+   "div": "Metropolitan",
+   "abbr": "PIT",
+   "fill": "#000000",
+   "ring": "#FCB514"
+  },
+  "Capitals": {
+   "lat": 38.898,
+   "lon": -77.021,
+   "conf": "East",
+   "div": "Metropolitan",
+   "abbr": "WSH",
+   "fill": "#041E42",
+   "ring": "#C8102E"
+  },
+  "Blackhawks": {
+   "lat": 41.881,
+   "lon": -87.674,
+   "conf": "West",
+   "div": "Central",
+   "abbr": "CHI",
+   "fill": "#CF0A2C",
+   "ring": "#000000"
+  },
+  "Avalanche": {
+   "lat": 39.749,
+   "lon": -105.008,
+   "conf": "West",
+   "div": "Central",
+   "abbr": "COL",
+   "fill": "#6F263D",
+   "ring": "#236192"
+  },
+  "Stars": {
+   "lat": 32.79,
+   "lon": -96.81,
+   "conf": "West",
+   "div": "Central",
+   "abbr": "DAL",
+   "fill": "#006847",
+   "ring": "#8F8F8C"
+  },
+  "Wild": {
+   "lat": 44.945,
+   "lon": -93.101,
+   "conf": "West",
+   "div": "Central",
+   "abbr": "MIN",
+   "fill": "#154734",
+   "ring": "#A6192E"
+  },
+  "Predators": {
+   "lat": 36.159,
+   "lon": -86.778,
+   "conf": "West",
+   "div": "Central",
+   "abbr": "NSH",
+   "fill": "#FFB81C",
+   "ring": "#041E42"
+  },
+  "Blues": {
+   "lat": 38.627,
+   "lon": -90.203,
+   "conf": "West",
+   "div": "Central",
+   "abbr": "STL",
+   "fill": "#002F87",
+   "ring": "#FCB514"
+  },
+  "Mammoth": {
+   "lat": 40.768,
+   "lon": -111.901,
+   "conf": "West",
+   "div": "Central",
+   "abbr": "UTA",
+   "fill": "#6CACE4",
+   "ring": "#010101"
+  },
+  "Jets": {
+   "lat": 49.893,
+   "lon": -97.144,
+   "conf": "West",
+   "div": "Central",
+   "abbr": "WPG",
+   "fill": "#041E42",
+   "ring": "#004C97"
+  },
+  "Ducks": {
+   "lat": 33.808,
+   "lon": -117.877,
+   "conf": "West",
+   "div": "Pacific",
+   "abbr": "ANA",
+   "fill": "#F47A38",
+   "ring": "#B09862"
+  },
+  "Flames": {
+   "lat": 51.038,
+   "lon": -114.052,
+   "conf": "West",
+   "div": "Pacific",
+   "abbr": "CGY",
+   "fill": "#C8102E",
+   "ring": "#F1BE48"
+  },
+  "Oilers": {
+   "lat": 53.547,
+   "lon": -113.498,
+   "conf": "West",
+   "div": "Pacific",
+   "abbr": "EDM",
+   "fill": "#041E42",
+   "ring": "#FC4C02"
+  },
+  "Kings": {
+   "lat": 34.043,
+   "lon": -118.267,
+   "conf": "West",
+   "div": "Pacific",
+   "abbr": "LAK",
+   "fill": "#111111",
+   "ring": "#A2AAAD"
+  },
+  "Sharks": {
+   "lat": 37.333,
+   "lon": -121.901,
+   "conf": "West",
+   "div": "Pacific",
+   "abbr": "SJS",
+   "fill": "#006D75",
+   "ring": "#EA7200"
+  },
+  "Kraken": {
+   "lat": 47.622,
+   "lon": -122.354,
+   "conf": "West",
+   "div": "Pacific",
+   "abbr": "SEA",
+   "fill": "#001628",
+   "ring": "#99D9D9"
+  },
+  "Canucks": {
+   "lat": 49.278,
+   "lon": -123.109,
+   "conf": "West",
+   "div": "Pacific",
+   "abbr": "VAN",
+   "fill": "#00205B",
+   "ring": "#00843D"
+  },
+  "Golden Knights": {
+   "lat": 36.103,
+   "lon": -115.178,
+   "conf": "West",
+   "div": "Pacific",
+   "abbr": "VGK",
+   "fill": "#B4975A",
+   "ring": "#333F42"
+  }
+ },
+ "mlb": {
+  "Orioles": {
+   "lat": 39.284,
+   "lon": -76.622,
+   "conf": "AL",
+   "div": "East",
+   "abbr": "BAL",
+   "fill": "#DF4601",
+   "ring": "#000000"
+  },
+  "Red Sox": {
+   "lat": 42.346,
+   "lon": -71.097,
+   "conf": "AL",
+   "div": "East",
+   "abbr": "BOS",
+   "fill": "#BD3039",
+   "ring": "#0C2340"
+  },
+  "Yankees": {
+   "lat": 40.829,
+   "lon": -73.926,
+   "conf": "AL",
+   "div": "East",
+   "abbr": "NYY",
+   "fill": "#0C2340",
+   "ring": "#C4CED4"
+  },
+  "Rays": {
+   "lat": 27.768,
+   "lon": -82.653,
+   "conf": "AL",
+   "div": "East",
+   "abbr": "TB",
+   "fill": "#092C5C",
+   "ring": "#8FBCE6"
+  },
+  "Blue Jays": {
+   "lat": 43.641,
+   "lon": -79.389,
+   "conf": "AL",
+   "div": "East",
+   "abbr": "TOR",
+   "fill": "#134A8E",
+   "ring": "#1D2D5C"
+  },
+  "White Sox": {
+   "lat": 41.83,
+   "lon": -87.634,
+   "conf": "AL",
+   "div": "Central",
+   "abbr": "CWS",
+   "fill": "#27251F",
+   "ring": "#C4CED4"
+  },
+  "Guardians": {
+   "lat": 41.496,
+   "lon": -81.685,
+   "conf": "AL",
+   "div": "Central",
+   "abbr": "CLE",
+   "fill": "#0C2340",
+   "ring": "#E31937"
+  },
+  "Tigers": {
+   "lat": 42.339,
+   "lon": -83.049,
+   "conf": "AL",
+   "div": "Central",
+   "abbr": "DET",
+   "fill": "#0C2340",
+   "ring": "#FA4616"
+  },
+  "Royals": {
+   "lat": 39.051,
+   "lon": -94.481,
+   "conf": "AL",
+   "div": "Central",
+   "abbr": "KC",
+   "fill": "#004687",
+   "ring": "#BD9B60"
+  },
+  "Twins": {
+   "lat": 44.982,
+   "lon": -93.278,
+   "conf": "AL",
+   "div": "Central",
+   "abbr": "MIN",
+   "fill": "#002B5C",
+   "ring": "#D31145"
+  },
+  "Astros": {
+   "lat": 29.757,
+   "lon": -95.355,
+   "conf": "AL",
+   "div": "West",
+   "abbr": "HOU",
+   "fill": "#002D62",
+   "ring": "#EB6E1F"
+  },
+  "Angels": {
+   "lat": 33.8,
+   "lon": -117.883,
+   "conf": "AL",
+   "div": "West",
+   "abbr": "LAA",
+   "fill": "#BA0021",
+   "ring": "#003263"
+  },
+  "Athletics": {
+   "lat": 36.0994,
+   "lon": -115.17,
+   "conf": "AL",
+   "div": "West",
+   "abbr": "ATH",
+   "fill": "#003831",
+   "ring": "#EFB21E"
+  },
+  "Mariners": {
+   "lat": 47.591,
+   "lon": -122.332,
+   "conf": "AL",
+   "div": "West",
+   "abbr": "SEA",
+   "fill": "#0C2C56",
+   "ring": "#005C5C"
+  },
+  "Rangers": {
+   "lat": 32.747,
+   "lon": -97.082,
+   "conf": "AL",
+   "div": "West",
+   "abbr": "TEX",
+   "fill": "#003278",
+   "ring": "#C0111F"
+  },
+  "Braves": {
+   "lat": 33.89,
+   "lon": -84.468,
+   "conf": "NL",
+   "div": "East",
+   "abbr": "ATL",
+   "fill": "#CE1141",
+   "ring": "#13274F"
+  },
+  "Marlins": {
+   "lat": 25.778,
+   "lon": -80.22,
+   "conf": "NL",
+   "div": "East",
+   "abbr": "MIA",
+   "fill": "#00A3E0",
+   "ring": "#000000"
+  },
+  "Mets": {
+   "lat": 40.757,
+   "lon": -73.846,
+   "conf": "NL",
+   "div": "East",
+   "abbr": "NYM",
+   "fill": "#002D72",
+   "ring": "#FF5910"
+  },
+  "Phillies": {
+   "lat": 39.906,
+   "lon": -75.166,
+   "conf": "NL",
+   "div": "East",
+   "abbr": "PHI",
+   "fill": "#E81828",
+   "ring": "#002D72"
+  },
+  "Nationals": {
+   "lat": 38.873,
+   "lon": -77.007,
+   "conf": "NL",
+   "div": "East",
+   "abbr": "WSH",
+   "fill": "#AB0003",
+   "ring": "#14225A"
+  },
+  "Cubs": {
+   "lat": 41.948,
+   "lon": -87.656,
+   "conf": "NL",
+   "div": "Central",
+   "abbr": "CHC",
+   "fill": "#0E3386",
+   "ring": "#CC3433"
+  },
+  "Reds": {
+   "lat": 39.097,
+   "lon": -84.507,
+   "conf": "NL",
+   "div": "Central",
+   "abbr": "CIN",
+   "fill": "#C6011F",
+   "ring": "#000000"
+  },
+  "Brewers": {
+   "lat": 43.028,
+   "lon": -87.971,
+   "conf": "NL",
+   "div": "Central",
+   "abbr": "MIL",
+   "fill": "#12284B",
+   "ring": "#FFC52F"
+  },
+  "Pirates": {
+   "lat": 40.447,
+   "lon": -80.006,
+   "conf": "NL",
+   "div": "Central",
+   "abbr": "PIT",
+   "fill": "#27251F",
+   "ring": "#FDB827"
+  },
+  "Cardinals": {
+   "lat": 38.622,
+   "lon": -90.193,
+   "conf": "NL",
+   "div": "Central",
+   "abbr": "STL",
+   "fill": "#C41E3A",
+   "ring": "#0C2340"
+  },
+  "Diamondbacks": {
+   "lat": 33.445,
+   "lon": -112.067,
+   "conf": "NL",
+   "div": "West",
+   "abbr": "ARI",
+   "fill": "#A71930",
+   "ring": "#E3D4AD"
+  },
+  "Rockies": {
+   "lat": 39.756,
+   "lon": -104.994,
+   "conf": "NL",
+   "div": "West",
+   "abbr": "COL",
+   "fill": "#33006F",
+   "ring": "#C4CED4"
+  },
+  "Dodgers": {
+   "lat": 34.074,
+   "lon": -118.24,
+   "conf": "NL",
+   "div": "West",
+   "abbr": "LAD",
+   "fill": "#005A9C",
+   "ring": "#EF3E42"
+  },
+  "Padres": {
+   "lat": 32.707,
+   "lon": -117.157,
+   "conf": "NL",
+   "div": "West",
+   "abbr": "SD",
+   "fill": "#2F241D",
+   "ring": "#FFC425"
+  },
+  "Giants": {
+   "lat": 37.778,
+   "lon": -122.389,
+   "conf": "NL",
+   "div": "West",
+   "abbr": "SF",
+   "fill": "#FD5A1E",
+   "ring": "#27251F"
+  }
+ },
+ "nba": {
+  "Celtics": {
+   "lat": 42.366,
+   "lon": -71.062,
+   "conf": "East",
+   "div": "Atlantic",
+   "abbr": "BOS",
+   "fill": "#007A33",
+   "ring": "#BA9653"
+  },
+  "Nets": {
+   "lat": 40.683,
+   "lon": -73.975,
+   "conf": "East",
+   "div": "Atlantic",
+   "abbr": "BKN",
+   "fill": "#000000",
+   "ring": "#FFFFFF"
+  },
+  "Knicks": {
+   "lat": 40.75,
+   "lon": -73.993,
+   "conf": "East",
+   "div": "Atlantic",
+   "abbr": "NYK",
+   "fill": "#006BB6",
+   "ring": "#F58426"
+  },
+  "76ers": {
+   "lat": 39.901,
+   "lon": -75.172,
+   "conf": "East",
+   "div": "Atlantic",
+   "abbr": "PHI",
+   "fill": "#006BB6",
+   "ring": "#ED174C"
+  },
+  "Raptors": {
+   "lat": 43.643,
+   "lon": -79.379,
+   "conf": "East",
+   "div": "Atlantic",
+   "abbr": "TOR",
+   "fill": "#CE1141",
+   "ring": "#000000"
+  },
+  "Bulls": {
+   "lat": 41.881,
+   "lon": -87.674,
+   "conf": "East",
+   "div": "Central",
+   "abbr": "CHI",
+   "fill": "#CE1141",
+   "ring": "#000000"
+  },
+  "Cavaliers": {
+   "lat": 41.497,
+   "lon": -81.688,
+   "conf": "East",
+   "div": "Central",
+   "abbr": "CLE",
+   "fill": "#860038",
+   "ring": "#FDBB30"
+  },
+  "Pistons": {
+   "lat": 42.341,
+   "lon": -83.055,
+   "conf": "East",
+   "div": "Central",
+   "abbr": "DET",
+   "fill": "#C8102E",
+   "ring": "#1D42BA"
+  },
+  "Pacers": {
+   "lat": 39.764,
+   "lon": -86.155,
+   "conf": "East",
+   "div": "Central",
+   "abbr": "IND",
+   "fill": "#002D62",
+   "ring": "#FDBB30"
+  },
+  "Bucks": {
+   "lat": 43.045,
+   "lon": -87.917,
+   "conf": "East",
+   "div": "Central",
+   "abbr": "MIL",
+   "fill": "#00471B",
+   "ring": "#EEE1C6"
+  },
+  "Hawks": {
+   "lat": 33.757,
+   "lon": -84.396,
+   "conf": "East",
+   "div": "Southeast",
+   "abbr": "ATL",
+   "fill": "#E03A3E",
+   "ring": "#C1D32F"
+  },
+  "Hornets": {
+   "lat": 35.225,
+   "lon": -80.839,
+   "conf": "East",
+   "div": "Southeast",
+   "abbr": "CHA",
+   "fill": "#1D1160",
+   "ring": "#00788C"
+  },
+  "Heat": {
+   "lat": 25.781,
+   "lon": -80.187,
+   "conf": "East",
+   "div": "Southeast",
+   "abbr": "MIA",
+   "fill": "#98002E",
+   "ring": "#F9A01B"
+  },
+  "Magic": {
+   "lat": 28.539,
+   "lon": -81.384,
+   "conf": "East",
+   "div": "Southeast",
+   "abbr": "ORL",
+   "fill": "#0077C0",
+   "ring": "#C4CED4"
+  },
+  "Wizards": {
+   "lat": 38.898,
+   "lon": -77.021,
+   "conf": "East",
+   "div": "Southeast",
+   "abbr": "WAS",
+   "fill": "#002B5C",
+   "ring": "#E31837"
+  },
+  "Nuggets": {
+   "lat": 39.749,
+   "lon": -105.008,
+   "conf": "West",
+   "div": "Northwest",
+   "abbr": "DEN",
+   "fill": "#0E2240",
+   "ring": "#FEC524"
+  },
+  "Timberwolves": {
+   "lat": 44.979,
+   "lon": -93.276,
+   "conf": "West",
+   "div": "Northwest",
+   "abbr": "MIN",
+   "fill": "#0C2340",
+   "ring": "#78BE20"
+  },
+  "Thunder": {
+   "lat": 35.463,
+   "lon": -97.515,
+   "conf": "West",
+   "div": "Northwest",
+   "abbr": "OKC",
+   "fill": "#007AC1",
+   "ring": "#EF3B24"
+  },
+  "Trail Blazers": {
+   "lat": 45.532,
+   "lon": -122.667,
+   "conf": "West",
+   "div": "Northwest",
+   "abbr": "POR",
+   "fill": "#E03A3E",
+   "ring": "#000000"
+  },
+  "Jazz": {
+   "lat": 40.768,
+   "lon": -111.901,
+   "conf": "West",
+   "div": "Northwest",
+   "abbr": "UTA",
+   "fill": "#002B5C",
+   "ring": "#F9A01C"
+  },
+  "Warriors": {
+   "lat": 37.768,
+   "lon": -122.388,
+   "conf": "West",
+   "div": "Pacific",
+   "abbr": "GSW",
+   "fill": "#1D428A",
+   "ring": "#FFC72C"
+  },
+  "Clippers": {
+   "lat": 33.945,
+   "lon": -118.342,
+   "conf": "West",
+   "div": "Pacific",
+   "abbr": "LAC",
+   "fill": "#C8102E",
+   "ring": "#1D428A"
+  },
+  "Lakers": {
+   "lat": 34.043,
+   "lon": -118.267,
+   "conf": "West",
+   "div": "Pacific",
+   "abbr": "LAL",
+   "fill": "#552583",
+   "ring": "#FDB927"
+  },
+  "Suns": {
+   "lat": 33.446,
+   "lon": -112.071,
+   "conf": "West",
+   "div": "Pacific",
+   "abbr": "PHX",
+   "fill": "#1D1160",
+   "ring": "#E56020"
+  },
+  "Kings": {
+   "lat": 38.58,
+   "lon": -121.5,
+   "conf": "West",
+   "div": "Pacific",
+   "abbr": "SAC",
+   "fill": "#5A2D81",
+   "ring": "#63727A"
+  },
+  "Mavericks": {
+   "lat": 32.79,
+   "lon": -96.81,
+   "conf": "West",
+   "div": "Southwest",
+   "abbr": "DAL",
+   "fill": "#00538C",
+   "ring": "#002B5E"
+  },
+  "Rockets": {
+   "lat": 29.751,
+   "lon": -95.362,
+   "conf": "West",
+   "div": "Southwest",
+   "abbr": "HOU",
+   "fill": "#CE1141",
+   "ring": "#000000"
+  },
+  "Grizzlies": {
+   "lat": 35.138,
+   "lon": -90.051,
+   "conf": "West",
+   "div": "Southwest",
+   "abbr": "MEM",
+   "fill": "#5D76A9",
+   "ring": "#12173F"
+  },
+  "Pelicans": {
+   "lat": 29.949,
+   "lon": -90.082,
+   "conf": "West",
+   "div": "Southwest",
+   "abbr": "NOP",
+   "fill": "#0C2340",
+   "ring": "#C8102E"
+  },
+  "Spurs": {
+   "lat": 29.427,
+   "lon": -98.437,
+   "conf": "West",
+   "div": "Southwest",
+   "abbr": "SAS",
+   "fill": "#000000",
+   "ring": "#C4CED4"
+  },
+  "SuperSonics": {
+   "lat": 47.6221,
+   "lon": -122.354,
+   "conf": "West",
+   "div": "Northwest",
+   "abbr": "SEA",
+   "fill": "#006B3C",
+   "ring": "#FFC200"
+  },
+  "Las Vegas": {
+   "lat": 36.1028,
+   "lon": -115.1781,
+   "conf": "West",
+   "div": "Pacific",
+   "abbr": "LV",
+   "fill": "#C8102E",
+   "ring": "#C5B358"
+  }
+ },
+ "mls": {
+  "Atlanta United": {
+   "lat": 33.755,
+   "lon": -84.401,
+   "conf": "East",
+   "div": "East",
+   "abbr": "ATL",
+   "fill": "#80000A",
+   "ring": "#A19060"
+  },
+  "Charlotte FC": {
+   "lat": 35.226,
+   "lon": -80.853,
+   "conf": "East",
+   "div": "East",
+   "abbr": "CLT",
+   "fill": "#1A85C8",
+   "ring": "#000000"
+  },
+  "Chicago Fire": {
+   "lat": 41.862,
+   "lon": -87.617,
+   "conf": "East",
+   "div": "East",
+   "abbr": "CHI",
+   "fill": "#141946",
+   "ring": "#FF0000"
+  },
+  "FC Cincinnati": {
+   "lat": 39.111,
+   "lon": -84.522,
+   "conf": "East",
+   "div": "East",
+   "abbr": "CIN",
+   "fill": "#003087",
+   "ring": "#FE5000"
+  },
+  "Columbus Crew": {
+   "lat": 39.969,
+   "lon": -83.017,
+   "conf": "East",
+   "div": "East",
+   "abbr": "CLB",
+   "fill": "#FEDD00",
+   "ring": "#000000"
+  },
+  "DC United": {
+   "lat": 38.868,
+   "lon": -77.013,
+   "conf": "East",
+   "div": "East",
+   "abbr": "DC",
+   "fill": "#000000",
+   "ring": "#EF3E42"
+  },
+  "Inter Miami": {
+   "lat": 26.193,
+   "lon": -80.161,
+   "conf": "East",
+   "div": "East",
+   "abbr": "MIA",
+   "fill": "#F7B5CD",
+   "ring": "#000000"
+  },
+  "CF Montreal": {
+   "lat": 45.563,
+   "lon": -73.552,
+   "conf": "East",
+   "div": "East",
+   "abbr": "MTL",
+   "fill": "#000000",
+   "ring": "#0033A1"
+  },
+  "Nashville SC": {
+   "lat": 36.131,
+   "lon": -86.766,
+   "conf": "East",
+   "div": "East",
+   "abbr": "NSH",
+   "fill": "#ECE83A",
+   "ring": "#1F1646"
+  },
+  "New England": {
+   "lat": 42.091,
+   "lon": -71.264,
+   "conf": "East",
+   "div": "East",
+   "abbr": "NE",
+   "fill": "#0A2240",
+   "ring": "#CE0E2D"
+  },
+  "NYCFC": {
+   "lat": 40.829,
+   "lon": -73.926,
+   "conf": "East",
+   "div": "East",
+   "abbr": "NYC",
+   "fill": "#6CACE4",
+   "ring": "#041E42"
+  },
+  "NY Red Bulls": {
+   "lat": 40.737,
+   "lon": -74.15,
+   "conf": "East",
+   "div": "East",
+   "abbr": "RBNY",
+   "fill": "#ED1E36",
+   "ring": "#002776"
+  },
+  "Orlando City": {
+   "lat": 28.541,
+   "lon": -81.389,
+   "conf": "East",
+   "div": "East",
+   "abbr": "ORL",
+   "fill": "#633492",
+   "ring": "#FDE192"
+  },
+  "Philadelphia Union": {
+   "lat": 39.832,
+   "lon": -75.378,
+   "conf": "East",
+   "div": "East",
+   "abbr": "PHI",
+   "fill": "#002D55",
+   "ring": "#B19833"
+  },
+  "Toronto FC": {
+   "lat": 43.633,
+   "lon": -79.418,
+   "conf": "East",
+   "div": "East",
+   "abbr": "TOR",
+   "fill": "#B81137",
+   "ring": "#455560"
+  },
+  "Austin FC": {
+   "lat": 30.388,
+   "lon": -97.719,
+   "conf": "West",
+   "div": "West",
+   "abbr": "ATX",
+   "fill": "#00B140",
+   "ring": "#000000"
+  },
+  "Colorado Rapids": {
+   "lat": 39.806,
+   "lon": -104.892,
+   "conf": "West",
+   "div": "West",
+   "abbr": "COL",
+   "fill": "#862633",
+   "ring": "#9CC2E5"
+  },
+  "FC Dallas": {
+   "lat": 33.155,
+   "lon": -96.835,
+   "conf": "West",
+   "div": "West",
+   "abbr": "DAL",
+   "fill": "#C8102E",
+   "ring": "#002F5F"
+  },
+  "Houston Dynamo": {
+   "lat": 29.752,
+   "lon": -95.352,
+   "conf": "West",
+   "div": "West",
+   "abbr": "HOU",
+   "fill": "#F4732E",
+   "ring": "#1A1E29"
+  },
+  "LA Galaxy": {
+   "lat": 33.864,
+   "lon": -118.261,
+   "conf": "West",
+   "div": "West",
+   "abbr": "LAG",
+   "fill": "#00245D",
+   "ring": "#FFD200"
+  },
+  "LAFC": {
+   "lat": 34.013,
+   "lon": -118.285,
+   "conf": "West",
+   "div": "West",
+   "abbr": "LAFC",
+   "fill": "#000000",
+   "ring": "#C39E6D"
+  },
+  "Minnesota United": {
+   "lat": 44.953,
+   "lon": -93.165,
+   "conf": "West",
+   "div": "West",
+   "abbr": "MIN",
+   "fill": "#8CD2F4",
+   "ring": "#231F20"
+  },
+  "Portland Timbers": {
+   "lat": 45.522,
+   "lon": -122.692,
+   "conf": "West",
+   "div": "West",
+   "abbr": "POR",
+   "fill": "#00482B",
+   "ring": "#D69A00"
+  },
+  "Real Salt Lake": {
+   "lat": 40.583,
+   "lon": -111.893,
+   "conf": "West",
+   "div": "West",
+   "abbr": "RSL",
+   "fill": "#B30838",
+   "ring": "#013A81"
+  },
+  "San Diego FC": {
+   "lat": 32.783,
+   "lon": -117.119,
+   "conf": "West",
+   "div": "West",
+   "abbr": "SD",
+   "fill": "#009DAE",
+   "ring": "#000000"
+  },
+  "San Jose": {
+   "lat": 37.351,
+   "lon": -121.925,
+   "conf": "West",
+   "div": "West",
+   "abbr": "SJ",
+   "fill": "#0051BA",
+   "ring": "#000000"
+  },
+  "Seattle Sounders": {
+   "lat": 47.595,
+   "lon": -122.332,
+   "conf": "West",
+   "div": "West",
+   "abbr": "SEA",
+   "fill": "#5D9741",
+   "ring": "#1E4477"
+  },
+  "Sporting KC": {
+   "lat": 39.121,
+   "lon": -94.824,
+   "conf": "West",
+   "div": "West",
+   "abbr": "SKC",
+   "fill": "#002F65",
+   "ring": "#91B0D5"
+  },
+  "St. Louis City": {
+   "lat": 38.629,
+   "lon": -90.211,
+   "conf": "West",
+   "div": "West",
+   "abbr": "STL",
+   "fill": "#DC2828",
+   "ring": "#FAC807"
+  },
+  "Vancouver": {
+   "lat": 49.277,
+   "lon": -123.112,
+   "conf": "West",
+   "div": "West",
+   "abbr": "VAN",
+   "fill": "#00245E",
+   "ring": "#97D4E9"
+  }
+ }
+}

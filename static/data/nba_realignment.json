@@ -1,0 +1,393 @@
+{
+  "league": "NBA",
+  "generated_at": "2026-06-22T03:55:29.297621+00:00",
+  "ortools_version": "9.15.6755",
+  "teams": 32,
+  "division_size": 5,
+  "division_sizes": {
+    "West": [
+      6,
+      6,
+      5
+    ],
+    "East": [
+      5,
+      5,
+      5
+    ]
+  },
+  "structure": "two uneven conferences (West 17, East 15) including the Seattle and Las Vegas expansion clubs; three divisions each",
+  "metric": "total within-division great-circle miles",
+  "alignments": {
+    "actual": {
+      "travel_mi": 31866.9
+    },
+    "conference_fixed": {
+      "travel_mi": 28785.4,
+      "recovered_pct": 9.7,
+      "well_defined": true
+    },
+    "east_west": {
+      "travel_mi": 25895.4,
+      "recovered_pct": 18.7
+    }
+  },
+  "conference_premium_mi": 2889.9,
+  "conference_premium_pct": 9.1,
+  "schedule": {
+    "season_games": 82,
+    "tier_ratio_per_opponent": {
+      "division": 4.0,
+      "conference": 3.6,
+      "cross": 2.0
+    },
+    "model": "frozen-cross",
+    "weighted_metric": "expected season trip-miles = sum over team pairs of games*distance",
+    "nominal_conference_note": "per-opponent game rates use a nominal symmetric conference of 16; within-division miles use the real uneven divisions",
+    "invariance_note": "for a fixed conference split the minimum-weighted-travel partition equals the minimum within-division-distance partition for any weights; weights only affect the cross-count comparison"
+  },
+  "division_sweep": [
+    {
+      "divisions_per_conference": 1,
+      "division_size": 16.0,
+      "unweighted_within_division_mi": 193748.7,
+      "expected_trip_mi": 1457946.4,
+      "avg_trip_mi_per_game": 1111.24,
+      "games_per_opponent": {
+        "division": 3.33,
+        "conference": 0.0,
+        "cross": 2.0
+      },
+      "most_efficient": false
+    },
+    {
+      "divisions_per_conference": 2,
+      "division_size": 8.0,
+      "unweighted_within_division_mi": 57425.7,
+      "expected_trip_mi": 1446330.1,
+      "avg_trip_mi_per_game": 1102.39,
+      "games_per_opponent": {
+        "division": 3.52,
+        "conference": 3.17,
+        "cross": 2.0
+      },
+      "most_efficient": true
+    },
+    {
+      "divisions_per_conference": 3,
+      "division_size": 5.33,
+      "unweighted_within_division_mi": 28785.4,
+      "expected_trip_mi": 1448190.5,
+      "avg_trip_mi_per_game": 1103.8,
+      "games_per_opponent": {
+        "division": 3.59,
+        "conference": 3.23,
+        "cross": 2.0
+      },
+      "most_efficient": false
+    },
+    {
+      "divisions_per_conference": 4,
+      "division_size": 4.0,
+      "unweighted_within_division_mi": 17267.8,
+      "expected_trip_mi": 1450163.1,
+      "avg_trip_mi_per_game": 1105.31,
+      "games_per_opponent": {
+        "division": 3.62,
+        "conference": 3.26,
+        "cross": 2.0
+      },
+      "most_efficient": false
+    },
+    {
+      "divisions_per_conference": 5,
+      "division_size": 3.2,
+      "unweighted_within_division_mi": 11506.5,
+      "expected_trip_mi": 1451783.9,
+      "avg_trip_mi_per_game": 1106.54,
+      "games_per_opponent": {
+        "division": 3.64,
+        "conference": 3.28,
+        "cross": 2.0
+      },
+      "most_efficient": false
+    }
+  ],
+  "division_sweep_spread_pct": 0.8,
+  "steepness_robustness": [
+    {
+      "ratio": 1.0,
+      "optimal_divisions_per_conference": 1,
+      "spread_pct": 0.0,
+      "indifferent": true,
+      "is_real_ratio": false
+    },
+    {
+      "ratio": 1.11,
+      "optimal_divisions_per_conference": 2,
+      "spread_pct": 0.8,
+      "indifferent": false,
+      "is_real_ratio": true
+    },
+    {
+      "ratio": 1.25,
+      "optimal_divisions_per_conference": 2,
+      "spread_pct": 1.72,
+      "indifferent": false,
+      "is_real_ratio": false
+    },
+    {
+      "ratio": 1.5,
+      "optimal_divisions_per_conference": 2,
+      "spread_pct": 3.15,
+      "indifferent": false,
+      "is_real_ratio": false
+    },
+    {
+      "ratio": 1.75,
+      "optimal_divisions_per_conference": 2,
+      "spread_pct": 4.37,
+      "indifferent": false,
+      "is_real_ratio": false
+    },
+    {
+      "ratio": 2.0,
+      "optimal_divisions_per_conference": 2,
+      "spread_pct": 5.42,
+      "indifferent": false,
+      "is_real_ratio": false
+    },
+    {
+      "ratio": 2.5,
+      "optimal_divisions_per_conference": 2,
+      "spread_pct": 7.13,
+      "indifferent": false,
+      "is_real_ratio": false
+    },
+    {
+      "ratio": 3.0,
+      "optimal_divisions_per_conference": 3,
+      "spread_pct": 8.55,
+      "indifferent": false,
+      "is_real_ratio": false
+    },
+    {
+      "ratio": 4.0,
+      "optimal_divisions_per_conference": 3,
+      "spread_pct": 11.1,
+      "indifferent": false,
+      "is_real_ratio": false
+    }
+  ],
+  "minmax_equity_sweep": [
+    {
+      "divisions_per_conference": 1,
+      "worst_team_trip_mi": 130545.8,
+      "most_equitable": false
+    },
+    {
+      "divisions_per_conference": 2,
+      "worst_team_trip_mi": 129114.5,
+      "most_equitable": true
+    },
+    {
+      "divisions_per_conference": 3,
+      "worst_team_trip_mi": 129313.8,
+      "most_equitable": false
+    },
+    {
+      "divisions_per_conference": 4,
+      "worst_team_trip_mi": 129670.8,
+      "most_equitable": false
+    },
+    {
+      "divisions_per_conference": 5,
+      "worst_team_trip_mi": 129793.4,
+      "most_equitable": false
+    }
+  ],
+  "conclusions": {
+    "min_sum_optimal_divisions_per_conference": 2,
+    "min_max_optimal_divisions_per_conference": 2,
+    "weighted_spread_pct": 0.8,
+    "verdict": "division count is essentially irrelevant"
+  },
+  "optimal_east_west": {
+    "west": [
+      [
+        {
+          "name": "Trail Blazers",
+          "lat": 45.532,
+          "lon": -122.667
+        },
+        {
+          "name": "Jazz",
+          "lat": 40.768,
+          "lon": -111.901
+        },
+        {
+          "name": "Warriors",
+          "lat": 37.768,
+          "lon": -122.388
+        },
+        {
+          "name": "Kings",
+          "lat": 38.58,
+          "lon": -121.5
+        },
+        {
+          "name": "SuperSonics",
+          "lat": 47.6221,
+          "lon": -122.354
+        }
+      ],
+      [
+        {
+          "name": "Nuggets",
+          "lat": 39.749,
+          "lon": -105.008
+        },
+        {
+          "name": "Clippers",
+          "lat": 33.945,
+          "lon": -118.342
+        },
+        {
+          "name": "Lakers",
+          "lat": 34.043,
+          "lon": -118.267
+        },
+        {
+          "name": "Suns",
+          "lat": 33.446,
+          "lon": -112.071
+        },
+        {
+          "name": "Las Vegas",
+          "lat": 36.1028,
+          "lon": -115.1781
+        }
+      ],
+      [
+        {
+          "name": "Thunder",
+          "lat": 35.463,
+          "lon": -97.515
+        },
+        {
+          "name": "Mavericks",
+          "lat": 32.79,
+          "lon": -96.81
+        },
+        {
+          "name": "Rockets",
+          "lat": 29.751,
+          "lon": -95.362
+        },
+        {
+          "name": "Grizzlies",
+          "lat": 35.138,
+          "lon": -90.051
+        },
+        {
+          "name": "Spurs",
+          "lat": 29.427,
+          "lon": -98.437
+        }
+      ]
+    ],
+    "east": [
+      [
+        {
+          "name": "Bulls",
+          "lat": 41.881,
+          "lon": -87.674
+        },
+        {
+          "name": "Cavaliers",
+          "lat": 41.497,
+          "lon": -81.688
+        },
+        {
+          "name": "Pistons",
+          "lat": 42.341,
+          "lon": -83.055
+        },
+        {
+          "name": "Pacers",
+          "lat": 39.764,
+          "lon": -86.155
+        },
+        {
+          "name": "Bucks",
+          "lat": 43.045,
+          "lon": -87.917
+        },
+        {
+          "name": "Timberwolves",
+          "lat": 44.979,
+          "lon": -93.276
+        }
+      ],
+      [
+        {
+          "name": "Hawks",
+          "lat": 33.757,
+          "lon": -84.396
+        },
+        {
+          "name": "Hornets",
+          "lat": 35.225,
+          "lon": -80.839
+        },
+        {
+          "name": "Heat",
+          "lat": 25.781,
+          "lon": -80.187
+        },
+        {
+          "name": "Magic",
+          "lat": 28.539,
+          "lon": -81.384
+        },
+        {
+          "name": "Pelicans",
+          "lat": 29.949,
+          "lon": -90.082
+        }
+      ],
+      [
+        {
+          "name": "Celtics",
+          "lat": 42.366,
+          "lon": -71.062
+        },
+        {
+          "name": "Nets",
+          "lat": 40.683,
+          "lon": -73.975
+        },
+        {
+          "name": "Knicks",
+          "lat": 40.75,
+          "lon": -73.993
+        },
+        {
+          "name": "76ers",
+          "lat": 39.901,
+          "lon": -75.172
+        },
+        {
+          "name": "Raptors",
+          "lat": 43.643,
+          "lon": -79.379
+        },
+        {
+          "name": "Wizards",
+          "lat": 38.898,
+          "lon": -77.021
+        }
+      ]
+    ]
+  }
+}

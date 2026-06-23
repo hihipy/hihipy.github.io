@@ -1,0 +1,196 @@
+{
+  "league": "MLS",
+  "generated_at": "2026-06-20T20:08:47.484684+00:00",
+  "ortools_version": "9.15.6755",
+  "teams": 30,
+  "structure": "two conferences of 15, no sub-divisions",
+  "metric": "total within-conference great-circle miles",
+  "alignments": {
+    "actual": {
+      "within_conference_mi": 168085.8
+    },
+    "optimal": {
+      "within_conference_mi": 168085.8,
+      "recovered_pct": 0.0
+    }
+  },
+  "conference_assignment_premium_mi": 0.0,
+  "conference_assignment_premium_pct": 0.0,
+  "current_split_is_optimal": true,
+  "clubs_reassigned_by_optimum": [],
+  "schedule": {
+    "season_games": 34,
+    "tier_games_per_opponent": {
+      "conference": 2.0,
+      "cross": 0.4
+    },
+    "weighted_metric": "expected season trip-miles = sum over team pairs of games*distance",
+    "note": "conference opponents twice (2.0/opp), six of fifteen cross-conference clubs once (0.4/opp averaged); no division tier"
+  },
+  "weighted": {
+    "actual_avg_trip_mi_per_game": 949.28,
+    "optimal_avg_trip_mi_per_game": 949.28
+  },
+  "minmax_equity": {
+    "min_sum_worst_team_mi": 47380.5,
+    "min_max_worst_team_mi": 47047.0,
+    "worst_team_improvement_pct": 0.7
+  },
+  "lenses_not_applicable": "division-count sweep and steepness curve require a division tier; MLS has only the conference tier",
+  "optimal_east_west": {
+    "west": [
+      {
+        "name": "Austin FC",
+        "lat": 30.388,
+        "lon": -97.719
+      },
+      {
+        "name": "Colorado Rapids",
+        "lat": 39.806,
+        "lon": -104.892
+      },
+      {
+        "name": "FC Dallas",
+        "lat": 33.155,
+        "lon": -96.835
+      },
+      {
+        "name": "Houston Dynamo",
+        "lat": 29.752,
+        "lon": -95.352
+      },
+      {
+        "name": "LA Galaxy",
+        "lat": 33.864,
+        "lon": -118.261
+      },
+      {
+        "name": "LAFC",
+        "lat": 34.013,
+        "lon": -118.285
+      },
+      {
+        "name": "Minnesota United",
+        "lat": 44.953,
+        "lon": -93.165
+      },
+      {
+        "name": "Portland Timbers",
+        "lat": 45.522,
+        "lon": -122.692
+      },
+      {
+        "name": "Real Salt Lake",
+        "lat": 40.583,
+        "lon": -111.893
+      },
+      {
+        "name": "San Diego FC",
+        "lat": 32.783,
+        "lon": -117.119
+      },
+      {
+        "name": "San Jose",
+        "lat": 37.351,
+        "lon": -121.925
+      },
+      {
+        "name": "Seattle Sounders",
+        "lat": 47.595,
+        "lon": -122.332
+      },
+      {
+        "name": "Sporting KC",
+        "lat": 39.121,
+        "lon": -94.824
+      },
+      {
+        "name": "St. Louis City",
+        "lat": 38.629,
+        "lon": -90.211
+      },
+      {
+        "name": "Vancouver",
+        "lat": 49.277,
+        "lon": -123.112
+      }
+    ],
+    "east": [
+      {
+        "name": "Atlanta United",
+        "lat": 33.755,
+        "lon": -84.401
+      },
+      {
+        "name": "CF Montreal",
+        "lat": 45.563,
+        "lon": -73.552
+      },
+      {
+        "name": "Charlotte FC",
+        "lat": 35.226,
+        "lon": -80.853
+      },
+      {
+        "name": "Chicago Fire",
+        "lat": 41.862,
+        "lon": -87.617
+      },
+      {
+        "name": "Columbus Crew",
+        "lat": 39.969,
+        "lon": -83.017
+      },
+      {
+        "name": "DC United",
+        "lat": 38.868,
+        "lon": -77.013
+      },
+      {
+        "name": "FC Cincinnati",
+        "lat": 39.111,
+        "lon": -84.522
+      },
+      {
+        "name": "Inter Miami",
+        "lat": 26.193,
+        "lon": -80.161
+      },
+      {
+        "name": "NY Red Bulls",
+        "lat": 40.737,
+        "lon": -74.15
+      },
+      {
+        "name": "NYCFC",
+        "lat": 40.829,
+        "lon": -73.926
+      },
+      {
+        "name": "Nashville SC",
+        "lat": 36.131,
+        "lon": -86.766
+      },
+      {
+        "name": "New England",
+        "lat": 42.091,
+        "lon": -71.264
+      },
+      {
+        "name": "Orlando City",
+        "lat": 28.541,
+        "lon": -81.389
+      },
+      {
+        "name": "Philadelphia Union",
+        "lat": 39.832,
+        "lon": -75.378
+      },
+      {
+        "name": "Toronto FC",
+        "lat": 43.633,
+        "lon": -79.418
+      }
+    ]
+  }
+}

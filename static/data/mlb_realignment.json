@@ -1,0 +1,345 @@
+{
+  "league": "MLB",
+  "generated_at": "2026-06-20T20:40:14.371767+00:00",
+  "ortools_version": "9.15.6755",
+  "teams": 30,
+  "division_size": 5,
+  "metric": "total within-division great-circle miles",
+  "alignments": {
+    "actual": {
+      "travel_mi": 35727.6
+    },
+    "conference_fixed": {
+      "travel_mi": 35232.8,
+      "recovered_pct": 1.4,
+      "well_defined": true
+    },
+    "east_west": {
+      "travel_mi": 24916.7,
+      "recovered_pct": 30.3
+    }
+  },
+  "conference_premium_mi": 10316.1,
+  "conference_premium_pct": 28.9,
+  "schedule": {
+    "season_games": 162,
+    "tier_ratio_per_opponent": {
+      "division": 13.0,
+      "conference": 6.4,
+      "cross": 3.07
+    },
+    "model": "frozen-cross",
+    "weighted_metric": "expected season trip-miles = sum over team pairs of games*distance",
+    "invariance_note": "for a fixed league split the minimum-weighted-travel partition equals the minimum within-division-distance partition for any weights; weights only affect the cross-count comparison"
+  },
+  "division_sweep": [
+    {
+      "divisions_per_conference": 5,
+      "division_size": 3,
+      "unweighted_within_division_mi": 9543.1,
+      "expected_trip_mi": 2277744.2,
+      "avg_trip_mi_per_game": 937.34,
+      "games_per_opponent": {
+        "division": 14.66,
+        "conference": 7.22,
+        "cross": 3.07
+      },
+      "most_efficient": false
+    },
+    {
+      "divisions_per_conference": 3,
+      "division_size": 5,
+      "unweighted_within_division_mi": 24916.7,
+      "expected_trip_mi": 2235050.2,
+      "avg_trip_mi_per_game": 919.77,
+      "games_per_opponent": {
+        "division": 12.99,
+        "conference": 6.4,
+        "cross": 3.07
+      },
+      "most_efficient": true
+    },
+    {
+      "divisions_per_conference": 1,
+      "division_size": 15,
+      "unweighted_within_division_mi": 165602.0,
+      "expected_trip_mi": 2382814.7,
+      "avg_trip_mi_per_game": 980.58,
+      "games_per_opponent": {
+        "division": 8.28,
+        "conference": 0.0,
+        "cross": 3.07
+      },
+      "most_efficient": false
+    }
+  ],
+  "division_sweep_spread_pct": 6.61,
+  "steepness_robustness": [
+    {
+      "ratio": 1.0,
+      "optimal_divisions_per_conference": 5,
+      "optimal_division_size": 3,
+      "spread_pct": 0.0,
+      "indifferent": true,
+      "is_real_ratio": false
+    },
+    {
+      "ratio": 1.25,
+      "optimal_divisions_per_conference": 3,
+      "optimal_division_size": 5,
+      "spread_pct": 1.85,
+      "indifferent": false,
+      "is_real_ratio": false
+    },
+    {
+      "ratio": 1.5,
+      "optimal_divisions_per_conference": 3,
+      "optimal_division_size": 5,
+      "spread_pct": 3.53,
+      "indifferent": false,
+      "is_real_ratio": false
+    },
+    {
+      "ratio": 1.75,
+      "optimal_divisions_per_conference": 3,
+      "optimal_division_size": 5,
+      "spread_pct": 5.05,
+      "indifferent": false,
+      "is_real_ratio": false
+    },
+    {
+      "ratio": 2.0,
+      "optimal_divisions_per_conference": 3,
+      "optimal_division_size": 5,
+      "spread_pct": 6.45,
+      "indifferent": false,
+      "is_real_ratio": false
+    },
+    {
+      "ratio": 2.0312,
+      "optimal_divisions_per_conference": 3,
+      "optimal_division_size": 5,
+      "spread_pct": 6.61,
+      "indifferent": false,
+      "is_real_ratio": true
+    },
+    {
+      "ratio": 2.5,
+      "optimal_divisions_per_conference": 3,
+      "optimal_division_size": 5,
+      "spread_pct": 8.9,
+      "indifferent": false,
+      "is_real_ratio": false
+    },
+    {
+      "ratio": 3.0,
+      "optimal_divisions_per_conference": 3,
+      "optimal_division_size": 5,
+      "spread_pct": 11.0,
+      "indifferent": false,
+      "is_real_ratio": false
+    },
+    {
+      "ratio": 4.0,
+      "optimal_divisions_per_conference": 3,
+      "optimal_division_size": 5,
+      "spread_pct": 14.39,
+      "indifferent": false,
+      "is_real_ratio": false
+    }
+  ],
+  "minmax_equity_sweep": [
+    {
+      "divisions_per_conference": 5,
+      "division_size": 3,
+      "worst_team_trip_mi": 256154.9,
+      "most_equitable": false
+    },
+    {
+      "divisions_per_conference": 3,
+      "division_size": 5,
+      "worst_team_trip_mi": 250731.6,
+      "most_equitable": true
+    },
+    {
+      "divisions_per_conference": 1,
+      "division_size": 15,
+      "worst_team_trip_mi": 266471.2,
+      "most_equitable": false
+    }
+  ],
+  "conclusions": {
+    "min_sum_optimal_divisions_per_conference": 3,
+    "min_max_optimal_divisions_per_conference": 3,
+    "weighted_spread_pct": 6.61,
+    "verdict": "division count materially affects travel"
+  },
+  "optimal_east_west": {
+    "west": [
+      [
+        {
+          "name": "Angels",
+          "lat": 33.8,
+          "lon": -117.883
+        },
+        {
+          "name": "Athletics",
+          "lat": 36.0994,
+          "lon": -115.17
+        },
+        {
+          "name": "Dodgers",
+          "lat": 34.074,
+          "lon": -118.24
+        },
+        {
+          "name": "Giants",
+          "lat": 37.778,
+          "lon": -122.389
+        },
+        {
+          "name": "Padres",
+          "lat": 32.707,
+          "lon": -117.157
+        }
+      ],
+      [
+        {
+          "name": "Royals",
+          "lat": 39.051,
+          "lon": -94.481
+        },
+        {
+          "name": "Twins",
+          "lat": 44.982,
+          "lon": -93.278
+        },
+        {
+          "name": "Mariners",
+          "lat": 47.591,
+          "lon": -122.332
+        },
+        {
+          "name": "Diamondbacks",
+          "lat": 33.445,
+          "lon": -112.067
+        },
+        {
+          "name": "Rockies",
+          "lat": 39.756,
+          "lon": -104.994
+        }
+      ],
+      [
+        {
+          "name": "Rays",
+          "lat": 27.768,
+          "lon": -82.653
+        },
+        {
+          "name": "Astros",
+          "lat": 29.757,
+          "lon": -95.355
+        },
+        {
+          "name": "Rangers",
+          "lat": 32.747,
+          "lon": -97.082
+        },
+        {
+          "name": "Braves",
+          "lat": 33.89,
+          "lon": -84.468
+        },
+        {
+          "name": "Marlins",
+          "lat": 25.778,
+          "lon": -80.22
+        }
+      ]
+    ],
+    "east": [
+      [
+        {
+          "name": "White Sox",
+          "lat": 41.83,
+          "lon": -87.634
+        },
+        {
+          "name": "Brewers",
+          "lat": 43.028,
+          "lon": -87.971
+        },
+        {
+          "name": "Cardinals",
+          "lat": 38.622,
+          "lon": -90.193
+        },
+        {
+          "name": "Cubs",
+          "lat": 41.948,
+          "lon": -87.656
+        },
+        {
+          "name": "Reds",
+          "lat": 39.097,
+          "lon": -84.507
+        }
+      ],
+      [
+        {
+          "name": "Guardians",
+          "lat": 41.496,
+          "lon": -81.685
+        },
+        {
+          "name": "Tigers",
+          "lat": 42.339,
+          "lon": -83.049
+        },
+        {
+          "name": "Blue Jays",
+          "lat": 43.641,
+          "lon": -79.389
+        },
+        {
+          "name": "Pirates",
+          "lat": 40.447,
+          "lon": -80.006
+        },
+        {
+          "name": "Nationals",
+          "lat": 38.873,
+          "lon": -77.007
+        }
+      ],
+      [
+        {
+          "name": "Orioles",
+          "lat": 39.284,
+          "lon": -76.622
+        },
+        {
+          "name": "Red Sox",
+          "lat": 42.346,
+          "lon": -71.097
+        },
+        {
+          "name": "Yankees",
+          "lat": 40.829,
+          "lon": -73.926
+        },
+        {
+          "name": "Mets",
+          "lat": 40.757,
+          "lon": -73.846
+        },
+        {
+          "name": "Phillies",
+          "lat": 39.906,
+          "lon": -75.166
+        }
+      ]
+    ]
+  }
+}
