@@ -331,6 +331,17 @@ The NBA is the league this essay started from. Its conferences look like a brand
 
 Start with the thirty teams that play now. The actual divisions, three of five in each conference, cost 25,571.22 miles of within-division travel.
 
+The geographic center of each actual division, with its 2020 Census population:
+
+| Division | Center | 2020 Pop. | Team | Note |
+| --- | --- | --- | --- | --- |
+| Northwest | Laramie, Wyoming | 31,407 | The Laramie Cowboys | A high-plains railroad town between the Laramie and Snowy ranges, home to the University of Wyoming. |
+| Pacific | Bodfish, California | 2,008 | The Bodfish Prospectors | An unincorporated community in the Kern River Valley below Lake Isabella, in the southern Sierra Nevada of Kern County. |
+| Southwest | San Augustine, Texas | 1,920 | The San Augustine Lumberjacks | One of the oldest towns in Texas, deep in the East Texas Piney Woods, with roots in a Spanish mission of 1717. |
+| Atlantic | Port Jervis, New York | 8,775 | The Port Jervis Railers | An old Erie Railroad division hub at the point where New York, New Jersey, and Pennsylvania meet. |
+| Central | LaGrange, Indiana | 2,715 | The LaGrange Drafthorses | The seat of the third-largest Amish settlement in the country, in a county named for Lafayette's château outside Paris. |
+| Southeast | Laurel Bay, South Carolina | 5,082 | The Laurel Bay Leathernecks | A Marine Corps housing community for the families stationed at the air station in Beaufort and at Parris Island. |
+
 {{< realign league="nba" panel="B" >}}
 
 Redraw those divisions for the least travel and the league recovers 2.61%, the ordinary slack in any real alignment. But keeping the conference line or erasing it changes nothing: turned loose on all thirty teams, the optimizer never once puts an Eastern and a Western team in the same division. The conferences already are the line a map would draw, so the premium is zero.
@@ -341,6 +352,17 @@ Redraw those divisions for the least travel and the league recovers 2.61%, the o
 - \( B = 24{,}903.11 \): conferences kept, divisions redrawn
 - \( C = 24{,}903.11 \): conference line erased, free redraw
 - \( B = C \): the two optima tie, so the premium is zero
+
+The center of each division once they are redrawn for least travel:
+
+| Center | Teams | 2020 Pop. | Team | Note |
+| --- | --- | --- | --- | --- |
+| Copperopolis, California | Clippers, Kings, Lakers, Trail Blazers, Warriors | 3,400 | The Copperopolis Miners | A Gold Country town in Calaveras County whose copper mines supplied the Union during the Civil War. |
+| Ellicott, Colorado | Jazz, Nuggets, Suns, Thunder, Timberwolves | 1,248 | The Ellicott Plainsmen | A small farming community on the high plains east of Colorado Springs, in El Paso County. |
+| San Augustine, Texas | Grizzlies, Mavericks, Pelicans, Rockets, Spurs | 1,920 | The San Augustine Lumberjacks | One of the oldest towns in Texas, deep in the East Texas Piney Woods, with roots in a Spanish mission of 1717. |
+| Pinckney, Michigan | Bucks, Bulls, Cavaliers, Pistons, Raptors | 2,415 | The Pinckney Trailblazers | A village in Livingston County beside the lakes and trails of the Pinckney Recreation Area. |
+| Wrightsville, Georgia | Hawks, Heat, Hornets, Magic, Pacers | 3,449 | The Wrightsville Sandhillers | The Johnson County seat in the sandhills of middle Georgia. |
+| Perth Amboy, New Jersey | 76ers, Celtics, Knicks, Nets, Wizards | 55,436 | The Perth Amboy Colonials | An old port city where the Raritan River meets the Arthur Kill, once the colonial capital of East Jersey. |
 
 {{< realign league="nba" panel="C" >}}
 
@@ -361,6 +383,19 @@ Solve for the best projected alignment and the conference line falls exactly whe
 - \( B = C \): the optimal even split is already a clean East and West
 
 The optimizer even moves a team across the old map without being told to. The Timberwolves, closer to the upper-Midwest East than to the southern West, land in an eastern division, which is the league's own reported instinct too: shift a central team East and balance the conferences at sixteen apiece. Geography and the front office reach for the same team.
+
+The center of each division in the projected thirty-two-team league:
+
+| Center | Teams | 2020 Pop. | Team | Note |
+| --- | --- | --- | --- | --- |
+| Klamath Falls, Oregon | Kings, SuperSonics, Trail Blazers, Warriors | 21,813 | The Klamath Falls Geothermals | The Klamath County seat in south-central Oregon, on Upper Klamath Lake, where geothermal wells heat downtown sidewalks and buildings. |
+| Twentynine Palms, California | Clippers, Lakers, Las Vegas, Suns | 28,065 | The Twentynine Palms Desert Rats | A Mojave Desert city at the north gate of Joshua Tree National Park and home to the largest Marine Corps base, the Air Ground Combat Center. |
+| Springfield, Colorado | Jazz, Mavericks, Nuggets, Thunder | 1,325 | The Springfield Dust Bowlers | The Baca County seat in the far southeastern corner of Colorado, on high plains hit hard by the Dust Bowl of the 1930s. |
+| New Llano, Louisiana | Grizzlies, Pelicans, Rockets, Spurs | 2,213 | The New Llano Cooperators | A Vernon Parish town founded as a socialist cooperative colony when the Llano del Rio commune relocated from California in the 1910s. |
+| Capron, Illinois | Bucks, Bulls, Pacers, Timberwolves | 1,395 | The Capron Plowmen | A small village in Boone County in the farm country of northern Illinois near the Wisconsin line. |
+| Kingsland, Georgia | Hawks, Heat, Hornets, Magic | 18,337 | The Kingsland Submariners | A Camden County city in the far southeast corner of Georgia, beside the Kings Bay Naval Submarine Base and the Florida line. |
+| Conneaut Lakeshore, Pennsylvania | Cavaliers, Pistons, Raptors, Wizards | 2,307 | The Conneaut Lakeshore Boardwalkers | A community on Conneaut Lake, the largest natural lake in Pennsylvania, in Crawford County, beside a historic lakeside amusement park. |
+| Bayville, New York | 76ers, Celtics, Knicks, Nets | 6,748 | The Bayville Baymen | A village on a Long Island Sound peninsula on the North Shore of Long Island, in Nassau County. |
 
 The NBA can absorb all this because of how it grew. The American Basketball Association ran from 1967 to 1976, and when the NBA took in four of its teams it spread them across existing divisions rather than keeping an ABA bloc, then drew its conferences around geography in the mid-2000s.[^nba] A merger only leaves a premium if the absorbed teams are never re-sorted by map. The NBA re-sorted, and even two more teams do not undo it.
 
