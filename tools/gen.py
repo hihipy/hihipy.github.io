@@ -146,10 +146,11 @@ def wedge(cx,cy,ri,ro,a0,a1,col,extra=""):
 def content(lg, struct, S, rings, focus=None):
     teams=T[lg]
     flat=[(nm,ts,conf) for conf,divs in struct for nm,ts in divs]
+    pt={t for nm,ts,conf in flat for t in ts}  # only the teams in THIS panel (NBA panels differ in count)
     tdiv={t:i for i,(_,ts,_) in enumerate(flat) for t in ts}
     f=None if focus is None else int(focus)
-    true_xy={t:S(alb(teams[t]["lon"],teams[t]["lat"])) for t in teams}
-    THRESH=1.0; VENUE=2.0; tl=list(teams); used=set(); ren={}; clusters=[]
+    true_xy={t:S(alb(teams[t]["lon"],teams[t]["lat"])) for t in pt}
+    THRESH=1.0; VENUE=2.0; tl=list(pt); used=set(); ren={}; clusters=[]
     for t in tl:
         if t in used: continue
         cl=[u for u in tl if u not in used and math.hypot(true_xy[u][0]-true_xy[t][0],true_xy[u][1]-true_xy[t][1])<THRESH]
@@ -172,7 +173,7 @@ def content(lg, struct, S, rings, focus=None):
     def lbl_place(t):
         # initial guess: place the label away from nearby teams
         x,y=ren[t]
-        near=[u for u in teams if u!=t and math.hypot(ren[u][0]-x,ren[u][1]-y)<36]
+        near=[u for u in pt if u!=t and math.hypot(ren[u][0]-x,ren[u][1]-y)<36]
         if near:
             ax=sum(ren[u][0] for u in near)/len(near); ay=sum(ren[u][1] for u in near)/len(near)
             ux,uy=x-ax,y-ay; n=math.hypot(ux,uy) or 1; ux,uy=ux/n,uy/n
@@ -182,7 +183,7 @@ def content(lg, struct, S, rings, focus=None):
         if abs(uy)>=abs(ux):
             return [x, y-o, "middle"] if uy<0 else [x, y+o+6.5, "middle"]
         return [x+o+1, y+2.5, "start"] if ux>0 else [x-o-1, y+2.5, "end"]
-    lpos={t:lbl_place(t) for t in teams}
+    lpos={t:lbl_place(t) for t in pt}
     def lbox(t):
         lx,ly,anch=lpos[t]; w=len(teams[t]["abbr"])*4.3
         x0,x1=(lx-w/2,lx+w/2) if anch=="middle" else (lx-w,lx) if anch=="end" else (lx,lx+w)
@@ -191,7 +192,7 @@ def content(lg, struct, S, rings, focus=None):
     # same-venue-adjacent pairs like Yankees/Mets that land on one point)
     for _ in range(40):
         moved=False
-        for a,b in _it.combinations(list(teams),2):
+        for a,b in _it.combinations(list(pt),2):
             A=lbox(a); B=lbox(b)
             if A[1]<=B[0] or B[1]<=A[0] or A[3]<=B[2] or B[3]<=A[2]: continue
             shift=(min(A[3],B[3])-max(A[2],B[2]))/2+0.6
@@ -316,8 +317,9 @@ def panel_doc(lg,k,st,S,W,H,rings):
     title=PANELTITLE[k]
     if lg=="mlb" and k in "AB": title+=" (AL / NL)"
     if lg=="nba":
-        if k=="A": title="Projected Divisions"
-        title+=" (with Seattle and Las Vegas)"
+        title={"A":"Today: 30 Teams, Actual Divisions",
+               "B":"Today: 30 Teams, Optimized",
+               "C":"Projected: 32 Teams, Four Divisions Each (with Seattle and Las Vegas)"}[k]
     svg=(f'<svg id="{pid}" class="realign" viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" '
          f'data-z="0" style="width:100%;height:auto;touch-action:none;cursor:grab;color:var(--map-fg);'
          f'background:var(--map-bg);border-radius:8px;border:1px solid var(--map-border)"><g class="vp">{content(lg,st,S,rings)}</g></svg>')

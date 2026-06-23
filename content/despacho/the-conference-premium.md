@@ -16,7 +16,7 @@ showTableOfContents: true
 The conference premium is the travel a league spends honoring a conference line that geography would not have drawn. Here is what each of five major leagues pays.
 {{< /lead >}}
 
-> **TL;DR.** The conference premium is the share of a league's in-division travel that exists only because of where it drew its conference line, the miles it could erase by ignoring that line and regrouping its teams on geography alone. To put a number on it, score three versions of each league by total within-division great-circle miles: the actual league \( A \), the same conferences with the divisions redrawn \( B \), and a free geographic redraw \( C \). The premium is \( (B - C)/A \). Baseball pays 28.87% and football 19.66%, because their conferences are boundaries kept from a rival-league merger, not maps. The NBA, the NHL, and MLS pay 0.00%, because their conferences already are the map, or there is no division layer beneath them to redraw. The premium tracks one piece of history: whether a league that merged with a rival kept the old line as a brand or dissolved it into geography. The exception proves it. Add two western expansion clubs to the NBA, unbalancing a conference geography had balanced, and a 9.07% premium appears out of nowhere.
+> **TL;DR.** The conference premium is the share of a league's in-division travel that exists only because of where it drew its conference line, the miles it could erase by ignoring that line and regrouping its teams on geography alone. To put a number on it, score three versions of each league by total within-division great-circle miles: the actual league \( A \), the same conferences with the divisions redrawn \( B \), and a free geographic redraw \( C \). The premium is \( (B - C)/A \). Baseball pays 28.87% and football 19.66%, because their conferences are boundaries kept from a rival-league merger, not maps. The NBA, the NHL, and MLS pay 0.00%, because their conferences already are the map, or there is no division layer beneath them to redraw. The premium tracks one piece of history: whether a league that merged with a rival kept the old line as a brand or dissolved it into geography. The NBA is the case that started this essay: its coming expansion to thirty-two teams, squared up to four divisions of four, leaves the premium at zero. The conference line stays exactly where geography would draw it.
 
 ***
 
@@ -49,11 +49,13 @@ The conference premium is the travel a league spends honoring a conference line 
 <p class="cp-kpi-sub">Only the two that kept the old line still pay</p>
 </div>
 <div class="cp-kpi">
-<p class="cp-kpi-value">9.07%</p>
-<p class="cp-kpi-label">NBA expansion what-if</p>
-<p class="cp-kpi-sub">Adding Seattle and Las Vegas</p>
+<p class="cp-kpi-value">0.00%</p>
+<p class="cp-kpi-label">The NBA after expansion</p>
+<p class="cp-kpi-sub">32 teams, still a clean East and West</p>
 </div>
 </div>
+
+This essay started with a basketball question. The NBA is widely expected to expand within a few years, adding two western teams, and I wanted to know whether that would pull its tidy East and West out of shape. Measuring it meant building a way to price any league's conference line in travel, and that turned out to say something about all five.
 
 Every major North American league sorts its teams the same way. First into two conferences, then into divisions inside each conference, and a team plays its own division far more than anyone else. That nesting has a price measured in miles. A team locked into the wrong half of the country flies past closer rivals to reach the ones it is scheduled against. The question here is narrow and answerable: of all the travel a league spends inside its divisions, how much is the cost of where it drew the conference line, and how much is the unavoidable cost of geography? That first part is what this essay calls the conference premium: the travel a league could erase by forgetting its conference line and grouping teams on geography alone. It runs from nearly a third of all in-division miles down to zero, and which end a league lands on turns out to be a question of history.
 
@@ -323,79 +325,44 @@ The AFC and NFC are a fossil. The American Football League launched in 1960 to c
 
 ## NBA, Geographic After All
 
-Here is the twist. Modeled at the thirty teams it actually has, the NBA pays a premium of 0.00%. Keep its East and West and redraw the divisions, or erase the conference line and redraw from scratch, and the optimizer returns the same partition either way: turned loose on all thirty teams, it never once puts an Eastern and a Western team in the same division. Reseeding saves 2.61%, the free redraw saves the same 2.61%, and the line itself costs nothing. The NBA's conferences already are the line a map would draw, exactly like the NHL below.
-
-Both redraws land on the same total, so the gap is nothing:
-
-\[ \text{premium} = \frac{B - C}{A} = \frac{24{,}903.11 - 24{,}903.11}{25{,}571.22} = 0.00\% \]
-
-- \( A = 25{,}571.22 \): the actual divisions' within-division miles, real 30 teams
-- \( B = 24{,}903.11 \): conferences kept, divisions redrawn
-- \( C = 24{,}903.11 \): conference line erased, free redraw
-- \( B = C \): the two redraws tie, so the premium is zero
-
-The optimization runs on the real thirty teams, re-cut into six fives either way; the maps below add the two expansion clubs and re-cut thirty-two:
-
-\[ B:\ 15 \to 3 \times 5 \ \text{per conference} \qquad C:\ 30 \to 6 \times 5 \]
-
-- \( B \): keep the two conferences, cut each 15-team conference into 3 divisions of 5
-- \( C \): drop the conference line, cut all 30 teams into 6 divisions of 5
-
-So why give it three maps? Because the NBA is widely expected to grow. In March 2026 its Board of Governors voted unanimously to explore adding two franchises, a revived Seattle SuperSonics and a new Las Vegas team, both of which would sit in the West, with play targeted to begin in 2028.[^nbaexp] The maps below model that projected thirty-two-team league, not the thirty that play today, because adding two western clubs is the only thing that turns the premium from zero into something.
+The NBA is the league this essay started from. Its conferences look like a brand, an East and a West, and its coming expansion seemed like the kind of thing that might bend a geographic line out of shape. It does not. The NBA is geographic today, and it stays geographic through the expansion, which is the quiet result under all three maps that follow.
 
 {{< realign league="nba" panel="A" >}}
 
-This is the projected thirty-two-team league: today's six divisions with Seattle and Las Vegas slotted into the West, which now carries seventeen teams to the East's fifteen. The western divisions have to stretch to hold them.
-
-The heart of each division in the modeled league, with its 2020 Census population:
-
-| Division | Center | 2020 Pop. | Team | Note |
-| --- | --- | --- | --- | --- |
-| Atlantic | Port Jervis, New York | 8,775 | The Port Jervis Railers | An old Erie Railroad division hub at the point where New York, New Jersey, and Pennsylvania meet. |
-| Central | LaGrange, Indiana | 2,715 | The LaGrange Drafthorses | The seat of the third-largest Amish settlement in the country, in a county named for Lafayette's château outside Paris. |
-| Southeast | Laurel Bay, South Carolina | 5,082 | The Laurel Bay Leathernecks | A Marine Corps housing community for the families stationed at the air station in Beaufort and at Parris Island. |
-| Northwest | Lander, Wyoming | 7,546 | The Lander Wranglers | A ranching town at the foot of the Wind River Range and the mouth of Sinks Canyon. |
-| Pacific | Inyokern, California | 988 | The Inyokern Dust Devils | A wind-scoured speck in the Mojave next to the China Lake weapons range. |
-| Southwest | San Augustine, Texas | 1,920 | The San Augustine Lumberjacks | One of the oldest towns in Texas, deep in the East Texas Piney Woods, with roots in a Spanish mission of 1717. |
+Start with the thirty teams that play now. The actual divisions, three of five in each conference, cost 25,571.22 miles of within-division travel.
 
 {{< realign league="nba" panel="B" >}}
 
-Keep the conferences and redraw the divisions, and the lopsided seventeen-team West sorts into tighter groups while the East does a small shuffle, the Raptors dropping in with the Central teams and the Wizards sliding up to the Atlantic. Travel falls 9.67%.
+Redraw those divisions for the least travel and the league recovers 2.61%, the ordinary slack in any real alignment. But keeping the conference line or erasing it changes nothing: turned loose on all thirty teams, the optimizer never once puts an Eastern and a Western team in the same division. The conferences already are the line a map would draw, so the premium is zero.
 
-And the hearts of those same divisions once the conferences are kept but the lines inside them are redrawn for least travel:
+\[ \text{premium} = \frac{B - C}{A} = \frac{24{,}903.11 - 24{,}903.11}{25{,}571.22} = 0.00\% \]
 
-| Center | Teams | 2020 Pop. | Team | Note |
-| --- | --- | --- | --- | --- |
-| Inyokern, California | Clippers, Kings, Lakers, Las Vegas, Suns, Warriors | 988 | The Inyokern Dust Devils | A wind-scoured speck in the Mojave next to the China Lake weapons range. |
-| Henderson, Texas | Grizzlies, Mavericks, Pelicans, Rockets, Spurs, Thunder | 13,271 | The Henderson Derrickmen | The Rusk County seat in the piney woods and oil country of East Texas. |
-| Driggs, Idaho | Jazz, Nuggets, SuperSonics, Timberwolves, Trail Blazers | 1,984 | The Driggs Tetons | The seat of Teton County on the quiet western side of the Teton Range, in the high farming basin of Teton Valley. |
-| Pinckney, Michigan | Bucks, Bulls, Cavaliers, Pistons, Raptors | 2,415 | The Pinckney Trailblazers | A village in Livingston County beside the lakes and trails of the Pinckney Recreation Area. |
-| Wrightsville, Georgia | Hawks, Heat, Hornets, Magic, Pacers | 3,449 | The Wrightsville Sandhillers | The Johnson County seat in the sandhills of middle Georgia. |
-| Perth Amboy, New Jersey | 76ers, Celtics, Knicks, Nets, Wizards | 55,436 | The Perth Amboy Colonials | An old port city where the Raritan River meets the Arthur Kill, once the colonial capital of East Jersey. |
+- \( A = 25{,}571.22 \): the actual divisions' within-division miles
+- \( B = 24{,}903.11 \): conferences kept, divisions redrawn
+- \( C = 24{,}903.11 \): conference line erased, free redraw
+- \( B = C \): the two optima tie, so the premium is zero
 
 {{< realign league="nba" panel="C" >}}
 
-Erase the conference line and redraw freely, and the optimizer relieves the imbalance by pulling exactly two teams across the old line: the Timberwolves and the Pelicans, both nominally Western, land in eastern divisions. Travel falls 18.74%, and those two crossings are the entire 9.07% premium. It is not a brand boundary like baseball's; it is the arithmetic cost of unbalancing a conference that geography had balanced.
+Now the part that prompted the essay. The league is widely expected to add two western franchises, a revived Seattle SuperSonics and a Las Vegas team, with play targeted to begin in 2028.[^nbaexp] Thirty-two teams will not hold three divisions of five, which is thirty, so the league would square up to four divisions of four, sixteen per conference:
 
-\[ \text{premium}_{+2} = \frac{B - C}{A} = \frac{28{,}785.36 - 25{,}895.43}{31{,}866.89} = 9.07\% \]
+\[ \text{today: } 30 = 2 \times (3 \times 5) \qquad \text{projected: } 32 = 2 \times (4 \times 4) \]
 
-- \( A = 31{,}866.89 \): within-division miles with the two expansion clubs added
-- \( B = 28{,}785.36 \): conferences kept, divisions redrawn
-- \( C = 25{,}895.43 \): conference line erased, free redraw
-- \( (B - C)/A \): the premium the two western clubs introduce
+- today: thirty teams, two conferences of three divisions of five
+- projected: thirty-two teams, two conferences of four divisions of four
 
-And once the conference line is erased and every division is drawn from scratch:
+Solve for the best projected alignment and the conference line falls exactly where the free optimum already draws it. Not one of the eight divisions crosses it, so the premium is still zero.
 
-| Center | Teams | 2020 Pop. | Team | Note |
-| --- | --- | --- | --- | --- |
-| Lakeview, Oregon | Jazz, Kings, SuperSonics, Trail Blazers, Warriors | 2,418 | The Lakeview Hang Gliders | The Lake County seat in the high desert, billed as the Tallest Town in Oregon at roughly 4,800 feet, with hot springs and gliding ridges nearby. |
-| New Kingman-Butler, Arizona | Clippers, Lakers, Las Vegas, Nuggets, Suns | 12,907 | The New Kingman-Butler Mother Roaders | A community beside Kingman on historic Route 66, in the Mojave high desert. |
-| Van, Texas | Grizzlies, Mavericks, Rockets, Spurs, Thunder | 2,664 | The Van Wildcatters | A small Van Zandt County town that struck oil in the late 1920s with the Van Oilfield. |
-| Saint Joseph, Michigan | Bucks, Bulls, Cavaliers, Pacers, Pistons, Timberwolves | 7,856 | The Saint Joseph Lightkeepers | A Lake Michigan resort town at the mouth of the St. Joseph River, with bluff-top beaches and a pier lighthouse. |
-| Madison, Florida | Hawks, Heat, Hornets, Magic, Pelicans | 2,912 | The Madison Cottoneers | The Madison County seat in the rolling hills of north Florida near the Georgia line. |
-| Saw Creek, Pennsylvania | 76ers, Celtics, Knicks, Nets, Raptors, Wizards | 4,118 | The Saw Creek Black Bears | A gated resort community in the Poconos of Pike County. |
+\[ \text{premium} = \frac{B - C}{A} = \frac{16{,}625.25 - 16{,}625.25}{16{,}625.25} = 0.00\% \]
 
-The real league carries no such scar, because of how it grew. The American Basketball Association ran from 1967 to 1976, and when the NBA absorbed four of its teams it spread them across existing divisions rather than keeping an ABA bloc, then drew its conferences around geography in the mid-2000s.[^nba] A merger only leaves a premium if the absorbed teams are never re-sorted by map; the NBA re-sorted, so at its real roster it sits with the geographic leagues.
+- \( A = 16{,}625.25 \): the projected divisions' within-division miles, all 32 teams
+- \( B = 16{,}625.25 \): conferences kept, four divisions of four redrawn
+- \( C = 16{,}625.25 \): conference line erased, free redraw
+- \( B = C \): the optimal even split is already a clean East and West
+
+The optimizer even moves a team across the old map without being told to. The Timberwolves, closer to the upper-Midwest East than to the southern West, land in an eastern division, which is the league's own reported instinct too: shift a central team East and balance the conferences at sixteen apiece. Geography and the front office reach for the same team.
+
+The NBA can absorb all this because of how it grew. The American Basketball Association ran from 1967 to 1976, and when the NBA took in four of its teams it spread them across existing divisions rather than keeping an ABA bloc, then drew its conferences around geography in the mid-2000s.[^nba] A merger only leaves a premium if the absorbed teams are never re-sorted by map. The NBA re-sorted, and even two more teams do not undo it.
 
 ## NHL, Geography Already
 
@@ -500,7 +467,7 @@ Major League Soccer was built from scratch in the 1990s rather than from a merge
 
 Laid end to end, the five leagues do not fall on a tidy gradient. They fall into two groups, and the split tracks one piece of history: what each league did with a rival it absorbed. Baseball and football kept the old boundary as a brand and pay for it, 28.87 and 19.66%. The NBA and the NHL absorbed rivals too, then re-sorted them by geography, so at their real rosters they pay nothing. Soccer never merged and never drew a division layer, so its zero is structural. The premium is a single subtraction, but it sorts the leagues by whether a merged league kept its old line or dissolved it into the map.
 
-The NBA is the proof rather than the exception. Its real thirty-team conferences already are the map, which is why it pays zero; the only way to make a premium appear is to add two western expansion clubs and unbalance a conference geography had balanced, and even then the 9.07% is arithmetic, not history. A line drawn by distance can be made to cost miles only by breaking the distance that drew it.
+The NBA is the league that prompted all this, and it is the cleanest case of the rule. Its conferences already are the map, so it pays zero; and its projected expansion, two western teams and a square-up to four divisions of four, leaves the optimal split a clean East and West, so it still pays zero. Geography that was already honest does not turn dishonest just because the league grows.
 
 ## What This Does Not Mean
 
@@ -508,7 +475,7 @@ The premium is a geographic accounting, not a proposal, and a few limits keep it
 
 It measures dispersion, not itineraries. Each arena is a single point, and the score is the spread of teams within a division, not a literal flight schedule with road trips, layovers, and charter logistics. Two leagues with the same premium can fly very different real routes.
 
-The headline NBA number is the real thirty-team league, which pays nothing. The maps, the centroid towns, and the 9.07% figure in that section all model a projected thirty-two-team league with Seattle and Las Vegas added, an expansion the league voted in March 2026 to explore but has not yet approved. It illustrates what unbalancing a conference would cost; it is not the baseline.
+The NBA section carries a projection. Its first two maps are the real thirty-team league; the third is a projected thirty-two-team league with Seattle and Las Vegas added, an expansion the league voted in March 2026 to explore but has not yet approved. Because the league has not drawn those divisions yet, the projected panel shows them at the optimum, what a sensibly aligned expanded league would look like, rather than a forecast of the exact divisions.
 
 The full-league optimum is strong, not provably global. Where exact enumeration is infeasible, \( C \) is solved over a nearest-neighbor candidate pool, so it is optimal against a high-quality field rather than proven best across all partitions for the largest leagues.
 
@@ -537,5 +504,5 @@ The reasoning is the deliverable: the premium only means something once you have
 [^nba]: The American Basketball Association operated from 1967 to 1976, when the NBA absorbed four of its teams, the Nuggets, Pacers, Spurs, and Nets, and spread them across existing divisions rather than keeping a bloc. The NBA's current East and West alignment, drawn around geography, dates to the mid-2000s. Source: [ABA-NBA merger](https://en.wikipedia.org/wiki/ABA%E2%80%93NBA_merger), Wikipedia.
 [^nhl]: The World Hockey Association challenged the NHL from 1972 to 1979, when the NHL took in four survivors, the Oilers, Whalers, Nordiques, and Jets, and placed them by geography. Its conferences have tracked the map since. Source: [1979 NHL expansion](https://en.wikipedia.org/wiki/1979_NHL_expansion), Wikipedia.
 [^mls]: Major League Soccer was founded in 1993 and began play in 1996, built new rather than from a merger. It splits into Eastern and Western Conferences with no division layer beneath them. Source: [Major League Soccer](https://en.wikipedia.org/wiki/Major_League_Soccer), Wikipedia.
-[^nbarow]: The real thirty-team league, which pays nothing. The 9.07% what-if and the NBA-section maps model a projected thirty-two-team league with Seattle and Las Vegas added; see the note in that section.
+[^nbarow]: This is the real thirty-team league, which pays nothing. The NBA section's third map projects a thirty-two-team league (Seattle and Las Vegas) squared up to four divisions of four; its premium is also zero. See that section.
 [^nbaexp]: A projection, not the current league. On March 24 and 25, 2026, the NBA Board of Governors voted unanimously to explore expansion to Seattle, reviving the SuperSonics, and Las Vegas, with new teams targeted to begin play in 2028; the league has stressed that expansion is not yet certain. Sources: [NBA to explore expansion in Seattle and Las Vegas](https://www.nba.com/news/nba-commissioner-adam-silver-on-leagues-plan-to-explore-expansion-in-seattle-and-las-vegas), NBA.com; [Expansion of the NBA](https://en.wikipedia.org/wiki/Expansion_of_the_NBA), Wikipedia.
