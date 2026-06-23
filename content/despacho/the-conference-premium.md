@@ -51,7 +51,7 @@ The conference premium is the travel a league spends honoring a conference line 
 <div class="cp-kpi">
 <p class="cp-kpi-value">9.07%</p>
 <p class="cp-kpi-label">NBA expansion what-if</p>
-<p class="cp-kpi-sub">What two western clubs would cost</p>
+<p class="cp-kpi-sub">Adding Seattle and Las Vegas</p>
 </div>
 </div>
 
@@ -341,11 +341,11 @@ The optimization runs on the real thirty teams, re-cut into six fives either way
 - \( B \): keep the two conferences, cut each 15-team conference into 3 divisions of 5
 - \( C \): drop the conference line, cut all 30 teams into 6 divisions of 5
 
-So why give it three maps? Because the league is about to expand, and that is the only thing that creates a premium. The maps below model the near-future NBA, with a returning Seattle club and a Las Vegas club added, both Western.
+So why give it three maps? Because the NBA is widely expected to grow. In March 2026 its Board of Governors voted unanimously to explore adding two franchises, a revived Seattle SuperSonics and a new Las Vegas team, both of which would sit in the West, with play targeted to begin in 2028.[^nbaexp] The maps below model that projected thirty-two-team league, not the thirty that play today, because adding two western clubs is the only thing that turns the premium from zero into something.
 
 {{< realign league="nba" panel="A" >}}
 
-This is the thirty-two-team league: the current divisions with Seattle and Las Vegas slotted into the West, which now carries seventeen teams to the East's fifteen. The western divisions have to stretch to hold them.
+This is the projected thirty-two-team league: today's six divisions with Seattle and Las Vegas slotted into the West, which now carries seventeen teams to the East's fifteen. The western divisions have to stretch to hold them.
 
 The heart of each division in the modeled league, with its 2020 Census population:
 
@@ -508,7 +508,7 @@ The premium is a geographic accounting, not a proposal, and a few limits keep it
 
 It measures dispersion, not itineraries. Each arena is a single point, and the score is the spread of teams within a division, not a literal flight schedule with road trips, layovers, and charter logistics. Two leagues with the same premium can fly very different real routes.
 
-The headline NBA number is the real thirty-team league, which pays nothing. The maps, the centroid towns, and the 9.07% figure in that section all model the near-future league with two western expansion clubs added, an illustration of what unbalancing a conference would cost, not the baseline.
+The headline NBA number is the real thirty-team league, which pays nothing. The maps, the centroid towns, and the 9.07% figure in that section all model a projected thirty-two-team league with Seattle and Las Vegas added, an expansion the league voted in March 2026 to explore but has not yet approved. It illustrates what unbalancing a conference would cost; it is not the baseline.
 
 The full-league optimum is strong, not provably global. Where exact enumeration is infeasible, \( C \) is solved over a nearest-neighbor candidate pool, so it is optimal against a high-quality field rather than proven best across all partitions for the largest leagues.
 
@@ -537,4 +537,5 @@ The reasoning is the deliverable: the premium only means something once you have
 [^nba]: The American Basketball Association operated from 1967 to 1976, when the NBA absorbed four of its teams, the Nuggets, Pacers, Spurs, and Nets, and spread them across existing divisions rather than keeping a bloc. The NBA's current East and West alignment, drawn around geography, dates to the mid-2000s. Source: [ABA-NBA merger](https://en.wikipedia.org/wiki/ABA%E2%80%93NBA_merger), Wikipedia.
 [^nhl]: The World Hockey Association challenged the NHL from 1972 to 1979, when the NHL took in four survivors, the Oilers, Whalers, Nordiques, and Jets, and placed them by geography. Its conferences have tracked the map since. Source: [1979 NHL expansion](https://en.wikipedia.org/wiki/1979_NHL_expansion), Wikipedia.
 [^mls]: Major League Soccer was founded in 1993 and began play in 1996, built new rather than from a merger. It splits into Eastern and Western Conferences with no division layer beneath them. Source: [Major League Soccer](https://en.wikipedia.org/wiki/Major_League_Soccer), Wikipedia.
-[^nbarow]: The real thirty-team league, which pays nothing. The 9.07% what-if and the maps in the NBA section model the near-future league with two western expansion clubs added.
+[^nbarow]: The real thirty-team league, which pays nothing. The 9.07% what-if and the NBA-section maps model a projected thirty-two-team league with Seattle and Las Vegas added; see the note in that section.
+[^nbaexp]: A projection, not the current league. On March 24 and 25, 2026, the NBA Board of Governors voted unanimously to explore expansion to Seattle, reviving the SuperSonics, and Las Vegas, with new teams targeted to begin play in 2028; the league has stressed that expansion is not yet certain. Sources: [NBA to explore expansion in Seattle and Las Vegas](https://www.nba.com/news/nba-commissioner-adam-silver-on-leagues-plan-to-explore-expansion-in-seattle-and-las-vegas), NBA.com; [Expansion of the NBA](https://en.wikipedia.org/wiki/Expansion_of_the_NBA), Wikipedia.

@@ -313,7 +313,11 @@ THEME=('<style>'
 def panel_doc(lg,k,st,S,W,H,rings):
     """One standalone, single-panel, theme-aware interactive HTML file."""
     pid=f"{lg}_{k}"
-    title=PANELTITLE[k]+(" (AL / NL)" if (lg=="mlb" and k in "AB") else "")
+    title=PANELTITLE[k]
+    if lg=="mlb" and k in "AB": title+=" (AL / NL)"
+    if lg=="nba":
+        if k=="A": title="Projected Divisions"
+        title+=" (with Seattle and Las Vegas)"
     svg=(f'<svg id="{pid}" class="realign" viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" '
          f'data-z="0" style="width:100%;height:auto;touch-action:none;cursor:grab;color:var(--map-fg);'
          f'background:var(--map-bg);border-radius:8px;border:1px solid var(--map-border)"><g class="vp">{content(lg,st,S,rings)}</g></svg>')
