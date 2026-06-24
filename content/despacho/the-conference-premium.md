@@ -250,6 +250,8 @@ And once the conference line is erased and every division is drawn from scratch:
 
 The reason is history, not geography. The National League dates to 1876 and the American League to 1901, and the two ran as separate businesses for nearly a century before merging into a single organization in 2000.[^mlb] The split down the middle of the sport was never about longitude, and the 162-game season multiplies every extra mile. Division count matters too: across one to three divisions per conference the travel swings 6.61%, and the optimum lands on three, which is what the league already runs.
 
+Two of those groups look wrong until you trace the geometry. The Mariners sit in the Laramie group with Arizona, Colorado, Kansas City, and Minnesota, not with the California teams that are their nearest neighbors: the five California-area clubs already fill a division tightly, so Seattle, the leftover corner, attaches to the next cluster inland. The Marlins land in the Dauphin Island group with the two Texas teams because Miami is too isolated in the southeast to fill a division with close neighbors, so once Tampa and Atlanta are taken the group has to reach west to Texas to make five.
+
 ## NFL, History Over Geography
 
 Football runs eight divisions across thirty-two teams. The first map is the league as it plays today.
@@ -322,6 +324,8 @@ And once the conference line is erased and every division is drawn from scratch:
 | Glen Cove, New York | Eagles, Giants, Jets, Patriots | 28,365 | The Glen Cove Gilders | A small city on Long Island's North Shore, part of the old Gold Coast of Gilded Age estates. |
 
 The AFC and NFC are a fossil. The American Football League launched in 1960 to challenge the NFL, the two agreed to merge in 1966, and to balance the new conferences three old NFL clubs crossed over to join the ten AFL teams for the 1970 season.[^nfl] So like baseball, the boundary is a brand, not a map. Football is also the league where division count matters most: across one to four divisions per conference the travel swings 14.50%, and the optimum prefers two divisions per conference against the four the league runs, because tight local rivalries are worth more to it than miles.
+
+Two groups here look wrong for the same kinds of reasons. Seattle lands inland again, the Seahawks in the Rock Springs group with Denver and Arizona, and the Vikings beside them, rather than with the California four: the corner team and its nearest interior neighbor get absorbed by the mountain cluster. And the Cleveland Browns come out labeled West. The free optimum sorts its finished divisions into two halves by longitude only so the map reads like the others, and the Great Lakes group, the Bears, Browns, Lions, and Packers, falls just west of that median. Nothing in the solve treats Cleveland as western; the conference label sitting on top of the grouping is only a longitude line.
 
 ## NBA, Geographic After All
 
@@ -506,19 +510,13 @@ The NBA is the league that prompted all this, and it is the cleanest case of the
 
 ## The Groupings That Look Wrong
 
-The free optimum minimizes total within-division distance at fixed division sizes, which is not the same as putting every team with its single nearest neighbor. That gap is where the odd-looking placements come from, and each one has the same root: a team near a corner or a seam gets sorted by what makes the whole map cheapest, not by what looks right for that team alone.
+Across the maps the free optimum keeps drawing groups that look wrong: Seattle stranded inland, Miami reaching to Texas, Cleveland labeled West. They share one cause. The optimum minimizes total within-division distance at fixed division sizes, which is not the same as putting every team with its single nearest neighbor, so a team near a corner or a seam gets sorted by what makes the whole map cheapest, not by what looks right for it alone.
 
 Behind all of it is where each league's weight actually sits. The open crosshair on every map marks the league's geographic center, the average position of its teams, and not one of the five lands in the middle of the country. Because it depends only on who is in the league and not on how the divisions are cut, it sits in the identical spot on a league's three maps; the optimizer regroups teams around the center, it never moves the center itself. Measured against the geographic center of the contiguous United States, near Lebanon, Kansas at about 98.6 degrees west, every league leans east. Football leans hardest, its center about 8 degrees of longitude east; baseball and hockey sit about 6 degrees east; the NBA's real thirty teams about 5; soccer about 4 and a half. The eastern half of the map holds more teams, so the optimizer packs its tightest divisions there and the far western and far southeastern clubs, Seattle and Miami, are the ones left over to absorb. The center is why the corners look odd.
 
 The NBA is the one league whose center moves on the page. Its real thirty teams center near 93 degrees west, but the projected panel adds Seattle and Las Vegas, both far west, and that pulls the center about a degree and a half back toward the middle, to near 95 degrees west. The expansion does not bend the conference line. It nudges an east-leaning league toward the balance the line already assumed, which is the same reason the projected split stays clean and the premium stays at zero.
 
-Seattle is the clearest case. Its nearest neighbors are the California teams, yet the baseball optimum drops the Mariners in a mountain group with Arizona, Colorado, Kansas City, and Minnesota, and the football optimum does the same with the Seahawks. The California teams already fill a division on their own, tightly, and divisions have to come out at the set size. Seattle is the leftover corner, so it attaches to the next cluster inland rather than forcing a California team out to make room. The marginal team in a corner pays for the geometry of everyone else.
-
 Minnesota goes the other way, and goes both ways. The Vikings land in the western mountain group in football, the Timberwolves cross into an eastern division in the projected NBA, and the Twins sit in the interior group in baseball. Minneapolis sits near the seam between the eastern and western blocs of teams, so it is among the cheapest teams to move whenever one side needs a body. Whichever half is short, Minnesota tends to be the one that slides over, which is why the same city reads as West in one league and East in another.
-
-Miami is the southeastern version of Seattle. The Marlins share a baseball division with the two Texas teams, anchored at a centroid on the Gulf coast of Alabama, because Florida has too few nearby teams to make a compact group. Once Tampa and Atlanta are spoken for, the division has to reach west to Texas to hit five, so Miami ends up in a group that stretches most of the way across the South.
-
-The last kind of oddity is not the optimizer at all, it is the label. The free optimum sorts its finished divisions into two halves by longitude only so the map reads like the others, and that cut can put an eastern-feeling city on the western side. In the football optimum the Great Lakes division, the Bears, Browns, Lions, and Packers, falls just west of the median and is labeled West, which puts the Cleveland Browns in the western half. Nothing in the solve treats Cleveland as western. The grouping is real; the conference label sitting on top of it is only a longitude line.
 
 ## What This Does Not Mean
 
