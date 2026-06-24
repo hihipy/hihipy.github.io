@@ -24,7 +24,7 @@ La Meva Trajectòria
 {{< /typeit >}}
 {{< /lead >}}
 
-Senior-level data analyst with seven-plus years across academic medical centers and higher education, specializing in Power BI dashboard development, ETL pipeline engineering, and institutional research analytics. Currently analyzing $540M+ in research activity at the University of Miami Miller School of Medicine. M.S. in Business Analytics, University of Miami.
+Data Analyst II with seven-plus years across academic medical centers and higher education, specializing in Power BI dashboard development, ETL pipeline engineering, and institutional research analytics. Currently analyzing $540M+ in research activity at the University of Miami Miller School of Medicine. M.S. in Business Analytics, University of Miami.
 
 ## Experience
 
