@@ -46,9 +46,9 @@ df["Application ID"].nunique()       # 13,876
 
 Two different numbers for what should be the same thing. The 305-row gap is exactly the kind of structural surprise that the source phase exists to surface, and it has to be explained before any schema work begins. A duplicate-record bug would warrant cleaning. A real structural pattern warrants modeling.
 
-NIH grants are sometimes co-funded by multiple [Institutes and Centers](https://www.nih.gov/institutes-nih/list-nih-institutes-centers-offices), the operating divisions that make up NIH (the National Cancer Institute, the National Institute on Aging, and so on, twenty-seven in total). When a project is co-funded, the RePORTER export gives one row per (Application ID, Funding IC) pair. Of the 13,876 distinct projects in the dataset, 3,580 have no funder rows at all (the missing-cost pattern documented later in this phase). The remaining 10,296 projects have at least one funder row. Most of those have exactly one funder, but a small minority are co-funded by two or more.
+NIH grants are sometimes co-funded by multiple Institutes and Centers[^institutes-and-centers], the operating divisions that make up NIH (the National Cancer Institute, the National Institute on Aging, and so on, twenty-seven in total). When a project is co-funded, the RePORTER export gives one row per (Application ID, Funding IC) pair. Of the 13,876 distinct projects in the dataset, 3,580 have no funder rows at all (the missing-cost pattern documented later in this phase). The remaining 10,296 projects have at least one funder row. Most of those have exactly one funder, but a small minority are co-funded by two or more.
 
-One project, [Application ID 6874256](https://reporter.nih.gov/search/EeUf1tz3Akuz5bpcPbIzpg/projects), an institutional training grant from fiscal year 2005, has nineteen rows for nineteen different ICs. It is the most extreme co-funding case in the dataset.
+One project, Application ID 6874256[^application-id-6874256], an institutional training grant from fiscal year 2005, has nineteen rows for nineteen different ICs. It is the most extreme co-funding case in the dataset.
 
 The funder-count distribution after the database is built confirms the pattern:
 
@@ -194,7 +194,7 @@ Projects Without Funder Data
 3,580
 ```
 
-Initially this looks like a data-quality issue. It is not. The [NIH ExPORTER FAQ](https://reporter.nih.gov/exporter/faq) documents the pattern as policy: cost data is published only for projects funded by NIH, CDC, FDA, and ACF. Projects funded by other federal partners (NASA, USDA, the VA cooperative program, and others) appear in RePORTER's project listings with full metadata but no dollar amounts, because those partners do not authorize NIH to disclose their funding figures.
+Initially this looks like a data-quality issue. It is not. The NIH ExPORTER FAQ[^nih-exporter-faq] documents the pattern as policy: cost data is published only for projects funded by NIH, CDC, FDA, and ACF. Projects funded by other federal partners (NASA, USDA, the VA cooperative program, and others) appear in RePORTER's project listings with full metadata but no dollar amounts, because those partners do not authorize NIH to disclose their funding figures.
 
 Without knowing this, an analyst querying for "average funding per project in Kentucky" gets a wildly wrong answer. Either they include the 3,580 rows with null costs and the average is artificially deflated, or they exclude those rows and accidentally exclude a quarter of the actual project portfolio. Both options corrupt the analysis.
 
@@ -235,7 +235,7 @@ Avg Categories   Min   Max   Projects
 
 Average four categories per project, ranging from one (the minimum: every project has at least one category, even if that category is the literal string "No NIH Category available") to twenty-eight (the maximum: a single project carries 28 distinct category tags). The exploded table has 56,845 rows total across all 13,876 projects, which checks out: 13,876 × 4.1 = 56,892, close to the 56,845 actual count given the rounding in the average.
 
-The literal string `"No NIH Category available"` appears as a category value 4,764 times. It is itself meaningful (the project predates [Research, Condition, and Disease Categorization](https://report.nih.gov/funding/categorical-spending) or has not yet been categorized), so it is kept as a real category rather than filtered out. Phase 03's exploration query filters it out only when ranking the most frequent categories, since the placeholder otherwise crowds the top of the list.
+The literal string `"No NIH Category available"` appears as a category value 4,764 times. It is itself meaningful (the project predates Research, Condition, and Disease Categorization[^research-condition-and-disease-c] or has not yet been categorized), so it is kept as a real category rather than filtered out. Phase 03's exploration query filters it out only when ranking the most frequent categories, since the placeholder otherwise crowds the top of the list.
 
 A multi-valued column in a relational database is a denormalization waiting to be undone. Querying "all projects in the Cancer category" against the raw column would require a substring match (`LIKE '%Cancer%'`) that is slow, fragile (the substring "Cancer" matches "Cancer" but also any other category that happens to contain those letters), and prevents the database from using an index on the category. The standard fix is to explode the multi-valued field into its own table with one row per (project, category) pair.
 
@@ -308,3 +308,8 @@ The output is a 75-megabyte SQLite database with three tables, six indexes, and 
 ## Looking Ahead
 
 The database exists, the schema is documented, and the data invariants are verified. Anyone reading this page can open the database in [Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/kentucky-nih.sqlite) directly in the browser and run SQL against it without installing anything. The next phase, [exploration](/archivo/kentucky-nih/03-exploration/), is the first-pass orientation: how much funding flowed in each year, which institutions dominated, which categories show up most, where the surprises live.
+
+[^institutes-and-centers]: [Institutes and Centers](https://www.nih.gov/institutes-nih/list-nih-institutes-centers-offices), NIH.
+[^application-id-6874256]: [Application ID 6874256](https://reporter.nih.gov/search/EeUf1tz3Akuz5bpcPbIzpg/projects), NIH RePORTER.
+[^nih-exporter-faq]: [NIH ExPORTER FAQ](https://reporter.nih.gov/exporter/faq), NIH RePORTER.
+[^research-condition-and-disease-c]: [Research, Condition, and Disease Categorization](https://report.nih.gov/funding/categorical-spending), NIH.

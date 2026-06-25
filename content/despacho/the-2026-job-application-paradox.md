@@ -63,26 +63,26 @@ Each row shows the odds, a "1 in X" reading, and the kind of number it is (this 
 
 |  Goal  |  Odds  |  Roughly  |  What It Measures  |  Source  |
 | :---: | :---: | :---: | :---: | :---: |
-|  Get into an Average US College  |  73%  |  3 in 4  |  Per Applicant  |  [1]  |
-|  Finish Navy SEAL Training (BUD/S)  |  \~25%  |  1 in 4  |  Completion Rate  |  [2] [3]  |
-|  Get into Juilliard  |  9%  |  1 in 11  |  Per Applicant  |  [4] [5]  |
-|  Get into Yale Law  |  \~5%  |  1 in 20  |  Per Applicant  |  [6] [7]  |
-|  Become an FBI Special Agent  |  \~5%  |  1 in 20  |  Per Applicant  |  [8]  |
-|  Get into MIT  |  4.6%  |  1 in 22  |  Per Applicant  |  [9]  |
-|  Get into Harvard  |  4.2%  |  1 in 24  |  Per Applicant  |  [10] [11]  |
-|  Get into Stanford  |  \~3.6%  |  1 in 28  |  Per Applicant  |  [12]  |
-|  Get a Startup into Y Combinator  |  \~1%  |  1 in 100  |  Per Application  |  [13]  |
-|  Get a McKinsey Job Offer  |  \~1%  |  1 in 100  |  Per Applicant  |  [14] [15]  |
-|  Get Hired at SpaceX  |  \~1%  |  1 in 100  |  Per Application  |  [16]  |
-|  Get the Supreme Court to Hear Your Case  |  \~1%  |  1 in 100  |  Per Petition  |  [17] [18]  |
-|  Win a Rhodes Scholarship  |  \~0.7%  |  1 in 143  |  Per Applicant  |  [19]  |
-|  Land a Goldman Sachs Internship  |  \~0.7%  |  1 in 143  |  Per Applicant  |  [20] [21]  |
-|  Become a Jeopardy Contestant  |  \~0.5%  |  1 in 200  |  Per Applicant  |  [22] [23]  |
-|  **LAND ONE OFFICE JOB APPLICATION**  |  **\~0.4%**  |  **1 in 242**  |  **Per Application**  |  [24]  |
-|  Win a US Green Card Lottery  |  \~0.3%  |  1 in 360  |  Pure Chance  |  [25]  |
-|  Get Hired at Google  |  \~0.2%  |  1 in 500  |  Per Application  |  [26]  |
-|  Get Picked as a NASA Astronaut  |  0.125%  |  1 in 800  |  Per Applicant  |  [27] [28]  |
-|  Go from High School to Pro Athlete  |  \~0.03%  |  1 in 3,300  |  Lifetime Odds  |  [29]  |
+|  Get into an Average US College  |  73%  |  3 in 4  |  Per Applicant  | [^1]  |
+|  Finish Navy SEAL Training (BUD/S)  |  \~25%  |  1 in 4  |  Completion Rate  | [^2] [^3]  |
+|  Get into Juilliard  |  9%  |  1 in 11  |  Per Applicant  | [^4] [^5]  |
+|  Get into Yale Law  |  \~5%  |  1 in 20  |  Per Applicant  | [^6] [^7]  |
+|  Become an FBI Special Agent  |  \~5%  |  1 in 20  |  Per Applicant  | [^8]  |
+|  Get into MIT  |  4.6%  |  1 in 22  |  Per Applicant  | [^9]  |
+|  Get into Harvard  |  4.2%  |  1 in 24  |  Per Applicant  | [^10] [^11]  |
+|  Get into Stanford  |  \~3.6%  |  1 in 28  |  Per Applicant  | [^12]  |
+|  Get a Startup into Y Combinator  |  \~1%  |  1 in 100  |  Per Application  | [^13]  |
+|  Get a McKinsey Job Offer  |  \~1%  |  1 in 100  |  Per Applicant  | [^14] [^15]  |
+|  Get Hired at SpaceX  |  \~1%  |  1 in 100  |  Per Application  | [^16]  |
+|  Get the Supreme Court to Hear Your Case  |  \~1%  |  1 in 100  |  Per Petition  | [^17] [^18]  |
+|  Win a Rhodes Scholarship  |  \~0.7%  |  1 in 143  |  Per Applicant  | [^19]  |
+|  Land a Goldman Sachs Internship  |  \~0.7%  |  1 in 143  |  Per Applicant  | [^20] [^21]  |
+|  Become a Jeopardy Contestant  |  \~0.5%  |  1 in 200  |  Per Applicant  | [^22] [^23]  |
+|  **LAND ONE OFFICE JOB APPLICATION**  |  **\~0.4%**  |  **1 in 242**  |  **Per Application**  | [^24]  |
+|  Win a US Green Card Lottery  |  \~0.3%  |  1 in 360  |  Pure Chance  | [^25]  |
+|  Get Hired at Google  |  \~0.2%  |  1 in 500  |  Per Application  | [^26]  |
+|  Get Picked as a NASA Astronaut  |  0.125%  |  1 in 800  |  Per Applicant  | [^27] [^28]  |
+|  Go from High School to Pro Athlete  |  \~0.03%  |  1 in 3,300  |  Lifetime Odds  | [^29]  |
 
 The office job line sits below elite admissions and a tier of legendary jobs. The rest of this note is about whether that ranking means what it appears to mean. It does not, and the reason is more interesting than the headline.
 
@@ -142,7 +142,7 @@ options: {
 
 ## The Core Number: Where 0.4% Comes From
 
-The average opening now draws about 242 applications and fills roughly one seat [24]. Treating a single application as one independent trial, the per-application probability of success is
+The average opening now draws about 242 applications and fills roughly one seat.[^24] Treating a single application as one independent trial, the per-application probability of success is
 
 $$
 p_{\text{app}} = \frac{\text{hires}}{\text{applications}} = \frac{1}{242} \approx 0.00413 = 0.413\%.
@@ -385,7 +385,7 @@ options: {
 
 Why is the per-application number so punishing in the first place? Because the denominator is padded with submissions that were never real contenders. Model the pile with three quantities:
 
-- \\(N\\) = total applications per opening, about 242 [24]
+- \\(N\\) = total applications per opening, about 242[^24]
 - \\(q\\) = genuinely qualified, serious applicants, about 20 to 30 (call it 25)
 - one hire, which goes to a qualified applicant
 
@@ -434,7 +434,7 @@ Not in the way it sounds, and the math says exactly why. This is the part to int
 
 First, the obvious point: **SpaceX, Google, and McKinsey are themselves white collar office jobs.** So "an office job is harder than SpaceX" is partly comparing office jobs to other office jobs. Fun line, not the deep truth.
 
-Second, the subtle point. SpaceX's own court filing states that about **1% of applications result in a hire** [16]. That is a *per-application* number, exactly like the office job's 0.413%. Comparing like to like:
+Second, the subtle point. SpaceX's own court filing states that about **1% of applications result in a hire**.[^16] That is a *per-application* number, exactly like the office job's 0.413%. Comparing like to like:
 
 $$
 \frac{p_{\text{SpaceX}}}{p_{\text{office}}} = \frac{0.01}{0.00413} \approx 2.42.
@@ -496,7 +496,7 @@ from "3 in 4" down to "1 in 3,300." The office job sits at \\(-2.38\\), deep in 
 
 The collapse in per-application odds is almost entirely a denominator story, and it decomposes cleanly.
 
-**Applications per opening** rose from about 100 to about 242 [24]:
+**Applications per opening** rose from about 100 to about 242:[^24]
 
 $$
 \frac{242}{100} = 2.42 \quad (\text{a } 142\% \text{ increase}).
@@ -510,13 +510,13 @@ $$
 
 So per-application odds dropped by about **59%** with no change whatsoever in the hiring bar. That is the core argument, quantified.
 
-**Recruiter load.** Total annual application volume rose 411% (a multiplier of \\(1 + 4.11 = 5.11\\)) while recruiting teams shrank about 55% (a multiplier of \\(1 - 0.55 = 0.45\\)) [30] [31]. Applications per recruiter therefore scaled by
+**Recruiter load.** Total annual application volume rose 411% (a multiplier of \\(1 + 4.11 = 5.11\\)) while recruiting teams shrank about 55% (a multiplier of \\(1 - 0.55 = 0.45\\))[^30] .[^31] Applications per recruiter therefore scaled by
 
 $$
 \text{load multiplier} = \frac{5.11}{0.45} \approx 11.4.
 $$
 
-Each recruiter now faces roughly **11 times** the applications in the same hours. That forces aggressive automated filtering, which rewards more mass-applying, which feeds the loop. The per-person fuel is AI: job seekers who use AI complete about 41% more applications than those who do not, per Capterra's global survey of roughly 3,000 job seekers across 12 countries [32] [33].
+Each recruiter now faces roughly **11 times** the applications in the same hours. That forces aggressive automated filtering, which rewards more mass-applying, which feeds the loop. The per-person fuel is AI: job seekers who use AI complete about 41% more applications than those who do not, per Capterra's global survey of roughly 3,000 job seekers across 12 countries[^32] .[^33]
 
 ### Sensitivity: How Much Does the 242 Drive This?
 
@@ -537,7 +537,7 @@ Even at the optimistic end (\\(N = 100\\), roughly the pre-2021 norm), reaching 
 
 ## The Macro Backdrop: The Market Did Cool
 
-The per-application math explains most of the pain, but it is not the whole story. White collar hiring genuinely softened. The US job-openings-to-unemployed ratio dipped below 1.0 in March 2025 and bottomed near 0.87 in December 2025, and information-sector openings fell about 33% year over year, the steepest of any private sector, per Bureau of Labor Statistics JOLTS data and Indeed Hiring Lab analysis [34] [35]. So the picture is two effects stacked: a modestly tighter market, and a per-application denominator that exploded. The second effect is the larger and less understood one, which is why this note focuses on it.
+The per-application math explains most of the pain, but it is not the whole story. White collar hiring genuinely softened. The US job-openings-to-unemployed ratio dipped below 1.0 in March 2025 and bottomed near 0.87 in December 2025, and information-sector openings fell about 33% year over year, the steepest of any private sector, per Bureau of Labor Statistics JOLTS data and Indeed Hiring Lab analysis[^34] .[^35] So the picture is two effects stacked: a modestly tighter market, and a per-application denominator that exploded. The second effect is the larger and less understood one, which is why this note focuses on it.
 
 ***
 
@@ -566,9 +566,9 @@ Not all of these figures are equal, and an honest analysis says so. They fall in
 
 A few specific notes on the trickier numbers:
 
-- **Yale Law** is the most selective US law school. Yale's own ABA Standard 509 disclosure reports 226 offers from 5,562 completed applications, a 4.06% rate for the fall 2025 class [6], and US News reported 5.25% (229 of 4,358) for fall 2024 [7]. The "5%" in the ladder is the conservative reading. A commonly repeated "8 to 9%" figure is stale or a confusion with Stanford Law's recent rate.
-- **The 242 applications figure** is the softest input and the most load-bearing, so it deserves scrutiny. It traces to Business Insider data cited in a February 2026 analysis [24]. Greenhouse's own benchmark data is in the same range (about 222 applications per opening in early 2024) and independently confirms the 411% volume surge [30] [31].
-- **The 41% AI figure** is from Capterra's 2024 Job Seeker AI Survey of about 3,000 respondents across 12 countries [32] [33]. It is a global, not regional, survey, and it is a distinct metric from the 411% volume surge.
+- **Yale Law** is the most selective US law school. Yale's own ABA Standard 509 disclosure reports 226 offers from 5,562 completed applications, a 4.06% rate for the fall 2025 class,[^6] and US News reported 5.25% (229 of 4,358) for fall 2024.[^7] The "5%" in the ladder is the conservative reading. A commonly repeated "8 to 9%" figure is stale or a confusion with Stanford Law's recent rate.
+- **The 242 applications figure** is the softest input and the most load-bearing, so it deserves scrutiny. It traces to Business Insider data cited in a February 2026 analysis.[^24] Greenhouse's own benchmark data is in the same range (about 222 applications per opening in early 2024) and independently confirms the 411% volume surge[^30] .[^31]
+- **The 41% AI figure** is from Capterra's 2024 Job Seeker AI Survey of about 3,000 respondents across 12 countries[^32] .[^33] It is a global, not regional, survey, and it is a distinct metric from the 411% volume surge.
 - **Metric types are not interchangeable.** The single biggest analytical caveat in this piece is that the ladder mixes per-applicant rates (most schools, NASA, Rhodes) with per-application rates (the office job, SpaceX, Google, Y Combinator), a completion rate (Navy SEAL), and a pure-chance lottery (green card). The comparison is illustrative, not a strict like-for-like ranking. Section 5 works through why that distinction matters most for the SpaceX comparison.
 
 ***
@@ -584,59 +584,40 @@ A few specific notes on the trickier numbers:
 
 *Note to self: this was put together with help from Claude (Anthropic), which did the data gathering and the probability math. Irony fully acknowledged: using AI to explain why landing a job got so brutal in a market that AI itself flooded.*
 
-***
+*All links were live as of May 2026. Verify before citing.*
 
-## References
-
-All links were live as of May 2026. Verify before citing.
-
-1. National Association for College Admission Counseling (NACAC). "Selectivity: Acceptance Rates at 4-Year Colleges." https://www.nacacnet.org/selectivity-acceptance-rates-at-4-year-colleges/
-2. Sandboxx News. "New Navy report reveals rare SEAL training attrition data" (2024). https://www.sandboxx.us/news/special-ops/new-navy-report-reveals-rare-seal-training-attrition-data/
-3. SOF Prep Coach. "How hard is Navy SEAL training and how to pass BUD/S?" https://sofprepcoach.com/how-hard-is-navy-seal-training/
-4. CollegeSimply. "The Juilliard School Admission" (181 admitted of 2,020). https://www.collegesimply.com/colleges/new-york/the-juilliard-school/admission/
-5. U.S. News & World Report. "Juilliard School Applying." https://www.usnews.com/best-colleges/juilliard-school-2742/applying
-6. Yale Law School. ABA Standard 509 Information Report (fall 2025: 226 offers of 5,562 applications, 4.06%). https://law.yale.edu/sites/default/files/documents/pdf/std509inforeport.pdf
-7. U.S. News & World Report. "20 Law Schools That Are Hardest to Get Into" (Yale 5.25%, fall 2024). https://www.usnews.com/education/best-graduate-schools/the-short-list-grad-school/articles/law-schools-that-are-hardest-to-get-into
-8. Federal Bureau of Investigation. "What I See: A Message from the Assistant Director of the FBI's Training Division" (48,000+ applications, ~1,900 graduates over two years). https://www.fbi.gov/news/press-releases/what-i-see-a-message-from-the-assistant-director-of-the-fbi-s-training-division
-9. MIT Admissions. "Admissions Statistics" (Class of 2029: 1,334 of 29,281, 4.6%). https://mitadmissions.org/apply/process/admissions-statistics/
-10. Harvard Magazine. "Harvard's Class of 2029 Admissions Data" (2,003 of 47,893, 4.2%). https://www.harvardmagazine.com/university-news/harvard-admissions-class-2029-admissions-data-ethnicity
-11. Harvard Office of Institutional Research. Admissions data series. https://oira.harvard.edu/
-12. The Stanford Daily. "Class of '29 admitted to the Farm" (recent rate ~3.6%). https://stanforddaily.com/2025/04/03/stanford-admits-class-of-2029/
-13. Bloomberg. "Y Combinator's Latest Batch Is 35% AI Startups" (record 24,000 applications, ~1% accepted). https://www.bloomberg.com/news/articles/2023-06-27/y-combinator-s-latest-batch-is-35-ai-startups
-14. Hacking the Case Interview. "McKinsey Acceptance Rate" (~200,000 applications, ~2,000 hires, ~1%). https://www.hackingthecaseinterview.com/pages/mckinsey-acceptance-rate
-15. CaseCoach. "How Selective are Bain, BCG and McKinsey Through the Application Process?" https://casecoach.com/b/how-selective-are-bain-bcg-and-mckinsey-through-the-application-process/
-16. Michael Sheetz (CNBC), reporting SpaceX's legal complaint: "only about 1% of applications result in a hire." https://x.com/thesheetztweetz/status/1704501132133912830
-17. U.S. Courts. "Supreme Court Procedures" (accepts 100 to 150 of more than 7,000 cases per year). https://www.uscourts.gov/about-federal-courts/educational-resources/about-educational-outreach/activity-resources/supreme-court-procedures
-18. D.C. Bar. "Getting Heard at the High Court" (~80 of 7,000 to 8,000 petitions). https://www.dcbar.org/news-events/publications/d-c-bar-blog/getting-heard-at-the-high-court-what-you-need-to-k
-19. Scholarships360. "Rhodes Scholarship" (~0.7%; ~100 scholars from thousands of applicants). https://scholarships360.org/scholarships/rhodes-scholarship/
-20. Fox Business. "Goldman Sachs internships have 0.7% acceptance rate with 360,000 applicants" (2,600 selected). https://www.foxbusiness.com/lifestyle/landing-goldman-sachs-internship-difficult-nasa-astronaut-acceptance
-21. eFinancialCareers. "A brief history of the Goldman Sachs internship acceptance rate." https://www.efinancialcareers.com/news/goldman-sachs-internship-acceptance-rate
-22. Ken Jennings. "Frequently Asked Questions" (tens of thousands of applicants for ~400 spots). https://www.ken-jennings.com/faq
-23. Jeopardy.com. "Contestant FAQs." https://www.jeopardy.com/be-on-j/faqs
-24. The Interview Guys. "The Average Job Opening Now Gets 242 Applications (And a 0.4% Chance of Landing It)" (Business Insider data via Novorésumé, Feb 2026). https://blog.theinterviewguys.com/the-average-job-opening-now-gets-242-applications/
-25. U.S. Department of State. "DV-2025 Selected Entrants" (~55,000 visas from 19,927,656 qualified entries). https://travel.state.gov/content/travel/en/us-visas/immigrate/diversity-visa-program-entry/dv-2025-selected-entrants.html
-26. Quartz. "Here's why you only have a 0.2% chance of getting hired at Google" (~7,000 hires from ~3M applications). https://qz.com/285001/heres-why-you-only-have-a-0-2-chance-of-getting-hired-at-google
-27. Fortune. "NASA just picked its newest astronauts, only 0.1% made the cut" (10 of 8,000+, ~0.125%). https://fortune.com/2025/09/24/nasa-astronaut-class-2025-candidates-six-figure-salaries-150k-future-missions-space-moon-mars
-28. NASA. "NASA Selects All-American 2025 Class of Astronaut Candidates." https://www.nasa.gov/news-release/nasa-selects-all-american-2025-class-of-astronaut-candidates
-29. NCAA Research. "Estimated Probability of Competing in Professional Athletics." https://www.ncaa.org/sports/2015/3/6/estimated-probability-of-competing-in-professional-athletics.aspx
-30. RecTech Media. "Greenhouse Report: More Applications, Fewer Recruiters" (411% application surge, ~55% smaller recruiting teams since 2022). https://www.rectechmedia.com/blog/2026/5/9/greenhouse-report-more-applications-fewer-recruiters
-31. Greenhouse. "AI has doubled recruiters' workloads" (~222 applications per opening, Q1 2024). https://www.greenhouse.com/blog/ai-has-doubled-recruiters-workloads
-32. BusinessWire / Capterra. "AI-Driven Job Applications Are Taking Over Job Market" (AI users complete 41% more applications). https://www.businesswire.com/news/home/20240829618028/en/AI-Driven-Job-Applications-Are-Taking-Over-Job-Market-and-Creating-New-Challenges-for-Recruiters
-33. Capterra. "How To Use AI in Recruitment" (survey methodology: ~3,000 respondents, 12 countries, July 2024). https://www.capterra.com/resources/ai-in-recruitment/
-34. U.S. Bureau of Labor Statistics. "Job Openings and Labor Turnover Survey (JOLTS)." https://www.bls.gov/news.release/jolts.htm
-35. Indeed Hiring Lab. "March 2026 JOLTS Report: Stable, Depending on What You Do." https://www.hiringlab.org/2026/05/05/march-2026-jolts-report-stable-depending-on-what-you-do/
-
-***
-
-### Appendix: Notation
-
-|  Symbol  |  Meaning  |
-| :---: | :---: |
-|  \\(p\_{\\text{app}}\\)  |  Probability One Application Converts, \\(= 1/N \\approx 0.413\%\\)  |
-|  \\(N\\)  |  Total Applications per Opening, \\(\\approx 242\\)  |
-|  \\(q\\)  |  Qualified, Serious Applicants per Opening, \\(\\approx 25\\)  |
-|  \\(f\\)  |  Signal Fraction, \\(= q/N\\)  |
-|  \\(p\_{\\text{qualified}}\\)  |  A Qualified Applicant's Odds, \\(= p\_{\\text{app}}/f \\approx 1/q\\)  |
-|  \\(n\\)  |  Number of Applications a Person Sends  |
-|  \\(1 - (1-p)^{n}\\)  |  Probability of at Least One Offer from \\(n\\) Tries  |
-|  \\(1/p\\)  |  Expected Applications to First Offer (Geometric Mean)  |
+[^1]: National Association for College Admission Counseling (NACAC). [Selectivity: Acceptance Rates at 4-Year Colleges](https://www.nacacnet.org/selectivity-acceptance-rates-at-4-year-colleges/).
+[^2]: Sandboxx News. [New Navy report reveals rare SEAL training attrition data](https://www.sandboxx.us/news/special-ops/new-navy-report-reveals-rare-seal-training-attrition-data/) (2024).
+[^3]: SOF Prep Coach. [How hard is Navy SEAL training and how to pass BUD/S?](https://sofprepcoach.com/how-hard-is-navy-seal-training/).
+[^4]: CollegeSimply. [The Juilliard School Admission](https://www.collegesimply.com/colleges/new-york/the-juilliard-school/admission/) (181 admitted of 2,020).
+[^5]: U.S. News & World Report. [Juilliard School Applying](https://www.usnews.com/best-colleges/juilliard-school-2742/applying).
+[^6]: [Yale Law School](https://law.yale.edu/sites/default/files/documents/pdf/std509inforeport.pdf). ABA Standard 509 Information Report (fall 2025: 226 offers of 5,562 applications, 4.06%).
+[^7]: U.S. News & World Report. [20 Law Schools That Are Hardest to Get Into](https://www.usnews.com/education/best-graduate-schools/the-short-list-grad-school/articles/law-schools-that-are-hardest-to-get-into) (Yale 5.25%, fall 2024).
+[^8]: Federal Bureau of Investigation. [What I See: A Message from the Assistant Director of the FBI's Training Division](https://www.fbi.gov/news/press-releases/what-i-see-a-message-from-the-assistant-director-of-the-fbi-s-training-division) (48,000+ applications, ~1,900 graduates over two years).
+[^9]: MIT Admissions. [Admissions Statistics](https://mitadmissions.org/apply/process/admissions-statistics/) (Class of 2029: 1,334 of 29,281, 4.6%).
+[^10]: Harvard Magazine. [Harvard's Class of 2029 Admissions Data](https://www.harvardmagazine.com/university-news/harvard-admissions-class-2029-admissions-data-ethnicity) (2,003 of 47,893, 4.2%).
+[^11]: [Harvard Office of Institutional Research](https://oira.harvard.edu/). Admissions data series.
+[^12]: The Stanford Daily. [Class of '29 admitted to the Farm](https://stanforddaily.com/2025/04/03/stanford-admits-class-of-2029/) (recent rate ~3.6%).
+[^13]: Bloomberg. [Y Combinator's Latest Batch Is 35% AI Startups](https://www.bloomberg.com/news/articles/2023-06-27/y-combinator-s-latest-batch-is-35-ai-startups) (record 24,000 applications, ~1% accepted).
+[^14]: Hacking the Case Interview. [McKinsey Acceptance Rate](https://www.hackingthecaseinterview.com/pages/mckinsey-acceptance-rate) (~200,000 applications, ~2,000 hires, ~1%).
+[^15]: CaseCoach. [How Selective are Bain, BCG and McKinsey Through the Application Process?](https://casecoach.com/b/how-selective-are-bain-bcg-and-mckinsey-through-the-application-process/).
+[^16]: Michael Sheetz (CNBC), reporting SpaceX's legal complaint: [only about 1% of applications result in a hire](https://x.com/thesheetztweetz/status/1704501132133912830).
+[^17]: U.S. Courts. [Supreme Court Procedures](https://www.uscourts.gov/about-federal-courts/educational-resources/about-educational-outreach/activity-resources/supreme-court-procedures) (accepts 100 to 150 of more than 7,000 cases per year).
+[^18]: D.C. Bar. [Getting Heard at the High Court](https://www.dcbar.org/news-events/publications/d-c-bar-blog/getting-heard-at-the-high-court-what-you-need-to-k) (~80 of 7,000 to 8,000 petitions).
+[^19]: Scholarships360. [Rhodes Scholarship](https://scholarships360.org/scholarships/rhodes-scholarship/) (~0.7%; ~100 scholars from thousands of applicants).
+[^20]: Fox Business. [Goldman Sachs internships have 0.7% acceptance rate with 360,000 applicants](https://www.foxbusiness.com/lifestyle/landing-goldman-sachs-internship-difficult-nasa-astronaut-acceptance) (2,600 selected).
+[^21]: eFinancialCareers. [A brief history of the Goldman Sachs internship acceptance rate](https://www.efinancialcareers.com/news/goldman-sachs-internship-acceptance-rate).
+[^22]: Ken Jennings. [Frequently Asked Questions](https://www.ken-jennings.com/faq) (tens of thousands of applicants for ~400 spots).
+[^23]: Jeopardy.com. [Contestant FAQs](https://www.jeopardy.com/be-on-j/faqs).
+[^24]: The Interview Guys. [The Average Job Opening Now Gets 242 Applications (And a 0.4% Chance of Landing It)](https://blog.theinterviewguys.com/the-average-job-opening-now-gets-242-applications/) (Business Insider data via Novorésumé, Feb 2026).
+[^25]: U.S. Department of State. [DV-2025 Selected Entrants](https://travel.state.gov/content/travel/en/us-visas/immigrate/diversity-visa-program-entry/dv-2025-selected-entrants.html) (~55,000 visas from 19,927,656 qualified entries).
+[^26]: Quartz. [Here's why you only have a 0.2% chance of getting hired at Google](https://qz.com/285001/heres-why-you-only-have-a-0-2-chance-of-getting-hired-at-google) (~7,000 hires from ~3M applications).
+[^27]: Fortune. [NASA just picked its newest astronauts, only 0.1% made the cut](https://fortune.com/2025/09/24/nasa-astronaut-class-2025-candidates-six-figure-salaries-150k-future-missions-space-moon-mars) (10 of 8,000+, ~0.125%).
+[^28]: NASA. [NASA Selects All-American 2025 Class of Astronaut Candidates](https://www.nasa.gov/news-release/nasa-selects-all-american-2025-class-of-astronaut-candidates).
+[^29]: NCAA Research. [Estimated Probability of Competing in Professional Athletics](https://www.ncaa.org/sports/2015/3/6/estimated-probability-of-competing-in-professional-athletics.aspx).
+[^30]: RecTech Media. [Greenhouse Report: More Applications, Fewer Recruiters](https://www.rectechmedia.com/blog/2026/5/9/greenhouse-report-more-applications-fewer-recruiters) (411% application surge, ~55% smaller recruiting teams since 2022).
+[^31]: Greenhouse. [AI has doubled recruiters' workloads](https://www.greenhouse.com/blog/ai-has-doubled-recruiters-workloads) (~222 applications per opening, Q1 2024).
+[^32]: BusinessWire / Capterra. [AI-Driven Job Applications Are Taking Over Job Market](https://www.businesswire.com/news/home/20240829618028/en/AI-Driven-Job-Applications-Are-Taking-Over-Job-Market-and-Creating-New-Challenges-for-Recruiters) (AI users complete 41% more applications).
+[^33]: Capterra. [How To Use AI in Recruitment](https://www.capterra.com/resources/ai-in-recruitment/) (survey methodology: ~3,000 respondents, 12 countries, July 2024).
+[^34]: U.S. Bureau of Labor Statistics. [Job Openings and Labor Turnover Survey (JOLTS)](https://www.bls.gov/news.release/jolts.htm).
+[^35]: Indeed Hiring Lab. [March 2026 JOLTS Report: Stable, Depending on What You Do](https://www.hiringlab.org/2026/05/05/march-2026-jolts-report-stable-depending-on-what-you-do/).

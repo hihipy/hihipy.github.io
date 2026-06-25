@@ -328,7 +328,7 @@ F31                 13
 P42                 12
 ```
 
-The R01 (the standard NIH research grant) leads as it does every year. The unexpected entry is P20 at 130 grants, the second-most-common code in 2009. P20 is a [center grant mechanism](https://grants.nih.gov/grants/funding/funding_program.htm) often used for IDeA program awards (Institutional Development Awards) that build research capacity in states with historically lower NIH funding. Kentucky has long been an IDeA state, and the P20 surge in 2009 likely reflects ARRA-era IDeA expansion rather than a single-year random fluctuation.
+The R01 (the standard NIH research grant) leads as it does every year. The unexpected entry is P20 at 130 grants, the second-most-common code in 2009. P20 is a center grant mechanism[^center-grant-mechanism] often used for IDeA program awards (Institutional Development Awards) that build research capacity in states with historically lower NIH funding. Kentucky has long been an IDeA state, and the P20 surge in 2009 likely reflects ARRA-era IDeA expansion rather than a single-year random fluctuation.
 
 The presence of multiple P-series codes in the top ten (P20, P01, P30, P50, P42 — five of the top ten) plus the small-grant supplement mechanisms (R21, R03) is the supplement-heavy mix consistent with stimulus-era funding patterns. Standard R01 grants dominate every year; the unusual signal is the breadth of the rest of the distribution. The 2009 ARRA spike is a real artifact of policy, not a data error or organic growth in Kentucky research capacity. Documenting it explicitly here matters because every later analysis that includes a year-over-year comparison has to decide whether to include or exclude 2009-2010.
 
@@ -345,3 +345,5 @@ Which Institutes show real decade-over-decade shifts? The IC-by-decade compariso
 What does annual funding look like with the ARRA spike smoothed out? A 5-year centered moving average gives the underlying trend without the policy-shock artifact dominating the shape. Window functions handle this in one query.
 
 These are the questions phase 04 reaches for, with window functions and common table expressions doing the work that group-bys alone cannot.
+
+[^center-grant-mechanism]: [center grant mechanism](https://grants.nih.gov/grants/funding/funding_program.htm), NIH.

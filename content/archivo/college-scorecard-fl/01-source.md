@@ -15,7 +15,7 @@ The case study starts with the source data. College Scorecard publishes 39 CSVs 
 
 ## At a Glance
 
-The U.S. Department of Education's [College Scorecard](https://collegescorecard.ed.gov/data/) is the canonical federal dataset on American higher education. It contains institution-level financial, enrollment, and outcome metrics for every Title IV-eligible institution in the country, updated annually since 2009. The current release contains 39 CSVs per year. This case study reduces a single-state slice of that data to a three-table SQLite database covering 112 Florida four-year institutions across cohort years 2014 to 2023.
+The U.S. Department of Education's College Scorecard[^college-scorecard] is the canonical federal dataset on American higher education. It contains institution-level financial, enrollment, and outcome metrics for every Title IV-eligible institution in the country, updated annually since 2009. The current release contains 39 CSVs per year. This case study reduces a single-state slice of that data to a three-table SQLite database covering 112 Florida four-year institutions across cohort years 2014 to 2023.
 
 ```sql
 -- Three-table row count summary used in the At a Glance section.
@@ -215,3 +215,5 @@ This is how an analytical thread emerges from data. Not from a research question
 [Phase 04 (Findings)](/archivo/college-scorecard-fl/04-findings/) covers the intersection analyses: cost-per-completer ranking within sectors, the closure-wave concentration, where the displaced students went, the HBCU comparison, and the 10-year-earnings ranking. It is what the data shows when the questions are sharper.
 
 The case study philosophy lives at the [biblioteca](/biblioteca/). Every query is reproducible. Every claim is from a captured query. The reproducibility-is-the-floor commitment is satisfied: anyone can re-run any query in this case study, change the parameters, and ask their own questions.
+
+[^college-scorecard]: [College Scorecard](https://collegescorecard.ed.gov/data/), U.S. Department of Education.

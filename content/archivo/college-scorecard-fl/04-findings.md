@@ -331,7 +331,7 @@ What this doesn't tell you: the survivor-growth pattern is consistent with stude
 
 Florida has four Historically Black Colleges and Universities by the Higher Education Act of 1965 designation: Florida A&M University (the only public HBCU in the state), Bethune-Cookman University, Edward Waters University, and Florida Memorial University (the three private nonprofit HBCUs). The orientation queries in phase 03 did not single them out. The findings phase asks: how do they compare to their sector peers on the metrics most relevant to a recruiter or a policymaker?
 
-The query filters by UNITID rather than by the `hbcu` flag, because [phase 02 documents](/archivo/college-scorecard-fl/02-schema/#a-build-gap-worth-documenting) that the flag column is unreliable in this database. The four UNITIDs are the verified institution numbers from the database itself, and the HBCU designation is a matter of external authoritative record (the U.S. Department of Education's [HBCU list](https://sites.ed.gov/whhbcu/one-hundred-and-five-historically-black-colleges-and-universities/)) rather than a derived classification.
+The query filters by UNITID rather than by the `hbcu` flag, because [phase 02 documents](/archivo/college-scorecard-fl/02-schema/#a-build-gap-worth-documenting) that the flag column is unreliable in this database. The four UNITIDs are the verified institution numbers from the database itself, and the HBCU designation is a matter of external authoritative record (the U.S. Department of Education's HBCU list[^hbcu-list]) rather than a derived classification.
 
 ```sql
 -- HBCU comparison filtered by UNITID rather than the i.hbcu flag.
@@ -553,3 +553,5 @@ Five threads pulled, each rooted in a specific question phase 03 raised. The for
 None of these findings is a definitive analysis. Each one names what the data shows and what it does not show, what it can support and what would require additional data sources to defend. The case study is not the analysis; it is the worked example of how a verified dataset, queried with documented SQL, can surface specific structural patterns that a single GROUP BY would not.
 
 The full database is at `https://pgbd.casa/data/college-scorecard-fl.sqlite` and queryable directly in the browser via [Datasette Lite](https://lite.datasette.io/?url=https://pgbd.casa/data/college-scorecard-fl.sqlite). The build script is at [`tools/build_florida_scorecard.py`](https://github.com/hihipy/hihipy.github.io/blob/main/tools/build_florida_scorecard.py). The questions a reader might ask of this database are not bounded by what this case study chose to ask. The reproducibility-is-the-floor commitment from the [case study philosophy](/biblioteca/) is satisfied: anyone can re-run every query in this case study, change the parameters, and ask their own questions.
+
+[^hbcu-list]: [HBCU list](https://sites.ed.gov/whhbcu/one-hundred-and-five-historically-black-colleges-and-universities/), U.S. Department of Education.

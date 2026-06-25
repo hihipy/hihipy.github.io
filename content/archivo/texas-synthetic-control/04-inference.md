@@ -3519,6 +3519,8 @@ The full fit, including the predictor set, the donor pool, and the figure genera
 
 The method originates with Abadie, Diamond, and Hainmueller (2010), "Synthetic Control Methods for Comparative Case Studies: Estimating the Effect of California's Tobacco Control Program," *Journal of the American Statistical Association* 105 (490): 493 to 505. The estimator and its placebo-permutation inference both follow that paper.
 
-The Texas prison-capacity data is the `texas` panel from Scott Cunningham's *Causal Inference: The Mixtape* (Yale University Press, 2021), available online at [mixtape.scunning.com](https://mixtape.scunning.com/). The dataset is distributed in R through the [`causaldata`](https://cran.r-project.org/package=causaldata) package, which is how this analysis loads it.
+The Texas prison-capacity data is the `texas` panel from Scott Cunningham's *Causal Inference: The Mixtape* (Yale University Press, 2021), available online at mixtape.scunning.com[^mixtape-scunning-com]. The dataset is distributed in R through the [`causaldata`](https://cran.r-project.org/package=causaldata) package, which is how this analysis loads it.
 
 The fit uses the [`tidysynth`](https://cran.r-project.org/package=tidysynth) package (Dunford), a tidyverse-style interface to the synthetic control estimator.
+
+[^mixtape-scunning-com]: [mixtape.scunning.com](https://mixtape.scunning.com/), Scott Cunningham.

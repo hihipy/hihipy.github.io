@@ -15,7 +15,7 @@ Where the data came from, why one state across twenty-one years, and the export 
 
 ## At a Glance
 
-[NIH RePORTER](https://reporter.nih.gov/) is the public-facing search interface that the National Institutes of Health publishes for every research grant it funds. The database goes back decades, contains the full project metadata for each grant (principal investigator, institution, fiscal year, dollar amounts, scientific abstract, research category), and is searchable by anyone with a browser. Federal research funding is a multi-billion-dollar annual public investment, and RePORTER is the closest thing to a complete public ledger of how that money gets allocated.
+NIH RePORTER[^nih-reporter] is the public-facing search interface that the National Institutes of Health publishes for every research grant it funds. The database goes back decades, contains the full project metadata for each grant (principal investigator, institution, fiscal year, dollar amounts, scientific abstract, research category), and is searchable by anyone with a browser. Federal research funding is a multi-billion-dollar annual public investment, and RePORTER is the closest thing to a complete public ledger of how that money gets allocated.
 
 This case study takes one slice of RePORTER's data: every grant awarded to a Kentucky institution from fiscal year 2005 through 2025. The slice is small enough to load locally and analyze in [SQLite](https://www.sqlite.org/), large enough to support real questions about institutional trends and research priorities, and personal to me because Kentucky is where I grew up.
 
@@ -157,7 +157,7 @@ Application   Fiscal Year   Institution                Administering IC   Activi
 6874256              2005   UNIVERSITY OF LOUISVILLE   NHLBI              T15                    413,364
 ```
 
-A T15 activity code is an [NIH institutional training grant](https://grants.nih.gov/grants/funding/t-kiosk/index.htm) for continuing education programs. The record is administered by the National Heart, Lung, and Blood Institute (NHLBI) but is co-funded by 18 other Institutes (which is why this particular grant has 19 funder rows in `project_funders`, the schema-phase example). Total cost is $413,364, the same number that the schema phase verifies as the sum of the 19 per-funder splits.
+A T15 activity code is an NIH institutional training grant[^nih-institutional-training-grant] for continuing education programs. The record is administered by the National Heart, Lung, and Blood Institute (NHLBI) but is co-funded by 18 other Institutes (which is why this particular grant has 19 funder rows in `project_funders`, the schema-phase example). Total cost is $413,364, the same number that the schema phase verifies as the sum of the 19 per-funder splits.
 
 The fourth query previews the analytical shape ahead by showing the top 10 administering Institutes for the full window:
 
@@ -194,7 +194,7 @@ NIAID                   752
 NIDDK                   607
 ```
 
-The Cancer Institute (NCI), the Heart, Lung, and Blood Institute (NHLBI), and the General Medical Sciences Institute (NIGMS) lead the count. NCRR (the National Center for Research Resources) shows up in seventh place with 878 projects, almost all of which are from the first decade of the window, since [NCRR was dissolved in December 2011](https://www.nih.gov/news-events/news-releases/nih-establishes-national-center-advancing-translational-sciences) and its functions absorbed into other ICs. Phase 04's cross-IC findings examine that rename in detail.
+The Cancer Institute (NCI), the Heart, Lung, and Blood Institute (NHLBI), and the General Medical Sciences Institute (NIGMS) lead the count. NCRR (the National Center for Research Resources) shows up in seventh place with 878 projects, almost all of which are from the first decade of the window, since NCRR was dissolved in December 2011[^ncrr-was-dissolved-in-december-2] and its functions absorbed into other ICs. Phase 04's cross-IC findings examine that rename in detail.
 
 Each of those query result sets is also the seed of a finding. NIGMS being on this list is the entrance to the IDeA-program story phase 04 develops. NCRR being on this list is the entrance to the rename story phase 04 documents. The source phase is the right place to surface the structural shape; the exploration and findings phases are where the shape becomes claims.
 
@@ -213,3 +213,7 @@ If RePORTER changes its export format in the future, the seven structural quirks
 ## Looking Ahead
 
 What looked like one row per project turned out not to be. The 305-row gap between the file's 14,181 rows and its 13,876 projects is the doorway into [the schema phase](/archivo/kentucky-nih/02-schema/), where the data model has to decide what a project actually is, where the funding-institute splits live, and how to keep the two perspectives queryable from the same database without one corrupting the other. That is what comes next.
+
+[^nih-reporter]: [NIH RePORTER](https://reporter.nih.gov/).
+[^nih-institutional-training-grant]: [NIH institutional training grant](https://grants.nih.gov/grants/funding/t-kiosk/index.htm).
+[^ncrr-was-dissolved-in-december-2]: [NCRR was dissolved in December 2011](https://www.nih.gov/news-events/news-releases/nih-establishes-national-center-advancing-translational-sciences), NIH.

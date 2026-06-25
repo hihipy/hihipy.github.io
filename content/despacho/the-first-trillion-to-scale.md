@@ -26,7 +26,7 @@ window.__retheme=function(){try{if(!window.Chart)return;var reg=Chart.instances|
 try{new MutationObserver(window.__retheme).observe(document.documentElement,{attributes:true,attributeFilter:['class']});}catch(_){}
 </script>
 
-On June 12, 2026, the public market debut of SpaceX pushed Elon Musk's combined SpaceX and Tesla stakes past a trillion dollars, the first time any individual has been valued that high [1][2]. The figure landed between about 1.0 trillion at the offering price and 1.14 trillion at the close [2]. This essay uses 1.05 trillion as a round middle and does the only thing that makes a number this size legible: divides it by ordinary things.
+On June 12, 2026, the public market debut of SpaceX pushed Elon Musk's combined SpaceX and Tesla stakes past a trillion dollars, the first time any individual has been valued that high.[^1][^2] The figure landed between about 1.0 trillion at the offering price and 1.14 trillion at the close.[^2] This essay uses 1.05 trillion as a round middle and does the only thing that makes a number this size legible: divides it by ordinary things.
 
 ## Results First
 
@@ -42,13 +42,13 @@ On June 12, 2026, the public market debut of SpaceX pushed Elon Musk's combined 
 
 ## One Family, and Then Him
 
-The fairest comparison is net worth against net worth: one family's lifetime of saving against one man's holdings. The median U.S. family net worth, everything owned minus everything owed, is about 192,700 dollars [4]. Divide:
+The fairest comparison is net worth against net worth: one family's lifetime of saving against one man's holdings. The median U.S. family net worth, everything owned minus everything owed, is about 192,700 dollars.[^4] Divide:
 
 \\[ \dfrac{1.05 \times 10^{12}\ \text{USD}}{1.927 \times 10^{5}\ \text{USD per family}} \approx 5{,}448{,}884\ \text{families} \\]
 
 One man is not a rich family. He is five and a half million of them. A typical family sits at \\(10^{5}\\) dollars and one man sits at \\(10^{12}\\) dollars, seven orders of magnitude apart.
 
-Against the roughly 127 million households the Census counts [7], those 5.45 million families are more than four percent of the country:
+Against the roughly 127 million households the Census counts,[^7] those 5.45 million families are more than four percent of the country:
 
 \\[ \dfrac{5.45 \times 10^{6}\ \text{households}}{1.27 \times 10^{8}\ \text{households}} \approx 4.3\ \text{percent} \\]
 
@@ -140,11 +140,11 @@ A billion is already a number almost no one can hold in the mind, and the fortun
 
 \\[ \dfrac{1.05 \times 10^{12}\ \text{USD}}{1 \times 10^{9}\ \text{USD}} \approx 1{,}050 \\]
 
-The U.S. mean household net worth, about 1.06 million dollars [4], already runs nearly five and a half times the U.S. median, because a few enormous fortunes drag the average up. This one is close to a million times that mean.
+The U.S. mean household net worth, about 1.06 million dollars,[^4] already runs nearly five and a half times the U.S. median, because a few enormous fortunes drag the average up. This one is close to a million times that mean.
 
 ## A Second of His Day
 
-On the day of the offering, the IPO lifted the value of Musk's SpaceX shares by about 192.3 billion dollars [2]. Spread across the 6.5-hour trading day, that is a rate the words cannot keep up with:
+On the day of the offering, the IPO lifted the value of Musk's SpaceX shares by about 192.3 billion dollars.[^2] Spread across the 6.5-hour trading day, that is a rate the words cannot keep up with:
 
 \\[ \dfrac{192.3 \times 10^{9}\ \text{USD}}{6.5\ \text{h} \times 3600\ \text{s/h}} \approx 8.2 \times 10^{6}\ \text{USD per second} \\]
 
@@ -194,7 +194,7 @@ A person at the U.S. median lives on about 72 dollars a day, near 26,306 dollars
 
 \\[ T_{\text{US}} = \dfrac{1.05 \times 10^{12}\ \text{USD}}{26{,}306\ \text{USD per year}} \approx 4.0 \times 10^{7}\ \text{years} \\]
 
-Forty million years. The same number reads across people instead of years: about 40 million Americans, each earning the U.S. median for a single year, together holding what one man holds. And the United States sits near the top of the ladder. To stay fair across the whole world rather than only the rich West, the comparison borrows a structure the United Nations already maintains: the M49 standard [8]. It is the UN's official statistical geography, a system that gives every country a code and files it under a continental region (Africa, the Americas, Asia, Europe, Oceania) and a finer subregion (Northern Africa, the Caribbean, Central Asia, and so on), so that the word region means the same thing from one report to the next. Borrowing it keeps the picks below honest rather than cherry-picked. One country sits near the middle of each of the five continental regions:
+Forty million years. The same number reads across people instead of years: about 40 million Americans, each earning the U.S. median for a single year, together holding what one man holds. And the United States sits near the top of the ladder. To stay fair across the whole world rather than only the rich West, the comparison borrows a structure the United Nations already maintains: the M49 standard.[^8] It is the UN's official statistical geography, a system that gives every country a code and files it under a continental region (Africa, the Americas, Asia, Europe, Oceania) and a finer subregion (Northern Africa, the Caribbean, Central Asia, and so on), so that the word region means the same thing from one report to the next. Borrowing it keeps the picks below honest rather than cherry-picked. One country sits near the middle of each of the five continental regions:
 
 {{< mermaid >}}
 flowchart TD
@@ -331,7 +331,7 @@ The fortune is a full year of income for about 311 million people at the world m
 
 ## Bigger Than Nations
 
-A person is the small unit. A country is the large one, and the fortune clears almost all of them. Only about nineteen national economies produce more in a year than one man holds on paper [2][6]. The twentieth, Switzerland, he matches outright, and the rest he tops:
+A person is the small unit. A country is the large one, and the fortune clears almost all of them. Only about nineteen national economies produce more in a year than one man holds on paper.[^2][^6] The twentieth, Switzerland, he matches outright, and the rest he tops:
 
 {{< chart >}}
 type: 'bar',
@@ -364,7 +364,7 @@ For heritage's sake: Spain, at about 1.9 trillion, is still larger than the fort
 
 ## Bigger Than Regions
 
-A country is not the largest unit. Drop one level in the same M49 standard, from continents to subregions [8], and the fortune swallows whole ones. Summing the IMF output of every country the geoscheme files under a subregion, one man's holdings come to about the entire annual product of Northern Africa, and they top all of West Africa, all of East Africa, the Caribbean, and Central Asia, each home to tens or hundreds of millions of people.
+A country is not the largest unit. Drop one level in the same M49 standard, from continents to subregions,[^8] and the fortune swallows whole ones. Summing the IMF output of every country the geoscheme files under a subregion, one man's holdings come to about the entire annual product of Northern Africa, and they top all of West Africa, all of East Africa, the Caribbean, and Central Asia, each home to tens or hundreds of millions of people.
 
 {{< chart >}}
 type: 'bar',
@@ -436,28 +436,26 @@ One wrinkle is specific to the income chart. Richer countries usually report inc
 
 ## How These Countries Were Chosen
 
-The income comparison and the regional totals both lean on the United Nations M49 geoscheme [8], the standard that assigns every country to one of five regions: Africa, the Americas, Asia, Europe, and Oceania. For the income chart, one country represents each, chosen to sit near the middle of its region rather than at the rich or poor extreme: Nigeria, Mexico, Indonesia, Poland, and Fiji. Each lands close to the World Bank's own regional benchmark [5]. Nigeria tracks the Sub-Saharan figure, Mexico tracks Latin America and the Caribbean, Poland tracks Europe and Central Asia, and Indonesia falls between the South and East Asian benchmarks.
+The income comparison and the regional totals both lean on the United Nations M49 geoscheme,[^8] the standard that assigns every country to one of five regions: Africa, the Americas, Asia, Europe, and Oceania. For the income chart, one country represents each, chosen to sit near the middle of its region rather than at the rich or poor extreme: Nigeria, Mexico, Indonesia, Poland, and Fiji. Each lands close to the World Bank's own regional benchmark.[^5] Nigeria tracks the Sub-Saharan figure, Mexico tracks Latin America and the Caribbean, Poland tracks Europe and Central Asia, and Indonesia falls between the South and East Asian benchmarks.
 
 Two honest caveats. "Middle" is a judgment: a population-weighted regional median would shift some picks, most sharply in the Americas, where the United States pulls the figure up. Oceania is the hardest, genuinely split between high-income Australia and New Zealand and the lower-income Pacific islands that Fiji represents; weighted by population the typical Oceanian would look much more like Australia, where the median is roughly eight times Fiji's. The region defies a single representative, and that is worth seeing rather than smoothing over.
 
 ## Methods and Sources
 
-Net worth of roughly 1.05 trillion dollars as of June 12, 2026, from combined SpaceX and Tesla stakes following the SpaceX IPO (Nasdaq ticker SPCX), reported by Bloomberg, CBS News, and CNBC [1][2][3]. Estimates ranged from about 1.0 trillion at the offering price to about 1.14 trillion at the close [2]; the 192.3 billion one-day gain and the count of economies above a trillion dollars are from the same CBS reporting [2]. All division here uses 1.05 trillion.
+Net worth of roughly 1.05 trillion dollars as of June 12, 2026, from combined SpaceX and Tesla stakes following the SpaceX IPO (Nasdaq ticker SPCX), reported by Bloomberg, CBS News, and CNBC.[^1][^2][^3] Estimates ranged from about 1.0 trillion at the offering price to about 1.14 trillion at the close;[^2] the 192.3 billion one-day gain and the count of economies above a trillion dollars are from the same CBS reporting.[^2] All division here uses 1.05 trillion.
 
-Median and mean U.S. family net worth, about 192,700 dollars and about 1.06 million dollars in 2022 dollars, are from the Federal Reserve's 2022 Survey of Consumer Finances, the most recent available; the 2025 survey is expected in late 2026 [4]. The household share uses the roughly 127 million households counted in the 2020 Census [7]. The per-second figure is arithmetic on the headline number, using a 6.5-hour trading day and a median full-time worker's income spread evenly across the year.
+Median and mean U.S. family net worth, about 192,700 dollars and about 1.06 million dollars in 2022 dollars, are from the Federal Reserve's 2022 Survey of Consumer Finances, the most recent available; the 2025 survey is expected in late 2026.[^4] The household share uses the roughly 127 million households counted in the 2020 Census.[^7] The per-second figure is arithmetic on the headline number, using a 6.5-hour trading day and a median full-time worker's income spread evenly across the year.
 
-Median income figures are median income or consumption per person per day, in 2021 PPP international dollars, from the World Bank Poverty and Inequality Platform, via Our World in Data [5] (latest year per country: Nigeria 2022, Mexico 2024, Indonesia 2024, Poland 2023, Fiji 2019, United States 2024, world median 2024). Daily figures are multiplied by 365. The series mixes income and consumption surveys, a known comparability limit the source documents. Regions follow the United Nations M49 geoscheme [8].
+Median income figures are median income or consumption per person per day, in 2021 PPP international dollars, from the World Bank Poverty and Inequality Platform, via Our World in Data[^5] (latest year per country: Nigeria 2022, Mexico 2024, Indonesia 2024, Poland 2023, Fiji 2019, United States 2024, world median 2024). Daily figures are multiplied by 365. The series mixes income and consumption surveys, a known comparability limit the source documents. Regions follow the United Nations M49 geoscheme.[^8]
 
-National and regional GDP figures are nominal output, 2025 estimate, from the IMF World Economic Outlook (April 2026) [6]. National values used: Switzerland about 1,044 billion, Poland about 1,036, Taiwan about 920, Argentina about 681, Sweden about 669, Singapore about 604, Spain about 1,904, Greece about 280, South Africa about 427. The income chart uses the five continental M49 regions; the output charts use the finer M49 subregions. Subregional totals are the sum of IMF nominal GDP over the countries the standard files under each: Northern Africa about 975 billion, Western Africa about 717, Eastern Africa about 607, the Caribbean about 595, Central Asia about 566, Middle Africa about 370, and the Pacific islands (Melanesia, Micronesia, and Polynesia, all of Oceania except Australia and New Zealand) about 71. The stacked figure adds Eastern Africa, Middle Africa, and the Pacific islands to about 1,048 billion across twenty-eight countries and roughly 700 million people. Regional populations are implied by the same source, dividing each country's GDP by its GDP per capita and summing. The interactive region block divides the fortune by each UN region's median income per person, where that regional figure is the median of the latest national medians of all countries the M49 standard files under the region, drawn from the same World Bank Poverty and Inequality Platform data via Our World in Data [5], to count the people a full year of that income would equal; the interactive region block uses the same one-pixel-per-person rendering as the households figure and scrolls through the region's entire count, from about 75 million people for Europe to about 747 million for Africa, drawn in tiles loaded as you scroll so the taller regions render without exceeding browser canvas limits. Each region's count is then set against its own mid-2024 population from the UN World Population Prospects 2024 [9], which is how the readout reports the figure as a multiple of, or a fraction of, everyone who lives there. The menu opens on the visitor's own region, inferred from the browser time zone with the Americas as the fallback, and no network request or address lookup is involved. The deep-time placement uses the 4.54-billion-year age of the Earth and the 78-year compression from the companion essay in this room.
+National and regional GDP figures are nominal output, 2025 estimate, from the IMF World Economic Outlook (April 2026).[^6] National values used: Switzerland about 1,044 billion, Poland about 1,036, Taiwan about 920, Argentina about 681, Sweden about 669, Singapore about 604, Spain about 1,904, Greece about 280, South Africa about 427. The income chart uses the five continental M49 regions; the output charts use the finer M49 subregions. Subregional totals are the sum of IMF nominal GDP over the countries the standard files under each: Northern Africa about 975 billion, Western Africa about 717, Eastern Africa about 607, the Caribbean about 595, Central Asia about 566, Middle Africa about 370, and the Pacific islands (Melanesia, Micronesia, and Polynesia, all of Oceania except Australia and New Zealand) about 71. The stacked figure adds Eastern Africa, Middle Africa, and the Pacific islands to about 1,048 billion across twenty-eight countries and roughly 700 million people. Regional populations are implied by the same source, dividing each country's GDP by its GDP per capita and summing. The interactive region block divides the fortune by each UN region's median income per person, where that regional figure is the median of the latest national medians of all countries the M49 standard files under the region, drawn from the same World Bank Poverty and Inequality Platform data via Our World in Data,[^5] to count the people a full year of that income would equal; the interactive region block uses the same one-pixel-per-person rendering as the households figure and scrolls through the region's entire count, from about 75 million people for Europe to about 747 million for Africa, drawn in tiles loaded as you scroll so the taller regions render without exceeding browser canvas limits. Each region's count is then set against its own mid-2024 population from the UN World Population Prospects 2024,[^9] which is how the readout reports the figure as a multiple of, or a fraction of, everyone who lives there. The menu opens on the visitor's own region, inferred from the browser time zone with the Americas as the fallback, and no network request or address lookup is involved. The deep-time placement uses the 4.54-billion-year age of the Earth and the 78-year compression from the companion essay in this room.
 
-## References
-
-1. Tom Maloney, "Elon Musk Hits $1 Trillion Net Worth as SpaceX IPO Breaks Records," Bloomberg, June 12, 2026. https://www.bloomberg.com/news/articles/2026-06-12/elon-musk-hits-1-trillion-net-worth-as-spacex-ipo-breaks-records
-2. "Elon Musk becomes the world's first trillionaire with SpaceX's IPO," CBS News, June 12, 2026. https://www.cbsnews.com/news/elon-musk-spacex-ipo-trillionaire-wealth/
-3. "Elon Musk's net worth poised to sail past $1 trillion in SpaceX IPO," CNBC, June 3, 2026. https://www.cnbc.com/2026/06/03/elon-musks-net-worth-poised-to-sail-past-1-trillion-in-spacex-ipo.html
-4. "Changes in U.S. Family Finances from 2019 to 2022: Evidence from the Survey of Consumer Finances," Board of Governors of the Federal Reserve System, October 2023. https://www.federalreserve.gov/publications/october-2023-changes-in-us-family-finances-from-2019-to-2022.htm
-5. "Median income or consumption per day," World Bank Poverty and Inequality Platform (2026), with major processing by Our World in Data. https://ourworldindata.org/grapher/daily-median-income
-6. "World Economic Outlook Database," International Monetary Fund, April 2026. https://www.imf.org/en/Publications/WEO
-7. "Households and Families: 2020," U.S. Census Bureau, report C2020BR-10. https://www.census.gov/library/publications/2024/dec/c2020br-10.html
-8. "Standard Country or Area Codes for Statistical Use (M49)," United Nations Statistics Division. https://unstats.un.org/unsd/methodology/m49/
-9. "World Population Prospects 2024," United Nations Department of Economic and Social Affairs, Population Division, mid-2024 estimates. https://population.un.org/wpp/
+[^1]: Tom Maloney, [Elon Musk Hits $1 Trillion Net Worth as SpaceX IPO Breaks Records](https://www.bloomberg.com/news/articles/2026-06-12/elon-musk-hits-1-trillion-net-worth-as-spacex-ipo-breaks-records), Bloomberg, June 12, 2026.
+[^2]: [Elon Musk becomes the world's first trillionaire with SpaceX's IPO](https://www.cbsnews.com/news/elon-musk-spacex-ipo-trillionaire-wealth/), CBS News, June 12, 2026.
+[^3]: [Elon Musk's net worth poised to sail past $1 trillion in SpaceX IPO](https://www.cnbc.com/2026/06/03/elon-musks-net-worth-poised-to-sail-past-1-trillion-in-spacex-ipo.html), CNBC, June 3, 2026.
+[^4]: [Changes in U.S. Family Finances from 2019 to 2022: Evidence from the Survey of Consumer Finances](https://www.federalreserve.gov/publications/october-2023-changes-in-us-family-finances-from-2019-to-2022.htm), Board of Governors of the Federal Reserve System, October 2023.
+[^5]: [Median income or consumption per day](https://ourworldindata.org/grapher/daily-median-income), World Bank Poverty and Inequality Platform (2026), with major processing by Our World in Data.
+[^6]: [World Economic Outlook Database](https://www.imf.org/en/Publications/WEO), International Monetary Fund, April 2026.
+[^7]: [Households and Families: 2020](https://www.census.gov/library/publications/2024/dec/c2020br-10.html), U.S. Census Bureau, report C2020BR-10.
+[^8]: [Standard Country or Area Codes for Statistical Use (M49)](https://unstats.un.org/unsd/methodology/m49/), United Nations Statistics Division.
+[^9]: [World Population Prospects 2024](https://population.un.org/wpp/), United Nations Department of Economic and Social Affairs, Population Division, mid-2024 estimates.
