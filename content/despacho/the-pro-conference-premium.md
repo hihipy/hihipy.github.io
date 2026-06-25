@@ -50,15 +50,15 @@ The conference premium is the travel a league spends honoring a conference line 
 <p class="cp-kpi-sub">Only the two that kept the old line still pay</p>
 </div>
 <div class="cp-kpi">
-<p class="cp-kpi-value">0.00%</p>
-<p class="cp-kpi-label">The NBA after expansion</p>
-<p class="cp-kpi-sub">32 teams, still a clean East and West</p>
+<p class="cp-kpi-value">1 team</p>
+<p class="cp-kpi-label">Moved by the NBA expansion</p>
+<p class="cp-kpi-sub">Minnesota crosses east on geography alone, matching the league's own instinct</p>
 </div>
 </div>
 
 This essay started with a basketball question. The NBA is widely expected to expand within a few years, adding two western teams, and I wanted to know whether that would pull its tidy East and West out of shape. Measuring it meant building a way to price any league's conference line in travel, and that turned out to say something about all five.
 
-Every major North American league sorts its teams the same way. First into two conferences, then into divisions inside each conference, and a team plays its own division far more than anyone else. That nesting has a price measured in miles. A team locked into the wrong half of the country flies past closer rivals to reach the ones it is scheduled against. The question here is narrow and answerable: of all the travel a league spends inside its divisions, how much is the cost of where it drew the conference line, and how much is the unavoidable cost of geography? That first part is what this essay calls the conference premium: the travel a league could erase by forgetting its conference line and grouping teams on geography alone. It runs from nearly a third of all in-division miles down to zero, and which end a league lands on turns out to be a question of history.
+Every major North American league, baseball's MLB, football's NFL, basketball's NBA, hockey's NHL, and soccer's MLS, sorts its teams the same way. First into two conferences, then into divisions inside each conference, and a team plays its own division far more than anyone else. That nesting has a price measured in miles. A team locked into the wrong half of the country flies past closer rivals to reach the ones it is scheduled against. The question here is narrow and answerable: of all the travel a league spends inside its divisions, how much is the cost of where it drew the conference line, and how much is the unavoidable cost of geography? That first part is what this essay calls the conference premium: the travel a league could erase by forgetting its conference line and grouping teams on geography alone. It runs from nearly a third of all in-division miles down to zero, and which end a league lands on turns out to be a question of history.
 
 ## The Scoreboard
 
@@ -143,7 +143,7 @@ def partition(members, sizes, distances):
 
 For a conference of fifteen or sixteen teams the candidate list is small enough to enumerate in full, so the result is exact. For the whole league at once the count is too large, so the same program runs over a candidate set restricted to each team's nearest neighbors, which keeps the partition optimal against a strong field.
 
-**Step three: three versions of each league.** Score each league three ways. \( A \) is the league as it stands today. \( B \) keeps the real conferences but redraws the divisions inside them for minimum travel, at the real sizes. \( C \) throws out the conference line, redraws every division across the whole league, then splits the result back into two halves by longitude. The conference premium is how much worse the conference-bound best is than the free best, against what the league spends now:
+**Step three: three versions of each league.** Score each league three ways. \( A \) is the league as it stands today. \( B \) keeps the real conferences but redraws the divisions inside them for minimum travel, at the real sizes. \( C \) throws out the conference line, redraws every division across the whole league, then splits the result back into two halves by longitude. The longitude re-split only sorts the finished divisions into two conferences so the \( C \) map reads like the others; it places no constraint on the solve, so \( C \)'s mileage is the free optimum either way. The conference premium is how much worse the conference-bound best is than the free best, against what the league spends now:
 
 \[ \mathrm{premium} = \frac{B - C}{A}, \qquad \mathrm{recover}_B = \frac{A - B}{A}, \qquad \mathrm{recover}_C = \frac{A - C}{A} \]
 
@@ -197,7 +197,7 @@ Every division has a geographic heart, the average position of its teams. Revers
 | Division | Center | 2020 Pop. | Team | Note |
 | --- | --- | --- | --- | --- |
 | AL East | Croom, Maryland | 2,720 | The Croom Crows | A rural crossroads of tobacco barns and woodlots in Prince George's County, near Mount Calvert, the county seat before 1792, on the Patuxent River. |
-| AL Central | Addison, Illinois | 35,702 | The Addison Aviators | A Chicago suburb on Salt Creek that was farmland until the 1960s and once home to the Adventureland amusement park. |
+| AL Central | Addison, Illinois | 35,702 | The Addison Adventurers | A Chicago suburb on Salt Creek that was farmland until the 1960s and once home to the Adventureland amusement park. |
 | AL West | Chinle, Arizona | 4,573 | The Chinle Canyoneers | A Navajo Nation community and the gateway to Canyon de Chelly, a national monument that sits entirely on tribal land. |
 | NL East | Spring Hope, North Carolina | 1,309 | The Spring Hope Pumpkins | A Nash County town that throws the National Pumpkin Festival every autumn. |
 | NL Central | Grissom Air Reserve Base, Indiana | 3,009 | The Grissom Bombers | A former Strategic Air Command bomber field named for the Hoosier astronaut Gus Grissom, now home to the largest KC-135 tanker wing in the Air Force Reserve. |
@@ -243,13 +243,15 @@ And once the conference line is erased and every division is drawn from scratch:
 | Center | Teams | 2020 Pop. | Team | Note |
 | --- | --- | --- | --- | --- |
 | Rosamond, California | Angels, Athletics, Dodgers, Giants, Padres | 20,961 | The Rosamond Test Pilots | A Mojave Desert town in the Antelope Valley beside Edwards Air Force Base and its dry lakebeds. |
-| Laramie, Wyoming | Diamondbacks, Mariners, Rockies, Royals, Twins | 31,407 | The Laramie Cowboys | A high-plains railroad town between the Laramie and Snowy ranges, home to the University of Wyoming. |
-| Dauphin Island, Alabama | Astros, Braves, Marlins, Rangers, Rays | 1,778 | The Dauphin Island Mariners | A barrier island at the mouth of Mobile Bay, guarded by the brick ramparts of Fort Gaines and lined by a long fishing pier. |
+| Laramie, Wyoming | Diamondbacks, Mariners, Rockies, Royals, Twins | 31,407 | The Laramie Snowcaps | A high-plains railroad town between the Laramie and Snowy ranges, home to the University of Wyoming. |
+| Dauphin Island, Alabama | Astros, Braves, Marlins, Rangers, Rays | 1,778 | The Dauphin Island Ramparts | A barrier island at the mouth of Mobile Bay, guarded by the brick ramparts of Fort Gaines and lined by a long fishing pier. |
 | Sheldon, Illinois | Brewers, Cardinals, Cubs, Reds, White Sox | 965 | The Sheldon Threshers | A small village in Iroquois County in the flat grain country of eastern Illinois. |
 | Stoneboro, Pennsylvania | Blue Jays, Guardians, Nationals, Pirates, Tigers | 946 | The Stoneboro Fairgoers | A small Mercer County borough known for its long-running Stoneboro Fair. |
 | Bayonne, New Jersey | Mets, Orioles, Phillies, Red Sox, Yankees | 71,686 | The Bayonne Bridgemen | A peninsula city wedged between Newark Bay and New York Bay, known for its oil terminals and the steel arch of the Bayonne Bridge to Staten Island. |
 
 The reason is history, not geography. The National League dates to 1876 and the American League to 1901, and the two ran as separate businesses for nearly a century before merging into a single organization in 2000.[^mlb] The split down the middle of the sport was never about longitude, and the 162-game season multiplies every extra mile. Division count matters too: across one to three divisions per conference the travel swings 6.61%, and the optimum lands on three, which is what the league already runs.
+
+Two of those groups look wrong until you trace the geometry. The Mariners sit in the Laramie group with Arizona, Colorado, Kansas City, and Minnesota, not with the California teams that are their nearest neighbors: the five California-area clubs already fill a division tightly, so Seattle, the leftover corner, attaches to the next cluster inland. The Marlins land in the Dauphin Island group with the two Texas teams because Miami is too isolated in the southeast to fill a division with close neighbors, so once Tampa and Atlanta are taken the group has to reach west to Texas to make five.
 
 ## NFL, History Over Geography
 
@@ -324,6 +326,8 @@ And once the conference line is erased and every division is drawn from scratch:
 
 The AFC and NFC are a fossil. The American Football League launched in 1960 to challenge the NFL, the two agreed to merge in 1966, and to balance the new conferences three old NFL clubs crossed over to join the ten AFL teams for the 1970 season.[^nfl] So like baseball, the boundary is a brand, not a map. Football is also the league where division count matters most: across one to four divisions per conference the travel swings 14.50%, and the optimum prefers two divisions per conference against the four the league runs, because tight local rivalries are worth more to it than miles.
 
+Two groups here look wrong for the same kinds of reasons. Seattle lands inland again, the Seahawks in the Rock Springs group with Denver and Arizona, and the Vikings beside them, rather than with the California four: the corner team and its nearest interior neighbor get absorbed by the mountain cluster. And the Cleveland Browns land in Group A, the western of the two halves, even though Cleveland is an eastern city. The free optimum sorts its finished divisions into two halves by longitude only so the map reads like the others, and the Great Lakes group, the Bears, Browns, Lions, and Packers, has a centroid just west of that median. The halves are labeled Group A and Group B rather than West and East precisely because a division can sit on one side while a team inside it, like Cleveland, belongs to the other.
+
 ## NBA, Geographic After All
 
 The NBA is the league this essay started from. Its conferences look like a brand, an East and a West, and its coming expansion seemed like the kind of thing that might bend a geographic line out of shape. It does not. The NBA is geographic today, and it stays geographic through the expansion, which is the quiet result under all three maps that follow.
@@ -336,7 +340,7 @@ The geographic center of each actual division, with its 2020 Census population:
 
 | Division | Center | 2020 Pop. | Team | Note |
 | --- | --- | --- | --- | --- |
-| Northwest | Laramie, Wyoming | 31,407 | The Laramie Cowboys | A high-plains railroad town between the Laramie and Snowy ranges, home to the University of Wyoming. |
+| Northwest | Laramie, Wyoming | 31,407 | The Laramie Snowcaps | A high-plains railroad town between the Laramie and Snowy ranges, home to the University of Wyoming. |
 | Pacific | Bodfish, California | 2,008 | The Bodfish Prospectors | An unincorporated community in the Kern River Valley below Lake Isabella, in the southern Sierra Nevada of Kern County. |
 | Southwest | San Augustine, Texas | 1,920 | The San Augustine Lumberjacks | One of the oldest towns in Texas, deep in the East Texas Piney Woods, with roots in a Spanish mission of 1717. |
 | Atlantic | Port Jervis, New York | 8,775 | The Port Jervis Railers | An old Erie Railroad division hub at the point where New York, New Jersey, and Pennsylvania meet. |
@@ -361,7 +365,7 @@ The center of each division once they are redrawn for least travel:
 | Copperopolis, California | Clippers, Kings, Lakers, Trail Blazers, Warriors | 3,400 | The Copperopolis Miners | A Gold Country town in Calaveras County whose copper mines supplied the Union during the Civil War. |
 | Ellicott, Colorado | Jazz, Nuggets, Suns, Thunder, Timberwolves | 1,248 | The Ellicott Plainsmen | A small farming community on the high plains east of Colorado Springs, in El Paso County. |
 | San Augustine, Texas | Grizzlies, Mavericks, Pelicans, Rockets, Spurs | 1,920 | The San Augustine Lumberjacks | One of the oldest towns in Texas, deep in the East Texas Piney Woods, with roots in a Spanish mission of 1717. |
-| Pinckney, Michigan | Bucks, Bulls, Cavaliers, Pistons, Raptors | 2,415 | The Pinckney Trailblazers | A village in Livingston County beside the lakes and trails of the Pinckney Recreation Area. |
+| Pinckney, Michigan | Bucks, Bulls, Cavaliers, Pistons, Raptors | 2,415 | The Pinckney Trekkers | A village in Livingston County beside the lakes and trails of the Pinckney Recreation Area. |
 | Wrightsville, Georgia | Hawks, Heat, Hornets, Magic, Pacers | 3,449 | The Wrightsville Sandhillers | The Johnson County seat in the sandhills of middle Georgia. |
 | Perth Amboy, New Jersey | 76ers, Celtics, Knicks, Nets, Wizards | 55,436 | The Perth Amboy Colonials | An old port city where the Raritan River meets the Arthur Kill, once the colonial capital of East Jersey. |
 
@@ -406,7 +410,7 @@ Hockey is the clean case the NBA's real roster resembles. Here is the league as 
 
 {{< realign league="nhl" panel="A" >}}
 
-The actual divisions cost 68,797.66 miles, the second-highest raw total in the study, because hockey simply covers a lot of ground, from Florida to western Canada. Raw miles and premium are different things, though, as the next two maps show.
+The actual divisions cost 68,797.66 miles, the second-highest raw total in the study, because hockey simply covers a lot of ground, from Florida to western Canada. Its geographic center, marked on each map, gives that away: it sits nearly three degrees of latitude north of the other four leagues, pulled up by the Canadian clubs, so the whole league is stretched vertically in a way none of the others are. Raw miles and premium are different things, though, as the next two maps show.
 
 The center of each division anyway, with its 2020 Census population:
 
@@ -504,6 +508,16 @@ Major League Soccer was built from scratch in the 1990s rather than from a merge
 Laid end to end, the five leagues do not fall on a tidy gradient. They fall into two groups, and the split tracks one piece of history: what each league did with a rival it absorbed. Baseball and football kept the old boundary as a brand and pay for it, 28.87 and 19.66%. The NBA and the NHL absorbed rivals too, then re-sorted them by geography, so at their real rosters they pay nothing. Soccer never merged and never drew a division layer, so its zero is structural. The premium is a single subtraction, but it sorts the leagues by whether a merged league kept its old line or dissolved it into the map.
 
 The NBA is the league that prompted all this, and it is the cleanest case of the rule. Its conferences already are the map, so it pays zero; and its projected expansion, two western teams and a square-up to four divisions of four, leaves the optimal split a clean East and West, so it still pays zero. Geography that was already honest does not turn dishonest just because the league grows.
+
+## The Groupings That Look Wrong
+
+Across the maps the free optimum keeps drawing groups that look wrong: Seattle stranded inland, Miami reaching to Texas, Cleveland sorted into the western half. They share one cause. The optimum minimizes total within-division distance at fixed division sizes, which is not the same as putting every team with its single nearest neighbor, so a team near a corner or a seam gets sorted by what makes the whole map cheapest, not by what looks right for it alone.
+
+Behind all of it is where each league's weight actually sits. The open crosshair on every map marks the league's geographic center, the average position of its teams, and not one of the five lands in the middle of the country. Because it depends only on who is in the league and not on how the divisions are cut, it sits in the identical spot on a league's three maps; the optimizer regroups teams around the center, it never moves the center itself. Measured against the geographic center of the contiguous United States, near Lebanon, Kansas at about 98.6 degrees west, every league leans east. Football leans hardest, its center about 8 degrees of longitude east; baseball and hockey sit about 6 degrees east; the NBA's real thirty teams about 5; soccer about 4 and a half. The eastern half of the map holds more teams, so the optimizer packs its tightest divisions there and the far western and far southeastern clubs, Seattle and Miami, are the ones left over to absorb. The center is why the corners look odd.
+
+The NBA is the one league whose center moves on the page. Its real thirty teams center near 93 degrees west, but the projected panel adds Seattle and Las Vegas, both far west, and that pulls the center about a degree and a half back toward the middle, to near 95 degrees west. The expansion does not bend the conference line. It nudges an east-leaning league toward the balance the line already assumed, which is the same reason the projected split stays clean and the premium stays at zero.
+
+Minnesota goes the other way, and goes both ways. The Vikings land in the western mountain group in football, the Timberwolves cross into an eastern division in the projected NBA, and the Twins sit in the interior group in baseball. Minneapolis sits near the seam between the eastern and western blocs of teams, so it is among the cheapest teams to move whenever one side needs a body. Whichever half is short, Minnesota tends to be the one that slides over, which is why the same city reads as West in one league and East in another.
 
 ## What This Does Not Mean
 
