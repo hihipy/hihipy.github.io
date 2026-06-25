@@ -274,6 +274,25 @@ These are established conventions across all 16 project pages. Match them when a
 | **Mention Miller School only when project genuinely connects** | Not as decoration. |
 | **No invented content, no redundancy** | If two fields say the same thing, one of them is wrong. |
 | **Backticks for inline code/paths** | `~/sala`, `Path.glob()`, `summaryLength = 70`. |
+| **Footnotes for source citations** | In analytical prose, cite data sources as Markdown footnotes (`[^id]`), not inline links. Tool, glossary, action, and internal links stay inline. See the Footnote and Citation Convention below. |
+
+### Footnote and Citation Convention
+
+Source citations render as Markdown footnotes, the style Hugo's Goldmark passthrough produces. The three despacho essays and the four archivo case studies share it. Goldmark auto-numbers the notes in order of first appearance and renders the block at the end of the page, so there is no manual References heading to maintain.
+
+Rules:
+
+- The inline marker sits after the punctuation, not before it: `still routes a team's bus today.[^nfl]`, never `today [^nfl].` or `today[^nfl] .`.
+- Definition format is the visible phrase as a link, then the publisher: `[^scorecard]: [College Scorecard](https://collegescorecard.ed.gov/data/), U.S. Department of Education.` Drop the publisher when the link text already names it: `[^nih-reporter]: [NIH RePORTER](https://reporter.nih.gov/).`
+- One source per definition.
+- In analytical prose a citation is a footnote; a tool, library, glossary, internal, or "Run this query" link stays inline, because it points somewhere useful rather than citing a source. The same domain can be both: a Wikipedia link to a policy event is a citation, a Wikipedia link defining ISO 8601 is a gloss, so the call is the link's role in the sentence, not its domain.
+- Tribute and link-directory pages (biblioteca, sala, mirador, obrador) keep their inline links. There the links are the content, not citations.
+- A prose "Methods and Sources" or "Sources and Honesty Note" paragraph with no discrete cited works (earths-history) is left as prose; it is not forced into footnotes.
+
+Two tools in `tools/` generate this convention. Both keep a `.backup-*` beside each file and reconcile every marker against its definition before writing, and both mask code, scripts, charts, and styles first, so an index like `items[0]` is never rewritten as a footnote.
+
+- `footnote_convert.py` converts the old numeric style (inline `[N]` plus a numbered `## References` list) into footnotes. `--scan DIR` classifies a whole tree, `--write-all DIR` converts it, and `--check FILE` / `--write FILE` handle one file. Used on the three despacho essays.
+- `link_footnote.py` pulls genuine source links out of prose into footnotes, recognizing them by a curated domain allowlist (NIH, the Department of Education, NCSBN, and the like) plus a short URL allowlist for specific citations on shared domains like Wikipedia. Tool, gloss, action, badge, internal, and self links stay inline; ambiguous domains are flagged for review rather than converted. It is idempotent: a re-run never reprocesses an existing footnote. `--scan DIR` reviews, `--write DIR` applies. Used on the four archivo case studies.
 
 ---
 

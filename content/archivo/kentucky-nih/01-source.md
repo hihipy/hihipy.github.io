@@ -29,7 +29,7 @@ The honest reason: I was born and raised in Kentucky. Of all the states I could 
 
 The defensible reasons hold up too. Kentucky is large enough to have substantial NIH activity (the University of Kentucky and the University of Louisville together account for the majority of it) but small enough that twenty-one years of data fits in a 75-megabyte SQLite file. The Appalachian region has a recognizable research footprint (opioid response, occupational safety, rural health) that gives the categorical distributions a coherent shape rather than a generic one. And none of the data overlaps with my work at the Miller School of Medicine, which keeps this a clean public-data exercise rather than a thinly disguised work project.
 
-The twenty-one-year window from FY 2005 through FY 2025 captures three things worth seeing in the same dataset: a pre-recession baseline, the 2009 [American Recovery and Reinvestment Act](https://en.wikipedia.org/wiki/American_Recovery_and_Reinvestment_Act_of_2009) stimulus that briefly doubled NIH funding, and the post-pandemic period through the most recent complete fiscal year. Cutting the window shorter would lose one of those; extending it earlier would push past the point where RePORTER's data quality is consistent.
+The twenty-one-year window from FY 2005 through FY 2025 captures three things worth seeing in the same dataset: a pre-recession baseline, the 2009 American Recovery and Reinvestment Act[^american-recovery-and-reinvestme] stimulus that briefly doubled NIH funding, and the post-pandemic period through the most recent complete fiscal year. Cutting the window shorter would lose one of those; extending it earlier would push past the point where RePORTER's data quality is consistent.
 
 ## The Export Limit
 
@@ -217,3 +217,4 @@ What looked like one row per project turned out not to be. The 305-row gap betwe
 [^nih-reporter]: [NIH RePORTER](https://reporter.nih.gov/).
 [^nih-institutional-training-grant]: [NIH institutional training grant](https://grants.nih.gov/grants/funding/t-kiosk/index.htm).
 [^ncrr-was-dissolved-in-december-2]: [NCRR was dissolved in December 2011](https://www.nih.gov/news-events/news-releases/nih-establishes-national-center-advancing-translational-sciences), NIH.
+[^american-recovery-and-reinvestme]: [American Recovery and Reinvestment Act](https://en.wikipedia.org/wiki/American_Recovery_and_Reinvestment_Act_of_2009), Wikipedia.

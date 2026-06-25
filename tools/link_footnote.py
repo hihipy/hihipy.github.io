@@ -17,10 +17,16 @@ SOURCE = {
  'sabr.org':'SABR', 'nba.com':'NBA',
 }
 REVIEW_DOMAINS = {'en.wikipedia.org','w3.org','webaim.org','archive.org','creativecommons.org'}
+# specific URLs on a review domain that ARE citations (footnote them); everything
+# else on those domains stays inline as a gloss.
+SOURCE_URLS = {
+ 'https://en.wikipedia.org/wiki/American_Recovery_and_Reinvestment_Act_of_2009':'Wikipedia',
+}
 
 MASK=[re.compile(r'```.*?```',re.S),re.compile(r'`[^`]*`'),
       re.compile(r'<script\b.*?</script>',re.S|re.I),re.compile(r'<style\b.*?</style>',re.S|re.I),
-      re.compile(r'{{<\s*chart\s*>}}.*?{{<\s*/\s*chart\s*>}}',re.S)]
+      re.compile(r'{{<\s*chart\s*>}}.*?{{<\s*/\s*chart\s*>}}',re.S),
+      re.compile(r'^\[\^[^\]]+\]:.*$',re.M)]      # existing footnote defs: never reprocess
 def masked_spans(t):
     spans=[]
     for p in MASK:
@@ -43,13 +49,17 @@ def convert(text):
         txt,url=m.group(1),m.group(2)
         if '{{<' in txt: continue                  # badge chips
         d=domain(url)
-        if d in REVIEW_DOMAINS:
+        if url in SOURCE_URLS:
+            pub=SOURCE_URLS[url]
+        elif d in REVIEW_DOMAINS:
             review.append((txt,url)); continue
-        if d not in SOURCE: continue               # tool/gloss/action/self/internal -> leave inline
+        elif d in SOURCE:
+            pub=SOURCE[d]
+        else:
+            continue                               # tool/gloss/action/self/internal -> leave inline
         slug=slugify(txt); base=slug; k=2
         while slug in used: slug=f"{base}-{k}"; k+=1
         used.add(slug)
-        pub=SOURCE[d]
         cleantxt=re.sub(r'\*|`','',txt).lower()
         deftext=f"[{txt}]({url})" + (f", {pub}." if pub and pub.lower() not in cleantxt else ".")
         defs.append((slug,deftext))
@@ -57,7 +67,11 @@ def convert(text):
     for s,e,r in sorted(edits,reverse=True):
         text=text[:s]+r+text[e:]
     if defs:
-        text=text.rstrip()+"\n\n"+"\n".join(f"[^{s}]: {t}" for s,t in defs)+"\n"
+        block="\n".join(f"[^{s}]: {t}" for s,t in defs)
+        tail=text.rstrip()
+        last=tail.splitlines()[-1] if tail.splitlines() else ''
+        sep="\n" if re.match(r'\[\^[^\]]+\]:', last) else "\n\n"   # contiguous if a block already ends the file
+        text=tail+sep+block+"\n"
     return text, defs, review
 
 def main():
