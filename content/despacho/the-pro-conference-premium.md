@@ -509,6 +509,8 @@ Laid end to end, the five leagues do not fall on a tidy gradient. They fall into
 
 The NBA is the league that prompted all this, and it is the cleanest case of the rule. Its conferences already are the map, so it pays zero; and its projected expansion, two western teams and a square-up to four divisions of four, leaves the optimal split a clean East and West, so it still pays zero. Geography that was already honest does not turn dishonest just because the league grows.
 
+A league that pays this premium is choosing its line on purpose; nothing here disputes that choice, only measures what it costs in travel.
+
 ## The Groupings That Look Wrong
 
 Across the maps the free optimum keeps drawing groups that look wrong: Seattle stranded inland, Miami reaching to Texas, Cleveland sorted into the western half. They share one cause. The optimum minimizes total within-division distance at fixed division sizes, which is not the same as putting every team with its single nearest neighbor, so a team near a corner or a seam gets sorted by what makes the whole map cheapest, not by what looks right for it alone.
