@@ -510,13 +510,13 @@ $$
 
 So per-application odds dropped by about **59%** with no change whatsoever in the hiring bar. That is the core argument, quantified.
 
-**Recruiter load.** Total annual application volume rose 411% (a multiplier of \\(1 + 4.11 = 5.11\\)) while recruiting teams shrank about 55% (a multiplier of \\(1 - 0.55 = 0.45\\))[^30] .[^31] Applications per recruiter therefore scaled by
+**Recruiter load.** Total annual application volume rose 411% (a multiplier of \\(1 + 4.11 = 5.11\\)) while recruiting teams shrank about 55% (a multiplier of \\(1 - 0.55 = 0.45\\)).[^30] [^31] Applications per recruiter therefore scaled by
 
 $$
 \text{load multiplier} = \frac{5.11}{0.45} \approx 11.4.
 $$
 
-Each recruiter now faces roughly **11 times** the applications in the same hours. That forces aggressive automated filtering, which rewards more mass-applying, which feeds the loop. The per-person fuel is AI: job seekers who use AI complete about 41% more applications than those who do not, per Capterra's global survey of roughly 3,000 job seekers across 12 countries[^32] .[^33]
+Each recruiter now faces roughly **11 times** the applications in the same hours. That forces aggressive automated filtering, which rewards more mass-applying, which feeds the loop. The per-person fuel is AI: job seekers who use AI complete about 41% more applications than those who do not, per Capterra's global survey of roughly 3,000 job seekers across 12 countries.[^32] [^33]
 
 ### Sensitivity: How Much Does the 242 Drive This?
 
@@ -537,7 +537,7 @@ Even at the optimistic end (\\(N = 100\\), roughly the pre-2021 norm), reaching 
 
 ## The Macro Backdrop: The Market Did Cool
 
-The per-application math explains most of the pain, but it is not the whole story. White collar hiring genuinely softened. The US job-openings-to-unemployed ratio dipped below 1.0 in March 2025 and bottomed near 0.87 in December 2025, and information-sector openings fell about 33% year over year, the steepest of any private sector, per Bureau of Labor Statistics JOLTS data and Indeed Hiring Lab analysis[^34] .[^35] So the picture is two effects stacked: a modestly tighter market, and a per-application denominator that exploded. The second effect is the larger and less understood one, which is why this note focuses on it.
+The per-application math explains most of the pain, but it is not the whole story. White collar hiring genuinely softened. The US job-openings-to-unemployed ratio dipped below 1.0 in March 2025 and bottomed near 0.87 in December 2025, and information-sector openings fell about 33% year over year, the steepest of any private sector, per Bureau of Labor Statistics JOLTS data and Indeed Hiring Lab analysis.[^34] [^35] So the picture is two effects stacked: a modestly tighter market, and a per-application denominator that exploded. The second effect is the larger and less understood one, which is why this note focuses on it.
 
 ***
 
@@ -567,8 +567,8 @@ Not all of these figures are equal, and an honest analysis says so. They fall in
 A few specific notes on the trickier numbers:
 
 - **Yale Law** is the most selective US law school. Yale's own ABA Standard 509 disclosure reports 226 offers from 5,562 completed applications, a 4.06% rate for the fall 2025 class,[^6] and US News reported 5.25% (229 of 4,358) for fall 2024.[^7] The "5%" in the ladder is the conservative reading. A commonly repeated "8 to 9%" figure is stale or a confusion with Stanford Law's recent rate.
-- **The 242 applications figure** is the softest input and the most load-bearing, so it deserves scrutiny. It traces to Business Insider data cited in a February 2026 analysis.[^24] Greenhouse's own benchmark data is in the same range (about 222 applications per opening in early 2024) and independently confirms the 411% volume surge[^30] .[^31]
-- **The 41% AI figure** is from Capterra's 2024 Job Seeker AI Survey of about 3,000 respondents across 12 countries[^32] .[^33] It is a global, not regional, survey, and it is a distinct metric from the 411% volume surge.
+- **The 242 applications figure** is the softest input and the most load-bearing, so it deserves scrutiny. It traces to Business Insider data cited in a February 2026 analysis.[^24] Greenhouse's own benchmark data is in the same range (about 222 applications per opening in early 2024) and independently confirms the 411% volume surge.[^30] [^31]
+- **The 41% AI figure** is from Capterra's 2024 Job Seeker AI Survey of about 3,000 respondents across 12 countries.[^32] [^33] It is a global, not regional, survey, and it is a distinct metric from the 411% volume surge.
 - **Metric types are not interchangeable.** The single biggest analytical caveat in this piece is that the ladder mixes per-applicant rates (most schools, NASA, Rhodes) with per-application rates (the office job, SpaceX, Google, Y Combinator), a completion rate (Navy SEAL), and a pure-chance lottery (green card). The comparison is illustrative, not a strict like-for-like ranking. Section 5 works through why that distinction matters most for the SpaceX comparison.
 
 ***

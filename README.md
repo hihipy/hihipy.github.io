@@ -282,7 +282,8 @@ Source citations render as Markdown footnotes, the style Hugo's Goldmark passthr
 
 Rules:
 
-- The inline marker sits after the punctuation, not before it: `still routes a team's bus today.[^nfl]`, never `today [^nfl].` or `today[^nfl] .`.
+- The inline marker sits after the punctuation, never before it. At the end of a sentence: `still routes a team's bus today.[^nfl]`, never `today [^nfl].` or `today[^nfl] .`. The same holds against a mid-sentence comma: `the Institutes and Centers,[^ic] the operating divisions`, never `Centers[^ic],`.
+- When two or more sources back the same point, the markers follow the punctuation separated by a space, so they do not blur into one number: `Indeed Hiring Lab analysis.[^jolts] [^indeed]`, not `analysis.[^jolts][^indeed]` or `analysis[^jolts] .[^indeed]`.
 - Definition format is the visible phrase as a link, then the publisher: `[^scorecard]: [College Scorecard](https://collegescorecard.ed.gov/data/), U.S. Department of Education.` Drop the publisher when the link text already names it: `[^nih-reporter]: [NIH RePORTER](https://reporter.nih.gov/).`
 - One source per definition.
 - In analytical prose a citation is a footnote; a tool, library, glossary, internal, or "Run this query" link stays inline, because it points somewhere useful rather than citing a source. The same domain can be both: a Wikipedia link to a policy event is a citation, a Wikipedia link defining ISO 8601 is a gloss, so the call is the link's role in the sentence, not its domain.

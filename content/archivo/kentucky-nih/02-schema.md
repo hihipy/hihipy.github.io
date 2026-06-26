@@ -46,9 +46,9 @@ df["Application ID"].nunique()       # 13,876
 
 Two different numbers for what should be the same thing. The 305-row gap is exactly the kind of structural surprise that the source phase exists to surface, and it has to be explained before any schema work begins. A duplicate-record bug would warrant cleaning. A real structural pattern warrants modeling.
 
-NIH grants are sometimes co-funded by multiple Institutes and Centers[^institutes-and-centers], the operating divisions that make up NIH (the National Cancer Institute, the National Institute on Aging, and so on, twenty-seven in total). When a project is co-funded, the RePORTER export gives one row per (Application ID, Funding IC) pair. Of the 13,876 distinct projects in the dataset, 3,580 have no funder rows at all (the missing-cost pattern documented later in this phase). The remaining 10,296 projects have at least one funder row. Most of those have exactly one funder, but a small minority are co-funded by two or more.
+NIH grants are sometimes co-funded by multiple Institutes and Centers,[^institutes-and-centers] the operating divisions that make up NIH (the National Cancer Institute, the National Institute on Aging, and so on, twenty-seven in total). When a project is co-funded, the RePORTER export gives one row per (Application ID, Funding IC) pair. Of the 13,876 distinct projects in the dataset, 3,580 have no funder rows at all (the missing-cost pattern documented later in this phase). The remaining 10,296 projects have at least one funder row. Most of those have exactly one funder, but a small minority are co-funded by two or more.
 
-One project, Application ID 6874256[^application-id-6874256], an institutional training grant from fiscal year 2005, has nineteen rows for nineteen different ICs. It is the most extreme co-funding case in the dataset.
+One project, Application ID 6874256,[^application-id-6874256] an institutional training grant from fiscal year 2005, has nineteen rows for nineteen different ICs. It is the most extreme co-funding case in the dataset.
 
 The funder-count distribution after the database is built confirms the pattern:
 

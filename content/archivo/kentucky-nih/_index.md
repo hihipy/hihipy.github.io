@@ -15,10 +15,8 @@ A SQL case study on twenty years of NIH grant funding in Kentucky, walked throug
 
 ## At a Glance
 
-This case study takes a 13,876-project slice of NIH RePORTER[^nih-reporter], every research grant awarded to a Kentucky institution from fiscal year 2005 through 2025, and walks through how to reason about it. Source, schema, exploration, findings: four phases, each short enough to read on its own, together documenting the full process from a blank query on a federal data portal through to the SQL patterns that surface the interesting answers. The SQLite database produced at the end of phase 02 is queryable directly in the browser via Datasette Lite, so any reader can re-run every query in the case study.
+This case study takes a 13,876-project slice of NIH RePORTER, every research grant awarded to a Kentucky institution from fiscal year 2005 through 2025, and walks through how to reason about it. Source, schema, exploration, findings: four phases, each short enough to read on its own, together documenting the full process from a blank query on a federal data portal through to the SQL patterns that surface the interesting answers. The SQLite database produced at the end of phase 02 is queryable directly in the browser via Datasette Lite, so any reader can re-run every query in the case study.
 
 I picked Kentucky because I was born and raised there. The full reasoning, including why this state is well-suited to a single-file SQLite exercise and the export limit that shaped the scope, lives in phase 01.
 
 ## The Phases
-
-[^nih-reporter]: [NIH RePORTER](https://reporter.nih.gov/).

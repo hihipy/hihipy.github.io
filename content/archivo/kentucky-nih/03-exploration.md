@@ -259,7 +259,7 @@ Substance Misuse sits at 1,125 projects, just below the top ten cutoff but a sub
 
 ## The ARRA Spike
 
-The annual funding query surfaced one number that does not fit the surrounding pattern: 2009 sits well above its 2007-2011 neighbors at $248.0 million, the highest year of the first decade. The reason is the American Recovery and Reinvestment Act[^american-recovery-and-reinvestme], signed into law in February 2009, which directed roughly $10.4 billion in stimulus funding to NIH for distribution across two fiscal years.
+The annual funding query surfaced one number that does not fit the surrounding pattern: 2009 sits well above its 2007-2011 neighbors at $248.0 million, the highest year of the first decade. The reason is the American Recovery and Reinvestment Act,[^american-recovery-and-reinvestme] signed into law in February 2009, which directed roughly $10.4 billion in stimulus funding to NIH for distribution across two fiscal years.
 
 The grant count tells the story more clearly than the dollar total. 2009 had 896 distinct projects against neighbors of 720-780:
 
