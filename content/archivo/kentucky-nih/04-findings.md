@@ -3,7 +3,7 @@ title: "Findings"
 weight: 40
 description: "Deeper analytical queries using window functions and common table expressions to surface multi-year patterns, institutional rankings, and the funding shifts visible across two decades of NIH research grants awarded in Kentucky."
 summary: "Phase 4: Window functions and CTEs"
-tags: ["ctes", "datasette", "sql", "sqlite", "window-functions"]
+tags: ["sql", "datasette", "sqlite", "ctes", "window-functions", "case-study"]
 showDate: false
 showReadingTime: true
 showAuthor: false

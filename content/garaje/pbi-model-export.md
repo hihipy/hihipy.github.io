@@ -3,7 +3,7 @@ title: "pbi-model-export"
 weight: 40
 description: "A Tabular Editor 2 C# script that exports a Power BI model to AI-ready JSON: full schema, recursive DAX dependency chains, top-level KPI detection, RLS roles, and a data head sampled directly from source files on disk."
 summary: "Power BI to AI-ready JSON."
-tags: ["ai", "bi", "csharp", "dax", "power-bi", "tabular-editor"]
+tags: ["csharp", "dax", "power-bi", "ai", "tool"]
 showDate: false
 showReadingTime: true
 showAuthor: false

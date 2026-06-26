@@ -3,7 +3,7 @@ title: "qualtrics-report-generator"
 weight: 40
 description: "A Python utility that turns Qualtrics CSV exports into formatted, readable HTML reports. Built for administrative data intake (rankings, accreditation, compliance) where every individual response matters and aggregate statistics don't."
 summary: "Renders Qualtrics surveys as HTML."
-tags: ["etl", "higher-ed", "html", "python", "qualtrics", "reporting"]
+tags: ["html", "python", "qualtrics", "etl", "reporting", "higher-education", "tool"]
 showDate: false
 showReadingTime: true
 showAuthor: false

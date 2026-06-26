@@ -3,7 +3,7 @@ title: "Findings"
 weight: 40
 description: "Three structured findings: the 26-point campus spread and a counterfactual for intervention targeting, the 2024-to-2025 cohort decline compared against NCSBN national rates, and the retake conversion data reframed as an engagement story. Closing R-based ceiling analysis on what any predictive model could do with this dataset."
 summary: "Three findings, one R supplement, an honest accounting of what the data can and cannot say"
-tags: ["logistic-regression", "nclex", "nursing-education", "predictive-modeling", "r", "sql"]
+tags: ["r", "sql", "logistic-regression", "predictive-modeling", "nursing-education", "case-study"]
 showDate: false
 showReadingTime: true
 showAuthor: false

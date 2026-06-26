@@ -3,7 +3,7 @@ title: "Schema"
 weight: 20
 description: "Exploratory analysis of a 14,181-row CSV that turned out to describe 13,876 projects, the co-funding split that explained the gap, and the three-table normalized SQLite schema that resulted."
 summary: "Phase 2: Schema design from EDA"
-tags: ["python", "schema-design", "sql", "sqlite", "sqlite-utils"]
+tags: ["python", "sql", "sqlite", "sqlite-utils", "schema-design", "case-study"]
 showDate: false
 showReadingTime: true
 showAuthor: false

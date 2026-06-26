@@ -4,7 +4,7 @@ slug: "the-pro-conference-premium"
 weight: 30
 description: "The five major North American pro sports leagues, MLB, the NFL, the NBA, the NHL, and MLS, sorted into conferences and divisions and scored by integer programming against the geographic optimum, to measure how many miles each spends honoring a conference boundary drawn for history rather than distance."
 summary: "What MLB, the NFL, the NBA, the NHL, and MLS pay to keep their conference lines"
-tags: ["data-essay", "sports", "optimization", "operations-research", "combinatorics", "python", "data-visualization"]
+tags: ["python", "combinatorics", "data-visualization", "operations-research", "optimization", "sports", "data-essay"]
 showDate: false
 showReadingTime: true
 showAuthor: false

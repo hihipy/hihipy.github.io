@@ -3,7 +3,7 @@ title: "Inference"
 weight: 40
 description: "Whether the estimated effects are distinguishable from chance. The placebo permutation that reassigns the 1993 treatment to every donor state, the MSPE-ratio test that ranks Texas against that placebo distribution, and an honest accounting of what the design can and cannot establish."
 summary: "The placebo test, and what it can and cannot prove"
-tags: ["causal-inference", "data-visualization", "econometrics", "r", "synthetic-control"]
+tags: ["r", "causal-inference", "data-visualization", "econometrics", "synthetic-control", "case-study"]
 showDate: false
 showReadingTime: true
 showAuthor: false

@@ -3,7 +3,7 @@ title: "ascii-username-generator"
 weight: 10
 description: "A Python GUI that pulls words from a linguistic database covering 19 languages and turns them into ASCII-clean usernames. A side project that started as 'wouldn't it be cool to get a username in Basque' and ended as a small example of repurposing NLP infrastructure for a non-NLP task."
 summary: "ASCII usernames in 19 languages."
-tags: ["nltk", "python", "side-project", "tkinter", "wordnet"]
+tags: ["python", "nltk", "tkinter", "side-project"]
 showDate: false
 showReadingTime: true
 showAuthor: false

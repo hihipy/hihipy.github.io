@@ -3,7 +3,7 @@ title: "Results"
 weight: 30
 description: "The estimated effect of the 1993 expansion. The racial-asymmetry gap shown first in proportional terms, then in absolute prisoner counts, the two underlying fits that establish the counterfactual, and the dual finding the data supports: about a fifth larger proportionally, about half again larger in people."
 summary: "What the expansion did, proportionally and in people"
-tags: ["causal-inference", "data-visualization", "econometrics", "r", "synthetic-control"]
+tags: ["r", "causal-inference", "data-visualization", "econometrics", "synthetic-control", "case-study"]
 showDate: false
 showReadingTime: true
 showAuthor: false

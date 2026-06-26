@@ -3,7 +3,7 @@ title: "dialogorithm"
 weight: 20
 description: "A Python desktop app that turns phone numbers into PhD-level mathematical art. Each digit becomes a graduate-level expression that provably evaluates to that digit, rendered as a clean PNG suitable for email signatures."
 summary: "Phone numbers as PhD math."
-tags: ["latex", "mathematics", "python", "side-project", "tkinter"]
+tags: ["latex", "python", "tkinter", "mathematics", "side-project"]
 showDate: false
 showReadingTime: true
 showAuthor: false

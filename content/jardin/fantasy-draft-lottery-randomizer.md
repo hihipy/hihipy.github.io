@@ -3,7 +3,7 @@ title: "fantasy-draft-lottery-randomizer"
 weight: 30
 description: "A Python GUI that runs fantasy sports draft lotteries with three distribution modes, a dramatic reverse reveal, and an audit-trail output that embeds its own source code so league members can verify the result."
 summary: "Auditable fantasy draft lottery."
-tags: ["asyncio", "combinatorics", "python", "side-project", "tkinter"]
+tags: ["python", "asyncio", "tkinter", "combinatorics", "side-project"]
 showDate: false
 showReadingTime: true
 showAuthor: false

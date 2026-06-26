@@ -3,7 +3,7 @@ title: "The First Trillion, to Scale"
 weight: 30
 description: "A short exercise in division. The first trillion-dollar fortune, set to scale against the net worth of a typical American family, the median income of a country from every United Nations region, the output of nations, and the output of whole UN regions."
 summary: "One fortune, divided by everything"
-tags: ["data essay", "inequality", "scale"]
+tags: ["economics", "data-essay"]
 showDate: false
 showReadingTime: true
 showAuthor: false

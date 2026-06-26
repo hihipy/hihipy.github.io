@@ -3,7 +3,7 @@ title: "Schema"
 weight: 20
 description: "Three normalized tables: a per-attempt mirror of the source, a per-student derivation with twelve aggregates, and a term-order lookup that makes academic-quarter math a single JOIN. The decisions that shape the schema, with SQL the reader can run to verify each one."
 summary: "Three tables, twelve derived columns, one lookup"
-tags: ["etl", "python", "schema-design", "sql", "sqlite"]
+tags: ["python", "sql", "sqlite", "etl", "schema-design", "case-study"]
 showDate: false
 showReadingTime: true
 showAuthor: false

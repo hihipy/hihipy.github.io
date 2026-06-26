@@ -3,7 +3,7 @@ title: "Method"
 weight: 20
 description: "What synthetic control does and why it fits a single-state treatment, the donor pool, the predictor set, the data-driven decisions that shaped the fit, and the full formal estimator: predictor balance, the weight simplex, and the nested optimization that selects predictor importances."
 summary: "Synthetic control, the donor pool, and the decisions the data forced"
-tags: ["causal-inference", "econometrics", "predictive-modeling", "r", "synthetic-control"]
+tags: ["r", "causal-inference", "econometrics", "predictive-modeling", "synthetic-control", "case-study"]
 showDate: false
 showReadingTime: true
 showAuthor: false

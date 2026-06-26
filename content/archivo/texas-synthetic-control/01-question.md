@@ -3,7 +3,7 @@ title: "Question"
 weight: 10
 description: "The natural experiment. Why the 1993 Texas prison-capacity expansion works as a treatment, why incarceration by race is the outcome worth measuring, the framing the data ended up supporting, and a formal statement of the estimand in potential-outcomes notation."
 summary: "The natural experiment and the question it answers"
-tags: ["causal-inference", "econometrics", "public-data", "synthetic-control"]
+tags: ["causal-inference", "econometrics", "public-data", "synthetic-control", "case-study"]
 showDate: false
 showReadingTime: true
 showAuthor: false

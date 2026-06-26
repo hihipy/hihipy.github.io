@@ -3,7 +3,7 @@ title: "The 2026 Job Application Paradox"
 weight: 20
 description: "Why a single office job application now converts at roughly one in 242, below elite university and even astronaut odds, and the probability math behind it, including why the popular '34% from 100 applications' rebuttal misreads a crowd average as one person's real odds."
 summary: "Job application odds, worked out"
-tags: ["mathematics", "public-data"]
+tags: ["mathematics", "public-data", "data-essay"]
 showDate: false
 showReadingTime: true
 showAuthor: false

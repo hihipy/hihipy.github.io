@@ -3,7 +3,7 @@ title: "Source"
 weight: 10
 description: "Where the data came from, why the outcomes are synthetic, what the nine source columns hold, and the 26-point campus spread that surfaces in a single GROUP BY query."
 summary: "Phase 1: Synthetic outcomes, real structure, and the first thread"
-tags: ["csv", "data-quality", "nclex", "nursing-education", "public-data"]
+tags: ["csv", "data-quality", "public-data", "nursing-education", "case-study"]
 showDate: false
 showReadingTime: true
 showAuthor: false

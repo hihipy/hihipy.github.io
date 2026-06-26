@@ -3,7 +3,7 @@ title: "ai-csv-profiler"
 weight: 10
 description: "A Python utility that produces concise, AI-readable JSON profiles of CSV files. Built so that LLMs can reason about a dataset without ever seeing the raw rows."
 summary: "CSV profiler for LLMs."
-tags: ["ai", "csv", "data-profiling", "pandas", "python"]
+tags: ["python", "csv", "pandas", "ai", "data-profiling", "tool"]
 showDate: false
 showReadingTime: true
 showAuthor: false

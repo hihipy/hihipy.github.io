@@ -3,7 +3,7 @@ title: "Source"
 weight: 10
 description: "Where the data came from, why one state across twenty-one years, and the export limit that shaped the scope before any analysis began."
 summary: "Phase 1: Source data and provenance"
-tags: ["csv", "data-quality", "nih-reporter", "public-data"]
+tags: ["csv", "data-quality", "public-data", "case-study"]
 showDate: false
 showReadingTime: true
 showAuthor: false

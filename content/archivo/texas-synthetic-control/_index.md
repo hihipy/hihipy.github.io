@@ -3,7 +3,7 @@ title: "Texas Prison Expansion"
 weight: 10
 description: "A synthetic control case study on the 1993 Texas prison-capacity expansion and what it did to incarceration, estimated separately for Black and white men. Cunningham's Mixtape data fit in R with tidysynth, walked through phase by phase so every identification decision is auditable."
 summary: "A natural experiment and an unequal burden"
-tags: ["causal-inference", "econometrics", "predictive-modeling", "r", "synthetic-control"]
+tags: ["r", "causal-inference", "econometrics", "predictive-modeling", "synthetic-control", "case-study"]
 showDate: false
 showReadingTime: false
 showAuthor: false

@@ -3,7 +3,7 @@ title: "excel-vba-toolkit"
 weight: 10
 description: "A collection of ten Excel VBA macros covering data cleaning, structured exports, and analyst utilities. Plain .bas modules that import into any workbook in under a minute, with engineering patterns that hold up against modern expectations."
 summary: "Reusable Excel VBA macros."
-tags: ["data-cleaning", "documentation", "excel", "macros", "vba"]
+tags: ["vba", "excel", "data-cleaning", "documentation", "macros", "tool"]
 showDate: false
 showReadingTime: true
 showAuthor: false
