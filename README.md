@@ -326,7 +326,7 @@ Pages within a room are sorted alphabetically by enforcing weights in alphabetic
 | `weight` | Hugo section list ordering |
 | `description` | `<meta name="description">`, Open Graph, Twitter card |
 | `summary` | Card label on the room landing page AND search result snippet |
-| `tags` | Currently unused for navigation but indexed; reserve for future tag pages |
+| `tags` | Faceted controlled vocabulary; drives the card pills and the `/tags/<tag>/` term pages. See the Tag Convention below |
 | `showDate`, `showAuthor` | Both `false` to keep pages stripped of clutter |
 | `showReadingTime` | `true`: surfaces Hugo's auto-estimated reading time on cards ("10 mins") and on the page itself. The only `true` of the three; see BUG-030 for the §8/§6 drift that previously documented this as `false` |
 
@@ -335,6 +335,34 @@ Pages within a room are sorted alphabetically by enforcing weights in alphabetic
 - `date`: not set anywhere; presence triggers reverse-chronological sort fallback
 - `lastmod`: handled automatically by `enableGitInfo`
 - `draft: true`, never used; commit only when ready
+
+### Tag Convention (Faceted Vocabulary)
+
+Tags follow a faceted controlled vocabulary. Every tag belongs to exactly one of five facets, and a page declares a small bounded set across them rather than a flat pile of keywords. The full vocabulary, with every tag classified and the per-page effect, lives in `TAG_METHODOLOGY.md` at the repo root.
+
+The five facets:
+
+- **language**: what the work is written in. Programming, query, markup, and typesetting languages actually used: python, r, sql, csharp, vba, latex, html, dax.
+- **tool**: what it is built with. Libraries, frameworks, databases, apps, and formats, the primary ones rather than every dependency: pandas, sqlite, datasette, selenium, excel, power-bi, and the like.
+- **concept**: the method or idea it shows. etl, causal-inference, data-visualization, schema-design, and the rest.
+- **domain**: what it is about, from a short list of broad subjects: higher-education, nursing-education, finance, sports, economics, earth-science, travel.
+- **type**: what the artifact is. Exactly one per page: case-study, data-essay, tool, calculator, side-project.
+
+Rules:
+
+- Canonical form is kebab-case, no spaces.
+- Aim for 4 to 7 tags per page, at most 2 to 3 from any one facet.
+- Every page carries exactly one type. When none is set it defaults from the room: archivo is case-study, despacho is data-essay, cocina and estudio and garaje are tool, jardin is side-project.
+- Prefer a broader facet term over a single-use hyper-specific tag. A tool that supports many database engines gets its primary ones plus a concept, not one tag per engine. Dataset and place names are dropped; public-data plus the page title carry that weight.
+- The tags array is written in facet order: language, tool, concept, domain, type.
+
+Three sources of truth stay in sync with this vocabulary:
+
+- the `tags` array in each page's frontmatter
+- the `content/tags/<tag>/_index.md` term pages, one per tag in use
+- the `$tagMap` dict in `layouts/partials/article-link/card.html`, which maps each tag to a display label for the card pills. The partial title-cases any tag missing from the map, so a new tag still renders, but the map is regenerated to keep the special-cased labels correct (SQL, CTEs, Power BI, and so on).
+
+One tool keeps all three aligned. `tools/tag_normalize.py` rewrites the frontmatter facet-ordered, creates and deletes term pages to match the vocabulary, and regenerates the `$tagMap`. It keeps a `.backup-*` beside every edited file and reconciles the three sources before reporting. Run `--scan REPO` to review or `--write REPO` to apply.
 
 ---
 
