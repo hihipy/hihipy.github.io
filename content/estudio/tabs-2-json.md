@@ -19,7 +19,7 @@ Copying a page into an LLM sounds trivial: select all, copy, paste. Then you do 
 
 `tabs-2-json` is a Chromium browser extension that reads the tabs you select and hands back a single JSON document. Open the popup, tick the tabs you want, and choose Download JSON or Copy to Clipboard. Readable tabs are selected by default; browser internal pages and any domains you block are shown disabled and never read. One file comes back, and an LLM can consume it end to end.
 
-It works across page types by relying on how HTML organizes content rather than assuming any particular site structure. The read runs through the [`chrome.scripting`](https://developer.chrome.com/docs/extensions/reference/api/scripting) API, only on the tabs you pick, and only when you trigger an export. It runs in any Chromium browser on [Manifest V3](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3): Chrome, Brave, Edge, Opera, and others.
+It works across page types by relying on how HTML organizes content rather than assuming any particular site structure. The read runs through the [`chrome.scripting`](https://developer.chrome.com/docs/extensions/reference/api/scripting) API, only on the tabs you pick, and only when you trigger an export. It runs in any Chromium browser on [Manifest V3](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3): Chrome, Brave, Edge, Opera, and others, and installs in one click from the [Chrome Web Store](https://chromewebstore.google.com/detail/tabs2json/bljpjkglinfdphfopjdfoookglelobhj).
 
 ## The Problem
 
@@ -474,6 +474,12 @@ A page carrying both a `VideoObject` and an `Article` is treated as an article, 
 - **Privacy:** all work local; no network requests, no analytics, no tracking
 - **Tests:** a Node unit suite (`test/unit.mjs`) covering text cleaning, field pruning, structured-data sanitizing, and chrome peeling
 - **License:** [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+## Install
+
+[Tabs2JSON on the Chrome Web Store](https://chromewebstore.google.com/detail/tabs2json/bljpjkglinfdphfopjdfoookglelobhj)
+
+Add it and the popup lives in the toolbar. The listing is built from the source below, published under the same license.
 
 ## Repo
 
