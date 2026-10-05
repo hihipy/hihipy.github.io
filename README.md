@@ -121,10 +121,8 @@ Listed in alphabetical order within each room (matches Hugo render order, see §
 | Filename | Title | Summary |
 |---|---|---|
 | `excel-vba-toolkit.md` | excel-vba-toolkit | Reusable Excel VBA macros. |
-| `expense-report-review-calculator.md` | expense-report-review-calculator | Flags late expense submissions. |
 | `foreign-per-diem-calculator-for-usa-based-institutions.md` | foreign-per-diem-calculator-for-usa-based-institutions | International per diem calculator. |
 | `pbi-model-export.md` | pbi-model-export | Power BI to AI-ready JSON. |
-| `timeline-of-events-business-days.md` | timeline-of-events-business-days | Process timeline with gap detection. |
 
 ### `/jardin/`
 
