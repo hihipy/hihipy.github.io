@@ -19,7 +19,7 @@ The schema phase produced a queryable database with three tables and known invar
 
 This is the exploration phase the [case study philosophy](/biblioteca/) describes: not the analysis, but the orientation. Findings live in the [next phase](/archivo/college-scorecard-fl/04-findings/). The six queries below are the act of getting bearings, the moments of "what does this dataset actually contain" that shape every deeper question that comes later.
 
-Every SQL block in this phase has a Datasette Lite link below it so the reader can run the query directly in the browser against the same database, no setup required. The expected output shown alongside each query is the actual output from the live database: anyone running the query gets the same numbers shown here, or this case study fails its own [reproducibility-is-the-floor](/biblioteca/#reproducibility-is-the-floor-review-is-the-ceiling) test.
+Every SQL block in this phase has a Datasette Lite link below it so the reader can run the query directly in the browser against the same database, no setup required. The expected output shown alongside each query is the actual output from the live database: anyone running the query gets the same numbers shown here, or this case study fails its own [reproducibility-is-the-floor](/biblioteca/#peer-review-as-the-publish-gate) test.
 
 ## Counts By Sector And Year
 

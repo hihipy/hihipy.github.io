@@ -162,7 +162,7 @@ len(violations)                              # 0
 
 Across all 13,876 applications, the number of cases where `Total Cost` varies across funder rows is exactly zero. The invariant holds without exception. This single fact determines the rest of the schema: project-level fields can be deduplicated to one row per Application ID without any information loss, and the per-funder split can be promoted into its own table linked by foreign key. The schema is now writeable.
 
-This is the [reproducibility-is-the-floor, review-is-the-ceiling](/biblioteca/#reproducibility-is-the-floor-review-is-the-ceiling) principle in concrete form. The query above is reproducibility: anyone can re-run it against the same data and get the same answer. But the question of whether to *run* the query in the first place, rather than just assuming the invariant on the basis of a plausible explanation, is what review catches. A reviewer would ask "did you actually check that the invariant holds, or did you assume it from the explanation?" and the only good answer is to run the check before they ask.
+This is the [reproducibility-is-the-floor, review-is-the-ceiling](/biblioteca/#peer-review-as-the-publish-gate) principle in concrete form. The query above is reproducibility: anyone can re-run it against the same data and get the same answer. But the question of whether to *run* the query in the first place, rather than just assuming the invariant on the basis of a plausible explanation, is what review catches. A reviewer would ask "did you actually check that the invariant holds, or did you assume it from the explanation?" and the only good answer is to run the check before they ask.
 
 ## The 25 Percent Missing-Cost Pattern
 

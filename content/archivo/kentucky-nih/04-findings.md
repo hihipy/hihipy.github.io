@@ -391,7 +391,7 @@ NHLBI (Heart, Lung, and Blood) is the one major IC that contracted, declining 13
 
 One more observation worth surfacing through review rather than calculation: NCRR (the National Center for Research Resources) does not appear in the top twelve. NCRR was dissolved by NIH in December 2011[^dissolved-by-nih-in-december-201] and its functions were absorbed into the new National Center for Advancing Translational Sciences (NCATS) and several other institutes. NCRR funding existed in the first decade and was reorganized under different IC labels in subsequent years; a reader who saw NCRR's absence from the second decade might conclude that NCRR-funded work stopped happening, which is wrong.
 
-This is the [reproducibility-is-the-floor, review-is-the-ceiling](/biblioteca/#reproducibility-is-the-floor-review-is-the-ceiling) principle in concrete form. Anyone running this query reproduces these numbers. A reviewer is the one who would ask "wait, what happened to NCRR?" and prompt the rename investigation that turns a chart artifact into a defensible finding.
+This is the [reproducibility-is-the-floor, review-is-the-ceiling](/biblioteca/#peer-review-as-the-publish-gate) principle in concrete form. Anyone running this query reproduces these numbers. A reviewer is the one who would ask "wait, what happened to NCRR?" and prompt the rename investigation that turns a chart artifact into a defensible finding.
 
 ## What This Doesn't Tell You
 

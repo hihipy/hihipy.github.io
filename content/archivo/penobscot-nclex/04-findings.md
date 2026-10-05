@@ -401,7 +401,7 @@ What an institutional follow-up would look like, given access to the institution
 
 The case study's contribution is making these analytical questions sharp enough that they can be acted on. The methodology is replicable: the [source phase](/archivo/penobscot-nclex/01-source/) documents what the published dataset is and why the institution is anonymized, the [schema phase](/archivo/penobscot-nclex/02-schema/) documents the table design that lets every query in this case study run cleanly, and the [exploration phase](/archivo/penobscot-nclex/03-exploration/) documents the orientation queries that surface the threads this phase developed.
 
-The reproducibility-is-the-floor commitment the [biblioteca](/biblioteca/#reproducibility-is-the-floor-review-is-the-ceiling) page makes holds throughout: every number in this case study traces to a query the reader can run against the published SQLite, in the browser, with no setup. The R code in the predictive-modeling section is the only piece that requires a local environment; everything else is one click away.
+The reproducibility-is-the-floor commitment the [biblioteca](/biblioteca/#peer-review-as-the-publish-gate) page makes holds throughout: every number in this case study traces to a query the reader can run against the published SQLite, in the browser, with no setup. The R code in the predictive-modeling section is the only piece that requires a local environment; everything else is one click away.
 
 [^ncsbn]: [NCSBN](https://www.ncsbn.org/exams/exam-statistics-and-publications/nclex-pass-rates.page).
 [^next-generation-nclex-ngn]: [Next Generation NCLEX (NGN)](https://www.ncsbn.org/exams/next-generation-nclex.page), NCSBN.
