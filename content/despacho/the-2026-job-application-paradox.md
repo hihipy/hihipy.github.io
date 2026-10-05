@@ -594,7 +594,7 @@ A few specific notes on the trickier numbers:
 [^6]: [Yale Law School](https://law.yale.edu/sites/default/files/documents/pdf/std509inforeport.pdf). ABA Standard 509 Information Report (fall 2025: 226 offers of 5,562 applications, 4.06%).
 [^7]: U.S. News & World Report. [20 Law Schools That Are Hardest to Get Into](https://www.usnews.com/education/best-graduate-schools/the-short-list-grad-school/articles/law-schools-that-are-hardest-to-get-into) (Yale 5.25%, fall 2024).
 [^8]: Federal Bureau of Investigation. [What I See: A Message from the Assistant Director of the FBI's Training Division](https://www.fbi.gov/news/press-releases/what-i-see-a-message-from-the-assistant-director-of-the-fbi-s-training-division) (48,000+ applications, ~1,900 graduates over two years).
-[^9]: MIT Admissions. [Admissions Statistics](https://mitadmissions.org/apply/process/admissions-statistics/) (Class of 2029: 1,334 of 29,281, 4.6%).
+[^9]: MIT Admissions. [Admissions Statistics](https://mitadmissions.org/apply/process/stats/) (Class of 2029: 1,334 of 29,281, 4.6%).
 [^10]: Harvard Magazine. [Harvard's Class of 2029 Admissions Data](https://www.harvardmagazine.com/university-news/harvard-admissions-class-2029-admissions-data-ethnicity) (2,003 of 47,893, 4.2%).
 [^11]: [Harvard Office of Institutional Research](https://oira.harvard.edu/). Admissions data series.
 [^12]: The Stanford Daily. [Class of '29 admitted to the Farm](https://stanforddaily.com/2025/04/03/stanford-admits-class-of-2029/) (recent rate ~3.6%).

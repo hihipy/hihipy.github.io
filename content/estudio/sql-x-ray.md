@@ -162,7 +162,7 @@ Default value literals are excluded because they can carry personal data (`DEFAU
 
 What's left is unambiguous: schema names, table names, column names, types, nullability, key relationships, and index columns. None of these can carry sensitive *values* by design. The guarantee comes from the read pattern, not from filtering applied afterward.
 
-In healthcare and education contexts this distinction matters operationally. [HIPAA's minimum-necessary principle](https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/minimum-necessary-requirement/index.html) and [FERPA's directory-information rules](https://studentprivacy.ed.gov/faq/what-directory-information) both work better with a tool that demonstrably *cannot* leak protected fields than with one that requires manual review of every dump. "Structure only, never values" is a stronger claim than "we tried to filter the sensitive bits."
+In healthcare and education contexts this distinction matters operationally. [HIPAA's minimum-necessary principle](https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/minimum-necessary-requirement/index.html) and [FERPA's directory-information rules](https://studentprivacy.ed.gov/content/directory-information) both work better with a tool that demonstrably *cannot* leak protected fields than with one that requires manual review of every dump. "Structure only, never values" is a stronger claim than "we tried to filter the sensitive bits."
 
 ## What You Can Build From the Dump
 

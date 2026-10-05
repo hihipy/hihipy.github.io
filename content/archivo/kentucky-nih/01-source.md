@@ -215,6 +215,6 @@ If RePORTER changes its export format in the future, the seven structural quirks
 What looked like one row per project turned out not to be. The 305-row gap between the file's 14,181 rows and its 13,876 projects is the doorway into [the schema phase](/archivo/kentucky-nih/02-schema/), where the data model has to decide what a project actually is, where the funding-institute splits live, and how to keep the two perspectives queryable from the same database without one corrupting the other. That is what comes next.
 
 [^nih-reporter]: [NIH RePORTER](https://reporter.nih.gov/).
-[^nih-institutional-training-grant]: [NIH institutional training grant](https://grants.nih.gov/grants/funding/t-kiosk/index.htm).
-[^ncrr-was-dissolved-in-december-2]: [NCRR was dissolved in December 2011](https://www.nih.gov/news-events/news-releases/nih-establishes-national-center-advancing-translational-sciences), NIH.
+[^nih-institutional-training-grant]: [NIH institutional training grant](https://grants.nih.gov/funding/funding-categories/research-training-and-career-development/institutional-training).
+[^ncrr-was-dissolved-in-december-2]: [NCRR was dissolved in December 2011](https://www.grants.nih.gov/grants/guide/notice-files/NOT-OD-12-026.html), NIH.
 [^american-recovery-and-reinvestme]: [American Recovery and Reinvestment Act](https://en.wikipedia.org/wiki/American_Recovery_and_Reinvestment_Act_of_2009), Wikipedia.

@@ -200,7 +200,7 @@ Coursework in time value of money, capital investment decisions, risk and return
 
 #### Enterprise Systems
 
-[{{< badge >}}25Live{{< /badge >}}](https://www.collegenet.com/products/25live/)
+[{{< badge >}}25Live{{< /badge >}}](https://collegenet.com/scheduling/25live)
 [{{< badge >}}IBM Cognos Analytics{{< /badge >}}](https://www.ibm.com/products/cognos-analytics)
 [{{< badge >}}NIH Grant Systems{{< /badge >}}](https://grants.nih.gov/)
 [{{< badge >}}Qualtrics{{< /badge >}}](https://www.qualtrics.com/)

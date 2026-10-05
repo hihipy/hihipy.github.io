@@ -411,4 +411,4 @@ The database is at [`https://pgbd.casa/data/kentucky-nih.sqlite`](https://pgbd.c
 
 [^markey-cancer-center]: [Markey Cancer Center](https://ukhealthcare.uky.edu/markey-cancer-center), University of Kentucky.
 [^trans-nih-initiatives]: [trans-NIH initiatives](https://www.nih.gov/institutes-nih/list-nih-institutes-centers-offices).
-[^dissolved-by-nih-in-december-201]: [dissolved by NIH in December 2011](https://www.nih.gov/news-events/news-releases/nih-establishes-national-center-advancing-translational-sciences).
+[^dissolved-by-nih-in-december-201]: [dissolved by NIH in December 2011](https://www.grants.nih.gov/grants/guide/notice-files/NOT-OD-12-026.html).
